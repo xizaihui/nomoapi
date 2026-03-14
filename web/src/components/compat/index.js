@@ -56,5 +56,5 @@ export { LocaleProvider } from './LocaleProvider';
 export {
   Chat,
   Form,
-  Table,
 } from '@douyinfe/semi-ui__real';
+export { Table } from './Table';
