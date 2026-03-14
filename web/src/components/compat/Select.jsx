@@ -11,6 +11,12 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
+// Radix Select does not allow empty string values.
+// We use a sentinel to represent "empty" internally.
+const EMPTY_SENTINEL = '__empty__';
+const toRadix = (v) => (v === '' || v === null || v === undefined) ? EMPTY_SENTINEL : String(v);
+const fromRadix = (v) => v === EMPTY_SENTINEL ? '' : v;
+
 const Select = React.forwardRef(
   (
     {
@@ -34,15 +40,17 @@ const Select = React.forwardRef(
     },
     ref
   ) => {
-    // For simple single select
     const handleChange = (val) => {
-      if (onChange) onChange(val);
+      if (onChange) onChange(fromRadix(val));
     };
+
+    const radixValue = value !== undefined ? toRadix(value) : undefined;
+    const radixDefault = defaultValue !== undefined ? toRadix(defaultValue) : undefined;
 
     // If children are provided (Semi pattern: <Select><Select.Option>), render them
     if (children) {
       return (
-        <ShadcnSelect value={value !== undefined ? String(value) : undefined} defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined} onValueChange={handleChange} disabled={disabled}>
+        <ShadcnSelect value={radixValue} defaultValue={radixDefault} onValueChange={handleChange} disabled={disabled}>
           <SelectTrigger className={cn(className)} style={style} ref={ref}>
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
@@ -54,13 +62,13 @@ const Select = React.forwardRef(
     }
 
     return (
-      <ShadcnSelect value={value !== undefined ? String(value) : undefined} defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined} onValueChange={handleChange} disabled={disabled}>
+      <ShadcnSelect value={radixValue} defaultValue={radixDefault} onValueChange={handleChange} disabled={disabled}>
         <SelectTrigger className={cn(className)} style={style} ref={ref}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           {optionList.map((opt) => (
-            <SelectItem key={opt.value} value={String(opt.value)} disabled={opt.disabled}>
+            <SelectItem key={opt.value ?? '__empty'} value={toRadix(opt.value)} disabled={opt.disabled}>
               {opt.label}
             </SelectItem>
           ))}
@@ -73,7 +81,7 @@ Select.displayName = 'Select';
 
 // Semi Select.Option compat
 const Option = ({ value, children, disabled, ...rest }) => (
-  <SelectItem value={String(value)} disabled={disabled} {...rest}>
+  <SelectItem value={toRadix(value)} disabled={disabled} {...rest}>
     {children}
   </SelectItem>
 );
