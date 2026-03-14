@@ -1,58 +1,53 @@
 // Compat barrel: re-exports all Semi Design compat components
 // This module is aliased from '@douyinfe/semi-ui' via vite.config.js
 
+// --- Fully migrated to shadcn/ui ---
 export { Button } from './Button';
 export { Input, TextArea } from './Input';
+export { InputNumber } from './InputNumber';
 export { Select } from './Select';
 export { Modal } from './Modal';
 export { Toast, Notification } from './Toast';
+export { Typography } from './Typography';
+export { Card } from './Card';
+export { Avatar } from './Avatar';
+export { Tag } from './Tag';
+export { Badge } from './Badge';
+export { Banner } from './Banner';
+export { Spin } from './Spin';
+export { Empty } from './Empty';
+export { Space } from './Space';
+export { Row, Col } from './Layout';
+export { Dropdown } from './Dropdown';
+export { Checkbox } from './Checkbox';
+export { Radio, RadioGroup } from './Radio';
+export { Switch } from './Switch';
+export { Skeleton } from './Skeleton';
+export { Tooltip } from './Tooltip';
+export { Popover } from './Popover';
+export { Popconfirm } from './Popconfirm';
+export { Progress } from './Progress';
+export { Divider } from './Divider';
+export { Descriptions } from './Descriptions';
+export { Pagination } from './Pagination';
+export { SideSheet } from './SideSheet';
+export { Steps } from './Steps';
+export { Tabs, TabPane } from './Tabs';
 
-// --- Pass-through stubs for components not yet migrated ---
-// These re-export from the real Semi package during transition.
-// As each component gets a compat wrapper, move it above.
-
-// To enable gradual migration, we re-export everything else from real semi
-// The alias in vite only kicks in for this file, so we use a direct path
+// --- Not yet migrated: pass through from real Semi ---
+// These are low-usage components that still need compat wrappers.
+// As each gets migrated, move it above.
 export {
-  Avatar,
-  Badge,
-  Banner,
-  Card,
   Chat,
-  Checkbox,
-  Col,
   Collapse,
-  Descriptions,
-  Divider,
-  Dropdown,
-  Empty,
   Form,
   Image,
   ImagePreview,
-  InputNumber,
   Layout,
   LocaleProvider,
   Nav,
-  Pagination,
-  Popconfirm,
-  Popover,
-  Progress,
-  Radio,
-  RadioGroup,
-  Row,
-  SideSheet,
-  Skeleton,
   Slider,
-  Space,
-  Spin,
-  Steps,
-  Switch,
-  TabPane,
   Table,
-  Tabs,
-  Tag,
   Timeline,
-  Tooltip,
-  Typography,
   Icon,
 } from '@douyinfe/semi-ui__real';
