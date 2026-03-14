@@ -45,17 +45,16 @@ export { ScrollList, ScrollItem } from './ScrollList';
 // --- Complex components: pass through from real Semi ---
 export { DatePicker } from './DatePicker';
 export { Calendar } from './Calendar';
+export { Layout } from './SemiLayout';
+export { Nav } from './Nav';
+export { Icon } from './Icon';
+export { Collapse } from './Collapse';
+export { Slider } from './Slider';
+export { Timeline } from './Timeline';
+export { Image, ImagePreview } from './Image';
+export { LocaleProvider } from './LocaleProvider';
 export {
   Chat,
-  Collapse,
   Form,
-  Image,
-  ImagePreview,
-  Layout,
-  LocaleProvider,
-  Nav,
-  Slider,
   Table,
-  Timeline,
-  Icon,
 } from '@douyinfe/semi-ui__real';
