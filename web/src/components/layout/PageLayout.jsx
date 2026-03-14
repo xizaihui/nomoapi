@@ -18,7 +18,6 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import HeaderBar from './headerbar';
-import { Layout } from '@douyinfe/semi-ui';
 import SiderBar from './SiderBar';
 import App from '../../App';
 import FooterBar from './Footer';
@@ -38,7 +37,6 @@ import { UserContext } from '../../context/User';
 import { StatusContext } from '../../context/Status';
 import { useLocation } from 'react-router-dom';
 import { normalizeLanguage } from '../../i18n/language';
-const { Sider, Content, Header } = Layout;
 
 const PageLayout = () => {
   const [userState, userDispatch] = useContext(UserContext);
@@ -144,45 +142,27 @@ const PageLayout = () => {
   }, [i18n, userState?.user?.setting]);
 
   return (
-    <Layout
-      className='app-layout'
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: isMobile ? 'visible' : 'hidden',
-      }}
+    <div
+      className='app-layout flex flex-col'
+      style={{ overflow: isMobile ? 'visible' : 'hidden' }}
     >
-      <Header
-        style={{
-          padding: 0,
-          height: 'auto',
-          lineHeight: 'normal',
-          position: 'fixed',
-          width: '100%',
-          top: 0,
-          zIndex: 100,
-        }}
+      <header
+        className='fixed w-full top-0 z-[100]'
+        style={{ padding: 0, lineHeight: 'normal' }}
       >
         <HeaderBar
           onMobileMenuToggle={() => setDrawerOpen((prev) => !prev)}
           drawerOpen={drawerOpen}
         />
-      </Header>
-      <Layout
-        style={{
-          overflow: isMobile ? 'visible' : 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
+      </header>
+      <div
+        className='flex flex-col'
+        style={{ overflow: isMobile ? 'visible' : 'auto' }}
       >
         {showSider && (
-          <Sider
-            className='app-sider'
+          <aside
+            className='app-sider fixed left-0 top-[64px] z-[99]'
             style={{
-              position: 'fixed',
-              left: 0,
-              top: '64px',
-              zIndex: 99,
               border: 'none',
               paddingRight: '0',
               width: 'var(--sidebar-current-width)',
@@ -193,23 +173,21 @@ const PageLayout = () => {
                 if (isMobile) setDrawerOpen(false);
               }}
             />
-          </Sider>
+          </aside>
         )}
-        <Layout
+        <div
+          className='flex flex-col flex-1'
           style={{
             marginLeft: isMobile
               ? '0'
               : showSider
                 ? 'var(--sidebar-current-width)'
                 : '0',
-            flex: '1 1 auto',
-            display: 'flex',
-            flexDirection: 'column',
           }}
         >
-          <Content
+          <main
+            className='flex-1'
             style={{
-              flex: '1 0 auto',
               overflowY: isMobile ? 'visible' : 'hidden',
               WebkitOverflowScrolling: 'touch',
               padding: shouldInnerPadding ? (isMobile ? '5px' : '24px') : '0',
@@ -217,21 +195,16 @@ const PageLayout = () => {
             }}
           >
             <App />
-          </Content>
+          </main>
           {!shouldHideFooter && (
-            <Layout.Footer
-              style={{
-                flex: '0 0 auto',
-                width: '100%',
-              }}
-            >
+            <footer className='w-full flex-shrink-0'>
               <FooterBar />
-            </Layout.Footer>
+            </footer>
           )}
-        </Layout>
-      </Layout>
+        </div>
+      </div>
       <ToastContainer />
-    </Layout>
+    </div>
   );
 };
 

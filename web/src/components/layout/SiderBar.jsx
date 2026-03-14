@@ -28,7 +28,7 @@ import { useMinimumLoadingTime } from '../../hooks/common/useMinimumLoadingTime'
 import { isAdmin, isRoot, showError } from '../../helpers';
 import SkeletonWrapper from './components/SkeletonWrapper';
 
-import { Nav, Divider, Button } from '@douyinfe/semi-ui';
+import { Divider, Button } from '@douyinfe/semi-ui';
 
 const routerMap = {
   home: '/',
@@ -304,86 +304,122 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   }, [collapsed]);
 
   // 选中高亮颜色（统一）
-  const SELECTED_COLOR = 'var(--semi-color-primary)';
+  const SELECTED_COLOR = 'hsl(var(--sidebar-primary))';
 
   // 渲染自定义菜单项
   const renderNavItem = (item) => {
-    // 跳过隐藏的项目
     if (item.className === 'tableHiddle') return null;
 
     const isSelected = selectedKeys.includes(item.itemKey);
-    const textColor = isSelected ? SELECTED_COLOR : 'inherit';
+    const to = routerMapState[item.itemKey] || routerMap[item.itemKey];
 
-    return (
-      <Nav.Item
-        key={item.itemKey}
-        itemKey={item.itemKey}
-        text={
+    const content = (
+      <div
+        className={`sidebar-nav-item flex items-center gap-2 cursor-pointer ${isSelected ? 'sidebar-nav-item-selected' : ''}`}
+        onClick={() => {
+          setSelectedKeys([item.itemKey]);
+          onNavigate();
+        }}
+      >
+        <div className='sidebar-icon-container flex-shrink-0'>
+          {getLucideIcon(item.itemKey, isSelected)}
+        </div>
+        {!collapsed && (
           <span
             className='truncate font-medium text-sm'
-            style={{ color: textColor }}
+            style={{ color: isSelected ? SELECTED_COLOR : 'inherit' }}
           >
             {item.text}
           </span>
-        }
-        icon={
-          <div className='sidebar-icon-container flex-shrink-0'>
-            {getLucideIcon(item.itemKey, isSelected)}
-          </div>
-        }
-        className={item.className}
-      />
+        )}
+      </div>
     );
+
+    if (to) {
+      return (
+        <Link key={item.itemKey} to={to} style={{ textDecoration: 'none' }}>
+          {content}
+        </Link>
+      );
+    }
+    return <div key={item.itemKey}>{content}</div>;
   };
 
   // 渲染子菜单项
   const renderSubItem = (item) => {
     if (item.items && item.items.length > 0) {
+      const isOpen = openedKeys.includes(item.itemKey);
       const isSelected = selectedKeys.includes(item.itemKey);
-      const textColor = isSelected ? SELECTED_COLOR : 'inherit';
 
       return (
-        <Nav.Sub
-          key={item.itemKey}
-          itemKey={item.itemKey}
-          text={
-            <span
-              className='truncate font-medium text-sm'
-              style={{ color: textColor }}
-            >
-              {item.text}
-            </span>
-          }
-          icon={
+        <div key={item.itemKey}>
+          <div
+            className={`sidebar-nav-item flex items-center gap-2 cursor-pointer ${isSelected ? 'sidebar-nav-item-selected' : ''}`}
+            onClick={() => {
+              if (isOpen) {
+                setOpenedKeys(openedKeys.filter((k) => k !== item.itemKey));
+              } else {
+                setOpenedKeys([...openedKeys, item.itemKey]);
+              }
+            }}
+          >
             <div className='sidebar-icon-container flex-shrink-0'>
               {getLucideIcon(item.itemKey, isSelected)}
             </div>
-          }
-        >
-          {item.items.map((subItem) => {
-            const isSubSelected = selectedKeys.includes(subItem.itemKey);
-            const subTextColor = isSubSelected ? SELECTED_COLOR : 'inherit';
+            {!collapsed && (
+              <>
+                <span
+                  className='truncate font-medium text-sm flex-1'
+                  style={{ color: isSelected ? SELECTED_COLOR : 'inherit' }}
+                >
+                  {item.text}
+                </span>
+                <ChevronLeft
+                  size={14}
+                  className='transition-transform duration-200 text-muted-foreground'
+                  style={{ transform: isOpen ? 'rotate(-90deg)' : 'rotate(0deg)' }}
+                />
+              </>
+            )}
+          </div>
+          {isOpen && !collapsed && (
+            <div className='ml-4'>
+              {item.items.map((subItem) => {
+                const isSubSelected = selectedKeys.includes(subItem.itemKey);
+                const subTo = routerMapState[subItem.itemKey] || routerMap[subItem.itemKey];
 
-            return (
-              <Nav.Item
-                key={subItem.itemKey}
-                itemKey={subItem.itemKey}
-                text={
-                  <span
-                    className='truncate font-medium text-sm'
-                    style={{ color: subTextColor }}
+                const subContent = (
+                  <div
+                    className={`sidebar-nav-item flex items-center gap-2 cursor-pointer ${isSubSelected ? 'sidebar-nav-item-selected' : ''}`}
+                    onClick={() => {
+                      setSelectedKeys([subItem.itemKey]);
+                      onNavigate();
+                    }}
                   >
-                    {subItem.text}
-                  </span>
+                    <span
+                      className='truncate font-medium text-sm'
+                      style={{ color: isSubSelected ? SELECTED_COLOR : 'inherit' }}
+                    >
+                      {subItem.text}
+                    </span>
+                  </div>
+                );
+
+                if (subTo) {
+                  return (
+                    <Link key={subItem.itemKey} to={subTo} style={{ textDecoration: 'none' }}>
+                      {subContent}
+                    </Link>
+                  );
                 }
-              />
-            );
-          })}
-        </Nav.Sub>
+                return <div key={subItem.itemKey}>{subContent}</div>;
+              })}
+            </div>
+          )}
+        </div>
       );
-    } else {
-      return renderNavItem(item);
     }
+    return renderNavItem(item);
   };
 
   return (
@@ -400,44 +436,9 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         collapsed={collapsed}
         showAdmin={isAdmin()}
       >
-        <Nav
+        <div
           className='sidebar-nav'
-          defaultIsCollapsed={collapsed}
-          isCollapsed={collapsed}
-          onCollapseChange={toggleCollapsed}
-          selectedKeys={selectedKeys}
-          itemStyle='sidebar-nav-item'
-          hoverStyle='sidebar-nav-item:hover'
-          selectedStyle='sidebar-nav-item-selected'
-          renderWrapper={({ itemElement, props }) => {
-            const to =
-              routerMapState[props.itemKey] || routerMap[props.itemKey];
-
-            // 如果没有路由，直接返回元素
-            if (!to) return itemElement;
-
-            return (
-              <Link
-                style={{ textDecoration: 'none' }}
-                to={to}
-                onClick={onNavigate}
-              >
-                {itemElement}
-              </Link>
-            );
-          }}
-          onSelect={(key) => {
-            // 如果点击的是已经展开的子菜单的父项，则收起子菜单
-            if (openedKeys.includes(key.itemKey)) {
-              setOpenedKeys(openedKeys.filter((k) => k !== key.itemKey));
-            }
-
-            setSelectedKeys([key.itemKey]);
-          }}
-          openKeys={openedKeys}
-          onOpenChange={(data) => {
-            setOpenedKeys(data.openKeys);
-          }}
+          style={{ overflowY: 'auto' }}
         >
           {/* 聊天区域 */}
           {hasSectionVisibleModules('chat') && (
@@ -475,7 +476,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             </>
           )}
 
-          {/* 管理员区域 - 只在管理员时显示且配置允许时显示 */}
+          {/* 管理员区域 */}
           {isAdmin() && hasSectionVisibleModules('admin') && (
             <>
               <Divider className='sidebar-divider' />
@@ -487,7 +488,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               </div>
             </>
           )}
-        </Nav>
+        </div>
       </SkeletonWrapper>
 
       {/* 底部折叠按钮 */}
