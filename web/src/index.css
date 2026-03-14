@@ -392,6 +392,7 @@ code {
   margin: 2px 8px;
   transition: all 0.15s ease;
   padding: 8px 12px;
+  color: hsl(var(--sidebar-foreground));
 }
 
 .sidebar-nav-item:hover {
@@ -436,7 +437,7 @@ code {
 /* 分组标签样式 */
 .sidebar-group-label {
   padding: 4px 15px 8px;
-  color: var(--semi-color-text-2);
+  color: hsl(var(--sidebar-foreground) / 0.6);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;

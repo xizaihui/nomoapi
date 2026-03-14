@@ -398,19 +398,103 @@ const FormRadioGroup = ({ field, label, options, direction, ...rest }) => {
 };
 
 // --- Form.DatePicker ---
-const FormDatePicker = ({ field, label, type = 'date', ...rest }) => {
+const FormDatePicker = ({ field, label, type = 'date', presets, showClear, placeholder, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
-  const value = field ? (values[field] ?? '') : '';
+  const value = field ? (values[field] ?? (type === 'dateTimeRange' || type === 'dateRange' ? [null, null] : '')) : '';
+  const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, size, className: cls, ...safeRest } = rest;
+
+  const isRange = type === 'dateTimeRange' || type === 'dateRange';
+  const inputType = type === 'dateTime' || type === 'dateTimeRange' ? 'datetime-local' : 'date';
+
+  const formatForInput = (d) => {
+    if (!d) return '';
+    if (d instanceof Date) {
+      if (inputType === 'datetime-local') {
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+      return d.toISOString().split('T')[0];
+    }
+    return String(d);
+  };
+
+  if (isRange) {
+    const rangeVal = Array.isArray(value) ? value : [null, null];
+    const placeholders = Array.isArray(placeholder) ? placeholder : ['开始', '结束'];
+
+    const handleRangeChange = (idx, newVal) => {
+      const updated = [...rangeVal];
+      updated[idx] = newVal ? new Date(newVal) : null;
+      if (field) formApi.setValue(field, updated);
+    };
+
+    const handleClear = () => {
+      if (field) formApi.setValue(field, [null, null]);
+    };
+
+    const applyPreset = (preset) => {
+      if (field) formApi.setValue(field, [preset.start, preset.end]);
+    };
+
+    return (
+      <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+        <div className='flex flex-col gap-1'>
+          <div className='flex items-center gap-1'>
+            <input
+              type={inputType}
+              value={formatForInput(rangeVal[0])}
+              onChange={(e) => handleRangeChange(0, e.target.value)}
+              placeholder={placeholders[0]}
+              className='flex h-8 flex-1 rounded-md border border-input bg-background px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+            />
+            <span className='text-muted-foreground text-xs'>~</span>
+            <input
+              type={inputType}
+              value={formatForInput(rangeVal[1])}
+              onChange={(e) => handleRangeChange(1, e.target.value)}
+              placeholder={placeholders[1]}
+              className='flex h-8 flex-1 rounded-md border border-input bg-background px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+            />
+            {showClear && (rangeVal[0] || rangeVal[1]) && (
+              <button type='button' onClick={handleClear} className='text-muted-foreground hover:text-foreground text-xs px-1'>✕</button>
+            )}
+          </div>
+          {presets && presets.length > 0 && (
+            <div className='flex flex-wrap gap-1'>
+              {presets.map((preset, idx) => (
+                <button
+                  key={idx}
+                  type='button'
+                  onClick={() => applyPreset(preset)}
+                  className='text-xs px-2 py-0.5 rounded border border-input bg-background hover:bg-accent text-muted-foreground hover:text-foreground transition-colors'
+                >
+                  {preset.text}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </FormField>
+    );
+  }
+
+  // Single date/datetime
   return (
-    <FormField field={field} label={label} {...rest}>
-      <input
-        type={type === 'dateTime' ? 'datetime-local' : 'date'}
-        value={value}
-        onChange={(e) => field && formApi.setValue(field, e.target.value)}
-        className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
-      />
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+      <div className='flex items-center gap-1'>
+        <input
+          type={inputType}
+          value={formatForInput(value)}
+          onChange={(e) => field && formApi.setValue(field, e.target.value ? new Date(e.target.value) : null)}
+          placeholder={typeof placeholder === 'string' ? placeholder : undefined}
+          className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+        />
+        {showClear && value && (
+          <button type='button' onClick={() => field && formApi.setValue(field, null)} className='text-muted-foreground hover:text-foreground text-sm px-1'>✕</button>
+        )}
+      </div>
     </FormField>
   );
 };
