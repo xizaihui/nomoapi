@@ -55,6 +55,6 @@ export { Image, ImagePreview } from './Image';
 export { LocaleProvider } from './LocaleProvider';
 export {
   Chat,
-  Form,
 } from '@douyinfe/semi-ui__real';
+export { Form } from './Form';
 export { Table } from './Table';
