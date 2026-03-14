@@ -30,7 +30,7 @@ import {
   Skeleton,
   Tooltip,
 } from '@douyinfe/semi-ui';
-import { IconChevronDown, IconChevronUp } from '@douyinfe/semi-icons';
+import { IconChevronDown, IconChevronUp } from '@/components/compat/icons';
 
 /**
  * 通用可选择按钮组组件

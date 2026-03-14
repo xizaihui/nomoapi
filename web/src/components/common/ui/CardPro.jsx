@@ -21,7 +21,7 @@ import React, { useState } from 'react';
 import { Card, Divider, Typography, Button } from '@douyinfe/semi-ui';
 import PropTypes from 'prop-types';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';
-import { IconEyeOpened, IconEyeClosed } from '@douyinfe/semi-icons';
+import { IconEyeOpened, IconEyeClosed } from '@/components/compat/icons';
 
 const { Text } = Typography;
 

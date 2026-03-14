@@ -45,7 +45,7 @@ import {
   Receipt,
   Sparkles,
 } from 'lucide-react';
-import { IconGift } from '@douyinfe/semi-icons';
+import { IconGift } from '@/components/compat/icons';
 import { useMinimumLoadingTime } from '../../hooks/common/useMinimumLoadingTime';
 import { getCurrencyConfig } from '../../helpers/render';
 import SubscriptionPlansCard from './SubscriptionPlansCard';

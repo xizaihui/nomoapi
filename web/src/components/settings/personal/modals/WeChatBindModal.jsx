@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Button, Input, Modal, Image } from '@douyinfe/semi-ui';
-import { IconKey } from '@douyinfe/semi-icons';
+import { IconKey } from '@/components/compat/icons';
 import { SiWechat } from 'react-icons/si';
 
 const WeChatBindModal = ({

@@ -39,7 +39,7 @@ import {
   IconEdit,
   IconDelete,
   IconRefresh,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { API, showError, showSuccess, getOAuthProviderIcon } from '../../helpers';
 import { useTranslation } from 'react-i18next';
 

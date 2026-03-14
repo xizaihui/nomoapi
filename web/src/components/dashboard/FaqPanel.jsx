@@ -20,7 +20,7 @@ For commercial licensing, please contact support@quantumnous.com
 import React from 'react';
 import { Card, Collapse, Empty } from '@douyinfe/semi-ui';
 import { HelpCircle } from 'lucide-react';
-import { IconPlus, IconMinus } from '@douyinfe/semi-icons';
+import { IconPlus, IconMinus } from '@/components/compat/icons';
 import { marked } from 'marked';
 import {
   IllustrationConstruction,

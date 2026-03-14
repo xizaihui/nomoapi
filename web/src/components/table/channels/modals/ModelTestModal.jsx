@@ -29,7 +29,7 @@ import {
   Switch,
   Banner,
 } from '@douyinfe/semi-ui';
-import { IconSearch, IconInfoCircle } from '@douyinfe/semi-icons';
+import { IconSearch, IconInfoCircle } from '@/components/compat/icons';
 import { copy, showError, showInfo, showSuccess } from '../../../../helpers';
 import { MODEL_TABLE_PAGE_SIZE } from '../../../../constants';
 

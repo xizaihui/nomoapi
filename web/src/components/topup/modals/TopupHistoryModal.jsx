@@ -33,7 +33,7 @@ import {
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
 import { Coins } from 'lucide-react';
-import { IconSearch } from '@douyinfe/semi-icons';
+import { IconSearch } from '@/components/compat/icons';
 import { API, timestamp2string } from '../../../helpers';
 import { isAdmin } from '../../../helpers/utils';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';

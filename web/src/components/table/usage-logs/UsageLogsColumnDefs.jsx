@@ -41,7 +41,7 @@ import {
   renderClaudeModelPrice,
   renderModelPrice,
 } from '../../../helpers';
-import { IconHelpCircle } from '@douyinfe/semi-icons';
+import { IconHelpCircle } from '@/components/compat/icons';
 import { Route, Sparkles } from 'lucide-react';
 
 const colors = [

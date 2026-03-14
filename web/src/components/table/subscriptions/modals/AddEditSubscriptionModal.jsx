@@ -37,7 +37,7 @@ import {
   IconClose,
   IconCreditCard,
   IconSave,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { Clock, RefreshCw } from 'lucide-react';
 import { API, showError, showSuccess } from '../../../../helpers';
 import {

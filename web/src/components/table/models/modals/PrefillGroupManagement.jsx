@@ -30,7 +30,7 @@ import {
   Spin,
   Empty,
 } from '@douyinfe/semi-ui';
-import { IconPlus, IconLayers } from '@douyinfe/semi-icons';
+import { IconPlus, IconLayers } from '@/components/compat/icons';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,

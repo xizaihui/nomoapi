@@ -43,7 +43,7 @@ import {
   IconMinus,
   IconHelpCircle,
   IconCopy,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { API } from '../../../../helpers';
 import { showError, showSuccess, copy } from '../../../../helpers';
 

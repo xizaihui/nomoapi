@@ -34,7 +34,7 @@ import {
   TextArea,
   Typography,
 } from '@douyinfe/semi-ui';
-import { IconDelete, IconMenu, IconPlus } from '@douyinfe/semi-icons';
+import { IconDelete, IconMenu, IconPlus } from '@/components/compat/icons';
 import { copy, showError, showSuccess, verifyJSON } from '../../../../helpers';
 import {
   CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE,

@@ -20,7 +20,7 @@ For commercial licensing, please contact support@quantumnous.com
 import React from 'react';
 import { Button, Dropdown, Tag, Typography } from '@douyinfe/semi-ui';
 import { timestamp2string, showSuccess, showError } from '../../../helpers';
-import { IconMore } from '@douyinfe/semi-icons';
+import { IconMore } from '@/components/compat/icons';
 import {
   FaPlay,
   FaTrash,

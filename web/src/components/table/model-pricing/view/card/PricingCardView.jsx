@@ -28,7 +28,7 @@ import {
   Button,
   Avatar,
 } from '@douyinfe/semi-ui';
-import { IconHelpCircle } from '@douyinfe/semi-icons';
+import { IconHelpCircle } from '@/components/compat/icons';
 import { Copy } from 'lucide-react';
 import {
   IllustrationNoResult,

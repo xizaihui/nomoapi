@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Typography } from '@douyinfe/semi-ui';
-import { IconUserAdd } from '@douyinfe/semi-icons';
+import { IconUserAdd } from '@/components/compat/icons';
 import CompactModeToggle from '../../common/ui/CompactModeToggle';
 
 const { Text } = Typography;

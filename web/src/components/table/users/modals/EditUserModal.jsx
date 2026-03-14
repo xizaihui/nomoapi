@@ -54,7 +54,7 @@ import {
   IconLink,
   IconUserGroup,
   IconPlus,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import UserBindingManagementModal from './UserBindingManagementModal';
 
 const { Text, Title } = Typography;

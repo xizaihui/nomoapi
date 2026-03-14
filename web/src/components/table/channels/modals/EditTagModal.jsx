@@ -46,7 +46,7 @@ import {
   IconUser,
   IconCode,
   IconSetting,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { getChannelModels } from '../../../../helpers';
 import { useTranslation } from 'react-i18next';
 

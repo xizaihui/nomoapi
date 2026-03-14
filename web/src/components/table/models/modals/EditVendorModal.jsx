@@ -21,7 +21,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Form, Col, Row } from '@douyinfe/semi-ui';
 import { API, showError, showSuccess } from '../../../../helpers';
 import { Typography } from '@douyinfe/semi-ui';
-import { IconLink } from '@douyinfe/semi-icons';
+import { IconLink } from '@/components/compat/icons';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 

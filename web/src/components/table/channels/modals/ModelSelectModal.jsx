@@ -34,7 +34,7 @@ import {
   IllustrationNoResult,
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
-import { IconSearch, IconInfoCircle } from '@douyinfe/semi-icons';
+import { IconSearch, IconInfoCircle } from '@/components/compat/icons';
 import { useTranslation } from 'react-i18next';
 import { getModelCategories } from '../../../../helpers/render';
 

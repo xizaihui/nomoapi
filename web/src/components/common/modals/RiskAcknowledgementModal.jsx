@@ -26,7 +26,7 @@ import {
   Input,
   Space,
 } from '@douyinfe/semi-ui';
-import { IconAlertTriangle } from '@douyinfe/semi-icons';
+import { IconAlertTriangle } from '@/components/compat/icons';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';
 import MarkdownRenderer from '../markdown/MarkdownRenderer';
 

@@ -3,9 +3,14 @@ import * as React from 'react';
 import {
   AlertTriangle,
   Bell,
+  Bookmark,
+  CalendarClock,
   CheckCircle,
   ChevronDown,
   ChevronUp,
+  Code,
+  Columns3,
+  Component,
   X,
   CircleDollarSign,
   Copy,
@@ -19,23 +24,42 @@ import {
   File,
   Filter,
   Gift,
+  Github,
+  Globe,
   HelpCircle,
+  BarChart3,
   Info,
   Key,
   Layers,
   Link,
   Lock,
+  LogOut,
   Mail,
+  Map,
   Menu,
   Minus,
   MoreHorizontal,
+  ArrowLeftRight,
+  Play,
   Plus,
   PlusCircle,
+  MapPin,
+  Activity,
   RefreshCw,
   Save,
   Search,
+  Send,
+  Server,
+  Settings,
+  Shield,
+  Timer,
+  Type,
+  ChevronDownSquare,
   User,
   UserPlus,
+  Users,
+  UserCog,
+  Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -90,3 +114,27 @@ export const IconSave = wrapIcon(Save, 'IconSave');
 export const IconSearch = wrapIcon(Search, 'IconSearch');
 export const IconUser = wrapIcon(User, 'IconUser');
 export const IconUserAdd = wrapIcon(UserPlus, 'IconUserAdd');
+export const IconBolt = wrapIcon(Zap, 'IconBolt');
+export const IconBookmark = wrapIcon(Bookmark, 'IconBookmark');
+export const IconCalendarClock = wrapIcon(CalendarClock, 'IconCalendarClock');
+export const IconCode = wrapIcon(Code, 'IconCode');
+export const IconExit = wrapIcon(LogOut, 'IconExit');
+export const IconGithubLogo = wrapIcon(Github, 'IconGithubLogo');
+export const IconGlobe = wrapIcon(Globe, 'IconGlobe');
+export const IconHistogram = wrapIcon(BarChart3, 'IconHistogram');
+export const IconMap = wrapIcon(Map, 'IconMap');
+export const IconMoneyExchangeStroked = wrapIcon(ArrowLeftRight, 'IconMoneyExchangeStroked');
+export const IconPlay = wrapIcon(Play, 'IconPlay');
+export const IconPosition = wrapIcon(MapPin, 'IconPosition');
+export const IconPulse = wrapIcon(Activity, 'IconPulse');
+export const IconSaveStroked = wrapIcon(Save, 'IconSaveStroked');
+export const IconSend = wrapIcon(Send, 'IconSend');
+export const IconServer = wrapIcon(Server, 'IconServer');
+export const IconSetting = wrapIcon(Settings, 'IconSetting');
+export const IconShield = wrapIcon(Shield, 'IconShield');
+export const IconStopwatchStroked = wrapIcon(Timer, 'IconStopwatchStroked');
+export const IconTextStroked = wrapIcon(Type, 'IconTextStroked');
+export const IconTreeTriangleDown = wrapIcon(ChevronDown, 'IconTreeTriangleDown');
+export const IconTypograph = wrapIcon(Type, 'IconTypograph');
+export const IconUserGroup = wrapIcon(Users, 'IconUserGroup');
+export const IconUserSetting = wrapIcon(UserCog, 'IconUserSetting');

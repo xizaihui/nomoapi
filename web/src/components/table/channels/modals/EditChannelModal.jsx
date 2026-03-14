@@ -82,7 +82,7 @@ import {
   IconSearch,
   IconChevronUp,
   IconChevronDown,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 
 const { Text, Title } = Typography;
 

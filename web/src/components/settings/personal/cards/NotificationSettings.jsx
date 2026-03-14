@@ -32,7 +32,7 @@ import {
   Row,
   Col,
 } from '@douyinfe/semi-ui';
-import { IconMail, IconKey, IconBell, IconLink } from '@douyinfe/semi-icons';
+import { IconMail, IconKey, IconBell, IconLink } from '@/components/compat/icons';
 import { ShieldCheck, Bell, DollarSign, Settings } from 'lucide-react';
 import {
   renderQuotaWithPrompt,

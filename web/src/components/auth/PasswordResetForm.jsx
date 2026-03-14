@@ -28,7 +28,7 @@ import {
 } from '../../helpers';
 import Turnstile from 'react-turnstile';
 import { Button, Card, Form, Typography } from '@douyinfe/semi-ui';
-import { IconMail } from '@douyinfe/semi-icons';
+import { IconMail } from '@/components/compat/icons';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 

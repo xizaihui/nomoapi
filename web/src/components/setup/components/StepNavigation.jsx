@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Button } from '@douyinfe/semi-ui';
-import { IconCheckCircleStroked } from '@douyinfe/semi-icons';
+import { IconCheckCircleStroked } from '@/components/compat/icons';
 
 /**
  * 步骤导航组件

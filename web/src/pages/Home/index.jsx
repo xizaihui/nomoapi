@@ -37,7 +37,7 @@ import {
   IconPlay,
   IconFile,
   IconCopy,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { Link } from 'react-router-dom';
 import NoticeModal from '../../components/layout/NoticeModal';
 import {

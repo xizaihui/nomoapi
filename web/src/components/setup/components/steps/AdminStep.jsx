@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Banner, Form } from '@douyinfe/semi-ui';
-import { IconUser, IconLock } from '@douyinfe/semi-icons';
+import { IconUser, IconLock } from '@/components/compat/icons';
 
 /**
  * 管理员账号设置步骤组件

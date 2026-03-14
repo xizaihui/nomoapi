@@ -39,7 +39,7 @@ import {
   IconSearch,
   IconSaveStroked,
   IconBolt,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import {
   compareObjects,
   API,

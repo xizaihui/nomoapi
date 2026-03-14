@@ -48,7 +48,7 @@ import {
   IconTreeTriangleDown,
   IconMore,
   IconAlertTriangle,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { FaRandom } from 'react-icons/fa';
 
 // Render functions

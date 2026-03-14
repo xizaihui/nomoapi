@@ -28,7 +28,7 @@ import {
   IconStopwatchStroked,
   IconTypograph,
   IconSend,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { renderQuota } from '../../helpers';
 import { createSectionTitle } from '../../helpers/dashboard';
 

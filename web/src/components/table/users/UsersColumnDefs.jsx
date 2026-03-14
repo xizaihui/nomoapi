@@ -28,7 +28,7 @@ import {
   Typography,
   Dropdown,
 } from '@douyinfe/semi-ui';
-import { IconMore } from '@douyinfe/semi-icons';
+import { IconMore } from '@/components/compat/icons';
 import { renderGroup, renderNumber, renderQuota } from '../../../helpers';
 
 /**

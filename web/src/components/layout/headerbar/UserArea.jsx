@@ -26,7 +26,7 @@ import {
   IconUserSetting,
   IconCreditCard,
   IconKey,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { stringToColor } from '../../../helpers';
 import SkeletonWrapper from '../components/SkeletonWrapper';
 

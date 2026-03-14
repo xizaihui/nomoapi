@@ -31,7 +31,7 @@ import {
   IllustrationNoResult,
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
-import { IconSearch } from '@douyinfe/semi-icons';
+import { IconSearch } from '@/components/compat/icons';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 
 const normalizeModels = (models = []) =>

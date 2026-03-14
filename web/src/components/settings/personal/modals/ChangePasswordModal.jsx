@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Input, Modal, Typography } from '@douyinfe/semi-ui';
-import { IconLock } from '@douyinfe/semi-icons';
+import { IconLock } from '@/components/compat/icons';
 import Turnstile from 'react-turnstile';
 
 const ChangePasswordModal = ({

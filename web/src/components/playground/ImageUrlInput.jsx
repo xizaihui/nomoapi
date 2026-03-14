@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Input, Typography, Button, Switch } from '@douyinfe/semi-ui';
-import { IconFile } from '@douyinfe/semi-icons';
+import { IconFile } from '@/components/compat/icons';
 import { FileText, Plus, X, Image } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

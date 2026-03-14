@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Card, Avatar, Typography, Tag, Space } from '@douyinfe/semi-ui';
-import { IconInfoCircle } from '@douyinfe/semi-icons';
+import { IconInfoCircle } from '@/components/compat/icons';
 import { stringToColor } from '../../../../../helpers';
 
 const { Text } = Typography;

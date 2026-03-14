@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Button } from '@douyinfe/semi-ui';
-import { IconClose, IconMenu } from '@douyinfe/semi-icons';
+import { IconClose, IconMenu } from '@/components/compat/icons';
 
 const MobileMenuButton = ({
   isConsoleRoute,

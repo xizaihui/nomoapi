@@ -20,7 +20,7 @@ For commercial licensing, please contact support@quantumnous.com
 import React from 'react';
 import { Skeleton, Typography } from '@douyinfe/semi-ui';
 import { useMinimumLoadingTime } from '../../../hooks/common/useMinimumLoadingTime';
-import { IconEyeOpened } from '@douyinfe/semi-icons';
+import { IconEyeOpened } from '@/components/compat/icons';
 import CompactModeToggle from '../../common/ui/CompactModeToggle';
 
 const { Text } = Typography;

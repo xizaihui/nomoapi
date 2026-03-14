@@ -48,7 +48,7 @@ import {
   IconSave,
   IconClose,
   IconKey,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { useTranslation } from 'react-i18next';
 import { StatusContext } from '../../../../context/Status';
 

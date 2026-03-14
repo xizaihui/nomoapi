@@ -31,7 +31,7 @@ import {
 import { MousePointerClick } from 'lucide-react';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 import { MODEL_TABLE_PAGE_SIZE } from '../../../../constants';
-import { IconSearch } from '@douyinfe/semi-icons';
+import { IconSearch } from '@/components/compat/icons';
 
 const { Text } = Typography;
 

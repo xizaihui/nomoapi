@@ -45,7 +45,7 @@ import {
   IconCopy,
   IconEyeOpened,
   IconEyeClosed,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 
 // progress color helper
 const getProgressColor = (pct) => {

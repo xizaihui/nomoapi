@@ -39,7 +39,7 @@ import {
   IconPlus,
   IconSave,
   IconSearch,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { useTranslation } from 'react-i18next';
 import {
   PAGE_SIZE,

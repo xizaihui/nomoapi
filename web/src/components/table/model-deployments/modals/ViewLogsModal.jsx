@@ -43,7 +43,7 @@ import {
   FaInfoCircle,
   FaLink,
 } from 'react-icons/fa';
-import { IconRefresh, IconDownload } from '@douyinfe/semi-icons';
+import { IconRefresh, IconDownload } from '@/components/compat/icons';
 import {
   API,
   showError,

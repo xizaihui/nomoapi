@@ -28,7 +28,7 @@ import {
 } from '../../helpers';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Button, Card, Form, Typography, Banner } from '@douyinfe/semi-ui';
-import { IconMail, IconLock, IconCopy } from '@douyinfe/semi-icons';
+import { IconMail, IconLock, IconCopy } from '@/components/compat/icons';
 import { useTranslation } from 'react-i18next';
 
 const { Text, Title } = Typography;

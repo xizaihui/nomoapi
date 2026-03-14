@@ -50,7 +50,7 @@ import {
   IconUser,
   IconLock,
   IconKey,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import {
   onGitHubOAuthClicked,
   onLinuxDOOAuthClicked,

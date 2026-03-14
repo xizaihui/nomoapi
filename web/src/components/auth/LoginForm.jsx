@@ -59,7 +59,7 @@ import {
   IconMail,
   IconLock,
   IconKey,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import OIDCIcon from '../common/logo/OIDCIcon';
 import WeChatIcon from '../common/logo/WeChatIcon';
 import LinuxDoIcon from '../common/logo/LinuxDoIcon';

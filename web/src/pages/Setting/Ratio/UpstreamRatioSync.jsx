@@ -30,7 +30,7 @@ import {
   Select,
   Modal,
 } from '@douyinfe/semi-ui';
-import { IconSearch } from '@douyinfe/semi-icons';
+import { IconSearch } from '@/components/compat/icons';
 import {
   RefreshCcw,
   CheckSquare,

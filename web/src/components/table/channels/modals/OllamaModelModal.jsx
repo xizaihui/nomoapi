@@ -42,7 +42,7 @@ import {
   IconRefresh,
   IconSearch,
   IconPlus,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import {
   API,
   authHeader,

@@ -34,7 +34,7 @@ import {
   Row,
 } from '@douyinfe/semi-ui';
 import { Save, X, FileText } from 'lucide-react';
-import { IconAlertTriangle, IconLink } from '@douyinfe/semi-icons';
+import { IconAlertTriangle, IconLink } from '@/components/compat/icons';
 import { API, showError, showSuccess } from '../../../../helpers';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';

@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Button, Input, Modal } from '@douyinfe/semi-ui';
-import { IconMail, IconKey } from '@douyinfe/semi-icons';
+import { IconMail, IconKey } from '@/components/compat/icons';
 import Turnstile from 'react-turnstile';
 
 const EmailBindModal = ({

@@ -47,7 +47,7 @@ import {
   IconSave,
   IconClose,
   IconGift,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 
 const { Text, Title } = Typography;
 

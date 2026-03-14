@@ -39,7 +39,7 @@ import {
   IconMail,
   IconDelete,
   IconGithubLogo,
-} from '@douyinfe/semi-icons';
+} from '@/components/compat/icons';
 import { SiDiscord, SiTelegram, SiWechat, SiLinux } from 'react-icons/si';
 
 const { Text } = Typography;

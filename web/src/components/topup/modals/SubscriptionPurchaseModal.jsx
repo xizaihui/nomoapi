@@ -30,7 +30,7 @@ import {
 } from '@douyinfe/semi-ui';
 import { Crown, CalendarClock, Package } from 'lucide-react';
 import { SiStripe } from 'react-icons/si';
-import { IconCreditCard } from '@douyinfe/semi-icons';
+import { IconCreditCard } from '@/components/compat/icons';
 import { renderQuota } from '../../../helpers';
 import { getCurrencyConfig } from '../../../helpers/render';
 import {
