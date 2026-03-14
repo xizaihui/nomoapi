@@ -3111,7 +3111,7 @@ const EditChannelModal = (props) => {
                       onSearch={(value) => setModelSearchValue(value)}
                       innerBottomSlot={
                         modelSearchHintText ? (
-                          <Text className='px-3 py-2 block text-xs !text-semi-color-text-2'>
+                          <Text className='px-3 py-2 block text-xs !text-muted-foreground'>
                             {modelSearchHintText}
                           </Text>
                         ) : null
@@ -3596,7 +3596,7 @@ const EditChannelModal = (props) => {
                           <div className='flex flex-col gap-1'>
                             <div className='flex gap-2 flex-wrap items-center'>
                               <Text
-                                  className='!text-semi-color-primary cursor-pointer'
+                                  className='!text-primary cursor-pointer'
                                   onClick={() =>
                                       handleInputChange(
                                           'header_override',
@@ -3618,7 +3618,7 @@ const EditChannelModal = (props) => {
                                 {t('填入模板')}
                               </Text>
                               <Text
-                                  className='!text-semi-color-primary cursor-pointer'
+                                  className='!text-primary cursor-pointer'
                                   onClick={() =>
                                       handleInputChange(
                                           'header_override',
@@ -3635,7 +3635,7 @@ const EditChannelModal = (props) => {
                                 {t('填入透传模版')}
                               </Text>
                               <Text
-                                  className='!text-semi-color-primary cursor-pointer'
+                                  className='!text-primary cursor-pointer'
                                   onClick={() => formatJsonField('header_override')}
                               >
                                 {t('格式化')}

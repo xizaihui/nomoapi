@@ -74,7 +74,7 @@ const RateLimitWindowCard = ({ t, title, windowData }) => {
   const limitWindowSeconds = windowData?.limit_window_seconds;
 
   return (
-    <div className='rounded-lg border border-semi-color-border bg-semi-color-bg-0 p-3'>
+    <div className='rounded-lg border border-border bg-background p-3'>
       <div className='flex items-center justify-between gap-2'>
         <div className='font-medium'>{title}</div>
         <Text type='tertiary' size='small'>
@@ -91,7 +91,7 @@ const RateLimitWindowCard = ({ t, title, windowData }) => {
         />
       </div>
 
-      <div className='mt-1 flex flex-wrap items-center gap-2 text-xs text-semi-color-text-2'>
+      <div className='mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground'>
         <div>
           {tt('已使用：')}
           {percent}%
@@ -185,7 +185,7 @@ const CodexUsageView = ({ t, record, payload, onCopy, onRefresh }) => {
             {tt('复制')}
           </Button>
         </div>
-        <pre className='max-h-[50vh] overflow-auto rounded-lg bg-semi-color-fill-0 p-3 text-xs text-semi-color-text-0'>
+        <pre className='max-h-[50vh] overflow-auto rounded-lg bg-muted p-3 text-xs text-foreground'>
           {rawText}
         </pre>
       </div>

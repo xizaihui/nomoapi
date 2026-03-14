@@ -54,8 +54,8 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
 
   const getItemClassName = (isSelected) =>
     isSelected
-      ? '!bg-semi-color-primary-light-default !font-semibold'
-      : 'hover:!bg-semi-color-fill-1';
+      ? '!bg-primary-light-default !font-semibold'
+      : 'hover:!bg-secondary';
 
   const currentButtonIcon = useMemo(() => {
     const currentOption = themeOptions.find((option) => option.key === theme);
@@ -76,7 +76,7 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
             >
               <div className='flex flex-col'>
                 <span>{option.label}</span>
-                <span className='text-xs text-semi-color-text-2'>
+                <span className='text-xs text-muted-foreground'>
                   {option.description}
                 </span>
               </div>
@@ -86,7 +86,7 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
           {theme === 'auto' && (
             <>
               <Dropdown.Divider />
-              <div className='px-3 py-2 text-xs text-semi-color-text-2'>
+              <div className='px-3 py-2 text-xs text-muted-foreground'>
                 {t('当前跟随系统')}：
                 {actualTheme === 'dark' ? t('深色') : t('浅色')}
               </div>
@@ -100,7 +100,7 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
         aria-label={t('切换主题')}
         theme='borderless'
         type='tertiary'
-        className='!p-1.5 !text-current focus:!bg-semi-color-fill-1 !rounded-full !bg-semi-color-fill-0 hover:!bg-semi-color-fill-1'
+        className='!p-1.5 !text-current focus:!bg-secondary !rounded-full !bg-muted hover:!bg-secondary'
       />
     </Dropdown>
   );

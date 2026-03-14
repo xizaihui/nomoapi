@@ -88,7 +88,7 @@ const ApiInfoPanel = ({
                     </div>
                   </div>
                   <div
-                    className='!text-semi-color-primary break-all cursor-pointer hover:underline mb-1'
+                    className='!text-primary break-all cursor-pointer hover:underline mb-1'
                     onClick={() => handleCopyUrl(api.url)}
                   >
                     {api.url}

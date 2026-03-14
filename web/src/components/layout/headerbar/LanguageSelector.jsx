@@ -26,46 +26,46 @@ const LanguageSelector = ({ currentLang, onLanguageChange, t }) => {
     <Dropdown
       position='bottomRight'
       render={
-        <Dropdown.Menu className='!bg-semi-color-bg-overlay !border-semi-color-border !shadow-lg !rounded-lg dark:!bg-gray-700 dark:!border-gray-600'>
+        <Dropdown.Menu className='!bg-popover !border-border !shadow-lg !rounded-lg dark:!bg-gray-700 dark:!border-gray-600'>
           {/* Language sorting: Order by English name (Chinese, English, French, Japanese, Russian) */}
           <Dropdown.Item
             onClick={() => onLanguageChange('zh-CN')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'zh-CN' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'zh-CN' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
             简体中文
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('zh-TW')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'zh-TW' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'zh-TW' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
         	繁體中文
           </Dropdown.Item>          <Dropdown.Item
             onClick={() => onLanguageChange('en')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'en' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'en' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
             English
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('fr')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'fr' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'fr' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
             Français
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('ja')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'ja' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'ja' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
             日本語
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('ru')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'ru' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'ru' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
             Русский
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('vi')}
-            className={`!px-3 !py-1.5 !text-sm !text-semi-color-text-0 dark:!text-gray-200 ${currentLang === 'vi' ? '!bg-semi-color-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'vi' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
           >
             Tiếng Việt
           </Dropdown.Item>
@@ -77,7 +77,7 @@ const LanguageSelector = ({ currentLang, onLanguageChange, t }) => {
         aria-label={t('common.changeLanguage')}
         theme='borderless'
         type='tertiary'
-        className='!p-1.5 !text-current focus:!bg-semi-color-fill-1 dark:focus:!bg-gray-700 !rounded-full !bg-semi-color-fill-0 dark:!bg-semi-color-fill-1 hover:!bg-semi-color-fill-1 dark:hover:!bg-semi-color-fill-2'
+        className='!p-1.5 !text-current focus:!bg-secondary dark:focus:!bg-gray-700 !rounded-full !bg-muted dark:!bg-secondary hover:!bg-secondary dark:hover:!bg-accent'
       />
     </Dropdown>
   );
