@@ -53,8 +53,7 @@ export { Slider } from './Slider';
 export { Timeline } from './Timeline';
 export { Image, ImagePreview } from './Image';
 export { LocaleProvider } from './LocaleProvider';
-export {
-  Chat,
-} from '@douyinfe/semi-ui__real';
+// Chat: re-export from real Semi (only used by Playground ChatArea)
+export { Chat } from '@douyinfe/semi-ui__real';
 export { Form } from './Form';
 export { Table } from './Table';
