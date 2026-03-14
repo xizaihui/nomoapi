@@ -9,9 +9,12 @@ const TYPE_MAP = {
   success: 'bg-green-50 text-green-800 border-green-200 dark:bg-green-950 dark:text-green-200 dark:border-green-800',
 };
 
-const Banner = ({ type = 'info', title, description, children, icon, closable, onClose, fullMode, bordered = true, className, style, ...rest }) => {
+const Banner = ({ type = 'info', title, description, children, icon, closable, onClose, fullMode, bordered = true, className, style, closeIcon, ...rest }) => {
   const [visible, setVisible] = React.useState(true);
   if (!visible) return null;
+
+  // closeIcon={null} means explicitly hide close button
+  const showClose = closeIcon === null ? false : closable;
 
   const handleClose = () => {
     setVisible(false);

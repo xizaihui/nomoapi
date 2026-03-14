@@ -37,6 +37,10 @@ const Table = ({
     if (pagination?.pageSize) setPageSize(pagination.pageSize);
   }, [pagination?.pageSize]);
 
+  React.useEffect(() => {
+    if (pagination?.currentPage) setCurrentPage(pagination.currentPage);
+  }, [pagination?.currentPage]);
+
   const getRowKey = (record, idx) => {
     if (typeof rowKey === 'function') return rowKey(record);
     return record[rowKey] !== undefined ? record[rowKey] : idx;
@@ -85,6 +89,7 @@ const Table = ({
   const handleSelectAll = (checked) => {
     const keys = checked ? pagedData.map((r, i) => getRowKey(r, i)) : [];
     setSelectedRowKeys(keys);
+    rowSelection?.onSelectAll?.(checked, checked ? pagedData : [], checked ? pagedData : []);
     rowSelection?.onChange?.(keys, checked ? pagedData : []);
   };
 
@@ -203,11 +208,11 @@ const Table = ({
         <div className='flex items-center justify-between px-2 py-3'>
           <span className='text-xs text-muted-foreground'>共 {totalItems} 条</span>
           <div className='flex items-center gap-1'>
-            <button type='button' disabled={currentPage <= 1} onClick={() => setCurrentPage((p) => p - 1)} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>‹</button>
+            <button type='button' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>‹</button>
             {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => i + 1).map((p) => (
-              <button key={p} type='button' onClick={() => setCurrentPage(p)} className={cn('px-2 py-1 text-sm rounded border min-w-[28px]', p === currentPage ? 'bg-primary text-primary-foreground' : 'hover:bg-muted')}>{p}</button>
+              <button key={p} type='button' onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('px-2 py-1 text-sm rounded border min-w-[28px]', p === currentPage ? 'bg-primary text-primary-foreground' : 'hover:bg-muted')}>{p}</button>
             ))}
-            <button type='button' disabled={currentPage >= totalPages} onClick={() => setCurrentPage((p) => p + 1)} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>›</button>
+            <button type='button' disabled={currentPage >= totalPages} onClick={() => { const p = currentPage + 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>›</button>
             {pagination?.showSizeChanger && pagination?.pageSizeOptions && (
               <select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setCurrentPage(1); pagination?.onPageSizeChange?.(Number(e.target.value)); }} className='ml-2 h-7 rounded border bg-background px-1 text-xs'>
                 {pagination.pageSizeOptions.map((s) => <option key={s} value={s}>{s} 条/页</option>)}

@@ -67,12 +67,18 @@ const Modal = ({
     </DialogFooter>
   );
 
-  const resolvedWidth = fullScreen ? '95vw' : width;
+  const SIZE_MAP = {
+    'full-width': '95vw',
+    large: '720px',
+    medium: '520px',
+    small: '400px',
+  };
+  const resolvedWidth = fullScreen ? '95vw' : width || (size && SIZE_MAP[size]);
 
   return (
     <Dialog open={visible} onOpenChange={handleOpenChange}>
       <DialogContent
-        className={cn(fullScreen && 'max-h-[95vh]', className)}
+        className={cn(fullScreen && 'max-h-[95vh]', size === 'full-width' && 'max-h-[95vh]', className)}
         style={{ ...(resolvedWidth ? { maxWidth: typeof resolvedWidth === 'number' ? `${resolvedWidth}px` : resolvedWidth } : {}), ...style }}
         onInteractOutside={maskClosable ? undefined : (e) => e.preventDefault()}
       >
