@@ -29,6 +29,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      // Phase 0: compat layer aliases
+      // When ready to switch, uncomment the next line to redirect all Semi imports to compat layer:
+      // '@douyinfe/semi-ui': path.resolve(__dirname, './src/components/compat/index.js'),
+      // This alias lets the compat barrel import the real Semi package (avoids circular resolution)
+      '@douyinfe/semi-ui__real': path.resolve(__dirname, './node_modules/@douyinfe/semi-ui'),
     },
   },
   plugins: [
