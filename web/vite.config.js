@@ -27,14 +27,16 @@ const { vitePluginSemi } = pkg;
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      // Phase 0: compat layer aliases
-      // When ready to switch, uncomment the next line to redirect all Semi imports to compat layer:
-      // '@douyinfe/semi-ui': path.resolve(__dirname, './src/components/compat/index.js'),
-      // This alias lets the compat barrel import the real Semi package (avoids circular resolution)
-      '@douyinfe/semi-ui__real': path.resolve(__dirname, './node_modules/@douyinfe/semi-ui'),
-    },
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+      // Deep path imports MUST come before the bare module alias
+      { find: '@douyinfe/semi-ui/dist', replacement: path.resolve(__dirname, './node_modules/@douyinfe/semi-ui/dist') },
+      { find: '@douyinfe/semi-ui/lib', replacement: path.resolve(__dirname, './node_modules/@douyinfe/semi-ui/lib') },
+      // Phase 2: bare '@douyinfe/semi-ui' → compat layer
+      { find: /^@douyinfe\/semi-ui$/, replacement: path.resolve(__dirname, './src/components/compat/index.js') },
+      // Escape hatch for compat barrel to import real Semi
+      { find: '@douyinfe/semi-ui__real', replacement: path.resolve(__dirname, './node_modules/@douyinfe/semi-ui') },
+    ],
   },
   plugins: [
     codeInspectorPlugin({

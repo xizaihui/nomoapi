@@ -5,13 +5,16 @@
 export { Button } from './Button';
 export { Input, TextArea } from './Input';
 export { InputNumber } from './InputNumber';
+export { InputGroup } from './InputGroup';
 export { Select } from './Select';
 export { Modal } from './Modal';
 export { Toast, Notification } from './Toast';
 export { Typography } from './Typography';
 export { Card } from './Card';
 export { Avatar } from './Avatar';
+export { AvatarGroup } from './AvatarGroup';
 export { Tag } from './Tag';
+export { TagInput } from './TagInput';
 export { Badge } from './Badge';
 export { Banner } from './Banner';
 export { Spin } from './Spin';
@@ -33,10 +36,15 @@ export { Pagination } from './Pagination';
 export { SideSheet } from './SideSheet';
 export { Steps } from './Steps';
 export { Tabs, TabPane } from './Tabs';
+export { Collapsible } from './Collapsible';
+export { Highlight } from './Highlight';
+export { SplitButtonGroup } from './SplitButtonGroup';
+export { List } from './List';
+export { ScrollList, ScrollItem } from './ScrollList';
 
-// --- Not yet migrated: pass through from real Semi ---
-// These are low-usage components that still need compat wrappers.
-// As each gets migrated, move it above.
+// --- Complex components: pass through from real Semi ---
+export { DatePicker } from './DatePicker';
+export { Calendar } from './Calendar';
 export {
   Chat,
   Collapse,
