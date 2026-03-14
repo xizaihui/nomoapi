@@ -198,74 +198,104 @@ const FormField = ({
 };
 
 // --- Form.Input ---
-const FormInput = ({ field, label, ...rest }) => {
+const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter, showClear, onEnterPress, onChange: onChangeProp, value: valueProp, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
-  const value = field ? (values[field] ?? '') : '';
+  // Use controlled value from parent if provided, otherwise from formApi
+  const formValue = field ? (values[field] ?? '') : '';
+  const value = valueProp !== undefined ? valueProp : formValue;
+  const inputType = mode === 'password' ? 'password' : 'text';
+  const { placeholder, disabled, className: inputClassName, style: inputStyle, size, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} {...rest}>
-      <input
-        type='text'
-        value={value}
-        onChange={(e) => field && formApi.setValue(field, e.target.value)}
-        className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-        {...rest}
-      />
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition}>
+      <div className='flex items-center w-full rounded-md border border-input bg-background shadow-sm focus-within:ring-1 focus-within:ring-ring'>
+        {prefix && <span className='flex items-center pl-3 text-muted-foreground'>{prefix}</span>}
+        <input
+          type={inputType}
+          value={value}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (field) formApi.setValue(field, val);
+            // Semi onChange signature: (value, e) => void
+            if (onChangeProp) onChangeProp(val, e);
+          }}
+          onKeyDown={(e) => { if (e.key === 'Enter' && onEnterPress) onEnterPress(e); }}
+          placeholder={placeholder}
+          disabled={disabled}
+          style={inputStyle}
+          className='flex h-9 w-full bg-transparent px-3 py-1 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50'
+        />
+        {suffix && <span className='flex items-center pr-3 text-muted-foreground'>{suffix}</span>}
+      </div>
     </FormField>
   );
 };
 
 // --- Form.TextArea ---
-const FormTextArea = ({ field, label, ...rest }) => {
+const FormTextArea = ({ field, label, autosize, maxCount, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const value = field ? (values[field] ?? '') : '';
+  const { placeholder, disabled, className: cls, style, rows, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} {...rest}>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition}>
       <textarea
         value={value}
         onChange={(e) => field && formApi.setValue(field, e.target.value)}
+        placeholder={placeholder}
+        disabled={disabled}
+        rows={rows}
+        style={style}
         className='flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-        {...rest}
       />
     </FormField>
   );
 };
 
 // --- Form.InputNumber ---
-const FormInputNumber = ({ field, label, ...rest }) => {
+const FormInputNumber = ({ field, label, min, max, step, prefix, suffix, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const value = field ? (values[field] ?? '') : '';
+  const { placeholder, disabled, style, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} {...rest}>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition}>
       <input
         type='number'
         value={value}
+        min={min}
+        max={max}
+        step={step}
         onChange={(e) => field && formApi.setValue(field, e.target.value === '' ? undefined : Number(e.target.value))}
+        placeholder={placeholder}
+        disabled={disabled}
+        style={style}
         className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-        {...rest}
       />
     </FormField>
   );
 };
 
 // --- Form.Select ---
-const FormSelect = ({ field, label, optionList, children, multiple, filter, ...rest }) => {
+const FormSelect = ({ field, label, optionList, children, multiple, filter, placeholder, disabled, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const value = field ? (values[field] ?? '') : '';
+  const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, style, className: cls, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} {...rest}>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition}>
       <select
         value={value}
         onChange={(e) => field && formApi.setValue(field, e.target.value)}
+        disabled={disabled}
+        style={style}
         className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
       >
+        {placeholder && <option value='' disabled>{placeholder}</option>}
         {optionList
           ? optionList.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -278,21 +308,24 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, ...r
 };
 
 // --- Form.Switch ---
-const FormSwitch = ({ field, label, ...rest }) => {
+const FormSwitch = ({ field, label, checkedText, uncheckedText, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const checked = field ? (values[field] ?? false) : false;
+  const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} {...rest}>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition}>
       <button
         type='button'
         role='switch'
         aria-checked={checked}
+        disabled={disabled}
         onClick={() => field && formApi.setValue(field, !checked)}
         className={cn(
           'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-          checked ? 'bg-primary' : 'bg-input'
+          checked ? 'bg-primary' : 'bg-input',
+          disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
         <span className={cn('pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform', checked ? 'translate-x-4' : 'translate-x-0')} />
@@ -307,12 +340,14 @@ const FormCheckbox = ({ field, label, ...rest }) => {
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const checked = field ? (values[field] ?? false) : false;
+  const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} noLabel {...rest}>
+    <FormField field={field} label={label} noLabel required={required} helpText={helpText} extraText={extraText} labelPosition={labelPosition}>
       <label className='flex items-center gap-2 cursor-pointer'>
         <input
           type='checkbox'
           checked={checked}
+          disabled={disabled}
           onChange={(e) => field && formApi.setValue(field, e.target.checked)}
           className='h-4 w-4 rounded border-input accent-[hsl(var(--primary))]'
         />
@@ -323,14 +358,15 @@ const FormCheckbox = ({ field, label, ...rest }) => {
 };
 
 // --- Form.RadioGroup ---
-const FormRadioGroup = ({ field, label, options, ...rest }) => {
+const FormRadioGroup = ({ field, label, options, direction, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const value = field ? values[field] : undefined;
+  const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} {...rest}>
-      <div className='flex flex-wrap gap-3'>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition}>
+      <div className={cn('flex gap-3', direction === 'vertical' ? 'flex-col' : 'flex-wrap')}>
         {(options || []).map((opt) => {
           const optValue = typeof opt === 'string' ? opt : opt.value;
           const optLabel = typeof opt === 'string' ? opt : opt.label;
@@ -339,6 +375,7 @@ const FormRadioGroup = ({ field, label, options, ...rest }) => {
               <input
                 type='radio'
                 checked={value === optValue}
+                disabled={disabled}
                 onChange={() => field && formApi.setValue(field, optValue)}
                 className='h-4 w-4 accent-[hsl(var(--primary))]'
               />
