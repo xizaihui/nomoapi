@@ -76,10 +76,10 @@ const DeploymentAccessGuard = ({
             style={{
               padding: '60px 40px',
               borderRadius: '16px',
-              border: '1px solid var(--semi-color-border)',
+              border: '1px solid hsl(var(--border))',
               boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
               background:
-                'linear-gradient(135deg, var(--semi-color-bg-0) 0%, var(--semi-color-fill-0) 100%)',
+                'linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%)',
             }}
           >
             {/* 图标区域 */}
@@ -98,7 +98,7 @@ const DeploymentAccessGuard = ({
                   marginBottom: '24px',
                 }}
               >
-                <AlertCircle size={56} color='var(--semi-color-warning)' />
+                <AlertCircle size={56} color='hsl(var(--chart-4))' />
               </div>
             </div>
 
@@ -107,7 +107,7 @@ const DeploymentAccessGuard = ({
               <Title
                 heading={2}
                 style={{
-                  color: 'var(--semi-color-text-0)',
+                  color: 'hsl(var(--foreground))',
                   margin: '0 0 12px 0',
                   fontSize: '28px',
                   fontWeight: '700',
@@ -119,7 +119,7 @@ const DeploymentAccessGuard = ({
                 style={{
                   fontSize: '18px',
                   lineHeight: '1.6',
-                  color: 'var(--semi-color-text-1)',
+                  color: 'hsl(var(--foreground) / 0.8)',
                   display: 'block',
                 }}
               >
@@ -130,10 +130,10 @@ const DeploymentAccessGuard = ({
             {/* 配置要求区域 */}
             <div
               style={{
-                backgroundColor: 'var(--semi-color-bg-1)',
+                backgroundColor: 'hsl(var(--card))',
                 padding: '24px',
                 borderRadius: '12px',
-                border: '1px solid var(--semi-color-border)',
+                border: '1px solid hsl(var(--border))',
                 margin: '32px 0',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
               }}
@@ -158,13 +158,13 @@ const DeploymentAccessGuard = ({
                     backgroundColor: 'rgba(var(--semi-blue-4), 0.15)',
                   }}
                 >
-                  <Server size={20} color='var(--semi-color-primary)' />
+                  <Server size={20} color='hsl(var(--primary))' />
                 </div>
                 <Text
                   strong
                   style={{
                     fontSize: '16px',
-                    color: 'var(--semi-color-text-0)',
+                    color: 'hsl(var(--foreground))',
                   }}
                 >
                   {t('需要配置的项目')}
@@ -190,14 +190,14 @@ const DeploymentAccessGuard = ({
                       width: '6px',
                       height: '6px',
                       borderRadius: '50%',
-                      backgroundColor: 'var(--semi-color-primary)',
+                      backgroundColor: 'hsl(var(--primary))',
                       flexShrink: 0,
                     }}
                   ></div>
                   <Text
                     style={{
                       fontSize: '15px',
-                      color: 'var(--semi-color-text-1)',
+                      color: 'hsl(var(--foreground) / 0.8)',
                     }}
                   >
                     {t('启用 io.net 部署开关')}
@@ -211,14 +211,14 @@ const DeploymentAccessGuard = ({
                       width: '6px',
                       height: '6px',
                       borderRadius: '50%',
-                      backgroundColor: 'var(--semi-color-primary)',
+                      backgroundColor: 'hsl(var(--primary))',
                       flexShrink: 0,
                     }}
                   ></div>
                   <Text
                     style={{
                       fontSize: '15px',
-                      color: 'var(--semi-color-text-1)',
+                      color: 'hsl(var(--foreground) / 0.8)',
                     }}
                   >
                     {t('配置有效的 io.net API Key')}
@@ -240,20 +240,20 @@ const DeploymentAccessGuard = ({
                   borderRadius: '8px',
                   fontSize: '16px',
                   fontWeight: '500',
-                  color: 'var(--semi-color-primary)',
-                  background: 'var(--semi-color-fill-0)',
-                  border: '1px solid var(--semi-color-border)',
+                  color: 'hsl(var(--primary))',
+                  background: 'hsl(var(--muted))',
+                  border: '1px solid hsl(var(--border))',
                   transition: 'all 0.2s ease',
                   textDecoration: 'none',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'var(--semi-color-fill-1)';
+                  e.currentTarget.style.background = 'hsl(var(--secondary))';
                   e.currentTarget.style.transform = 'translateY(-1px)';
                   e.currentTarget.style.boxShadow =
                     '0 2px 8px rgba(0, 0, 0, 0.1)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'var(--semi-color-fill-0)';
+                  e.currentTarget.style.background = 'hsl(var(--muted))';
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
@@ -268,7 +268,7 @@ const DeploymentAccessGuard = ({
               type='tertiary'
               style={{
                 fontSize: '14px',
-                color: 'var(--semi-color-text-2)',
+                color: 'hsl(var(--muted-foreground))',
                 lineHeight: '1.5',
               }}
             >
@@ -322,10 +322,10 @@ const DeploymentAccessGuard = ({
             style={{
               padding: '60px 40px',
               borderRadius: '16px',
-              border: '1px solid var(--semi-color-border)',
+              border: '1px solid hsl(var(--border))',
               boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
               background:
-                'linear-gradient(135deg, var(--semi-color-bg-0) 0%, var(--semi-color-fill-0) 100%)',
+                'linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%)',
             }}
           >
             <div style={{ marginBottom: '32px' }}>
@@ -343,7 +343,7 @@ const DeploymentAccessGuard = ({
                   marginBottom: '24px',
                 }}
               >
-                <WifiOff size={56} color='var(--semi-color-danger)' />
+                <WifiOff size={56} color='hsl(var(--destructive))' />
               </div>
             </div>
 
@@ -351,7 +351,7 @@ const DeploymentAccessGuard = ({
               <Title
                 heading={2}
                 style={{
-                  color: 'var(--semi-color-text-0)',
+                  color: 'hsl(var(--foreground))',
                   margin: '0 0 12px 0',
                   fontSize: '28px',
                   fontWeight: '700',
@@ -363,7 +363,7 @@ const DeploymentAccessGuard = ({
                 style={{
                   fontSize: '18px',
                   lineHeight: '1.6',
-                  color: 'var(--semi-color-text-1)',
+                  color: 'hsl(var(--foreground) / 0.8)',
                   display: 'block',
                 }}
               >

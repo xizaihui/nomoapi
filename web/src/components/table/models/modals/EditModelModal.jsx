@@ -453,7 +453,7 @@ const EditModelModal = (props) => {
                       icon={
                         <IconAlertTriangle
                           size='large'
-                          style={{ color: 'var(--semi-color-warning)' }}
+                          style={{ color: 'hsl(var(--chart-4))' }}
                         />
                       }
                       description={t(

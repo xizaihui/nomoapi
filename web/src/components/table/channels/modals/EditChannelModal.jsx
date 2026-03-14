@@ -3547,8 +3547,8 @@ const EditChannelModal = (props) => {
                       <div
                           className='mt-2 rounded-xl p-3'
                           style={{
-                            backgroundColor: 'var(--semi-color-fill-0)',
-                            border: '1px solid var(--semi-color-fill-2)',
+                            backgroundColor: 'hsl(var(--muted))',
+                            border: '1px solid hsl(var(--accent))',
                           }}
                       >
                         <div className='flex items-center justify-between mb-2'>

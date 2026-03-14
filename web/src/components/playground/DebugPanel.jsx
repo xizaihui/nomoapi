@@ -62,7 +62,7 @@ const DebugPanel = ({
       alignItems: 'center',
       borderRadius: '100%',
       background: 'rgba(var(--semi-grey-1), 1)',
-      color: 'var(--semi-color-text)',
+      color: 'hsl(var(--foreground))',
       cursor: 'pointer',
     };
 

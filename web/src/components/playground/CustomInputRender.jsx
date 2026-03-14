@@ -138,7 +138,7 @@ const CustomInputRender = (props) => {
     <div className='p-2 sm:p-4' ref={containerRef}>
       <div
         className='flex items-center gap-2 sm:gap-3 p-2 bg-gray-50 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition-shadow'
-        style={{ border: '1px solid var(--semi-color-border)' }}
+        style={{ border: '1px solid hsl(var(--border))' }}
         onClick={onClick}
         title={t('支持 Ctrl+V 粘贴图片')}
       >

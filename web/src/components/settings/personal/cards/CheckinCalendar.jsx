@@ -350,7 +350,7 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
               background: transparent;
             }
             .checkin-calendar .semi-calendar-month-today .semi-calendar-month-grid-row-cell-day {
-              background: var(--semi-color-primary);
+              background: hsl(var(--primary));
               color: white;border-radius: 50%;
               width: 20px;
               height: 20px;

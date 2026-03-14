@@ -186,7 +186,7 @@ export default function SettingModelDeployment(props) {
             {/*  style={{ */}
             {/*    display: 'block', */}
             {/*    marginBottom: '20px',*/}
-            {/*    color: 'var(--semi-color-text-2)'*/}
+            {/*    color: 'hsl(var(--muted-foreground))'*/}
             {/*  }}*/}
             {/*>*/}
             {/*  {t('配置模型部署服务提供商的API密钥和启用状态')}*/}
@@ -252,11 +252,11 @@ export default function SettingModelDeployment(props) {
                           borderRadius: '6px',
                           fontWeight: '500',
                           borderColor: testing
-                            ? 'var(--semi-color-primary)'
-                            : 'var(--semi-color-border)',
+                            ? 'hsl(var(--primary))'
+                            : 'hsl(var(--border))',
                           color: testing
-                            ? 'var(--semi-color-primary)'
-                            : 'var(--semi-color-text-0)',
+                            ? 'hsl(var(--primary))'
+                            : 'hsl(var(--foreground))',
                         }}
                       >
                         {testing ? t('连接测试中...') : t('测试连接')}
@@ -267,10 +267,10 @@ export default function SettingModelDeployment(props) {
                 <Col xs={24} lg={10}>
                   <div
                     style={{
-                      background: 'var(--semi-color-fill-0)',
+                      background: 'hsl(var(--muted))',
                       padding: '16px',
                       borderRadius: '8px',
-                      border: '1px solid var(--semi-color-border)',
+                      border: '1px solid hsl(var(--border))',
                       height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
@@ -292,7 +292,7 @@ export default function SettingModelDeployment(props) {
                           display: 'flex',
                           flexDirection: 'column',
                           gap: '6px',
-                          color: 'var(--semi-color-text-2)',
+                          color: 'hsl(var(--muted-foreground))',
                           fontSize: '13px',
                           lineHeight: 1.6,
                         }}

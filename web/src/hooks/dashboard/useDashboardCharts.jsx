@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import { useState, useCallback, useEffect } from 'react';
 import { initVChartSemiTheme } from '@visactor/vchart-semi-theme';
+import VChart from '@visactor/vchart';
 import {
   modelColorMap,
   renderNumber,
@@ -428,9 +429,18 @@ export const useDashboardCharts = (
 
   // ========== 初始化图表主题 ==========
   useEffect(() => {
+    // Use Semi theme bridge for VChart (Semi CSS vars are bridged to shadcn)
     initVChartSemiTheme({
       isWatchingThemeSwitch: true,
     });
+
+    // Override VChart default colors to match shadcn palette
+    try {
+      const isDark = document.body.hasAttribute('theme-mode');
+      VChart.ThemeManager?.setCurrentTheme?.(isDark ? 'dark' : 'light');
+    } catch (e) {
+      // ignore if ThemeManager not available
+    }
   }, []);
 
   return {

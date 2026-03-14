@@ -104,7 +104,7 @@ const ColumnSelectorModal = ({
       </div>
       <div
         className='flex flex-wrap max-h-96 overflow-y-auto rounded-lg p-4'
-        style={{ border: '1px solid var(--semi-color-border)' }}
+        style={{ border: '1px solid hsl(var(--border))' }}
       >
         {columnOptions.map(({ key, label, required }) => (
           <div key={key} className='w-1/2 mb-4 pr-2'>

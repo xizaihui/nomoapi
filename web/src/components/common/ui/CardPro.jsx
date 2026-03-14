@@ -149,7 +149,7 @@ const CardPro = ({
     return (
       <div
         className={`flex w-full pt-4 border-t ${isMobile ? 'justify-center' : 'justify-between items-center'}`}
-        style={{ borderColor: 'var(--semi-color-border)' }}
+        style={{ borderColor: 'hsl(var(--border))' }}
       >
         {paginationArea}
       </div>

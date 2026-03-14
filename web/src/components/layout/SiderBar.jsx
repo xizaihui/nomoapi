@@ -508,7 +508,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
               <ChevronLeft
                 size={16}
                 strokeWidth={2.5}
-                color='var(--semi-color-text-2)'
+                color='hsl(var(--muted-foreground))'
                 style={{
                   transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)',
                 }}

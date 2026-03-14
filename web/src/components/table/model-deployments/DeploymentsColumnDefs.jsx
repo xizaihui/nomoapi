@@ -147,9 +147,9 @@ const formatRemainingMinutes = (minutes, t) => {
 const getRemainingTheme = (percentRemaining) => {
   if (percentRemaining === null) {
     return {
-      iconColor: 'var(--semi-color-primary)',
+      iconColor: 'hsl(var(--primary))',
       tagColor: 'blue',
-      textColor: 'var(--semi-color-text-2)',
+      textColor: 'hsl(var(--muted-foreground))',
     };
   }
 
@@ -380,7 +380,7 @@ export const getDeploymentsColumns = ({
                 className='text-sm'
                 style={{ color: theme.iconColor }}
               />
-              <Typography.Text className='text-sm font-medium text-[var(--semi-color-text-0)]'>
+              <Typography.Text className='text-sm font-medium text-[hsl(var(--foreground))]'>
                 {timeDisplay}
               </Typography.Text>
               {showProgress && percentRemaining !== null ? (
@@ -394,7 +394,7 @@ export const getDeploymentsColumns = ({
               ) : null}
             </div>
             {showExtraInfo && (
-              <div className='flex items-center gap-3 text-[var(--semi-color-text-2)]'>
+              <div className='flex items-center gap-3 text-[hsl(var(--muted-foreground))]'>
                 {humanReadable && (
                   <span className='flex items-center gap-1'>
                     <FaClock className='text-[11px]' />

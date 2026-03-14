@@ -484,16 +484,16 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
         <div
           className='rounded-xl p-4 mb-3'
           style={{
-            background: 'var(--semi-color-bg-1)',
-            border: '1px solid var(--semi-color-border)',
+            background: 'hsl(var(--card))',
+            border: '1px solid hsl(var(--border))',
           }}
         >
           <Row gutter={16} align='middle'>
             <Col span={8}>
               <div
                 style={{
-                  background: 'var(--semi-color-bg-0)',
-                  border: '1px solid var(--semi-color-border)',
+                  background: 'hsl(var(--background))',
+                  border: '1px solid hsl(var(--border))',
                   borderRadius: 12,
                   padding: 12,
                 }}
@@ -509,7 +509,7 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
                     {enabledCount}
                   </Text>
                   <Text
-                    style={{ fontSize: 18, color: 'var(--semi-color-text-2)' }}
+                    style={{ fontSize: 18, color: 'hsl(var(--muted-foreground))' }}
                   >
                     / {total}
                   </Text>
@@ -526,8 +526,8 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
             <Col span={8}>
               <div
                 style={{
-                  background: 'var(--semi-color-bg-0)',
-                  border: '1px solid var(--semi-color-border)',
+                  background: 'hsl(var(--background))',
+                  border: '1px solid hsl(var(--border))',
                   borderRadius: 12,
                   padding: 12,
                 }}
@@ -543,7 +543,7 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
                     {manualDisabledCount}
                   </Text>
                   <Text
-                    style={{ fontSize: 18, color: 'var(--semi-color-text-2)' }}
+                    style={{ fontSize: 18, color: 'hsl(var(--muted-foreground))' }}
                   >
                     / {total}
                   </Text>
@@ -560,8 +560,8 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
             <Col span={8}>
               <div
                 style={{
-                  background: 'var(--semi-color-bg-0)',
-                  border: '1px solid var(--semi-color-border)',
+                  background: 'hsl(var(--background))',
+                  border: '1px solid hsl(var(--border))',
                   borderRadius: 12,
                   padding: 12,
                 }}
@@ -577,7 +577,7 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
                     {autoDisabledCount}
                   </Text>
                   <Text
-                    style={{ fontSize: 18, color: 'var(--semi-color-text-2)' }}
+                    style={{ fontSize: 18, color: 'hsl(var(--muted-foreground))' }}
                   >
                     / {total}
                   </Text>

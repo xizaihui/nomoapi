@@ -228,7 +228,7 @@ const ModelTestModal = ({
             <div className='flex items-center gap-2'>
               <Typography.Text
                 strong
-                className='!text-[var(--semi-color-text-0)] !text-base'
+                className='!text-[hsl(var(--foreground))] !text-base'
               >
                 {currentTestChannel.name} {t('渠道的模型测试')}
               </Typography.Text>

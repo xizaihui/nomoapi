@@ -322,7 +322,7 @@ const RechargeCard = ({
                                       size={18}
                                       color={
                                         payMethod.color ||
-                                        'var(--semi-color-text-2)'
+                                        'hsl(var(--muted-foreground))'
                                       }
                                     />
                                   )
@@ -374,7 +374,7 @@ const RechargeCard = ({
                         return (
                           <span
                             style={{
-                              color: 'var(--semi-color-text-2)',
+                              color: 'hsl(var(--muted-foreground))',
                               fontSize: '12px',
                               fontWeight: 'normal',
                             }}
@@ -432,8 +432,8 @@ const RechargeCard = ({
                             cursor: 'pointer',
                             border:
                               selectedPreset === preset.value
-                                ? '2px solid var(--semi-color-primary)'
-                                : '1px solid var(--semi-color-border)',
+                                ? '2px solid hsl(var(--primary))'
+                                : '1px solid hsl(var(--border))',
                             height: '100%',
                             width: '100%',
                           }}
@@ -464,7 +464,7 @@ const RechargeCard = ({
                             </Typography.Title>
                             <div
                               style={{
-                                color: 'var(--semi-color-text-2)',
+                                color: 'hsl(var(--muted-foreground))',
                                 fontSize: '12px',
                                 margin: '4px 0',
                               }}

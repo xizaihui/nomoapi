@@ -611,7 +611,7 @@ export const getLogsColumns = ({
                 style={{
                   marginTop: 2,
                   fontSize: 11,
-                  color: 'var(--semi-color-text-2)',
+                  color: 'hsl(var(--muted-foreground))',
                   whiteSpace: 'nowrap',
                 }}
               >

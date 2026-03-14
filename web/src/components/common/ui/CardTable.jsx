@@ -97,7 +97,7 @@ const CardTable = ({
               <div
                 key={idx}
                 className='flex justify-between items-center py-1 border-b last:border-b-0 border-dashed'
-                style={{ borderColor: 'var(--semi-color-border)' }}
+                style={{ borderColor: 'hsl(var(--border))' }}
               >
                 <Skeleton.Title active style={{ width: 80, height: 14 }} />
                 <Skeleton.Title
@@ -165,7 +165,7 @@ const CardTable = ({
             <div
               key={col.key || colIdx}
               className='flex justify-between items-start py-1 border-b last:border-b-0 border-dashed'
-              style={{ borderColor: 'var(--semi-color-border)' }}
+              style={{ borderColor: 'hsl(var(--border))' }}
             >
               <span className='font-medium text-gray-600 mr-2 whitespace-nowrap select-none'>
                 {title}

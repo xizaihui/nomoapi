@@ -816,7 +816,7 @@ const NotificationSettings = ({
                       style={{
                         fontSize: '12px',
                         lineHeight: '1.5',
-                        color: 'var(--semi-color-text-2)',
+                        color: 'hsl(var(--muted-foreground))',
                       }}
                     >
                       {t('您可以个性化设置侧边栏的要显示功能')}
@@ -826,8 +826,8 @@ const NotificationSettings = ({
                   <div
                     className='border rounded-xl p-4'
                     style={{
-                      borderColor: 'var(--semi-color-border)',
-                      backgroundColor: 'var(--semi-color-bg-1)',
+                      borderColor: 'hsl(var(--border))',
+                      backgroundColor: 'hsl(var(--card))',
                     }}
                   >
                     {sectionConfigs.map((section) => (
@@ -836,9 +836,9 @@ const NotificationSettings = ({
                         <div
                           className='flex justify-between items-center mb-4 p-4 rounded-lg'
                           style={{
-                            backgroundColor: 'var(--semi-color-fill-0)',
-                            border: '1px solid var(--semi-color-border-light)',
-                            borderColor: 'var(--semi-color-fill-1)',
+                            backgroundColor: 'hsl(var(--muted))',
+                            border: '1px solid hsl(var(--border))',
+                            borderColor: 'hsl(var(--secondary))',
                           }}
                         >
                           <div>
@@ -851,7 +851,7 @@ const NotificationSettings = ({
                               style={{
                                 fontSize: '12px',
                                 lineHeight: '1.5',
-                                color: 'var(--semi-color-text-2)',
+                                color: 'hsl(var(--muted-foreground))',
                               }}
                             >
                               {section.description}
@@ -903,7 +903,7 @@ const NotificationSettings = ({
                                         style={{
                                           fontSize: '12px',
                                           lineHeight: '1.5',
-                                          color: 'var(--semi-color-text-2)',
+                                          color: 'hsl(var(--muted-foreground))',
                                           marginTop: '4px',
                                         }}
                                       >

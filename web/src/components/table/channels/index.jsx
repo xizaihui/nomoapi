@@ -82,7 +82,7 @@ const ChannelsPage = () => {
           icon={
             <IconAlertTriangle
               size='large'
-              style={{ color: 'var(--semi-color-warning)' }}
+              style={{ color: 'hsl(var(--chart-4))' }}
             />
           }
           description={channelsData.t(

@@ -69,7 +69,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
         <div
           style={{
             fontWeight: 'bold',
-            color: 'var(--semi-color-text-0)',
+            color: 'hsl(var(--foreground))',
           }}
         >
           {text}
@@ -86,7 +86,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
             maxWidth: '300px',
             wordBreak: 'break-all',
             fontFamily: 'monospace',
-            color: 'var(--semi-color-primary)',
+            color: 'hsl(var(--primary))',
           }}
         >
           {text}
@@ -101,7 +101,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
         <div
           style={{
             fontFamily: 'monospace',
-            color: 'var(--semi-color-text-1)',
+            color: 'hsl(var(--foreground) / 0.8)',
           }}
         >
           {text}

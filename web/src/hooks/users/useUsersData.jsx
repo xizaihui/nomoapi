@@ -216,7 +216,7 @@ export const useUsersData = () => {
     if (record.DeletedAt !== null || record.status !== 1) {
       return {
         style: {
-          background: 'var(--semi-color-disabled-border)',
+          background: 'hsl(var(--border))',
         },
       };
     } else {

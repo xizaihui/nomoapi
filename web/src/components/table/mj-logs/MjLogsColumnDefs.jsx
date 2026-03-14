@@ -407,7 +407,7 @@ export const getMjLogsColumns = ({
               <Progress
                 stroke={
                   record.status === 'FAILURE'
-                    ? 'var(--semi-color-warning)'
+                    ? 'hsl(var(--chart-4))'
                     : null
                 }
                 percent={text ? parseInt(text.replace('%', '')) : 0}

@@ -400,7 +400,7 @@ export const getChannelsColumns = ({
               >
                 <span className='inline-flex items-center'>
                   <IconAlertTriangle
-                    style={{ color: 'var(--semi-color-warning)' }}
+                    style={{ color: 'hsl(var(--chart-4))' }}
                   />
                 </span>
               </Tooltip>

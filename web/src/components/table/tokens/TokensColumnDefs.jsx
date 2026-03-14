@@ -49,9 +49,9 @@ import {
 
 // progress color helper
 const getProgressColor = (pct) => {
-  if (pct === 100) return 'var(--semi-color-success)';
-  if (pct <= 10) return 'var(--semi-color-danger)';
-  if (pct <= 30) return 'var(--semi-color-warning)';
+  if (pct === 100) return 'hsl(var(--chart-2))';
+  if (pct <= 10) return 'hsl(var(--destructive))';
+  if (pct <= 30) return 'hsl(var(--chart-4))';
   return undefined;
 };
 

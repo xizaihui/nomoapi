@@ -386,7 +386,7 @@ export default function SettingsPerformance(props) {
                   <div
                     style={{
                       padding: 16,
-                      background: 'var(--semi-color-fill-0)',
+                      background: 'hsl(var(--muted))',
                       borderRadius: 8,
                       flex: 1,
                       display: 'flex',
@@ -402,8 +402,8 @@ export default function SettingsPerformance(props) {
                       style={{ marginBottom: 8 }}
                       stroke={
                         parseFloat(diskCacheUsagePercent) > 80
-                          ? 'var(--semi-color-danger)'
-                          : 'var(--semi-color-primary)'
+                          ? 'hsl(var(--destructive))'
+                          : 'hsl(var(--primary))'
                       }
                     />
                     <div
@@ -434,7 +434,7 @@ export default function SettingsPerformance(props) {
                   <div
                     style={{
                       padding: 16,
-                      background: 'var(--semi-color-fill-0)',
+                      background: 'hsl(var(--muted))',
                       borderRadius: 8,
                       flex: 1,
                       display: 'flex',
@@ -478,7 +478,7 @@ export default function SettingsPerformance(props) {
                     <div
                       style={{
                         padding: 16,
-                        background: 'var(--semi-color-fill-0)',
+                        background: 'hsl(var(--muted))',
                         borderRadius: 8,
                       }}
                     >
@@ -496,10 +496,10 @@ export default function SettingsPerformance(props) {
                         style={{ marginBottom: 8 }}
                         stroke={
                           stats.disk_space_info.used_percent > 90
-                            ? 'var(--semi-color-danger)'
+                            ? 'hsl(var(--destructive))'
                             : stats.disk_space_info.used_percent > 70
-                              ? 'var(--semi-color-warning)'
-                              : 'var(--semi-color-primary)'
+                              ? 'hsl(var(--chart-4))'
+                              : 'hsl(var(--primary))'
                         }
                       />
                       <div

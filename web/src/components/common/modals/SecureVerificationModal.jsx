@@ -251,14 +251,14 @@ const SecureVerificationModal = ({
                       alignItems: 'center',
                       justifyContent: 'center',
                       borderRadius: '50%',
-                      background: 'var(--semi-color-primary-light-default)',
+                      background: 'hsl(var(--primary) / 0.1)',
                     }}
                   >
                     <svg
                       style={{
                         width: 28,
                         height: 28,
-                        color: 'var(--semi-color-primary)',
+                        color: 'hsl(var(--primary))',
                       }}
                       fill='currentColor'
                       viewBox='0 0 20 20'

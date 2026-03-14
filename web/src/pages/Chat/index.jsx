@@ -71,7 +71,7 @@ const ChatPage = () => {
         <Spin size='large' spinning={true} tip={null} />
         <span
           className='whitespace-nowrap mt-2 text-center'
-          style={{ color: 'var(--semi-color-primary)' }}
+          style={{ color: 'hsl(var(--primary))' }}
         >
           {t('正在跳转...')}
         </span>

@@ -43,7 +43,7 @@ const RiskMarkdownBlock = React.memo(function RiskMarkdownBlock({
     <div
       className='rounded-lg'
       style={{
-        border: '1px solid var(--semi-color-warning-light-hover)',
+        border: '1px solid hsl(var(--chart-4) / 0.2)',
         padding: '12px',
         contentVisibility: 'auto',
       }}
@@ -105,7 +105,7 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
       visible={visible}
       title={
         <Space align='center'>
-          <IconAlertTriangle style={{ color: 'var(--semi-color-warning)' }} />
+          <IconAlertTriangle style={{ color: 'hsl(var(--chart-4))' }} />
           <span>{title}</span>
         </Space>
       }
@@ -141,8 +141,8 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
           <div
             className='flex flex-col gap-2 rounded-lg'
             style={{
-              border: '1px solid var(--semi-color-warning-light-hover)',
-              background: 'var(--semi-color-fill-0)',
+              border: '1px solid hsl(var(--chart-4) / 0.2)',
+              background: 'hsl(var(--muted))',
               padding: isMobile ? '10px 12px' : '12px 14px',
             }}
           >
@@ -157,8 +157,8 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
           <div
             className='flex flex-col gap-2 rounded-lg'
             style={{
-              border: '1px solid var(--semi-color-border)',
-              background: 'var(--semi-color-fill-0)',
+              border: '1px solid hsl(var(--border))',
+              background: 'hsl(var(--muted))',
               padding: isMobile ? '10px 12px' : '12px 14px',
             }}
           >
@@ -180,8 +180,8 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
           <div
             className='flex flex-col gap-2 rounded-lg'
             style={{
-              border: '1px solid var(--semi-color-danger-light-hover)',
-              background: 'var(--semi-color-danger-light-default)',
+              border: '1px solid hsl(var(--destructive) / 0.2)',
+              background: 'hsl(var(--destructive) / 0.1)',
               padding: isMobile ? '10px 12px' : '12px 14px',
             }}
           >

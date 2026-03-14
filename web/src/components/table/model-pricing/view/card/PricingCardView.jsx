@@ -302,7 +302,7 @@ const PricingCardView = ({
                 <div className='flex-1 mb-4'>
                   <p
                     className='text-xs line-clamp-2 leading-relaxed'
-                    style={{ color: 'var(--semi-color-text-2)' }}
+                    style={{ color: 'hsl(var(--muted-foreground))' }}
                   >
                     {getModelDescription(model)}
                   </p>
