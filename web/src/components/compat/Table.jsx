@@ -208,9 +208,9 @@ const Table = ({
         <div className='flex items-center justify-between px-2 py-3'>
           <span className='text-xs text-muted-foreground'>共 {totalItems} 条</span>
           <div className='flex items-center gap-1'>
-            <button type='button' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>‹</button>
+            <button type='button' aria-label='上一页' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>‹</button>
             {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => i + 1).map((p) => (
-              <button key={p} type='button' onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('px-2 py-1 text-sm rounded border min-w-[28px]', p === currentPage ? 'bg-primary text-primary-foreground' : 'hover:bg-muted')}>{p}</button>
+              <button key={p} type='button' aria-label={`第${p}页`} onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('px-2 py-1 text-sm rounded border min-w-[28px]', p === currentPage ? 'bg-primary text-primary-foreground' : 'hover:bg-muted')}>{p}</button>
             ))}
             <button type='button' disabled={currentPage >= totalPages} onClick={() => { const p = currentPage + 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>›</button>
             {pagination?.showSizeChanger && pagination?.pageSizeOptions && (

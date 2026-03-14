@@ -32,7 +32,7 @@ import { marked } from 'marked';
 import {
   IllustrationNoContent,
   IllustrationNoContentDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { StatusContext } from '../../context/Status';
 import { Bell, Megaphone } from 'lucide-react';
 

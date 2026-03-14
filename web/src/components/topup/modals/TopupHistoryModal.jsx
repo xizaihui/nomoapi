@@ -31,7 +31,7 @@ import {
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { Coins } from 'lucide-react';
 import { IconSearch } from '@/components/compat/icons';
 import { API, timestamp2string } from '../../../helpers';

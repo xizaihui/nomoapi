@@ -23,7 +23,7 @@ import CardTable from '../../common/ui/CardTable';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { getDeploymentsColumns } from './DeploymentsColumnDefs';
 
 // Import all the new modals

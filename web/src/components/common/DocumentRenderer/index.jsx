@@ -24,7 +24,7 @@ const { Title } = Typography;
 import {
   IllustrationConstruction,
   IllustrationConstructionDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { useTranslation } from 'react-i18next';
 import MarkdownRenderer from '../markdown/MarkdownRenderer';
 

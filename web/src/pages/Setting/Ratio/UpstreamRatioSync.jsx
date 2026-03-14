@@ -50,7 +50,7 @@ import { useTranslation } from 'react-i18next';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import ChannelSelectorModal from '../../../components/settings/ChannelSelectorModal';
 
 const OFFICIAL_RATIO_PRESET_ID = -100;

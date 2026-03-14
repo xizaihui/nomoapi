@@ -34,7 +34,7 @@ import { IconPlus, IconLayers } from '@/components/compat/icons';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import {
   API,
   showError,

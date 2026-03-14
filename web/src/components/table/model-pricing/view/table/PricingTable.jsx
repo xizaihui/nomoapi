@@ -22,7 +22,7 @@ import { Card, Table, Empty } from '@douyinfe/semi-ui';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { getPricingTableColumns } from './PricingTableColumns';
 
 const PricingTable = ({

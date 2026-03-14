@@ -33,7 +33,7 @@ import { Copy } from 'lucide-react';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import {
   stringToColor,
   calculateModelPrice,

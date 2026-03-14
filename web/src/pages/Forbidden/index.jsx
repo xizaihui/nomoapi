@@ -22,7 +22,7 @@ import { Empty } from '@douyinfe/semi-ui';
 import {
   IllustrationNoAccess,
   IllustrationNoAccessDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { useTranslation } from 'react-i18next';
 
 const Forbidden = () => {

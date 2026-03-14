@@ -35,7 +35,7 @@ import {
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { Plus, Edit, Trash2, Save, Bell, Maximize2 } from 'lucide-react';
 import {
   API,

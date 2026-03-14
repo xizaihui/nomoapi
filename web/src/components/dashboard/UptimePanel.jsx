@@ -31,7 +31,7 @@ import { Gauge, RefreshCw } from 'lucide-react';
 import {
   IllustrationConstruction,
   IllustrationConstructionDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import ScrollableContainer from '../common/ui/ScrollableContainer';
 
 const UptimePanel = ({

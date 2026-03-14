@@ -22,7 +22,7 @@ import { Progress, Divider, Empty } from '@douyinfe/semi-ui';
 import {
   IllustrationConstruction,
   IllustrationConstructionDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import {
   timestamp2string,
   timestamp2string1,

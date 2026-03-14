@@ -24,7 +24,7 @@ import { Empty } from '@douyinfe/semi-ui';
 import {
   IllustrationConstruction,
   IllustrationConstructionDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { useTranslation } from 'react-i18next';
 
 const About = () => {

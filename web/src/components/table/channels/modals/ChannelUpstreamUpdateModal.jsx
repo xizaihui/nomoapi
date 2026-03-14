@@ -30,7 +30,7 @@ import {
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { IconSearch } from '@/components/compat/icons';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 

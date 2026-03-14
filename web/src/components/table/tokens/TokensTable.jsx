@@ -23,7 +23,7 @@ import CardTable from '../../common/ui/CardTable';
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import { getTokensColumns } from './TokensColumnDefs';
 
 const TokensTable = (tokensData) => {

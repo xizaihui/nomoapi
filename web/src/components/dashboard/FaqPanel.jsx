@@ -25,7 +25,7 @@ import { marked } from 'marked';
 import {
   IllustrationConstruction,
   IllustrationConstructionDark,
-} from '@douyinfe/semi-illustrations';
+} from '@/components/compat/illustrations';
 import ScrollableContainer from '../common/ui/ScrollableContainer';
 
 const FaqPanel = ({
