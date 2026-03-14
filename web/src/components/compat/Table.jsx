@@ -18,6 +18,8 @@ const Table = ({
   style,
   onChange,
   expandedRowRender,
+  expandRowByClick,
+  rowExpandable,
   defaultExpandAllRows,
   ...rest
 }) => {
@@ -150,9 +152,16 @@ const Table = ({
               const key = getRowKey(record, rowIdx);
               const rowProps = onRow ? onRow(record, rowIdx) : {};
               const isExpanded = expandedRows.includes(key);
+              const canExpand = expandedRowRender && (!rowExpandable || rowExpandable(record));
+              const handleRowClick = (e) => {
+                if (expandRowByClick && canExpand) {
+                  setExpandedRows((prev) => prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]);
+                }
+                rowProps?.onClick?.(e);
+              };
               return (
                 <React.Fragment key={key}>
-                  <tr className={cn('hover:bg-muted/50 transition-colors', selectedRowKeys.includes(key) && 'bg-accent/30')} {...rowProps}>
+                  <tr className={cn('hover:bg-muted/50 transition-colors', selectedRowKeys.includes(key) && 'bg-accent/30', expandRowByClick && canExpand && 'cursor-pointer')} {...rowProps} onClick={handleRowClick}>
                     {rowSelection && (
                       <td className='px-3 py-2'>
                         <input
