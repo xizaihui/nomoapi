@@ -172,7 +172,7 @@ const AccountManagement = ({
     <Card className='!rounded-2xl'>
       {/* 卡片头部 */}
       <div className='flex items-center mb-4'>
-        <Avatar size='small' color='teal' className='mr-3 shadow-md'>
+        <Avatar size='small' color='teal' className='mr-3 shadow-sm'>
           <UserPlus size={16} />
         </Avatar>
         <div>

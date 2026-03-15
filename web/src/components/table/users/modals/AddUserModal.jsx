@@ -126,7 +126,7 @@ const AddUserModal = (props) => {
             <div className='p-2'>
               <Card className='!rounded-2xl shadow-sm border-0'>
                 <div className='flex items-center mb-2'>
-                  <Avatar size='small' color='blue' className='mr-2 shadow-md'>
+                  <Avatar size='small' color='blue' className='mr-2 shadow-sm'>
                     <IconUserAdd size={16} />
                   </Avatar>
                   <div>

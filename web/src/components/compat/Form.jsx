@@ -433,7 +433,7 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
             )}
           </div>
           {isOpen && (
-            <div className='absolute z-[9999] mt-1 w-full max-h-60 overflow-auto rounded-md border bg-popover shadow-lg'>
+            <div className='absolute z-[9999] mt-1 w-full max-h-60 overflow-auto rounded-md border bg-popover shadow-sm'>
               {filteredOptions.length === 0 && !allowCreate && !allowAdditions ? (
                 <div className='px-3 py-2 text-sm text-muted-foreground'>
                   {searchVal ? '无匹配结果' : '无选项'}
@@ -522,7 +522,7 @@ const FormSwitch = ({ field, label, checkedText, uncheckedText, ...rest }) => {
           disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
-        <span className={cn('pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform', checked ? 'translate-x-4' : 'translate-x-0')} />
+        <span className={cn('pointer-events-none block h-4 w-4 rounded-full bg-background shadow-sm ring-0 transition-transform', checked ? 'translate-x-4' : 'translate-x-0')} />
       </button>
     </FormField>
   );

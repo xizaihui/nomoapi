@@ -258,7 +258,7 @@ const AddEditSubscriptionModal = ({
                     <Avatar
                       size='small'
                       color='blue'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <IconCalendarClock size={16} />
                     </Avatar>
@@ -387,7 +387,7 @@ const AddEditSubscriptionModal = ({
                     <Avatar
                       size='small'
                       color='green'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <Clock size={16} />
                     </Avatar>
@@ -449,7 +449,7 @@ const AddEditSubscriptionModal = ({
                     <Avatar
                       size='small'
                       color='orange'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <RefreshCw size={16} />
                     </Avatar>
@@ -507,7 +507,7 @@ const AddEditSubscriptionModal = ({
                     <Avatar
                       size='small'
                       color='purple'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <IconCreditCard size={16} />
                     </Avatar>

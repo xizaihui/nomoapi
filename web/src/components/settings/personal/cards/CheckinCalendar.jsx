@@ -244,7 +244,7 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
           className='flex items-center flex-1 cursor-pointer'
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
-          <Avatar size='small' color='green' className='mr-3 shadow-md'>
+          <Avatar size='small' color='green' className='mr-3 shadow-sm'>
             <CalendarCheck size={16} />
           </Avatar>
           <div className='flex-1'>

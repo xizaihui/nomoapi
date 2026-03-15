@@ -214,7 +214,7 @@ const EditUserModal = (props) => {
                     <Avatar
                       size='small'
                       color='blue'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <IconUser size={16} />
                     </Avatar>
@@ -276,7 +276,7 @@ const EditUserModal = (props) => {
                       <Avatar
                         size='small'
                         color='green'
-                        className='mr-2 shadow-md'
+                        className='mr-2 shadow-sm'
                       >
                         <IconUserGroup size={16} />
                       </Avatar>
@@ -335,7 +335,7 @@ const EditUserModal = (props) => {
                         <Avatar
                           size='small'
                           color='purple'
-                          className='mr-2 shadow-md'
+                          className='mr-2 shadow-sm'
                         >
                           <IconLink size={16} />
                         </Avatar>

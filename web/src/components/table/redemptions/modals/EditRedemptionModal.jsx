@@ -222,7 +222,7 @@ const EditRedemptionModal = (props) => {
                     <Avatar
                       size='small'
                       color='blue'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <IconGift size={16} />
                     </Avatar>
@@ -270,7 +270,7 @@ const EditRedemptionModal = (props) => {
                     <Avatar
                       size='small'
                       color='green'
-                      className='mr-2 shadow-md'
+                      className='mr-2 shadow-sm'
                     >
                       <IconCreditCard size={16} />
                     </Avatar>

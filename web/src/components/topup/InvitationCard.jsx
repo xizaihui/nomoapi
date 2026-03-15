@@ -43,7 +43,7 @@ const InvitationCard = ({
     <Card className='!rounded-2xl shadow-sm border-0'>
       {/* 卡片头部 */}
       <div className='flex items-center mb-4'>
-        <Avatar size='small' color='green' className='mr-3 shadow-md'>
+        <Avatar size='small' color='green' className='mr-3 shadow-sm'>
           <Gift size={16} />
         </Avatar>
         <div>

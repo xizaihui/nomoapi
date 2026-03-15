@@ -15,7 +15,7 @@ const Card = React.forwardRef(
     return (
       <ShadcnCard
         ref={ref}
-        className={cn(!bordered && 'border-0', shadows === 'hover' && 'hover:shadow-md transition-shadow', className)}
+        className={cn(!bordered && 'border-0', shadows === 'hover' && 'hover:shadow-sm transition-shadow', className)}
         style={style}
         {...rest}
       >

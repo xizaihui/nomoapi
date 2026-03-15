@@ -38,7 +38,7 @@ const NewYearButton = ({ isNewYear }) => {
     <Dropdown
       position='bottomRight'
       render={
-        <Dropdown.Menu className='!bg-popover !border-border !shadow-lg !rounded-lg dark:!bg-foreground/80 dark:!border-gray-600'>
+        <Dropdown.Menu className='!bg-popover !border-border !shadow-sm !rounded-lg dark:!bg-foreground/80 dark:!border-gray-600'>
           <Dropdown.Item
             onClick={handleNewYearClick}
             className='!text-foreground hover:!bg-secondary dark:!text-muted-foreground/30 dark:hover:!bg-foreground/60'

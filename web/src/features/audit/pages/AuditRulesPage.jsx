@@ -249,7 +249,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
 
   return (
     <div className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/50' onClick={onClose}>
-      <div className='bg-background rounded-lg border shadow-lg w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto' onClick={(e) => e.stopPropagation()}>
+      <div className='bg-background rounded-lg border shadow-sm w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto' onClick={(e) => e.stopPropagation()}>
         <div className='flex items-center justify-between p-4 border-b'>
           <h2 className='text-lg font-semibold'>{rule ? t('编辑规则') : t('添加规则')}</h2>
           <button onClick={onClose} className='p-1 rounded hover:bg-muted'><X className='w-4 h-4' /></button>

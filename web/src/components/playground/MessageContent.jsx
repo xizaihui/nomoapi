@@ -176,7 +176,7 @@ const MessageContent = ({
       <div
         className={`${className} flex items-center gap-2 sm:gap-4 bg-gradient-to-r from-purple-50 to-indigo-50`}
       >
-        <div className='w-5 h-5 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg'>
+        <div className='w-5 h-5 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-sm'>
           <Loader2
             className='animate-spin text-white'
             size={styleState.isMobile ? 16 : 20}

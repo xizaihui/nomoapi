@@ -2041,9 +2041,9 @@ const EditChannelModal = (props) => {
       'flex items-center gap-3 px-3 py-2 transition-all duration-200 rounded-lg mx-2 my-1',
       focused && 'bg-muted/30 shadow-sm',
       selected &&
-        'bg-muted/60 text-foreground shadow-lg ring-2 ring-blue-200 ring-opacity-50',
+        'bg-muted/60 text-foreground shadow-sm ring-2 ring-blue-200 ring-opacity-50',
       disabled && 'opacity-50 cursor-not-allowed',
-      !disabled && 'hover:bg-muted/30 hover:shadow-md cursor-pointer',
+      !disabled && 'hover:bg-muted/30 hover:shadow-sm cursor-pointer',
       className,
     ]
       .filter(Boolean)
@@ -2175,7 +2175,7 @@ const EditChannelModal = (props) => {
                       <Avatar
                         size='small'
                         color='blue'
-                        className='mr-2 shadow-md'
+                        className='mr-2 shadow-sm'
                       >
                         <IconServer size={16} />
                       </Avatar>
@@ -2852,7 +2852,7 @@ const EditChannelModal = (props) => {
                         <Avatar
                           size='small'
                           color='green'
-                          className='mr-2 shadow-md'
+                          className='mr-2 shadow-sm'
                         >
                           <IconGlobe size={16} />
                         </Avatar>
@@ -3083,7 +3083,7 @@ const EditChannelModal = (props) => {
                       <Avatar
                         size='small'
                         color='purple'
-                        className='mr-2 shadow-md'
+                        className='mr-2 shadow-sm'
                       >
                         <IconCode size={16} />
                       </Avatar>
@@ -3372,7 +3372,7 @@ const EditChannelModal = (props) => {
                       <Avatar
                         size='small'
                         color='orange'
-                        className='mr-2 shadow-md'
+                        className='mr-2 shadow-sm'
                       >
                         <IconSetting size={16} />
                       </Avatar>
@@ -3809,7 +3809,7 @@ const EditChannelModal = (props) => {
                       <Avatar
                         size='small'
                         color='violet'
-                        className='mr-2 shadow-md'
+                        className='mr-2 shadow-sm'
                       >
                         <IconBolt size={16} />
                       </Avatar>

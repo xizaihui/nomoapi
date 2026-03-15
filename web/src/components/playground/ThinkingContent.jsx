@@ -86,7 +86,7 @@ const ThinkingContent = ({
           <div className='absolute -bottom-8 -left-8 w-24 h-24 bg-white opacity-10 rounded-full'></div>
         </div>
         <div className='flex items-center gap-2 sm:gap-4 relative'>
-          <div className='w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 flex items-center justify-center shadow-lg'>
+          <div className='w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 flex items-center justify-center shadow-sm'>
             <Brain
               style={{ color: 'white' }}
               size={styleState.isMobile ? 12 : 16}

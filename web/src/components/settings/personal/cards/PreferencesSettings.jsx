@@ -123,7 +123,7 @@ const PreferencesSettings = ({ t }) => {
 		<Card className="!rounded-2xl shadow-sm border-0">
 			{/* Card Header */}
 			<div className="flex items-center mb-4">
-				<Avatar size="small" color="violet" className="mr-3 shadow-md">
+				<Avatar size="small" color="violet" className="mr-3 shadow-sm">
 					<Languages size={16} />
 				</Avatar>
 				<div>

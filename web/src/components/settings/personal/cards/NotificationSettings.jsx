@@ -386,7 +386,7 @@ const NotificationSettings = ({
     >
       {/* 卡片头部 */}
       <div className='flex items-center mb-4'>
-        <Avatar size='small' color='blue' className='mr-3 shadow-md'>
+        <Avatar size='small' color='blue' className='mr-3 shadow-sm'>
           <Bell size={16} />
         </Avatar>
         <div>

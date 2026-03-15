@@ -423,7 +423,7 @@ const EditTagModal = (props) => {
               <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
                 {/* Header: Tag Info */}
                 <div className='flex items-center mb-2'>
-                  <Avatar size='small' color='blue' className='mr-2 shadow-md'>
+                  <Avatar size='small' color='blue' className='mr-2 shadow-sm'>
                     <IconBookmark size={16} />
                   </Avatar>
                   <div>
@@ -456,7 +456,7 @@ const EditTagModal = (props) => {
                   <Avatar
                     size='small'
                     color='purple'
-                    className='mr-2 shadow-md'
+                    className='mr-2 shadow-sm'
                   >
                     <IconCode size={16} />
                   </Avatar>
@@ -566,7 +566,7 @@ const EditTagModal = (props) => {
                   <Avatar
                     size='small'
                     color='orange'
-                    className='mr-2 shadow-md'
+                    className='mr-2 shadow-sm'
                   >
                     <IconSetting size={16} />
                   </Avatar>
@@ -716,7 +716,7 @@ const EditTagModal = (props) => {
               <Card className='!rounded-2xl shadow-sm border-0'>
                 {/* Header: Group Settings */}
                 <div className='flex items-center mb-2'>
-                  <Avatar size='small' color='green' className='mr-2 shadow-md'>
+                  <Avatar size='small' color='green' className='mr-2 shadow-sm'>
                     <IconUser size={16} />
                   </Avatar>
                   <div>
