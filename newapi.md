@@ -100,22 +100,31 @@
 ### 做到哪了
 - UI 框架迁移主体完成（Phase 0-7 + 所有 bug 修复）
 - **安全审计模块 v1 完成**：后端 audit/ 包 + 前端 features/audit/ + ES 集成 + 12 条默认规则
-- 38 个 commits，262+ 文件变更
+- **Dashboard 重设计完成**：StatsCards 极简网格 + UsageLogs 灰度 Pill
+- **UI 差异化 Phase 1-6 全部完成**：品牌/配色/字体/表格/侧边栏/按钮/标签/表单/弹窗/图表/动画/颜色净化
+- **收尾清理 1-6 全部完成**：shadow/rounded/border-input/bg-accent/About 品牌/favicon
+- 50+ commits，300+ 文件变更
 - 已部署运行：new-api + PostgreSQL + Redis + Elasticsearch
 - 代码已推送到 GitHub 两个仓库
+- 最新 tag: `v0.2.0-aurora`
+
+### 残留指标（v0.2.0-aurora）
+- 0 个硬编码 Tailwind 颜色类
+- 0 个 shadow-lg/shadow-md
+- 0 个 rounded-2xl
+- 0 个 border-input
+- 0 个 bg-accent
+- 0 个 ring-offset
+- 266 个 semi-ui import（全部走 compat alias，不是真 Semi）
+- 1 个真 Semi 引用（Chat 组件，必须保留）
+- 23 个 .semi- CSS 选择器（全是 .semi-chat-*）
 
 ### 卡点
-- **ES 初始化延迟**: ES 启动慢（~20秒），已改为异步等待连接，不阻塞主服务
-- **审计侧边栏图标**: 目前用的是 renderNavItem 默认图标，后续可以换 Shield / BookOpen 图标
-- **ModelTestModal 白屏**: 之前遗留的问题，点渠道测试按钮可能白屏
 - **Chat 组件锁定真实 Semi**: 无法全面移除 semi.css
+- **ModelTestModal 白屏**: 之前遗留的问题
+- **上游渠道 502**: test channel 返回 nginx bad gateway
 
-### 下一步
-1. **测试审计功能** — 用户管理页给用户开启审计开关，然后用 API Key 调 chat completions 触发审计
-2. **用户管理页集成审计开关** — 在用户列表加一列"审计开关"按钮
-3. **逐页 UI 打磨** — 检查每个页面视觉效果
-4. **ModelTestModal 白屏排查**
-5. **Docker 镜像优化**
+### 项目状态: ✅ UI 差异化完成，可作为独立品牌产品使用
 
 ---
 
@@ -156,6 +165,23 @@ git push opentoken feat/shadcn-ui
 ---
 
 ## 📅 更新日志
+
+### 2026-03-15 (晚间) — UI 差异化 + 收尾清理
+- **Phase 1** `2e0f1846`: 品牌（Aurora 标题/页脚/logo）+ 配色（全灰度 CSS 变量）+ 字体（Geist + PingFang SC）
+- **Phase 2** `f2dd348a`: 表格（11px 大写表头/文字分页）+ 侧边栏（13px/60% 图标）+ 按钮（黑底白字）+ 标签（灰度 pill）
+- **Phase 3a** `62e33d1b`: Dialog 毛玻璃遮罩 + 表单标签 text-xs + SideSheet 毛玻璃 + Tooltip 反色 + Toast 去 richColors
+- **Phase 3b** `430a3b63`: 登录/注册/重置页 rounded-xl + 下划线链接 + 灰度
+- **Phase 3c** `873237f6`: Tabs 下划线风格 + Banner 灰度 + Popover 圆角
+- **Phase 4** `62a6b245`: VChart 自定义灰度主题 + 37 个模型颜色灰度 + 趋势面积图 + Dashboard 面板去 Card
+- **Phase 5** `b395a7ad`: 7 个 Tailwind 动画 + 按钮 scale(0.98) + 页面 fade-up + 级联入场 + 6px 滚动条 + Header 按钮统一
+- **Input focus 修复** `98e1899b`: ring → border-foreground/30
+- **Phase 6** `21fcd0f1`: 80+ 文件 386 处硬编码颜色 → 灰度
+- **Cleanup 1/6** `6e132924`: 57 处 shadow-lg/md → shadow-sm
+- **Cleanup 2/6** `a35a1196`: 59 处 rounded-2xl → rounded-xl
+- **Cleanup 3-4/6** `082c52b0`: border-input/bg-accent/ring-offset 清理
+- **Cleanup 5/6** `48777232`: About 页品牌替换 + 默认系统名 Aurora
+- **Cleanup 6/6** `6d5f185a`: favicon 替换（黑底白 A）
+- **Tag: v0.2.0-aurora**
 
 ### 2026-03-15 (下午)
 - 安全审计模块 v1 完成
