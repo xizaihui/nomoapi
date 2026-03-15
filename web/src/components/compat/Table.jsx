@@ -114,8 +114,8 @@ const Table = ({
   }
 
   return (
-    <div className={cn('w-full animate-fade-in', className)} style={style}>
-      <div className={scroll ? 'overflow-auto' : ''} style={scroll ? { maxHeight: scroll.y, maxWidth: scroll.x === 'max-content' ? '100%' : scroll.x } : undefined}>
+    <div className={cn('w-full animate-fade-in overflow-hidden', className)} style={style}>
+      <div className='overflow-x-auto' style={scroll ? { maxHeight: scroll.y } : undefined}>
         <table className={cn('w-full caption-bottom', sizeClass, bordered && 'border')}>
           <thead>
             <tr className='border-b'>

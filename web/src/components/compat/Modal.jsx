@@ -69,7 +69,7 @@ const Modal = ({
 
   const SIZE_MAP = {
     'full-width': '95vw',
-    large: '720px',
+    large: '860px',
     medium: '520px',
     small: '400px',
   };
@@ -79,7 +79,7 @@ const Modal = ({
     <Dialog open={visible} onOpenChange={handleOpenChange}>
       <DialogContent
         className={cn(fullScreen && 'max-h-[95vh]', size === 'full-width' && 'max-h-[95vh]', className)}
-        style={{ ...(resolvedWidth ? { maxWidth: typeof resolvedWidth === 'number' ? `${resolvedWidth}px` : resolvedWidth } : {}), ...style }}
+        style={{ ...(resolvedWidth ? { maxWidth: typeof resolvedWidth === 'number' ? `${resolvedWidth}px` : resolvedWidth, width: '100%' } : {}), ...style }}
         onInteractOutside={maskClosable ? undefined : (e) => e.preventDefault()}
         aria-describedby={undefined}
       >
