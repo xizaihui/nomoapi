@@ -136,7 +136,7 @@ const EditPrefillGroupModal = ({
       width={isMobile ? '100%' : 600}
       bodyStyle={{ padding: '0' }}
       footer={
-        <div className='flex justify-end bg-white'>
+        <div className='flex justify-end'>
           <Space>
             <Button
               theme='solid'

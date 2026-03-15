@@ -132,6 +132,7 @@ const SideSheet = ({
     padding: '16px 24px',
     borderTop: '1px solid var(--border, #e5e7eb)',
     flexShrink: 0,
+    backgroundColor: 'var(--background, #fff)',
   };
 
   const closeButtonStyle = {

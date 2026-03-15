@@ -8,7 +8,7 @@ const FormContext = React.createContext(null);
 const useFormApi = () => React.useContext(FormContext);
 
 // --- formApi implementation ---
-const createFormApi = (valuesRef, setValues, onValueChange, rulesRef) => ({
+const createFormApi = (valuesRef, setValues, onValueChange, rulesRef, submitRef) => ({
   getValues: () => ({ ...valuesRef.current }),
   getValue: (field) => valuesRef.current[field],
   setValue: (field, value) => {
@@ -38,7 +38,7 @@ const createFormApi = (valuesRef, setValues, onValueChange, rulesRef) => ({
   setError: () => {},
   getError: () => undefined,
   scrollToField: () => {},
-  submitForm: () => {},
+  submitForm: () => { submitRef.current?.(); },
 });
 
 // --- Form ---
@@ -67,6 +67,7 @@ const Form = React.forwardRef(({
   const [values, setValues] = React.useState(initValues || {});
   const valuesRef = React.useRef(initValues || {});
   const rulesRef = React.useRef({});
+  const submitRef = React.useRef(null);
 
   // Keep ref in sync
   React.useEffect(() => {
@@ -74,7 +75,7 @@ const Form = React.forwardRef(({
   }, [values]);
 
   const formApi = React.useMemo(
-    () => createFormApi(valuesRef, setValues, onValueChange, rulesRef),
+    () => createFormApi(valuesRef, setValues, onValueChange, rulesRef, submitRef),
     [onValueChange]
   );
 
@@ -89,6 +90,9 @@ const Form = React.forwardRef(({
     e?.preventDefault?.();
     onSubmit?.(valuesRef.current);
   };
+
+  // Keep submitRef pointing to latest handleSubmit
+  submitRef.current = handleSubmit;
 
   const effectiveLayout = labelPosition === 'left' ? 'horizontal' : (layout || 'vertical');
 
