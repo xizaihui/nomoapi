@@ -15,13 +15,13 @@ import { cn } from '@/lib/utils';
 const renderMenuItems = (menu) => {
   if (!menu || !Array.isArray(menu)) return null;
   return menu.map((item, idx) => {
-    if (item.type === 'divider') return <DropdownMenuSeparator key={idx} />;
+    if (item.type === 'divider' || item.node === 'divider') return <DropdownMenuSeparator key={idx} />;
     if (item.items) {
       return (
         <DropdownMenuSub key={item.node || item.key || idx}>
           <DropdownMenuSubTrigger disabled={item.disabled}>
             {item.icon && <span className='mr-2'>{item.icon}</span>}
-            {item.name || item.node}
+            {item.name || item.label}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             {renderMenuItems(item.items)}
@@ -31,13 +31,13 @@ const renderMenuItems = (menu) => {
     }
     return (
       <DropdownMenuItem
-        key={item.node || item.key || idx}
+        key={item.key || idx}
         disabled={item.disabled}
         onClick={() => item.onClick?.()}
-        className={item.active ? 'bg-muted' : ''}
+        className={cn(item.active && 'bg-muted', item.type === 'danger' && 'text-destructive focus:text-destructive')}
       >
         {item.icon && <span className='mr-2'>{item.icon}</span>}
-        {item.name || item.node}
+        {item.name || item.label}
       </DropdownMenuItem>
     );
   });

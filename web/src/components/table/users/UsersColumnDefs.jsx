@@ -156,11 +156,12 @@ const renderQuotaUsage = (text, record, t) => {
   );
   return (
     <Popover content={popoverContent} position='top'>
-      <div className='inline-flex flex-col gap-0.5 min-w-[120px] cursor-default'>
-        <div className='flex items-baseline justify-between gap-2'>
-          <span className='text-xs font-medium tabular-nums'>{renderQuota(remain)}</span>
-          <span className='text-[10px] text-muted-foreground tabular-nums'>/ {renderQuota(total)}</span>
-        </div>
+      <div className='inline-flex flex-col gap-0.5 cursor-default'>
+        <span className='text-xs tabular-nums whitespace-nowrap'>
+          <span className='font-medium'>{renderQuota(remain)}</span>
+          <span className='text-muted-foreground mx-0.5'>/</span>
+          <span className='text-muted-foreground'>{renderQuota(total)}</span>
+        </span>
         <div className='h-1 w-full rounded-full bg-muted overflow-hidden'>
           <div
             className='h-full rounded-full bg-foreground/60 transition-all'

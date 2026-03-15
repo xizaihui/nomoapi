@@ -2,11 +2,17 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-const Layout = React.forwardRef(({ children, className, style, ...rest }, ref) => (
-  <section ref={ref} className={cn('flex flex-col min-h-0', className)} style={style} {...rest}>
-    {children}
-  </section>
-));
+const Layout = React.forwardRef(({ children, className, style, ...rest }, ref) => {
+  // Auto-detect if children include a Sider — if so, use flex-row
+  const hasSider = React.Children.toArray(children).some(
+    (child) => React.isValidElement(child) && (child.type === Sider || child.type?.displayName === 'Sider')
+  );
+  return (
+    <section ref={ref} className={cn('flex min-h-0', hasSider ? 'flex-row' : 'flex-col', className)} style={style} {...rest}>
+      {children}
+    </section>
+  );
+});
 Layout.displayName = 'Layout';
 
 const Header = React.forwardRef(({ children, className, style, ...rest }, ref) => (
