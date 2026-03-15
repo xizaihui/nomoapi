@@ -289,11 +289,11 @@ const FormInputNumber = ({ field, label, min, max, step, prefix, suffix, ...rest
 };
 
 // --- Form.Select ---
-const FormSelect = ({ field, label, optionList, children, multiple, filter, placeholder, disabled, onChange: onChangeProp, showClear, loading, ...rest }) => {
+const FormSelect = ({ field, label, optionList, children, multiple, filter, placeholder, disabled, onChange: onChangeProp, showClear, loading, allowCreate, renderSelectedItem, onSearch, innerBottomSlot, searchPosition, autoClearSearchValue, allowAdditions, additionLabel, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
-  const value = field ? (values[field] ?? '') : '';
+  const rawValue = field ? values[field] : undefined;
   const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, style, className: cls, size, ...safeRest } = rest;
 
   // Collect options from children (Select.Option) or optionList
@@ -308,6 +308,155 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
     return opts;
   }, [optionList, children]);
 
+  // --- Multiple select mode ---
+  if (multiple) {
+    const selected = Array.isArray(rawValue) ? rawValue : (rawValue ? [rawValue] : []);
+    const [searchVal, setSearchVal] = React.useState('');
+    const [isOpen, setIsOpen] = React.useState(false);
+    const containerRef = React.useRef(null);
+    const inputRef = React.useRef(null);
+
+    // Close dropdown on outside click
+    React.useEffect(() => {
+      const handler = (e) => {
+        if (containerRef.current && !containerRef.current.contains(e.target)) setIsOpen(false);
+      };
+      document.addEventListener('mousedown', handler);
+      return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    const filteredOptions = React.useMemo(() => {
+      let opts = options;
+      if (searchVal && filter !== false) {
+        const q = searchVal.toLowerCase();
+        opts = opts.filter((o) => String(o.label || o.value).toLowerCase().includes(q));
+      }
+      return opts;
+    }, [options, searchVal, filter]);
+
+    const updateValue = (newArr) => {
+      if (field) formApi.setValue(field, newArr);
+      if (onChangeProp) onChangeProp(newArr);
+    };
+
+    const toggleOption = (optValue) => {
+      const strVal = String(optValue);
+      const next = selected.includes(strVal)
+        ? selected.filter((v) => v !== strVal)
+        : [...selected, strVal];
+      updateValue(next);
+    };
+
+    const removeTag = (val) => {
+      updateValue(selected.filter((v) => v !== val));
+    };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter' && searchVal.trim()) {
+        e.preventDefault();
+        const trimmed = searchVal.trim();
+        if (allowCreate || allowAdditions) {
+          if (!selected.includes(trimmed)) {
+            updateValue([...selected, trimmed]);
+          }
+        } else {
+          // Select first matching option
+          const match = filteredOptions.find((o) => !selected.includes(String(o.value)));
+          if (match) toggleOption(match.value);
+        }
+        if (autoClearSearchValue !== false) setSearchVal('');
+      } else if (e.key === 'Backspace' && !searchVal && selected.length > 0) {
+        updateValue(selected.slice(0, -1));
+      }
+    };
+
+    const getLabel = (val) => {
+      const opt = options.find((o) => String(o.value) === String(val));
+      return opt ? (opt.label || opt.value) : val;
+    };
+
+    return (
+      <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+        <div ref={containerRef} className='relative' style={style}>
+          <div
+            className='flex flex-wrap items-center gap-1 min-h-[36px] w-full rounded-md border border-input bg-background px-2 py-1 text-sm shadow-sm focus-within:ring-1 focus-within:ring-ring cursor-text'
+            onClick={() => { setIsOpen(true); inputRef.current?.focus(); }}
+          >
+            {selected.map((val) => {
+              let tagContent = getLabel(val);
+              if (renderSelectedItem) {
+                const result = renderSelectedItem({ value: val, label: getLabel(val) });
+                if (result && result.content) tagContent = result.content;
+              }
+              return (
+                <span key={val} className='inline-flex items-center gap-1 bg-secondary text-secondary-foreground rounded px-1.5 py-0.5 text-xs max-w-[200px]'>
+                  <span className='truncate'>{tagContent}</span>
+                  <button type='button' className='ml-0.5 hover:text-destructive' onClick={(e) => { e.stopPropagation(); removeTag(val); }}>×</button>
+                </span>
+              );
+            })}
+            <input
+              ref={inputRef}
+              type='text'
+              value={searchVal}
+              onChange={(e) => { setSearchVal(e.target.value); onSearch?.(e.target.value); }}
+              onFocus={() => setIsOpen(true)}
+              onKeyDown={handleKeyDown}
+              placeholder={selected.length === 0 ? placeholder : ''}
+              disabled={disabled || loading}
+              className='flex-1 min-w-[60px] bg-transparent outline-none text-sm placeholder:text-muted-foreground'
+            />
+            {showClear && selected.length > 0 && (
+              <button type='button' className='text-muted-foreground hover:text-foreground ml-1' onClick={(e) => { e.stopPropagation(); updateValue([]); }}>×</button>
+            )}
+          </div>
+          {isOpen && (
+            <div className='absolute z-[9999] mt-1 w-full max-h-60 overflow-auto rounded-md border bg-popover shadow-lg'>
+              {filteredOptions.length === 0 && !allowCreate && !allowAdditions ? (
+                <div className='px-3 py-2 text-sm text-muted-foreground'>
+                  {searchVal ? '无匹配结果' : '无选项'}
+                </div>
+              ) : (
+                filteredOptions.map((opt) => {
+                  const isSelected = selected.includes(String(opt.value));
+                  return (
+                    <div
+                      key={String(opt.value)}
+                      className={cn(
+                        'flex items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-accent',
+                        isSelected && 'bg-accent/50'
+                      )}
+                      onClick={() => toggleOption(opt.value)}
+                    >
+                      <span className={cn('mr-2 w-4 text-center', isSelected ? 'text-primary' : 'text-transparent')}>✓</span>
+                      <span className='truncate'>{opt.label || opt.value}</span>
+                    </div>
+                  );
+                })
+              )}
+              {(allowCreate || allowAdditions) && searchVal.trim() && !options.some((o) => String(o.value) === searchVal.trim()) && (
+                <div
+                  className='flex items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-accent text-primary'
+                  onClick={() => {
+                    const trimmed = searchVal.trim();
+                    if (!selected.includes(trimmed)) updateValue([...selected, trimmed]);
+                    if (autoClearSearchValue !== false) setSearchVal('');
+                  }}
+                >
+                  {additionLabel || '创建 '}{searchVal.trim()}
+                </div>
+              )}
+              {innerBottomSlot}
+            </div>
+          )}
+        </div>
+        {extraText && <div className='text-xs text-muted-foreground mt-1'>{extraText}</div>}
+      </FormField>
+    );
+  }
+
+  // --- Single select mode ---
+  const value = rawValue ?? '';
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
       <select
