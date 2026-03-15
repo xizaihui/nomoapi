@@ -101,13 +101,13 @@ const SideSheet = ({
     zIndex: 10000,
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'var(--background, #fff)',
-    color: 'var(--foreground, #000)',
+    backgroundColor: 'hsl(var(--background))',
+    color: 'hsl(var(--foreground))',
     boxShadow: '-4px 0 24px rgba(0,0,0,0.15)',
     transform: transformMap[placement],
     transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
     ...panelPositionStyle[placement],
-    ...(isHorizontal ? { borderLeft: '1px solid var(--border, #e5e7eb)' } : { borderTop: '1px solid var(--border, #e5e7eb)' }),
+    ...(isHorizontal ? { borderLeft: '1px solid hsl(var(--border))' } : { borderTop: '1px solid hsl(var(--border))' }),
     ...style,
   };
 
@@ -116,7 +116,7 @@ const SideSheet = ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '16px 24px',
-    borderBottom: '1px solid var(--border, #e5e7eb)',
+    borderBottom: '1px solid hsl(var(--border))',
     flexShrink: 0,
     ...headerStyle,
   };
@@ -130,9 +130,9 @@ const SideSheet = ({
 
   const footerContainerStyle = {
     padding: '16px 24px',
-    borderTop: '1px solid var(--border, #e5e7eb)',
+    borderTop: '1px solid hsl(var(--border))',
     flexShrink: 0,
-    backgroundColor: 'var(--background, #fff)',
+    backgroundColor: 'hsl(var(--background))',
   };
 
   const closeButtonStyle = {
