@@ -99,23 +99,23 @@
 
 ### 做到哪了
 - UI 框架迁移主体完成（Phase 0-7 + 所有 bug 修复）
-- 34 个 commits，243 文件变更，+6736/-850 行
-- 已部署运行，基本功能可用
+- **安全审计模块 v1 完成**：后端 audit/ 包 + 前端 features/audit/ + ES 集成 + 12 条默认规则
+- 38 个 commits，262+ 文件变更
+- 已部署运行：new-api + PostgreSQL + Redis + Elasticsearch
 - 代码已推送到 GitHub 两个仓库
-- 上游同步文档已写好（UPSTREAM-SYNC.md）
 
 ### 卡点
-- **ModelTestModal 白屏**: 点击渠道测试按钮可能白屏，疑似 compat Table 分页或 Select 空值处理问题，未定位到根因
-- **浏览器工具不可用**: 无法直接在服务器上检查运行时错误，只能靠用户截图/DOM 反馈
-- **Chat 组件锁定真实 Semi**: 无法全面移除 semi.css，Chat 内部依赖 `@douyinfe/semi-icons` 导致图标别名无法全局激活
+- **ES 初始化延迟**: ES 启动慢（~20秒），已改为异步等待连接，不阻塞主服务
+- **审计侧边栏图标**: 目前用的是 renderNavItem 默认图标，后续可以换 Shield / BookOpen 图标
+- **ModelTestModal 白屏**: 之前遗留的问题，点渠道测试按钮可能白屏
+- **Chat 组件锁定真实 Semi**: 无法全面移除 semi.css
 
 ### 下一步
-1. **ModelTestModal 白屏排查** — 需要用户复现并提供控制台错误信息
-2. **逐页 UI 打磨** — 检查每个页面的视觉效果，修复残留样式问题
-3. **semi.css 按需加载** — 只在 Playground 页面加载 semi.css，减少全局 CSS 体积
-4. **Docker 镜像优化** — 多阶段构建改进、层缓存优化
-5. **审计 `style={{ color: 'white' }}` 用法** — 全局排查类似 Tag 白字问题
-6. **standalone Select compat 多选** — 目前只有 Form.Select 支持 multiple，独立 Select 组件还是单选
+1. **测试审计功能** — 用户管理页给用户开启审计开关，然后用 API Key 调 chat completions 触发审计
+2. **用户管理页集成审计开关** — 在用户列表加一列"审计开关"按钮
+3. **逐页 UI 打磨** — 检查每个页面视觉效果
+4. **ModelTestModal 白屏排查**
+5. **Docker 镜像优化**
 
 ---
 
@@ -157,7 +157,19 @@ git push opentoken feat/shadcn-ui
 
 ## 📅 更新日志
 
-### 2026-03-15
+### 2026-03-15 (下午)
+- 安全审计模块 v1 完成
+- 后端: audit/ 包（model, controller, router, scanner, elasticsearch, seed）
+- 前端: features/audit/（AuditLogsPage, AuditRulesPage, API hooks, constants）
+- ES 集成: 按月分索引、异步写入、聚合统计、全文搜索
+- 12 条默认审计规则（5 大类）
+- 异步审计中间件（不阻塞用户请求）
+- 权限控制: 管理员默认有权限，普通用户按 audit_configs 表开关
+- Docker: 新增 Elasticsearch 8.15.0 服务（512MB JVM heap）
+- ES 连接改为异步等待（解决启动顺序问题）
+- 上游入口改动仅 4 个文件（main.go, router/main.go, relay/compatible_handler.go, docker-compose.yml）
+
+### 2026-03-15 (上午)
 - 修复 Tailwind 标准颜色缺失（根因：theme.colors 完全替换）
 - 修复 Form.Select multiple 崩溃（原生 select 不支持多选数组）
 - 修复 Form.TextArea autosize 高度
