@@ -156,17 +156,18 @@ const renderQuotaUsage = (text, record, t) => {
   );
   return (
     <Popover content={popoverContent} position='top'>
-      <Tag color='white' shape='circle'>
-        <div className='flex flex-col items-end'>
-          <span className='text-xs leading-none'>{`${renderQuota(remain)} / ${renderQuota(total)}`}</span>
-          <Progress
-            percent={percent}
-            aria-label='quota usage'
-            format={() => `${percent.toFixed(0)}%`}
-            style={{ width: '100%', marginTop: '1px', marginBottom: 0 }}
+      <div className='inline-flex flex-col gap-0.5 min-w-[120px] cursor-default'>
+        <div className='flex items-baseline justify-between gap-2'>
+          <span className='text-xs font-medium tabular-nums'>{renderQuota(remain)}</span>
+          <span className='text-[10px] text-muted-foreground tabular-nums'>/ {renderQuota(total)}</span>
+        </div>
+        <div className='h-1 w-full rounded-full bg-muted overflow-hidden'>
+          <div
+            className='h-full rounded-full bg-foreground/60 transition-all'
+            style={{ width: `${Math.min(percent, 100)}%` }}
           />
         </div>
-      </Tag>
+      </div>
     </Popover>
   );
 };

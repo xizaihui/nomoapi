@@ -103,5 +103,7 @@ const RadioGroup = ({ value, defaultValue, onChange, options, direction = 'horiz
   );
 };
 
+Radio.Group = RadioGroup;
+
 export { Radio, RadioGroup };
 export default Radio;
