@@ -59,6 +59,10 @@ const PasswordResetForm = lazy(() => import('./components/auth/PasswordResetForm
 const PasswordResetConfirm = lazy(() => import('./components/auth/PasswordResetConfirm'));
 const OAuth2Callback = lazy(() => import('./components/auth/OAuth2Callback'));
 
+// 审计模块（独立功能，不影响上游）
+const AuditLogsPage = lazy(() => import('./features/audit/pages/AuditLogsPage'));
+const AuditRulesPage = lazy(() => import('./features/audit/pages/AuditRulesPage'));
+
 function DynamicOAuth2Callback() {
   const { provider } = useParams();
   return <OAuth2Callback type={provider} />;
@@ -395,6 +399,27 @@ function App() {
             <PrivateRoute>
               <Suspense fallback={<Loading></Loading>} key={location.pathname}>
                 <Chat2Link />
+              </Suspense>
+            </PrivateRoute>
+          }
+        />
+        {/* 审计模块路由（独立功能，不影响上游） */}
+        <Route
+          path='/console/audit-logs'
+          element={
+            <PrivateRoute>
+              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+                <AuditLogsPage />
+              </Suspense>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/console/audit-rules'
+          element={
+            <PrivateRoute>
+              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+                <AuditRulesPage />
               </Suspense>
             </PrivateRoute>
           }

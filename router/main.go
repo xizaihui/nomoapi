@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/QuantumNous/new-api/audit"
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/middleware"
 
@@ -18,6 +19,10 @@ func SetRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 	SetDashboardRouter(router)
 	SetRelayRouter(router)
 	SetVideoRouter(router)
+
+	// 审计模块路由（独立模块，不影响上游）
+	apiGroup := router.Group("/api")
+	audit.SetAuditRouter(apiGroup)
 	frontendBaseUrl := os.Getenv("FRONTEND_BASE_URL")
 	if common.IsMasterNode && frontendBaseUrl != "" {
 		frontendBaseUrl = ""

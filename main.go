@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/QuantumNous/new-api/audit"
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/controller"
@@ -289,6 +290,21 @@ func InitResources() error {
 	err = common.InitRedisClient()
 	if err != nil {
 		return err
+	}
+
+	// Initialize Audit Module (独立模块，不影响上游)
+	audit.SetDB(model.DB)
+	if err := audit.InitAuditTables(model.DB); err != nil {
+		common.SysError("审计模块初始化失败: " + err.Error())
+	}
+	audit.SeedDefaultRules(model.DB)
+	audit.InitScanner(model.DB)
+	esURL := os.Getenv("ES_URL")
+	if esURL == "" {
+		esURL = os.Getenv("ELASTICSEARCH_URL")
+	}
+	if err := audit.InitES(esURL); err != nil {
+		common.SysError("ES 初始化失败: " + err.Error())
 	}
 
 	// 启动系统监控

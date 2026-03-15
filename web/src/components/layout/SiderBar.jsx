@@ -26,6 +26,7 @@ import { useSidebarCollapsed } from '../../hooks/common/useSidebarCollapsed';
 import { useSidebar } from '../../hooks/common/useSidebar';
 import { useMinimumLoadingTime } from '../../hooks/common/useMinimumLoadingTime';
 import { isAdmin, isRoot, showError } from '../../helpers';
+import { fetchAuditStatus } from '../../features/audit/api';
 import SkeletonWrapper from './components/SkeletonWrapper';
 
 import { Divider, Button } from '@douyinfe/semi-ui';
@@ -67,6 +68,14 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const [openedKeys, setOpenedKeys] = useState([]);
   const location = useLocation();
   const [routerMapState, setRouterMapState] = useState(routerMap);
+  const [auditEnabled, setAuditEnabled] = useState(false);
+
+  // 检查审计权限
+  useEffect(() => {
+    fetchAuditStatus().then((res) => {
+      if (res?.success) setAuditEnabled(res.data?.audit_enabled || res.data?.is_admin);
+    }).catch(() => {});
+  }, []);
 
   const workspaceItems = useMemo(() => {
     const items = [
@@ -485,6 +494,20 @@ const SiderBar = ({ onNavigate = () => {} }) => {
                   <div className='sidebar-group-label'>{t('管理员')}</div>
                 )}
                 {adminItems.map((item) => renderNavItem(item))}
+              </div>
+            </>
+          )}
+
+          {/* 安全审计区域（独立模块，不影响上游） */}
+          {auditEnabled && (
+            <>
+              <Divider className='sidebar-divider' />
+              <div>
+                {!collapsed && (
+                  <div className='sidebar-group-label'>{t('安全审计')}</div>
+                )}
+                {renderNavItem({ text: t('审计日志'), itemKey: 'audit-logs', to: '/console/audit-logs' })}
+                {renderNavItem({ text: t('审计规则'), itemKey: 'audit-rules', to: '/console/audit-rules' })}
               </div>
             </>
           )}

@@ -29,6 +29,7 @@ services:
       - SQL_DSN=postgresql://root:123456@postgres:5432/new-api # ⚠️ IMPORTANT: Change the password in production!
 #      - SQL_DSN=root:123456@tcp(mysql:3306)/new-api  # Point to the mysql service, uncomment if using MySQL
       - REDIS_CONN_STRING=redis://redis
+      - ES_URL=http://elasticsearch:9200
       - TZ=Asia/Shanghai
       - ERROR_LOG_ENABLED=true # 是否启用错误日志记录 (Whether to enable error log recording)
       - BATCH_UPDATE_ENABLED=true  # 是否启用批量更新 (Whether to enable batch update)
@@ -42,6 +43,7 @@ services:
     depends_on:
       - redis
       - postgres
+      - elasticsearch
 #      - mysql  # Uncomment if using MySQL
     networks:
       - new-api-network
@@ -73,6 +75,24 @@ services:
 #    ports:
 #      - "5432:5432"  # Uncomment if you need to access PostgreSQL from outside Docker
 
+  elasticsearch:
+    image: elasticsearch:8.15.0
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - new-api-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 #  mysql:
 #    image: mysql:8.2
 #    container_name: mysql
@@ -89,6 +109,7 @@ services:
 
 volumes:
   pg_data:
+  es_data:
 #  mysql_data:
 
 networks:
