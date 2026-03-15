@@ -29,6 +29,7 @@ import {
   Dropdown,
 } from '@douyinfe/semi-ui';
 import { IconMore } from '@/components/compat/icons';
+import { Shield, ShieldOff, Loader2 } from 'lucide-react';
 import { renderGroup, renderNumber, renderQuota } from '../../../helpers';
 
 /**
@@ -296,6 +297,41 @@ const renderOperations = (
 };
 
 /**
+ * Render audit toggle (独立模块，不影响上游)
+ */
+const renderAuditToggle = (text, record, { auditMap, auditToggling, handleToggleAudit, t }) => {
+  if (record.DeletedAt !== null) return null;
+  // 管理员默认有审计权限，不需要开关
+  if (record.role >= 10) {
+    return (
+      <Tooltip content={t('管理员默认开启')} position='top'>
+        <Shield className='w-4 h-4 text-primary' />
+      </Tooltip>
+    );
+  }
+  const enabled = auditMap?.[record.id] || false;
+  const toggling = auditToggling?.[record.id] || false;
+
+  return (
+    <Tooltip content={enabled ? t('点击关闭审计') : t('点击开启审计')} position='top'>
+      <button
+        onClick={(e) => { e.stopPropagation(); handleToggleAudit(record.id); }}
+        disabled={toggling}
+        className='p-1 rounded hover:bg-muted transition-colors disabled:opacity-50'
+      >
+        {toggling ? (
+          <Loader2 className='w-4 h-4 animate-spin text-muted-foreground' />
+        ) : enabled ? (
+          <Shield className='w-4 h-4 text-green-600' />
+        ) : (
+          <ShieldOff className='w-4 h-4 text-muted-foreground' />
+        )}
+      </button>
+    </Tooltip>
+  );
+};
+
+/**
  * Get users table column definitions
  */
 export const getUsersColumns = ({
@@ -309,6 +345,9 @@ export const getUsersColumns = ({
   showResetPasskeyModal,
   showResetTwoFAModal,
   showUserSubscriptionsModal,
+  auditMap,
+  auditToggling,
+  handleToggleAudit,
 }) => {
   return [
     {
@@ -349,6 +388,12 @@ export const getUsersColumns = ({
       title: t('邀请信息'),
       dataIndex: 'invite',
       render: (text, record, index) => renderInviteInfo(text, record, t),
+    },
+    {
+      title: t('审计'),
+      dataIndex: 'audit',
+      width: 60,
+      render: (text, record) => renderAuditToggle(text, record, { auditMap, auditToggling, handleToggleAudit, t }),
     },
     {
       title: '',

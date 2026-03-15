@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Empty } from '@douyinfe/semi-ui';
 import CardTable from '../../common/ui/CardTable';
 import {
@@ -32,6 +32,7 @@ import DeleteUserModal from './modals/DeleteUserModal';
 import ResetPasskeyModal from './modals/ResetPasskeyModal';
 import ResetTwoFAModal from './modals/ResetTwoFAModal';
 import UserSubscriptionsModal from './modals/UserSubscriptionsModal';
+import { batchGetAuditConfigs, setUserAuditConfig } from '@/features/audit/api';
 
 const UsersTable = (usersData) => {
   const {
@@ -64,6 +65,36 @@ const UsersTable = (usersData) => {
   const [showResetTwoFAModal, setShowResetTwoFAModal] = useState(false);
   const [showUserSubscriptionsModal, setShowUserSubscriptionsModal] =
     useState(false);
+
+  // 审计开关状态（独立模块，不影响上游）
+  const [auditMap, setAuditMap] = useState({});
+  const [auditToggling, setAuditToggling] = useState({});
+
+  // 批量获取用户审计状态
+  useEffect(() => {
+    if (!users || users.length === 0) return;
+    const userIds = users.map((u) => u.id);
+    batchGetAuditConfigs(userIds).then((res) => {
+      if (res?.success && res.data) {
+        const map = {};
+        res.data.forEach((c) => { map[c.user_id] = c.audit_enabled; });
+        setAuditMap(map);
+      }
+    }).catch(() => {});
+  }, [users]);
+
+  // 切换审计开关
+  const handleToggleAudit = async (userId) => {
+    setAuditToggling((prev) => ({ ...prev, [userId]: true }));
+    const newVal = !auditMap[userId];
+    try {
+      const res = await setUserAuditConfig(userId, newVal);
+      if (res?.success) {
+        setAuditMap((prev) => ({ ...prev, [userId]: newVal }));
+      }
+    } catch {}
+    setAuditToggling((prev) => ({ ...prev, [userId]: false }));
+  };
 
   // Modal handlers
   const showPromoteUserModal = (user) => {
@@ -141,6 +172,9 @@ const UsersTable = (usersData) => {
       showResetPasskeyModal: showResetPasskeyUserModal,
       showResetTwoFAModal: showResetTwoFAUserModal,
       showUserSubscriptionsModal: showUserSubscriptionsUserModal,
+      auditMap,
+      auditToggling,
+      handleToggleAudit,
     });
   }, [
     t,
@@ -153,6 +187,9 @@ const UsersTable = (usersData) => {
     showResetPasskeyUserModal,
     showResetTwoFAUserModal,
     showUserSubscriptionsUserModal,
+    auditMap,
+    auditToggling,
+    handleToggleAudit,
   ]);
 
   // Handle compact mode by removing fixed positioning
