@@ -1,10 +1,11 @@
 // Compat layer: Semi Design SideSheet → shadcn/ui Sheet (Dialog-based)
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const SideSheet = ({ visible, onCancel, title, children, placement = 'right', width = 400, height, closable = true, mask = true, maskClosable = true, footer, headerStyle, bodyStyle, style, className, size, ...rest }) => {
+const SideSheet = ({ visible, onCancel, title, children, placement = 'right', width, height, closable = true, mask = true, maskClosable = true, footer, headerStyle, bodyStyle, style, className, size, ...rest }) => {
   const handleOpenChange = (open) => {
     if (!open && onCancel) onCancel();
   };
@@ -17,8 +18,10 @@ const SideSheet = ({ visible, onCancel, title, children, placement = 'right', wi
   };
 
   const isHorizontal = placement === 'left' || placement === 'right';
+  // Default width: min(680px, 100vw) for horizontal, matching Semi's large default
+  const resolvedWidth = width || '680px';
   const sizeStyle = isHorizontal
-    ? { width: typeof width === 'number' ? `${width}px` : width }
+    ? { width: typeof resolvedWidth === 'number' ? `${resolvedWidth}px` : resolvedWidth, maxWidth: '100vw' }
     : { height: typeof height === 'number' ? `${height}px` : (height || '400px') };
 
   return (
@@ -35,8 +38,9 @@ const SideSheet = ({ visible, onCancel, title, children, placement = 'right', wi
           )}
           style={{ ...sizeStyle, ...style }}
           onInteractOutside={maskClosable ? undefined : (e) => e.preventDefault()}
+          aria-describedby={undefined}
         >
-          {(title || closable) && (
+          {title ? (
             <div className={cn('flex items-center justify-between px-6 py-4 border-b')} style={headerStyle}>
               <DialogPrimitive.Title className='text-lg font-semibold'>{title}</DialogPrimitive.Title>
               {closable && (
@@ -45,8 +49,19 @@ const SideSheet = ({ visible, onCancel, title, children, placement = 'right', wi
                 </DialogPrimitive.Close>
               )}
             </div>
+          ) : (
+            <>
+              <VisuallyHidden><DialogPrimitive.Title>Dialog</DialogPrimitive.Title></VisuallyHidden>
+              {closable && (
+                <div className='flex justify-end px-6 pt-4'>
+                  <DialogPrimitive.Close className='rounded-sm opacity-70 hover:opacity-100'>
+                    <X className='h-4 w-4' />
+                  </DialogPrimitive.Close>
+                </div>
+              )}
+            </>
           )}
-          <div className='flex-1 overflow-auto px-6 py-4' style={bodyStyle}>
+          <div className='flex-1 overflow-auto px-6 py-4' style={bodyStyle} data-slot='sheet-content'>
             {children}
           </div>
           {footer && <div className='px-6 py-4 border-t'>{footer}</div>}

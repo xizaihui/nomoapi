@@ -285,12 +285,25 @@ const FormInputNumber = ({ field, label, min, max, step, prefix, suffix, ...rest
 };
 
 // --- Form.Select ---
-const FormSelect = ({ field, label, optionList, children, multiple, filter, placeholder, disabled, onChange: onChangeProp, showClear, ...rest }) => {
+const FormSelect = ({ field, label, optionList, children, multiple, filter, placeholder, disabled, onChange: onChangeProp, showClear, loading, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const value = field ? (values[field] ?? '') : '';
   const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, style, className: cls, size, ...safeRest } = rest;
+
+  // Collect options from children (Select.Option) or optionList
+  const options = React.useMemo(() => {
+    if (optionList) return optionList;
+    const opts = [];
+    React.Children.forEach(children, (child) => {
+      if (child && child.props) {
+        opts.push({ value: child.props.value ?? '', label: child.props.children || child.props.value });
+      }
+    });
+    return opts;
+  }, [optionList, children]);
+
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
       <select
@@ -300,17 +313,14 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
           if (field) formApi.setValue(field, val);
           if (onChangeProp) onChangeProp(val);
         }}
-        disabled={disabled}
+        disabled={disabled || loading}
         style={style}
         className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
       >
-        {placeholder && <option value=''>{placeholder}</option>}
-        {optionList
-          ? optionList.map((opt) => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))
-          : children
-        }
+        {placeholder && !value && <option value=''>{placeholder}</option>}
+        {options.map((opt) => (
+          <option key={String(opt.value)} value={opt.value}>{opt.label}</option>
+        ))}
       </select>
     </FormField>
   );
@@ -597,7 +607,8 @@ Form.Input = FormInput;
 Form.TextArea = FormTextArea;
 Form.InputNumber = FormInputNumber;
 Form.Select = FormSelect;
-Form.Select.Option = ({ value, children, ...rest }) => <option value={value} {...rest}>{children}</option>;
+// Form.Select.Option is a data-only component — FormSelect reads its props, not its render output
+Form.Select.Option = ({ value, children, ...rest }) => null;
 Form.Switch = FormSwitch;
 Form.Checkbox = FormCheckbox;
 Form.RadioGroup = FormRadioGroup;

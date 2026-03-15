@@ -81,13 +81,17 @@ const Modal = ({
         className={cn(fullScreen && 'max-h-[95vh]', size === 'full-width' && 'max-h-[95vh]', className)}
         style={{ ...(resolvedWidth ? { maxWidth: typeof resolvedWidth === 'number' ? `${resolvedWidth}px` : resolvedWidth } : {}), ...style }}
         onInteractOutside={maskClosable ? undefined : (e) => e.preventDefault()}
+        aria-describedby={undefined}
       >
-        {title && (
+        {title ? (
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
           </DialogHeader>
+        ) : (
+          <DialogHeader className='sr-only'>
+            <DialogTitle>Dialog</DialogTitle>
+          </DialogHeader>
         )}
-        <DialogDescription className='sr-only'>{typeof title === 'string' ? title : 'Dialog'}</DialogDescription>
         <div style={bodyStyle}>{children}</div>
         {footer !== null && (footer !== undefined ? footer : defaultFooter)}
       </DialogContent>
@@ -173,6 +177,7 @@ function createImperativeModal(type, config) {
           className={config.className}
           style={config.width ? { maxWidth: typeof config.width === 'number' ? `${config.width}px` : config.width } : undefined}
           onInteractOutside={config.maskClosable === false ? (e) => e.preventDefault() : undefined}
+          aria-describedby={undefined}
         >
           <DialogHeader>
             <DialogTitle className='flex items-center gap-2'>
@@ -180,7 +185,6 @@ function createImperativeModal(type, config) {
               {config.title || ''}
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription className='sr-only'>{typeof config.title === 'string' ? config.title : 'Dialog'}</DialogDescription>
           {config.content && (
             <div className='text-sm text-muted-foreground py-2'>
               {config.content}
