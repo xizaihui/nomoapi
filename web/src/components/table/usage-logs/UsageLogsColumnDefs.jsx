@@ -44,23 +44,29 @@ import {
 import { IconHelpCircle } from '@/components/compat/icons';
 import { Route, Sparkles } from 'lucide-react';
 
-const colors = [
-  'amber',
-  'blue',
-  'cyan',
-  'green',
-  'grey',
-  'indigo',
-  'light-blue',
-  'lime',
-  'orange',
-  'pink',
-  'purple',
-  'red',
-  'teal',
-  'violet',
-  'yellow',
-];
+// 极简 monochrome pill 组件
+const Pill = ({ children, variant = 'default', className = '', ...props }) => {
+  const variants = {
+    default: 'bg-muted text-muted-foreground',
+    outline: 'border border-border text-muted-foreground',
+    subtle: 'text-muted-foreground',
+    success: 'bg-foreground/5 text-foreground',
+    danger: 'bg-foreground/5 text-foreground',
+  };
+  return (
+    <span
+      className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${variants[variant] || variants.default} ${className}`}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
+
+// 状态点
+const StatusDot = ({ active }) => (
+  <span className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${active ? 'bg-foreground' : 'bg-muted-foreground/40'}`} />
+);
 
 function formatRatio(ratio) {
   if (ratio === undefined || ratio === null) {
@@ -100,131 +106,57 @@ function buildChannelAffinityTooltip(affinity, t) {
   );
 }
 
-// Render functions
+// Render functions — 极简黑白灰风格
 function renderType(type, t) {
-  switch (type) {
-    case 1:
-      return (
-        <Tag color='cyan' shape='circle'>
-          {t('充值')}
-        </Tag>
-      );
-    case 2:
-      return (
-        <Tag color='lime' shape='circle'>
-          {t('消费')}
-        </Tag>
-      );
-    case 3:
-      return (
-        <Tag color='orange' shape='circle'>
-          {t('管理')}
-        </Tag>
-      );
-    case 4:
-      return (
-        <Tag color='purple' shape='circle'>
-          {t('系统')}
-        </Tag>
-      );
-    case 5:
-      return (
-        <Tag color='red' shape='circle'>
-          {t('错误')}
-        </Tag>
-      );
-    case 6:
-      return (
-        <Tag color='teal' shape='circle'>
-          {t('退款')}
-        </Tag>
-      );
-    default:
-      return (
-        <Tag color='grey' shape='circle'>
-          {t('未知')}
-        </Tag>
-      );
-  }
+  const labels = {
+    1: t('充值'),
+    2: t('消费'),
+    3: t('管理'),
+    4: t('系统'),
+    5: t('错误'),
+    6: t('退款'),
+  };
+  const label = labels[type] || t('未知');
+  const isError = type === 5;
+  return (
+    <Pill variant={isError ? 'outline' : 'default'}>
+      <StatusDot active={type === 2 || type === 5} />
+      {label}
+    </Pill>
+  );
 }
 
 function renderIsStream(bool, t) {
-  if (bool) {
-    return (
-      <Tag color='blue' shape='circle'>
-        {t('流')}
-      </Tag>
-    );
-  } else {
-    return (
-      <Tag color='purple' shape='circle'>
-        {t('非流')}
-      </Tag>
-    );
-  }
+  return (
+    <Pill variant='subtle'>
+      {bool ? t('流') : t('非流')}
+    </Pill>
+  );
 }
 
 function renderUseTime(type, t) {
   const time = parseInt(type);
-  if (time < 101) {
-    return (
-      <Tag color='green' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
-  } else if (time < 300) {
-    return (
-      <Tag color='orange' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
-  } else {
-    return (
-      <Tag color='red' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
-  }
+  return (
+    <span className='text-xs tabular-nums text-muted-foreground'>
+      {time}s
+    </span>
+  );
 }
 
 function renderFirstUseTime(type, t) {
   let time = parseFloat(type) / 1000.0;
   time = time.toFixed(1);
-  if (time < 3) {
-    return (
-      <Tag color='green' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
-  } else if (time < 10) {
-    return (
-      <Tag color='orange' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
-  } else {
-    return (
-      <Tag color='red' shape='circle'>
-        {' '}
-        {time} s{' '}
-      </Tag>
-    );
-  }
+  return (
+    <span className='text-xs tabular-nums text-muted-foreground'>
+      {time}s
+    </span>
+  );
 }
 
 function renderBillingTag(record, t) {
   const other = getLogOther(record.other);
   if (other?.billing_source === 'subscription') {
-    return (
-      <Tag color='green' shape='circle'>
-        {t('订阅抵扣')}
-      </Tag>
-    );
+    return <Pill variant='outline'>{t('订阅抵扣')}</Pill>;
   }
   return null;
 }
@@ -380,12 +312,9 @@ export const getLogsColumns = ({
             <span style={{ position: 'relative', display: 'inline-block' }}>
               <Tooltip content={record.channel_name || t('未知渠道')}>
                 <span>
-                  <Tag
-                    color={colors[parseInt(text) % colors.length]}
-                    shape='circle'
-                  >
+                  <Pill variant='outline'>
                     {text}
-                  </Tag>
+                  </Pill>
                 </span>
               </Tooltip>
               {showMarker && (
@@ -407,30 +336,28 @@ export const getLogsColumns = ({
                       right: -4,
                       top: -4,
                       lineHeight: 1,
-                      fontWeight: 600,
-                      color: '#f59e0b',
                       cursor: 'pointer',
                       userSelect: 'none',
                     }}
+                    className='text-muted-foreground'
                     onClick={(e) => {
                       e.stopPropagation();
                       openChannelAffinityUsageCacheModal?.(affinity);
                     }}
                   >
                     <Sparkles
-                      size={14}
+                      size={12}
                       strokeWidth={2}
                       color='currentColor'
-                      fill='currentColor'
                     />
                   </span>
                 </Tooltip>
               )}
             </span>
             {isMultiKey && (
-              <Tag color='white' shape='circle'>
+              <Pill variant='subtle'>
                 {multiKeyIndex}
-              </Tag>
+              </Pill>
             )}
           </Space>
         ) : null;
@@ -442,19 +369,17 @@ export const getLogsColumns = ({
       dataIndex: 'username',
       render: (text, record, index) => {
         return isAdminUser ? (
-          <div>
-            <Avatar
-              size='extra-small'
-              color={stringToColor(text)}
-              style={{ marginRight: 4 }}
+          <div className='flex items-center gap-1.5'>
+            <span
+              className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-muted text-muted-foreground text-[10px] font-medium cursor-pointer flex-shrink-0'
               onClick={(event) => {
                 event.stopPropagation();
                 showUserInfoFunc(record.user_id);
               }}
             >
-              {typeof text === 'string' && text.slice(0, 1)}
-            </Avatar>
-            {text}
+              {typeof text === 'string' && text.slice(0, 1).toUpperCase()}
+            </span>
+            <span className='text-sm'>{text}</span>
           </div>
         ) : (
           <></>
@@ -467,18 +392,14 @@ export const getLogsColumns = ({
       dataIndex: 'token_name',
       render: (text, record, index) => {
         return record.type === 0 || record.type === 2 || record.type === 5 || record.type === 6 ? (
-          <div>
-            <Tag
-              color='grey'
-              shape='circle'
-              onClick={(event) => {
-                copyText(event, text);
-              }}
-            >
-              {' '}
-              {t(text)}{' '}
-            </Tag>
-          </div>
+          <span
+            className='text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors'
+            onClick={(event) => {
+              copyText(event, text);
+            }}
+          >
+            {t(text)}
+          </span>
         ) : (
           <></>
         );
@@ -491,7 +412,7 @@ export const getLogsColumns = ({
       render: (text, record, index) => {
         if (record.type === 0 || record.type === 2 || record.type === 5 || record.type === 6) {
           if (record.group) {
-            return <>{renderGroup(record.group)}</>;
+            return <Pill variant='subtle'>{record.group}</Pill>;
           } else {
             let other = null;
             try {
@@ -506,7 +427,7 @@ export const getLogsColumns = ({
               return <></>;
             }
             if (other.group !== undefined) {
-              return <>{renderGroup(other.group)}</>;
+              return <Pill variant='subtle'>{other.group}</Pill>;
             } else {
               return <></>;
             }
@@ -547,22 +468,21 @@ export const getLogsColumns = ({
         if (record.is_stream) {
           let other = getLogOther(record.other);
           return (
-            <>
-              <Space>
-                {renderUseTime(text, t)}
-                {renderFirstUseTime(other?.frt, t)}
-                {renderIsStream(record.is_stream, t)}
-              </Space>
-            </>
+            <div className='flex items-center gap-2'>
+              {renderUseTime(text, t)}
+              <span className='text-muted-foreground/30'>·</span>
+              {renderFirstUseTime(other?.frt, t)}
+              <span className='text-muted-foreground/30'>·</span>
+              {renderIsStream(record.is_stream, t)}
+            </div>
           );
         } else {
           return (
-            <>
-              <Space>
-                {renderUseTime(text, t)}
-                {renderIsStream(record.is_stream, t)}
-              </Space>
-            </>
+            <div className='flex items-center gap-2'>
+              {renderUseTime(text, t)}
+              <span className='text-muted-foreground/30'>·</span>
+              {renderIsStream(record.is_stream, t)}
+            </div>
           );
         }
       },
@@ -577,7 +497,7 @@ export const getLogsColumns = ({
               '根据 Anthropic 协定，/v1/messages 的输入 tokens 仅统计非缓存输入，不包含缓存读取与缓存写入 tokens。',
             )}
           >
-            <IconHelpCircle className='text-gray-400 cursor-help' />
+            <IconHelpCircle className='text-muted-foreground/50 cursor-help w-3.5 h-3.5' />
           </Tooltip>
         </div>
       ),
@@ -597,24 +517,10 @@ export const getLogsColumns = ({
         }
 
         return record.type === 0 || record.type === 2 || record.type === 5 || record.type === 6 ? (
-          <div
-            style={{
-              display: 'inline-flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              lineHeight: 1.2,
-            }}
-          >
-            <span>{text}</span>
+          <div className='flex flex-col'>
+            <span className='text-sm tabular-nums'>{text}</span>
             {cacheText ? (
-              <span
-                style={{
-                  marginTop: 2,
-                  fontSize: 11,
-                  color: 'hsl(var(--muted-foreground))',
-                  whiteSpace: 'nowrap',
-                }}
-              >
+              <span className='text-[11px] text-muted-foreground/60 mt-0.5'>
                 {cacheText}
               </span>
             ) : null}
@@ -631,7 +537,7 @@ export const getLogsColumns = ({
       render: (text, record, index) => {
         return parseInt(text) > 0 &&
           (record.type === 0 || record.type === 2 || record.type === 5 || record.type === 6) ? (
-          <>{<span> {text} </span>}</>
+          <span className='text-sm tabular-nums'>{text}</span>
         ) : (
           <></>
         );
@@ -648,14 +554,13 @@ export const getLogsColumns = ({
         const other = getLogOther(record.other);
         const isSubscription = other?.billing_source === 'subscription';
         if (isSubscription) {
-          // Subscription billed: show only tag (no $0), but keep tooltip for equivalent cost.
           return (
             <Tooltip content={`${t('由订阅抵扣')}：${renderQuota(text, 6)}`}>
               <span>{renderBillingTag(record, t)}</span>
             </Tooltip>
           );
         }
-        return <>{renderQuota(text, 6)}</>;
+        return <span className='text-sm tabular-nums'>{renderQuota(text, 6)}</span>;
       },
     },
     {
@@ -668,7 +573,7 @@ export const getLogsColumns = ({
               '只有当用户设置开启IP记录时，才会进行请求和错误类型日志的IP记录',
             )}
           >
-            <IconHelpCircle className='text-gray-400 cursor-help' />
+            <IconHelpCircle className='text-muted-foreground/50 cursor-help w-3.5 h-3.5' />
           </Tooltip>
         </div>
       ),
@@ -676,16 +581,13 @@ export const getLogsColumns = ({
       render: (text, record, index) => {
         return (record.type === 2 || record.type === 5) && text ? (
           <Tooltip content={text}>
-            <span>
-              <Tag
-                color='orange'
-                shape='circle'
-                onClick={(event) => {
-                  copyText(event, text);
-                }}
-              >
-                {text}
-              </Tag>
+            <span
+              className='text-xs text-muted-foreground font-mono cursor-pointer hover:text-foreground transition-colors'
+              onClick={(event) => {
+                copyText(event, text);
+              }}
+            >
+              {text}
             </span>
           </Tooltip>
         ) : (
@@ -719,7 +621,7 @@ export const getLogsColumns = ({
             }
           }
         }
-        return isAdminUser ? <div>{content}</div> : <></>;
+        return isAdminUser ? <span className='text-xs text-muted-foreground'>{content}</span> : <></>;
       },
     },
     {
