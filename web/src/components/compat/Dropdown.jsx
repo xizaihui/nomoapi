@@ -34,7 +34,7 @@ const renderMenuItems = (menu) => {
         key={item.node || item.key || idx}
         disabled={item.disabled}
         onClick={() => item.onClick?.()}
-        className={item.active ? 'bg-accent' : ''}
+        className={item.active ? 'bg-muted' : ''}
       >
         {item.icon && <span className='mr-2'>{item.icon}</span>}
         {item.name || item.node}
@@ -78,9 +78,9 @@ const Item = ({ children, onClick, disabled, icon, active, className, type, ...r
         className={cn(
           'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
           'hover:bg-muted',
-          'focus:bg-accent focus:text-accent-foreground',
+          'focus:bg-muted focus:text-accent-foreground',
           disabled && 'pointer-events-none opacity-50',
-          active && 'bg-accent',
+          active && 'bg-muted',
           className
         )}
         {...rest}
@@ -92,7 +92,7 @@ const Item = ({ children, onClick, disabled, icon, active, className, type, ...r
   }
 
   return (
-    <DropdownMenuItem onClick={onClick} disabled={disabled} className={cn(active && 'bg-accent', className)} {...rest}>
+    <DropdownMenuItem onClick={onClick} disabled={disabled} className={cn(active && 'bg-muted', className)} {...rest}>
       {icon && <span className='mr-2'>{icon}</span>}
       {children}
     </DropdownMenuItem>

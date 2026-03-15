@@ -51,7 +51,7 @@ const DatePicker = React.forwardRef(({
             const newStart = fromInputValue(e.target.value);
             onChange?.([newStart, end instanceof Date ? end : fromInputValue(end)]);
           }}
-          className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+          className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
         />
         <span className='text-muted-foreground text-sm'>~</span>
         <input
@@ -63,7 +63,7 @@ const DatePicker = React.forwardRef(({
             const newEnd = fromInputValue(e.target.value);
             onChange?.([start instanceof Date ? start : fromInputValue(start), newEnd]);
           }}
-          className='flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+          className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
         />
       </div>
     );
@@ -80,7 +80,7 @@ const DatePicker = React.forwardRef(({
       onChange={(e) => {
         onChange?.(fromInputValue(e.target.value));
       }}
-      className={cn('flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50', className)}
+      className={cn('flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50', className)}
       style={style}
     />
   );

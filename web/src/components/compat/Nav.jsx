@@ -51,7 +51,7 @@ const Nav = React.forwardRef(({
           onClick={() => handleSelect({ itemKey: item.itemKey, selectedKeys: [item.itemKey] })}
           className={cn(
             'flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
-            isActive ? 'bg-accent text-accent-foreground font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+            isActive ? 'bg-muted text-accent-foreground font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
             isCollapsed && 'justify-center px-2'
           )}
           title={isCollapsed ? item.text : undefined}

@@ -40,7 +40,7 @@ const Calendar = ({ mode, onChange, dateGridRender, className, style, ...rest })
             prev.setMonth(prev.getMonth() - 1);
             handleMonthChange(prev);
           }}
-          className='h-7 w-7 inline-flex items-center justify-center rounded-md border border-input bg-transparent hover:bg-accent hover:text-accent-foreground'
+          className='h-7 w-7 inline-flex items-center justify-center rounded-md border border-border bg-transparent hover:bg-muted hover:text-accent-foreground'
         >
           <ChevronLeft className='h-4 w-4' />
         </button>
@@ -55,7 +55,7 @@ const Calendar = ({ mode, onChange, dateGridRender, className, style, ...rest })
             next.setMonth(next.getMonth() + 1);
             handleMonthChange(next);
           }}
-          className='h-7 w-7 inline-flex items-center justify-center rounded-md border border-input bg-transparent hover:bg-accent hover:text-accent-foreground'
+          className='h-7 w-7 inline-flex items-center justify-center rounded-md border border-border bg-transparent hover:bg-muted hover:text-accent-foreground'
         >
           <ChevronRight className='h-4 w-4' />
         </button>
@@ -82,7 +82,7 @@ const CalendarGrid = ({ month, renderDay }) => {
     const date = new Date(year, m, d);
     cells.push(
       <td key={d} className='p-1 text-center align-top'>
-        <div className='relative w-10 h-10 mx-auto flex items-center justify-center rounded-md hover:bg-accent text-sm'>
+        <div className='relative w-10 h-10 mx-auto flex items-center justify-center rounded-md hover:bg-muted text-sm'>
           {renderDay(date)}
         </div>
       </td>

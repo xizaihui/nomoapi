@@ -50,7 +50,7 @@ const TagInput = React.forwardRef(
       <div
         ref={ref}
         className={cn(
-          'flex flex-wrap items-center gap-1 rounded-md border border-input bg-background px-2 py-1 ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+          'flex flex-wrap items-center gap-1 rounded-md border border-border bg-background px-2 py-1 focus-within:border-foreground/30',
           disabled && 'opacity-50 cursor-not-allowed',
           sizeClass,
           className

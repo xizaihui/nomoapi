@@ -263,7 +263,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
               type='text'
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              className='mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm'
+              className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
               placeholder={t('例如：色情内容检测')}
             />
           </div>
@@ -274,7 +274,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
               <select
                 value={form.category}
                 onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                className='mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm'
+                className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
               >
                 {Object.entries(CATEGORIES).map(([k, v]) => (
                   <option key={k} value={k}>{v.icon} {v.label}</option>
@@ -286,7 +286,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
               <select
                 value={form.rule_type}
                 onChange={(e) => setForm((f) => ({ ...f, rule_type: e.target.value }))}
-                className='mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm'
+                className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
               >
                 {Object.entries(RULE_TYPES).map(([k, v]) => (
                   <option key={k} value={k}>{v.label}</option>
@@ -300,7 +300,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
             <select
               value={form.risk_level}
               onChange={(e) => setForm((f) => ({ ...f, risk_level: e.target.value }))}
-              className='mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm'
+              className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
             >
               <option value={1}>{t('可疑')}</option>
               <option value={2}>{t('危险')}</option>
@@ -316,7 +316,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
               value={form.patterns}
               onChange={(e) => setForm((f) => ({ ...f, patterns: e.target.value }))}
               rows={6}
-              className='mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-mono'
+              className='mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm font-mono'
               placeholder={form.rule_type === 'keyword' ? t('色情\n赌博\n毒品') : t('(?i)password\\s*[:=]\\s*\\S+')}
             />
           </div>
@@ -327,7 +327,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
               type='text'
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-              className='mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm'
+              className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
               placeholder={t('规则的简要说明')}
             />
           </div>

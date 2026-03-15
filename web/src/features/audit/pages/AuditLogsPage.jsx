@@ -63,19 +63,19 @@ const AuditLogsPage = () => {
             placeholder={t('用户名')}
             value={filters.username}
             onChange={(e) => setFilters((f) => ({ ...f, username: e.target.value }))}
-            className='h-9 rounded-md border border-input bg-background px-3 text-sm'
+            className='h-9 rounded-md border border-border bg-background px-3 text-sm'
           />
           <input
             type='text'
             placeholder={t('搜索提问内容')}
             value={filters.keyword}
             onChange={(e) => setFilters((f) => ({ ...f, keyword: e.target.value }))}
-            className='h-9 rounded-md border border-input bg-background px-3 text-sm'
+            className='h-9 rounded-md border border-border bg-background px-3 text-sm'
           />
           <select
             value={filters.risk_level}
             onChange={(e) => setFilters((f) => ({ ...f, risk_level: e.target.value }))}
-            className='h-9 rounded-md border border-input bg-background px-3 text-sm'
+            className='h-9 rounded-md border border-border bg-background px-3 text-sm'
           >
             <option value=''>{t('全部风险等级')}</option>
             {Object.entries(RISK_LEVELS).map(([k, v]) => (
@@ -85,7 +85,7 @@ const AuditLogsPage = () => {
           <select
             value={filters.risk_category}
             onChange={(e) => setFilters((f) => ({ ...f, risk_category: e.target.value }))}
-            className='h-9 rounded-md border border-input bg-background px-3 text-sm'
+            className='h-9 rounded-md border border-border bg-background px-3 text-sm'
           >
             <option value=''>{t('全部规则类型')}</option>
             {Object.entries(CATEGORIES).map(([k, v]) => (
@@ -201,7 +201,7 @@ const AuditLogsPage = () => {
                                     placeholder={t('审阅备注（可选）')}
                                     value={reviewNote}
                                     onChange={(e) => setReviewNote(e.target.value)}
-                                    className='flex-1 h-8 rounded-md border border-input bg-background px-3 text-sm'
+                                    className='flex-1 h-8 rounded-md border border-border bg-background px-3 text-sm'
                                   />
                                   <button
                                     onClick={() => handleReview(log.request_id)}
