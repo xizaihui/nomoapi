@@ -74,8 +74,7 @@ const UserInfoHeader = ({ t, userState }) => {
                 </Avatar>
                 <div className='flex-1 min-w-0 flex flex-col justify-between'>
                   <div
-                    className='text-3xl font-bold truncate'
-                    style={{ color: 'white' }}
+                    className='text-3xl font-bold truncate text-white'
                   >
                     {getUsername()}
                   </div>
@@ -84,7 +83,7 @@ const UserInfoHeader = ({ t, userState }) => {
                       <Tag
                         size='large'
                         shape='circle'
-                        style={{ color: 'white' }}
+                        className='bg-white/20 text-white border-white/30 backdrop-blur-sm'
                       >
                         {t('超级管理员')}
                       </Tag>
@@ -92,7 +91,7 @@ const UserInfoHeader = ({ t, userState }) => {
                       <Tag
                         size='large'
                         shape='circle'
-                        style={{ color: 'white' }}
+                        className='bg-white/20 text-white border-white/30 backdrop-blur-sm'
                       >
                         {t('管理员')}
                       </Tag>
@@ -100,12 +99,12 @@ const UserInfoHeader = ({ t, userState }) => {
                       <Tag
                         size='large'
                         shape='circle'
-                        style={{ color: 'white' }}
+                        className='bg-white/20 text-white border-white/30 backdrop-blur-sm'
                       >
                         {t('普通用户')}
                       </Tag>
                     )}
-                    <Tag size='large' shape='circle' style={{ color: 'white' }}>
+                    <Tag size='large' shape='circle' className='bg-white/20 text-white border-white/30 backdrop-blur-sm'>
                       ID: {userState?.user?.id}
                     </Tag>
                   </div>

@@ -42,6 +42,9 @@ const Tag = React.forwardRef(
   ({ children, color, type, size = 'default', closable, onClose, visible = true, shape, prefixIcon, suffixIcon, avatarSrc, avatarShape, className, style, onClick, ...rest }, ref) => {
     if (!visible) return null;
 
+    // Detect if style requests white text without a color/type — needs a dark background
+    const needsDarkBg = !color && !type && style?.color === 'white';
+
     // If a named color is provided, use custom color classes
     if (color && COLOR_MAP[color]) {
       return (
@@ -96,7 +99,10 @@ const Tag = React.forwardRef(
       );
     }
 
-    const variant = TYPE_MAP[type] || 'secondary';
+    const variant = TYPE_MAP[type] || (needsDarkBg ? 'default' : 'secondary');
+
+    // Strip white color from style when using default variant (it already has white text)
+    const effectiveStyle = needsDarkBg ? { ...style, color: undefined } : style;
 
     return (
       <Badge
@@ -108,7 +114,7 @@ const Tag = React.forwardRef(
           onClick && 'cursor-pointer',
           className
         )}
-        style={style}
+        style={effectiveStyle}
         onClick={onClick}
         {...rest}
       >
