@@ -47,7 +47,7 @@ import { useIsMobile } from '../../../../../hooks/common/useIsMobile';
 
 const CARD_STYLES = {
   container:
-    'w-12 h-12 rounded-2xl flex items-center justify-center relative shadow-sm',
+    'w-12 h-12 rounded-xl flex items-center justify-center relative shadow-sm',
   icon: 'w-8 h-8 flex items-center justify-center',
   selected: 'border-blue-500 bg-muted/30',
   default: 'border-gray-200 hover:border-gray-300',
@@ -253,7 +253,7 @@ const PricingCardView = ({
           return (
             <Card
               key={modelKey || index}
-              className={`!rounded-2xl transition-all duration-200 hover:shadow-sm border cursor-pointer ${isSelected ? CARD_STYLES.selected : CARD_STYLES.default}`}
+              className={`!rounded-xl transition-all duration-200 hover:shadow-sm border cursor-pointer ${isSelected ? CARD_STYLES.selected : CARD_STYLES.default}`}
               bodyStyle={{ height: '100%' }}
               onClick={() => openModelDetail && openModelDetail(model)}
             >

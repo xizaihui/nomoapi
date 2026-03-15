@@ -647,7 +647,7 @@ const SubscriptionPlansCard = ({
   return (
     <>
       {withCard ? (
-        <Card className='!rounded-2xl shadow-sm border-0'>{cardContent}</Card>
+        <Card className='!rounded-xl shadow-sm border-0'>{cardContent}</Card>
       ) : (
         <div className='space-y-3'>{cardContent}</div>
       )}

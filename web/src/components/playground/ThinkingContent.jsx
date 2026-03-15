@@ -71,7 +71,7 @@ const ThinkingContent = ({
   }
 
   return (
-    <div className='rounded-xl sm:rounded-2xl mb-2 sm:mb-4 overflow-hidden shadow-sm backdrop-blur-sm'>
+    <div className='rounded-xl sm:rounded-xl mb-2 sm:mb-4 overflow-hidden shadow-sm backdrop-blur-sm'>
       <div
         className='flex items-center justify-between p-3 cursor-pointer hover:bg-gradient-to-r hover:from-white/20 hover:to-purple-50/30 transition-all'
         style={{

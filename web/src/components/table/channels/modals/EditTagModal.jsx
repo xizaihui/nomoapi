@@ -420,7 +420,7 @@ const EditTagModal = (props) => {
         {() => (
           <Spin spinning={loading}>
             <div className='p-2'>
-              <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+              <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                 {/* Header: Tag Info */}
                 <div className='flex items-center mb-2'>
                   <Avatar size='small' color='blue' className='mr-2 shadow-sm'>
@@ -450,7 +450,7 @@ const EditTagModal = (props) => {
                 </div>
               </Card>
 
-              <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+              <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                 {/* Header: Model Config */}
                 <div className='flex items-center mb-2'>
                   <Avatar
@@ -560,7 +560,7 @@ const EditTagModal = (props) => {
                 </div>
               </Card>
 
-              <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+              <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                 {/* Header: Advanced Settings */}
                 <div className='flex items-center mb-2'>
                   <Avatar
@@ -713,7 +713,7 @@ const EditTagModal = (props) => {
                 </div>
               </Card>
 
-              <Card className='!rounded-2xl shadow-sm border-0'>
+              <Card className='!rounded-xl shadow-sm border-0'>
                 {/* Header: Group Settings */}
                 <div className='flex items-center mb-2'>
                   <Avatar size='small' color='green' className='mr-2 shadow-sm'>

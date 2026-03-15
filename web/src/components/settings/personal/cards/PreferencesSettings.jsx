@@ -120,7 +120,7 @@ const PreferencesSettings = ({ t }) => {
 	};
 
 	return (
-		<Card className="!rounded-2xl shadow-sm border-0">
+		<Card className="!rounded-xl shadow-sm border-0">
 			{/* Card Header */}
 			<div className="flex items-center mb-4">
 				<Avatar size="small" color="violet" className="mr-3 shadow-sm">

@@ -100,7 +100,7 @@ const PricingVendorIntroSkeleton = memo(
   ({ isAllVendors = false, isMobile = false }) => {
     const placeholder = (
       <Card
-        className='!rounded-2xl shadow-sm border-0'
+        className='!rounded-xl shadow-sm border-0'
         cover={
           <div
             className='relative h-full'
@@ -153,7 +153,7 @@ const PricingVendorIntroSkeleton = memo(
                 </div>
               </div>
 
-              <div className='flex-shrink-0 w-16 h-16 rounded-2xl bg-white/90 shadow-sm backdrop-blur-sm flex items-center justify-center'>
+              <div className='flex-shrink-0 w-16 h-16 rounded-xl bg-white/90 shadow-sm backdrop-blur-sm flex items-center justify-center'>
                 {createSkeletonRect(
                   {
                     ...SKELETON_STYLES.avatar(isAllVendors),

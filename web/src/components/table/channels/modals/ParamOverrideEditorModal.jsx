@@ -1956,7 +1956,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
           <div style={{ width: '100%' }}>
             {visualMode === 'legacy' ? (
               <Card
-                className='!rounded-2xl !border-0'
+                className='!rounded-xl !border-0'
                 bodyStyle={{
                   padding: 14,
                   background: 'hsl(var(--muted))',
@@ -1989,7 +1989,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
                 <Row gutter={12}>
                   <Col xs={24} md={8}>
                     <Card
-                      className='!rounded-2xl !border-0 h-full'
+                      className='!rounded-xl !border-0 h-full'
                       bodyStyle={{
                         padding: 12,
                         background: 'hsl(var(--muted))',
@@ -2185,7 +2185,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
                             : null;
                         return (
                           <Card
-                            className='!rounded-2xl !border-0'
+                            className='!rounded-xl !border-0'
                             bodyStyle={{
                               padding: 14,
                               background: 'hsl(var(--muted))',
@@ -3271,7 +3271,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
                       })()
                     ) : (
                       <Card
-                        className='!rounded-2xl !border-0'
+                        className='!rounded-xl !border-0'
                         bodyStyle={{
                           padding: 14,
                           background: 'hsl(var(--muted))',
@@ -3285,7 +3285,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
 
                     {visualValidationError ? (
                       <Card
-                        className='!rounded-2xl !border-0 mt-3'
+                        className='!rounded-xl !border-0 mt-3'
                         bodyStyle={{
                           padding: 12,
                           background: 'hsl(var(--muted))',

@@ -353,7 +353,7 @@ const NotificationSettings = ({
 
   return (
     <Card
-      className='!rounded-2xl shadow-sm border-0'
+      className='!rounded-xl shadow-sm border-0'
       footer={
         <div className='flex justify-end gap-3'>
           {activeTabKey === 'sidebar' ? (

@@ -2169,7 +2169,7 @@ const EditChannelModal = (props) => {
             <Spin spinning={loading}>
               <div className='p-2 space-y-3' ref={formContainerRef}>
                 <div ref={(el) => (formSectionRefs.current.basicInfo = el)}>
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                     {/* Header: Basic Info */}
                     <div className='flex items-center mb-2'>
                       <Avatar
@@ -2843,7 +2843,7 @@ const EditChannelModal = (props) => {
                 {/* API Configuration Card */}
                 {showApiConfigCard && (
                   <div ref={(el) => (formSectionRefs.current.apiConfig = el)}>
-                    <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                    <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                       {/* Header: API Config */}
                       <div
                         className='flex items-center mb-2'
@@ -3077,7 +3077,7 @@ const EditChannelModal = (props) => {
 
                 {/* Model Configuration Card */}
                 <div ref={(el) => (formSectionRefs.current.modelConfig = el)}>
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                     {/* Header: Model Config */}
                     <div className='flex items-center mb-2'>
                       <Avatar
@@ -3366,7 +3366,7 @@ const EditChannelModal = (props) => {
                 <div
                   ref={(el) => (formSectionRefs.current.advancedSettings = el)}
                 >
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                     {/* Header: Advanced Settings */}
                     <div className='flex items-center mb-2'>
                       <Avatar
@@ -3803,7 +3803,7 @@ const EditChannelModal = (props) => {
                     (formSectionRefs.current.channelExtraSettings = el)
                   }
                 >
-                  <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+                  <Card className='!rounded-xl shadow-sm border-0 mb-6'>
                     {/* Header: Channel Extra Settings */}
                     <div className='flex items-center mb-2'>
                       <Avatar

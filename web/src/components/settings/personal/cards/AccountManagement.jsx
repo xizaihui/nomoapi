@@ -169,7 +169,7 @@ const AccountManagement = ({
     : t('尚未使用');
 
   return (
-    <Card className='!rounded-2xl'>
+    <Card className='!rounded-xl'>
       {/* 卡片头部 */}
       <div className='flex items-center mb-4'>
         <Avatar size='small' color='teal' className='mr-3 shadow-sm'>

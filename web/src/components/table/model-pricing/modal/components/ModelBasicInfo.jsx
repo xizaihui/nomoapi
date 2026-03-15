@@ -58,7 +58,7 @@ const ModelBasicInfo = ({ modelData, vendorsMap = {}, t }) => {
   };
 
   return (
-    <Card className='!rounded-2xl shadow-sm border-0 mb-6'>
+    <Card className='!rounded-xl shadow-sm border-0 mb-6'>
       <div className='flex items-center mb-4'>
         <Avatar size='small' color='blue' className='mr-2 shadow-sm'>
           <IconInfoCircle size={16} />
