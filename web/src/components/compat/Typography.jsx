@@ -7,11 +7,11 @@ const Text = React.forwardRef(
     const colorMap = {
       primary: 'text-foreground',
       secondary: 'text-muted-foreground',
-      tertiary: 'text-muted-foreground/70',
-      quaternary: 'text-muted-foreground/50',
-      success: 'text-[hsl(var(--chart-2))]',
-      warning: 'text-[hsl(var(--chart-4))]',
-      danger: 'text-destructive',
+      tertiary: 'text-gray-500 dark:text-gray-400',
+      quaternary: 'text-gray-400 dark:text-gray-500',
+      success: 'text-green-600 dark:text-green-400',
+      warning: 'text-amber-600 dark:text-amber-400',
+      danger: 'text-red-600 dark:text-red-400',
     };
     const sizeMap = {
       small: 'text-xs',
@@ -71,10 +71,10 @@ const Paragraph = React.forwardRef(
   ({ children, type, size, ellipsis, className, style, ...rest }, ref) => {
     const colorMap = {
       secondary: 'text-muted-foreground',
-      tertiary: 'text-muted-foreground/70',
-      success: 'text-[hsl(var(--chart-2))]',
-      warning: 'text-[hsl(var(--chart-4))]',
-      danger: 'text-destructive',
+      tertiary: 'text-gray-500 dark:text-gray-400',
+      success: 'text-green-600 dark:text-green-400',
+      warning: 'text-amber-600 dark:text-amber-400',
+      danger: 'text-red-600 dark:text-red-400',
     };
     return (
       <p ref={ref} className={cn('text-sm leading-relaxed', colorMap[type], ellipsis && 'truncate', className)} style={style} {...rest}>
