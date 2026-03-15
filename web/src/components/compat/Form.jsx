@@ -218,7 +218,7 @@ const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter
   const { placeholder, disabled, className: inputClassName, style: inputStyle, size, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, name, ...safeRest } = rest;
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
-      <div className='flex items-center w-full rounded-md border border-border bg-background focus-within:ring-1 focus-within:ring-ring'>
+      <div className='flex items-center w-full rounded-md border border-border bg-background transition-colors focus-within:border-foreground/30'>
         {prefix && <span className='flex items-center pl-3 text-muted-foreground'>{prefix}</span>}
         <input
           type={inputType}
@@ -279,7 +279,7 @@ const FormTextArea = ({ field, label, autosize, maxCount, onChange: onChangeProp
         disabled={disabled}
         rows={minRows}
         style={{ ...style, overflow: autosize ? 'hidden' : undefined, resize: autosize ? 'none' : undefined }}
-        className='flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+        className='flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-foreground/30 disabled:cursor-not-allowed disabled:opacity-50'
       />
     </FormField>
   );
@@ -304,7 +304,7 @@ const FormInputNumber = ({ field, label, min, max, step, prefix, suffix, ...rest
         placeholder={placeholder}
         disabled={disabled}
         style={style}
-        className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+        className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-foreground/30 disabled:cursor-not-allowed disabled:opacity-50'
       />
     </FormField>
   );
@@ -401,7 +401,7 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
       <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
         <div ref={containerRef} className='relative' style={style}>
           <div
-            className='flex flex-wrap items-center gap-1 min-h-[36px] w-full rounded-md border border-border bg-background px-2 py-1 text-sm focus-within:ring-1 focus-within:ring-ring cursor-text'
+            className='flex flex-wrap items-center gap-1 min-h-[36px] w-full rounded-md border border-border bg-background px-2 py-1 text-sm focus-within:border-foreground/30 cursor-text'
             onClick={() => { setIsOpen(true); inputRef.current?.focus(); }}
           >
             {selected.map((val) => {
@@ -490,7 +490,7 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
         }}
         disabled={disabled || loading}
         style={style}
-        className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+        className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:border-foreground/30 disabled:cursor-not-allowed disabled:opacity-50'
       >
         {placeholder && !value && <option value=''>{placeholder}</option>}
         {options.map((opt) => (
@@ -517,7 +517,7 @@ const FormSwitch = ({ field, label, checkedText, uncheckedText, ...rest }) => {
         disabled={disabled}
         onClick={() => field && formApi.setValue(field, !checked)}
         className={cn(
-          'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+          'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:border-foreground/30',
           checked ? 'bg-foreground' : 'bg-muted',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
@@ -632,7 +632,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
               value={formatForInput(rangeVal[0])}
               onChange={(e) => handleRangeChange(0, e.target.value)}
               placeholder={placeholders[0]}
-              className='flex h-8 flex-1 rounded-md border border-border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+              className='flex h-8 flex-1 rounded-md border border-border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:border-foreground/30'
             />
             <span className='text-muted-foreground text-xs'>~</span>
             <input
@@ -640,7 +640,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
               value={formatForInput(rangeVal[1])}
               onChange={(e) => handleRangeChange(1, e.target.value)}
               placeholder={placeholders[1]}
-              className='flex h-8 flex-1 rounded-md border border-border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+              className='flex h-8 flex-1 rounded-md border border-border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:border-foreground/30'
             />
             {showClear && (rangeVal[0] || rangeVal[1]) && (
               <button type='button' onClick={handleClear} className='text-muted-foreground hover:text-foreground text-xs px-1'>✕</button>
@@ -674,7 +674,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
           value={formatForInput(value)}
           onChange={(e) => field && formApi.setValue(field, e.target.value ? new Date(e.target.value) : null)}
           placeholder={typeof placeholder === 'string' ? placeholder : undefined}
-          className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+          className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:border-foreground/30'
         />
         {showClear && value && (
           <button type='button' onClick={() => field && formApi.setValue(field, null)} className='text-muted-foreground hover:text-foreground text-sm px-1'>✕</button>
@@ -697,7 +697,7 @@ const FormAutoComplete = ({ field, label, data = [], ...rest }) => {
         value={value}
         onChange={(e) => field && formApi.setValue(field, e.target.value)}
         list={`autocomplete-${field}`}
-        className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+        className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:border-foreground/30'
       />
       <datalist id={`autocomplete-${field}`}>
         {data.map((item) => (

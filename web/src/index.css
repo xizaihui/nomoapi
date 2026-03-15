@@ -1172,10 +1172,20 @@ body, .sidebar-container, .sidebar-nav, .sidebar-collapse-button {
 
 /* ==================== Micro-interactions ==================== */
 
-/* Subtle focus ring for all interactive elements */
-:focus-visible {
+/* Subtle focus ring for buttons and interactive elements (not inputs) */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring) / 0.3);
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring) / 0.15);
+}
+
+/* Inputs use their own focus styles — no double ring */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
 }
 
 /* Smooth scrolling */
