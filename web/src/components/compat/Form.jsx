@@ -242,22 +242,44 @@ const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter
 };
 
 // --- Form.TextArea ---
-const FormTextArea = ({ field, label, autosize, maxCount, ...rest }) => {
+const FormTextArea = ({ field, label, autosize, maxCount, onChange: onChangeProp, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const value = field ? (values[field] ?? '') : '';
-  const { placeholder, disabled, className: cls, style, rows, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, ...safeRest } = rest;
+  const { placeholder, disabled, className: cls, style, rows: rowsProp, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, ...safeRest } = rest;
+  const textareaRef = React.useRef(null);
+
+  // Compute rows from autosize prop
+  const minRows = autosize ? (typeof autosize === 'object' ? autosize.minRows || 3 : 3) : (rowsProp || 3);
+  const maxRows = autosize ? (typeof autosize === 'object' ? autosize.maxRows || 20 : 20) : undefined;
+
+  // Auto-resize effect
+  React.useEffect(() => {
+    if (!autosize || !textareaRef.current) return;
+    const el = textareaRef.current;
+    el.style.height = 'auto';
+    const lineHeight = parseInt(getComputedStyle(el).lineHeight) || 20;
+    const minH = minRows * lineHeight + 16; // 16 for padding
+    const maxH = maxRows ? maxRows * lineHeight + 16 : Infinity;
+    const scrollH = el.scrollHeight;
+    el.style.height = Math.min(Math.max(scrollH, minH), maxH) + 'px';
+  }, [value, autosize, minRows, maxRows]);
+
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
       <textarea
+        ref={textareaRef}
         value={value}
-        onChange={(e) => field && formApi.setValue(field, e.target.value)}
+        onChange={(e) => {
+          if (field) formApi.setValue(field, e.target.value);
+          if (onChangeProp) onChangeProp(e.target.value);
+        }}
         placeholder={placeholder}
         disabled={disabled}
-        rows={rows}
-        style={style}
-        className='flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+        rows={minRows}
+        style={{ ...style, overflow: autosize ? 'hidden' : undefined, resize: autosize ? 'none' : undefined }}
+        className='flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
       />
     </FormField>
   );
