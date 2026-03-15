@@ -116,12 +116,12 @@ const SettingsPanel = ({
         {/* 分组选择 */}
         <div className={customRequestMode ? 'opacity-50' : ''}>
           <div className='flex items-center gap-2 mb-2'>
-            <Users size={16} className='text-gray-500' />
+            <Users size={16} className='text-muted-foreground' />
             <Typography.Text strong className='text-sm'>
               {t('分组')}
             </Typography.Text>
             {customRequestMode && (
-              <Typography.Text className='text-xs text-orange-600'>
+              <Typography.Text className='text-xs text-foreground/80'>
                 ({t('已在自定义模式中忽略')})
               </Typography.Text>
             )}
@@ -148,12 +148,12 @@ const SettingsPanel = ({
         {/* 模型选择 */}
         <div className={customRequestMode ? 'opacity-50' : ''}>
           <div className='flex items-center gap-2 mb-2'>
-            <Sparkles size={16} className='text-gray-500' />
+            <Sparkles size={16} className='text-muted-foreground' />
             <Typography.Text strong className='text-sm'>
               {t('模型')}
             </Typography.Text>
             {customRequestMode && (
-              <Typography.Text className='text-xs text-orange-600'>
+              <Typography.Text className='text-xs text-foreground/80'>
                 ({t('已在自定义模式中忽略')})
               </Typography.Text>
             )}
@@ -204,12 +204,12 @@ const SettingsPanel = ({
         <div className={customRequestMode ? 'opacity-50' : ''}>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-2'>
-              <ToggleLeft size={16} className='text-gray-500' />
+              <ToggleLeft size={16} className='text-muted-foreground' />
               <Typography.Text strong className='text-sm'>
                 {t('流式输出')}
               </Typography.Text>
               {customRequestMode && (
-                <Typography.Text className='text-xs text-orange-600'>
+                <Typography.Text className='text-xs text-foreground/80'>
                   ({t('已在自定义模式中忽略')})
                 </Typography.Text>
               )}

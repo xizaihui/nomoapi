@@ -1,9 +1,9 @@
 // 审计模块常量
 export const RISK_LEVELS = {
-  0: { label: '正常', color: 'green', badge: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' },
-  1: { label: '可疑', color: 'yellow', badge: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
-  2: { label: '危险', color: 'orange', badge: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' },
-  3: { label: '高危', color: 'red', badge: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' },
+  0: { label: '正常', color: 'green', badge: 'bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground' },
+  1: { label: '可疑', color: 'yellow', badge: 'bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground' },
+  2: { label: '危险', color: 'orange', badge: 'bg-muted/60 text-foreground/80 dark:bg-muted dark:text-muted-foreground' },
+  3: { label: '高危', color: 'red', badge: 'bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground' },
 };
 
 export const CATEGORIES = {

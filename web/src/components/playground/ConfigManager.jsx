@@ -186,7 +186,7 @@ const ConfigManager = ({
       name: 'reset',
       onClick: handleReset,
       children: (
-        <div className='flex items-center gap-2 text-red-600'>
+        <div className='flex items-center gap-2 text-foreground/80'>
           <RotateCcw size={14} />
           {t('重置配置')}
         </div>
@@ -209,7 +209,7 @@ const ConfigManager = ({
             theme='borderless'
             type='tertiary'
             size='small'
-            className='!rounded-lg !text-gray-600 hover:!text-blue-600 hover:!bg-blue-50'
+            className='!rounded-lg !text-muted-foreground hover:!text-foreground hover:!bg-muted/30'
           />
         </Dropdown>
 
@@ -229,7 +229,7 @@ const ConfigManager = ({
     <div className='space-y-3'>
       {/* 配置状态信息和重置按钮 */}
       <div className='flex items-center justify-between'>
-        <Typography.Text className='text-xs text-gray-500'>
+        <Typography.Text className='text-xs text-muted-foreground'>
           {getConfigStatus()}
         </Typography.Text>
         <Button

@@ -322,7 +322,7 @@ const renderAuditToggle = (text, record, { auditMap, auditToggling, handleToggle
         {toggling ? (
           <Loader2 className='w-4 h-4 animate-spin text-muted-foreground' />
         ) : enabled ? (
-          <Shield className='w-4 h-4 text-green-600' />
+          <Shield className='w-4 h-4 text-foreground/80' />
         ) : (
           <ShieldOff className='w-4 h-4 text-muted-foreground' />
         )}

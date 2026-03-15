@@ -94,7 +94,7 @@ const SecureVerificationModal = ({
         <div className='text-center py-6'>
           <div className='mb-4'>
             <svg
-              className='w-16 h-16 text-yellow-500 mx-auto mb-4'
+              className='w-16 h-16 text-foreground/70 mx-auto mb-4'
               fill='currentColor'
               viewBox='0 0 20 20'
             >

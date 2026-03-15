@@ -38,10 +38,10 @@ const NewYearButton = ({ isNewYear }) => {
     <Dropdown
       position='bottomRight'
       render={
-        <Dropdown.Menu className='!bg-popover !border-border !shadow-lg !rounded-lg dark:!bg-gray-700 dark:!border-gray-600'>
+        <Dropdown.Menu className='!bg-popover !border-border !shadow-lg !rounded-lg dark:!bg-foreground/80 dark:!border-gray-600'>
           <Dropdown.Item
             onClick={handleNewYearClick}
-            className='!text-foreground hover:!bg-secondary dark:!text-gray-200 dark:hover:!bg-gray-600'
+            className='!text-foreground hover:!bg-secondary dark:!text-muted-foreground/30 dark:hover:!bg-foreground/60'
           >
             Happy New Year!!! 🎉
           </Dropdown.Item>
@@ -53,7 +53,7 @@ const NewYearButton = ({ isNewYear }) => {
         type='tertiary'
         icon={<span className='text-xl'>🎉</span>}
         aria-label='New Year'
-        className='!p-1.5 !text-current focus:!bg-secondary dark:focus:!bg-gray-700 rounded-full'
+        className='!p-1.5 !text-current focus:!bg-secondary dark:focus:!bg-foreground/80 rounded-full'
       />
     </Dropdown>
   );

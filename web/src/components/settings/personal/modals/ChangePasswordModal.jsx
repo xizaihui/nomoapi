@@ -37,7 +37,7 @@ const ChangePasswordModal = ({
     <Modal
       title={
         <div className='flex items-center'>
-          <IconLock className='mr-2 text-orange-500' />
+          <IconLock className='mr-2 text-foreground/70' />
           {t('修改密码')}
         </div>
       }

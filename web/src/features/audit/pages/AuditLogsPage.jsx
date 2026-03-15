@@ -152,7 +152,7 @@ const AuditLogsPage = () => {
                         </td>
                         <td className='p-3'>
                           {log.reviewed ? (
-                            <span className='inline-flex items-center gap-1 text-green-600 text-xs'>
+                            <span className='inline-flex items-center gap-1 text-foreground/80 text-xs'>
                               <CheckCircle className='w-3 h-3' /> {t('已审阅')}
                             </span>
                           ) : (
@@ -183,7 +183,7 @@ const AuditLogsPage = () => {
                                   <span className='text-xs font-medium text-muted-foreground'>{t('命中规则')}:</span>
                                   <div className='flex flex-wrap gap-1 mt-1'>
                                     {log.risk_tags.map((tag, i) => (
-                                      <span key={i} className='px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded text-xs'>{tag}</span>
+                                      <span key={i} className='px-2 py-0.5 bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground rounded text-xs'>{tag}</span>
                                     ))}
                                   </div>
                                 </div>
@@ -205,7 +205,7 @@ const AuditLogsPage = () => {
                                   />
                                   <button
                                     onClick={() => handleReview(log.request_id)}
-                                    className='h-8 rounded-md bg-green-600 text-white px-3 text-sm font-medium hover:bg-green-700 transition-colors'
+                                    className='h-8 rounded-md bg-foreground/70 text-white px-3 text-sm font-medium hover:bg-foreground/80 transition-colors'
                                   >
                                     <CheckCircle className='w-3 h-3 inline mr-1' />
                                     {t('标记已审阅')}
@@ -263,10 +263,10 @@ const AuditLogsPage = () => {
 // 统计卡片组件
 const StatCard = ({ label, value, icon, color }) => {
   const colors = {
-    blue: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-    yellow: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300',
-    orange: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
-    red: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
+    blue: 'bg-muted/30 text-foreground dark:bg-muted dark:text-muted-foreground/60',
+    yellow: 'bg-muted/30 text-foreground/80 dark:bg-muted dark:text-muted-foreground',
+    orange: 'bg-muted/30 text-foreground/80 dark:bg-muted dark:text-muted-foreground',
+    red: 'bg-muted/30 text-foreground/80 dark:bg-muted dark:text-muted-foreground',
   };
   return (
     <div className={`rounded-lg border p-4 ${colors[color] || ''}`}>

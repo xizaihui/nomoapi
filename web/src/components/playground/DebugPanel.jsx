@@ -145,7 +145,7 @@ const DebugPanel = ({
                 <Eye size={16} />
                 {t('预览请求体')}
                 {customRequestMode && (
-                  <span className='px-1.5 py-0.5 text-xs bg-orange-100 text-orange-600 rounded-full'>
+                  <span className='px-1.5 py-0.5 text-xs bg-muted/60 text-foreground/80 rounded-full'>
                     自定义
                   </span>
                 )}
@@ -182,7 +182,7 @@ const DebugPanel = ({
                 <Zap size={16} />
                 {t('响应')}
                 {debugData.sseMessages && debugData.sseMessages.length > 0 && (
-                  <span className='px-1.5 py-0.5 text-xs bg-blue-100 text-blue-600 rounded-full'>
+                  <span className='px-1.5 py-0.5 text-xs bg-muted/60 text-foreground rounded-full'>
                     SSE ({debugData.sseMessages.length})
                   </span>
                 )}
@@ -206,8 +206,8 @@ const DebugPanel = ({
       <div className='flex items-center justify-between mt-4 pt-4 flex-shrink-0'>
         {(debugData.timestamp || debugData.previewTimestamp) && (
           <div className='flex items-center gap-2'>
-            <Clock size={14} className='text-gray-500' />
-            <Typography.Text className='text-xs text-gray-500'>
+            <Clock size={14} className='text-muted-foreground' />
+            <Typography.Text className='text-xs text-muted-foreground'>
               {activeKey === 'preview' && debugData.previewTimestamp
                 ? `${t('预览更新')}: ${new Date(debugData.previewTimestamp).toLocaleString()}`
                 : debugData.timestamp

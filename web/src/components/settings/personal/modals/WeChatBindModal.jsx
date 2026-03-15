@@ -35,7 +35,7 @@ const WeChatBindModal = ({
     <Modal
       title={
         <div className='flex items-center'>
-          <SiWechat className='mr-2 text-green-500' size={20} />
+          <SiWechat className='mr-2 text-foreground/70' size={20} />
           {t('绑定微信账户')}
         </div>
       }
@@ -48,7 +48,7 @@ const WeChatBindModal = ({
     >
       <div className='space-y-4 py-4 text-center'>
         <Image src={status.wechat_qrcode} className='mx-auto' />
-        <div className='text-gray-600'>
+        <div className='text-muted-foreground'>
           <p>
             {t('微信扫码关注公众号，输入「验证码」获取验证码（三分钟内有效）')}
           </p>

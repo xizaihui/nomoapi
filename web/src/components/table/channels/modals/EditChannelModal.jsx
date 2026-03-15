@@ -1398,7 +1398,7 @@ const EditChannelModal = (props) => {
                 '模型重定向里的下列模型尚未添加到“模型”列表，调用时会因为缺少可用模型而失败：',
               )}
             </div>
-            <div className='font-mono text-xs break-all text-red-600 mt-1'>
+            <div className='font-mono text-xs break-all text-foreground/80 mt-1'>
               {missingModels.join(', ')}
             </div>
             <div className='mt-2'>
@@ -2039,11 +2039,11 @@ const EditChannelModal = (props) => {
     // 构建样式类名
     const optionClassName = [
       'flex items-center gap-3 px-3 py-2 transition-all duration-200 rounded-lg mx-2 my-1',
-      focused && 'bg-blue-50 shadow-sm',
+      focused && 'bg-muted/30 shadow-sm',
       selected &&
-        'bg-blue-100 text-blue-700 shadow-lg ring-2 ring-blue-200 ring-opacity-50',
+        'bg-muted/60 text-foreground shadow-lg ring-2 ring-blue-200 ring-opacity-50',
       disabled && 'opacity-50 cursor-not-allowed',
-      !disabled && 'hover:bg-gray-50 hover:shadow-md cursor-pointer',
+      !disabled && 'hover:bg-muted/30 hover:shadow-md cursor-pointer',
       className,
     ]
       .filter(Boolean)
@@ -2068,7 +2068,7 @@ const EditChannelModal = (props) => {
             />
           </div>
           {selected && (
-            <div className='flex-shrink-0 text-blue-600'>
+            <div className='flex-shrink-0 text-foreground'>
               <svg
                 width='16'
                 height='16'
@@ -2183,7 +2183,7 @@ const EditChannelModal = (props) => {
                         <Text className='text-lg font-medium'>
                           {t('基本信息')}
                         </Text>
-                        <div className='text-xs text-gray-600'>
+                        <div className='text-xs text-muted-foreground'>
                           {t('渠道的基本配置信息')}
                         </div>
                       </div>
@@ -2860,7 +2860,7 @@ const EditChannelModal = (props) => {
                           <Text className='text-lg font-medium'>
                             {t('API 配置')}
                           </Text>
-                          <div className='text-xs text-gray-600'>
+                          <div className='text-xs text-muted-foreground'>
                             {t('API 地址和相关配置')}
                           </div>
                         </div>
@@ -3091,7 +3091,7 @@ const EditChannelModal = (props) => {
                         <Text className='text-lg font-medium'>
                           {t('模型配置')}
                         </Text>
-                        <div className='text-xs text-gray-600'>
+                        <div className='text-xs text-muted-foreground'>
                           {t('模型选择和映射设置')}
                         </div>
                       </div>
@@ -3285,7 +3285,7 @@ const EditChannelModal = (props) => {
                             '开启后由后端定时任务检测该渠道上游模型变化',
                           )}
                         />
-                        <div className='text-xs text-gray-500 mb-2'>
+                        <div className='text-xs text-muted-foreground mb-2'>
                           {t('上次检测时间')}:&nbsp;
                           {formatUnixTime(
                             inputs.upstream_model_update_last_check_time,
@@ -3380,7 +3380,7 @@ const EditChannelModal = (props) => {
                         <Text className='text-lg font-medium'>
                           {t('高级设置')}
                         </Text>
-                        <div className='text-xs text-gray-600'>
+                        <div className='text-xs text-muted-foreground'>
                           {t('渠道的高级配置选项')}
                         </div>
                       </div>
@@ -3472,7 +3472,7 @@ const EditChannelModal = (props) => {
                         )}
                     />
 
-                    <div className='text-xs text-gray-500 mb-3'>
+                    <div className='text-xs text-muted-foreground mb-3'>
                       {t('上次检测到可加入模型')}:&nbsp;
                       {upstreamDetectedModels.length === 0 ? (
                           t('暂无')
@@ -3490,7 +3490,7 @@ const EditChannelModal = (props) => {
                               {upstreamDetectedModelsPreview.join(', ')}
                             </span>
                             </Tooltip>
-                            <span className='ml-1 text-gray-400'>
+                            <span className='ml-1 text-muted-foreground/60'>
                             {upstreamDetectedModelsOmittedCount > 0
                                 ? t('（共 {{total}} 个，省略 {{omit}} 个）', {
                                   total: upstreamDetectedModels.length,
@@ -3682,7 +3682,7 @@ const EditChannelModal = (props) => {
                     {/* 字段透传控制 - OpenAI 渠道 */}
                     {inputs.type === 1 && (
                       <>
-                        <div className='mt-4 mb-2 text-sm font-medium text-gray-700'>
+                        <div className='mt-4 mb-2 text-sm font-medium text-foreground/80'>
                           {t('字段透传控制')}
                         </div>
 
@@ -3757,7 +3757,7 @@ const EditChannelModal = (props) => {
                     {/* 字段透传控制 - Claude 渠道 */}
                     {inputs.type === 14 && (
                       <>
-                        <div className='mt-4 mb-2 text-sm font-medium text-gray-700'>
+                        <div className='mt-4 mb-2 text-sm font-medium text-foreground/80'>
                           {t('字段透传控制')}
                         </div>
 
@@ -3959,9 +3959,9 @@ const EditChannelModal = (props) => {
       <Modal
         title={
           <div className='flex items-center'>
-            <div className='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3'>
+            <div className='w-8 h-8 rounded-full bg-muted/60 dark:bg-foreground flex items-center justify-center mr-3'>
               <svg
-                className='w-4 h-4 text-green-600 dark:text-green-400'
+                className='w-4 h-4 text-foreground/80 dark:text-muted-foreground'
                 fill='currentColor'
                 viewBox='0 0 20 20'
               >

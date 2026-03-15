@@ -384,7 +384,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
   const renderLogEntry = (line, index) => (
     <div
       key={`${index}-${line.slice(0, 20)}`}
-      className='py-1 px-3 hover:bg-gray-50 font-mono text-sm border-b border-gray-100 whitespace-pre-wrap break-words'
+      className='py-1 px-3 hover:bg-muted/30 font-mono text-sm border-b border-gray-100 whitespace-pre-wrap break-words'
     >
       {line}
     </div>
@@ -394,7 +394,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
     <Modal
       title={
         <div className='flex items-center gap-2'>
-          <FaTerminal className='text-blue-500' />
+          <FaTerminal className='text-foreground/80' />
           <span>{t('容器日志')}</span>
           <Text type='secondary' size='small'>
             - {deployment?.container_name || deployment?.id}
@@ -436,7 +436,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       <span className='font-mono text-xs'>
                         {ctr.container_id}
                       </span>
-                      <span className='text-xs text-gray-500'>
+                      <span className='text-xs text-muted-foreground'>
                         {ctr.brand_name || 'IO.NET'}
                         {ctr.hardware ? ` · ${ctr.hardware}` : ''}
                       </span>
@@ -597,7 +597,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                 ) : containerDetails ? (
                   <div className='grid gap-4 md:grid-cols-2 text-sm'>
                     <div className='flex items-center gap-2'>
-                      <FaInfoCircle className='text-blue-500' />
+                      <FaInfoCircle className='text-foreground/80' />
                       <Text type='secondary'>{t('硬件')}</Text>
                       <Text>
                         {containerDetails?.brand_name ||
@@ -610,7 +610,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       </Text>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <FaServer className='text-purple-500' />
+                      <FaServer className='text-foreground/70' />
                       <Text type='secondary'>{t('GPU/容器')}</Text>
                       <Text>
                         {containerDetails?.gpus_per_container ??
@@ -619,7 +619,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       </Text>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <FaClock className='text-orange-500' />
+                      <FaClock className='text-foreground/70' />
                       <Text type='secondary'>{t('创建时间')}</Text>
                       <Text>
                         {containerDetails?.created_at
@@ -630,7 +630,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       </Text>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <FaInfoCircle className='text-green-500' />
+                      <FaInfoCircle className='text-foreground/70' />
                       <Text type='secondary'>{t('运行时长')}</Text>
                       <Text>
                         {containerDetails?.uptime_percent ??
@@ -648,7 +648,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
 
                 {containerDetails?.events &&
                   containerDetails.events.length > 0 && (
-                    <div className='bg-gray-50 rounded-lg p-3'>
+                    <div className='bg-muted/30 rounded-lg p-3'>
                       <Text size='small' type='secondary'>
                         {t('最近事件')}
                       </Text>
@@ -660,12 +660,12 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                               key={`${event.time}-${index}`}
                               className='flex gap-3 text-xs font-mono'
                             >
-                              <span className='text-gray-500'>
+                              <span className='text-muted-foreground'>
                                 {event.time
                                   ? timestamp2string(event.time)
                                   : '--'}
                               </span>
-                              <span className='text-gray-700 break-all flex-1'>
+                              <span className='text-foreground/80 break-all flex-1'>
                                 {event.message}
                               </span>
                             </div>
@@ -679,7 +679,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
         </Card>
 
         {/* Log Content */}
-        <div className='flex-1 flex flex-col border rounded-lg bg-gray-50 overflow-hidden'>
+        <div className='flex-1 flex flex-col border rounded-lg bg-muted/30 overflow-hidden'>
           <div
             ref={logContainerRef}
             className='flex-1 overflow-y-auto bg-white'
@@ -706,7 +706,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
 
           {/* Footer status */}
           {logLines.length > 0 && (
-            <div className='flex items-center justify-between px-3 py-2 bg-gray-50 border-t text-xs text-gray-500'>
+            <div className='flex items-center justify-between px-3 py-2 bg-muted/30 border-t text-xs text-muted-foreground'>
               <span>{following ? t('正在跟随最新日志') : t('日志已加载')}</span>
               <span>
                 {t('最后更新')}:{' '}

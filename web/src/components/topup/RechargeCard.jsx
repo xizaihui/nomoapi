@@ -277,7 +277,7 @@ const RechargeCard = ({
                             />
                           }
                         >
-                          <Text type='secondary' className='text-red-600'>
+                          <Text type='secondary' className='text-foreground/80'>
                             {t('实付金额：')}
                             <span style={{ color: 'red' }}>
                               {renderAmount()}
@@ -353,7 +353,7 @@ const RechargeCard = ({
                           })}
                         </Space>
                       ) : (
-                        <div className='text-gray-500 text-sm p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300'>
+                        <div className='text-muted-foreground text-sm p-3 bg-muted/30 rounded-lg border border-dashed border-gray-300'>
                           {t('暂无可用的支付方式，请联系管理员配置')}
                         </div>
                       )}
@@ -497,10 +497,10 @@ const RechargeCard = ({
                         <div className='font-medium text-lg mb-2'>
                           {product.name}
                         </div>
-                        <div className='text-sm text-gray-600 mb-2'>
+                        <div className='text-sm text-muted-foreground mb-2'>
                           {t('充值额度')}: {product.quota}
                         </div>
-                        <div className='text-lg font-semibold text-blue-600'>
+                        <div className='text-lg font-semibold text-foreground'>
                           {product.currency === 'EUR' ? '€' : '$'}
                           {product.price}
                         </div>

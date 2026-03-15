@@ -389,7 +389,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
   const renderHeader = () => (
     <div className='flex flex-col w-full'>
       <div className='mb-2'>
-        <div className='flex items-center text-blue-500'>
+        <div className='flex items-center text-foreground/80'>
           <Bell size={16} className='mr-2' />
           <Text>
             {t(

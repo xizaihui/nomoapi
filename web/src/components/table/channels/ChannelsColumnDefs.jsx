@@ -66,12 +66,12 @@ const renderType = (type, record = {}, t) => {
     icon =
       channelInfo?.multi_key_mode === 'random' ? (
         <div className='flex items-center gap-1'>
-          <FaRandom className='text-blue-500' />
+          <FaRandom className='text-foreground/80' />
           {icon}
         </div>
       ) : (
         <div className='flex items-center gap-1'>
-          <IconTreeTriangleDown className='text-blue-500' />
+          <IconTreeTriangleDown className='text-foreground/80' />
           {icon}
         </div>
       );
@@ -114,11 +114,11 @@ const renderType = (type, record = {}, t) => {
       <Tooltip
         content={
           <div className='max-w-xs'>
-            <div className='text-xs text-gray-600'>
+            <div className='text-xs text-muted-foreground'>
               {t('来源于 IO.NET 部署')}
             </div>
             {ionetMeta?.deployment_id && (
-              <div className='text-xs text-gray-500 mt-1'>
+              <div className='text-xs text-muted-foreground mt-1'>
                 {t('部署 ID')}: {ionetMeta.deployment_id}
               </div>
             )}

@@ -102,10 +102,10 @@ const Modal = ({
 // --- Imperative Modal API (confirm/info/warning/error/success) ---
 const ICON_MAP = {
   confirm: { icon: HelpCircle, color: 'text-primary' },
-  info: { icon: Info, color: 'text-blue-500' },
-  warning: { icon: AlertTriangle, color: 'text-yellow-500' },
+  info: { icon: Info, color: 'text-foreground/80' },
+  warning: { icon: AlertTriangle, color: 'text-foreground/70' },
   error: { icon: XCircle, color: 'text-destructive' },
-  success: { icon: CheckCircle2, color: 'text-green-500' },
+  success: { icon: CheckCircle2, color: 'text-foreground/70' },
 };
 
 function createImperativeModal(type, config) {

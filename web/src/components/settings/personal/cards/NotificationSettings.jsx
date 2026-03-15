@@ -393,7 +393,7 @@ const NotificationSettings = ({
           <Typography.Text className='text-lg font-medium'>
             {t('其他设置')}
           </Typography.Text>
-          <div className='text-xs text-gray-600'>
+          <div className='text-xs text-muted-foreground'>
             {t('通知、价格和隐私相关设置')}
           </div>
         </div>
@@ -559,7 +559,7 @@ const NotificationSettings = ({
                             language='json'
                           />
                         </div>
-                        <div className='text-xs text-gray-500 leading-relaxed'>
+                        <div className='text-xs text-muted-foreground leading-relaxed'>
                           <div>
                             <strong>type:</strong>{' '}
                             {t('通知类型 (quota_exceed: 额度预警)')}{' '}
@@ -611,15 +611,15 @@ const NotificationSettings = ({
                       ]}
                     />
 
-                    <div className='mt-3 p-4 bg-gray-50/50 rounded-xl'>
-                      <div className='text-sm text-gray-700 mb-3'>
+                    <div className='mt-3 p-4 bg-muted/30/50 rounded-xl'>
+                      <div className='text-sm text-foreground/80 mb-3'>
                         <strong>{t('模板示例')}</strong>
                       </div>
-                      <div className='text-xs text-gray-600 font-mono bg-white p-3 rounded-lg shadow-sm mb-4'>
+                      <div className='text-xs text-muted-foreground font-mono bg-white p-3 rounded-lg shadow-sm mb-4'>
                         https://api.day.app/yourkey/{'{{title}}'}/
                         {'{{content}}'}?sound=alarm&group=quota
                       </div>
-                      <div className='text-xs text-gray-500 space-y-2'>
+                      <div className='text-xs text-muted-foreground space-y-2'>
                         <div>
                           • <strong>{'title'}:</strong> {t('通知标题')}
                         </div>
@@ -627,14 +627,14 @@ const NotificationSettings = ({
                           • <strong>{'content'}:</strong> {t('通知内容')}
                         </div>
                         <div className='mt-3 pt-3 border-t border-gray-200'>
-                          <span className='text-gray-400'>
+                          <span className='text-muted-foreground/60'>
                             {t('更多参数请参考')}
                           </span>{' '}
                           <a
                             href='https://github.com/Finb/Bark'
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='text-blue-500 hover:text-blue-600 font-medium'
+                            className='text-foreground/80 hover:text-foreground font-medium'
                           >
                             Bark {t('官方文档')}
                           </a>
@@ -712,11 +712,11 @@ const NotificationSettings = ({
                       style={{ width: '100%', maxWidth: '300px' }}
                     />
 
-                    <div className='mt-3 p-4 bg-gray-50/50 rounded-xl'>
-                      <div className='text-sm text-gray-700 mb-3'>
+                    <div className='mt-3 p-4 bg-muted/30/50 rounded-xl'>
+                      <div className='text-sm text-foreground/80 mb-3'>
                         <strong>{t('配置说明')}</strong>
                       </div>
-                      <div className='text-xs text-gray-500 space-y-2'>
+                      <div className='text-xs text-muted-foreground space-y-2'>
                         <div>
                           1. {t('在Gotify服务器的应用管理中创建新应用')}
                         </div>
@@ -728,14 +728,14 @@ const NotificationSettings = ({
                         </div>
                         <div>3. {t('填写Gotify服务器的完整URL地址')}</div>
                         <div className='mt-3 pt-3 border-t border-gray-200'>
-                          <span className='text-gray-400'>
+                          <span className='text-muted-foreground/60'>
                             {t('更多信息请参考')}
                           </span>{' '}
                           <a
                             href='https://gotify.net/'
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='text-blue-500 hover:text-blue-600 font-medium'
+                            className='text-foreground/80 hover:text-foreground font-medium'
                           >
                             Gotify {t('官方文档')}
                           </a>
@@ -842,7 +842,7 @@ const NotificationSettings = ({
                           }}
                         >
                           <div>
-                            <div className='font-semibold text-base text-gray-900 mb-1'>
+                            <div className='font-semibold text-base text-foreground mb-1'>
                               {section.title}
                             </div>
                             <Typography.Text
@@ -893,7 +893,7 @@ const NotificationSettings = ({
                                 >
                                   <div className='flex justify-between items-center h-full'>
                                     <div className='flex-1 text-left'>
-                                      <div className='font-semibold text-sm text-gray-900 mb-1'>
+                                      <div className='font-semibold text-sm text-foreground mb-1'>
                                         {module.title}
                                       </div>
                                       <Typography.Text

@@ -80,7 +80,7 @@ const TwoFAVerification = ({ onSuccess, onBack, isModal = false }) => {
   if (isModal) {
     return (
       <div className='space-y-4'>
-        <Paragraph className='text-gray-600 dark:text-gray-300'>
+        <Paragraph className='text-muted-foreground dark:text-muted-foreground/40'>
           请输入认证器应用显示的验证码完成登录
         </Paragraph>
 
@@ -136,7 +136,7 @@ const TwoFAVerification = ({ onSuccess, onBack, isModal = false }) => {
           )}
         </div>
 
-        <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-3'>
+        <div className='bg-muted/30 dark:bg-foreground/90 rounded-lg p-3'>
           <Text size='small' type='secondary'>
             <strong>提示：</strong>
             <br />

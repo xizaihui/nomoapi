@@ -385,7 +385,7 @@ const UserBindingManagementModal = ({
                           {item.icon}
                         </div>
                         <div className='min-w-0 flex-1'>
-                          <div className='font-medium text-gray-900 flex items-center gap-2'>
+                          <div className='font-medium text-foreground flex items-center gap-2'>
                             <span>{item.name}</span>
                             <Tag size='small' color='white'>
                               {item.type === 'builtin'
@@ -393,7 +393,7 @@ const UserBindingManagementModal = ({
                                 : t('自定义')}
                             </Tag>
                           </div>
-                          <div className='text-sm text-gray-500 truncate'>
+                          <div className='text-sm text-muted-foreground truncate'>
                             {statusText}
                           </div>
                         </div>

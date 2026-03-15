@@ -161,7 +161,7 @@ const SubscriptionPurchaseModal = ({
                 <Text strong className='text-slate-700 dark:text-slate-200'>
                   {t('应付金额')}：
                 </Text>
-                <Text strong className='text-xl text-purple-600'>
+                <Text strong className='text-xl text-foreground/80'>
                   {symbol}
                   {displayPrice}
                 </Text>

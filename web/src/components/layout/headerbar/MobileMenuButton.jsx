@@ -48,7 +48,7 @@ const MobileMenuButton = ({
       onClick={onToggle}
       theme='borderless'
       type='tertiary'
-      className='!p-2 !text-current focus:!bg-secondary dark:focus:!bg-gray-700'
+      className='!p-2 !text-current focus:!bg-secondary dark:focus:!bg-foreground/80'
     />
   );
 };

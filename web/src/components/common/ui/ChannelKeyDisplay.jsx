@@ -111,7 +111,7 @@ const ChannelKeyDisplay = ({
       {showSuccessIcon && (
         <div className='flex items-center gap-2'>
           <svg
-            className='w-5 h-5 text-green-600'
+            className='w-5 h-5 text-foreground/80'
             fill='currentColor'
             viewBox='0 0 20 20'
           >
@@ -121,7 +121,7 @@ const ChannelKeyDisplay = ({
               clipRule='evenodd'
             />
           </svg>
-          <Typography.Text strong className='text-green-700'>
+          <Typography.Text strong className='text-foreground/80'>
             {successText || t('验证成功')}
           </Typography.Text>
         </div>
@@ -161,7 +161,7 @@ const ChannelKeyDisplay = ({
                   <Typography.Text
                     strong
                     size='small'
-                    className='text-gray-700 dark:text-gray-300'
+                    className='text-foreground/80 dark:text-muted-foreground/40'
                   >
                     {keyItem.label}
                   </Typography.Text>
@@ -192,10 +192,10 @@ const ChannelKeyDisplay = ({
                   </div>
                 </div>
 
-                <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-3 max-h-40 overflow-auto'>
+                <div className='bg-muted/30 dark:bg-foreground/90 rounded-lg p-3 max-h-40 overflow-auto'>
                   <Typography.Text
                     code
-                    className='text-xs font-mono break-all whitespace-pre-wrap text-gray-800 dark:text-gray-200'
+                    className='text-xs font-mono break-all whitespace-pre-wrap text-foreground dark:text-muted-foreground/30'
                   >
                     {keyItem.content}
                   </Typography.Text>
@@ -216,11 +216,11 @@ const ChannelKeyDisplay = ({
         </div>
 
         {isMultipleKeys && (
-          <div className='bg-blue-50 dark:bg-blue-900 rounded-lg p-3'>
+          <div className='bg-muted/30 dark:bg-foreground rounded-lg p-3'>
             <Typography.Text
               type='tertiary'
               size='small'
-              className='text-blue-700 dark:text-blue-300'
+              className='text-foreground dark:text-muted-foreground/60'
             >
               <svg
                 className='w-4 h-4 inline mr-1'
@@ -243,10 +243,10 @@ const ChannelKeyDisplay = ({
 
       {/* 安全警告 */}
       {showWarning && (
-        <div className='bg-yellow-50 dark:bg-yellow-900 rounded-lg p-4'>
+        <div className='bg-muted/30 dark:bg-muted rounded-lg p-4'>
           <div className='flex items-start'>
             <svg
-              className='w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5 mr-3 flex-shrink-0'
+              className='w-5 h-5 text-foreground/80 dark:text-muted-foreground mt-0.5 mr-3 flex-shrink-0'
               fill='currentColor'
               viewBox='0 0 20 20'
             >
@@ -259,11 +259,11 @@ const ChannelKeyDisplay = ({
             <div>
               <Typography.Text
                 strong
-                className='text-yellow-800 dark:text-yellow-200'
+                className='text-foreground dark:text-muted-foreground'
               >
                 {t('安全提醒')}
               </Typography.Text>
-              <Typography.Text className='block text-yellow-700 dark:text-yellow-300 text-sm mt-1'>
+              <Typography.Text className='block text-foreground/80 dark:text-muted-foreground text-sm mt-1'>
                 {warningText ||
                   t(
                     '请妥善保管密钥信息，不要泄露给他人。如有安全疑虑，请及时更换密钥。',

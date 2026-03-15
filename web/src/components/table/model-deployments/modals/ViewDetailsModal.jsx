@@ -142,7 +142,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
     <Modal
       title={
         <div className='flex items-center gap-2'>
-          <FaInfoCircle className='text-blue-500' />
+          <FaInfoCircle className='text-foreground/80' />
           <span>{t('容器详情')}</span>
         </div>
       }
@@ -174,7 +174,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaServer className='text-blue-500' />
+                <FaServer className='text-foreground/80' />
                 <span>{t('基本信息')}</span>
               </div>
             }
@@ -230,7 +230,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaChartLine className='text-green-500' />
+                <FaChartLine className='text-foreground/70' />
                 <span>{t('硬件与性能')}</span>
               </div>
             }
@@ -257,7 +257,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                           theme='solid'
                           type='primary'
                         >
-                          <FaServer className='text-purple-500' />
+                          <FaServer className='text-foreground/70' />
                         </Badge>
                         <Text>
                           {t('总计')} {details.total_gpus} {t('个GPU')}
@@ -295,7 +295,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                   strokeWidth={8}
                   showInfo={false}
                 />
-                <div className='flex justify-between text-xs text-gray-500'>
+                <div className='flex justify-between text-xs text-muted-foreground'>
                   <span>
                     {t('已服务')}: {details.compute_minutes_served} {t('分钟')}
                   </span>
@@ -312,7 +312,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
             <Card
               title={
                 <div className='flex items-center gap-2'>
-                  <FaDocker className='text-blue-600' />
+                  <FaDocker className='text-foreground' />
                   <span>{t('容器配置')}</span>
                 </div>
               }
@@ -354,7 +354,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                       <Text strong className='block mb-2'>
                         {t('环境变量')}:
                       </Text>
-                      <div className='bg-gray-50 p-3 rounded-lg max-h-32 overflow-y-auto'>
+                      <div className='bg-muted/30 p-3 rounded-lg max-h-32 overflow-y-auto'>
                         {Object.entries(
                           details.container_config.env_variables,
                         ).map(([key, value]) => (
@@ -362,10 +362,10 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                             key={key}
                             className='flex gap-2 text-sm font-mono mb-1'
                           >
-                            <span className='text-blue-600 font-medium'>
+                            <span className='text-foreground font-medium'>
                               {key}=
                             </span>
-                            <span className='text-gray-700 break-all'>
+                            <span className='text-foreground/80 break-all'>
                               {String(value)}
                             </span>
                           </div>
@@ -381,7 +381,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaServer className='text-indigo-500' />
+                <FaServer className='text-foreground/70' />
                 <span>{t('容器实例')}</span>
               </div>
             }
@@ -401,7 +401,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                 {containers.map((ctr) => (
                   <Card
                     key={ctr.container_id}
-                    className='bg-gray-50 border border-gray-100'
+                    className='bg-muted/30 border border-gray-100'
                     bodyStyle={{ padding: '12px 16px' }}
                   >
                     <div className='flex flex-wrap items-center justify-between gap-3'>
@@ -460,12 +460,12 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                               key={`${ctr.container_id}-${event.time}-${index}`}
                               className='flex gap-3 text-xs font-mono'
                             >
-                              <span className='text-gray-500 min-w-[140px]'>
+                              <span className='text-muted-foreground min-w-[140px]'>
                                 {event.time
                                   ? timestamp2string(event.time)
                                   : '--'}
                               </span>
-                              <span className='text-gray-700 break-all flex-1'>
+                              <span className='text-foreground/80 break-all flex-1'>
                                 {event.message || '--'}
                               </span>
                             </div>
@@ -484,7 +484,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
             <Card
               title={
                 <div className='flex items-center gap-2'>
-                  <FaMapMarkerAlt className='text-orange-500' />
+                  <FaMapMarkerAlt className='text-foreground/70' />
                   <span>{t('部署位置')}</span>
                 </div>
               }
@@ -509,16 +509,16 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaMoneyBillWave className='text-green-500' />
+                <FaMoneyBillWave className='text-foreground/70' />
                 <span>{t('费用信息')}</span>
               </div>
             }
             className='border-0 shadow-sm'
           >
             <div className='space-y-3'>
-              <div className='flex items-center justify-between p-3 bg-green-50 rounded-lg'>
+              <div className='flex items-center justify-between p-3 bg-muted/30 rounded-lg'>
                 <Text>{t('已支付金额')}</Text>
-                <Text strong className='text-lg text-green-600'>
+                <Text strong className='text-lg text-foreground/80'>
                   $
                   {details.amount_paid
                     ? details.amount_paid.toFixed(2)
@@ -552,7 +552,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaClock className='text-purple-500' />
+                <FaClock className='text-foreground/70' />
                 <span>{t('时间信息')}</span>
               </div>
             }
@@ -569,7 +569,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                 </div>
                 <div className='flex items-center justify-between'>
                   <Text type='secondary'>{t('剩余时间')}:</Text>
-                  <Text strong className='text-orange-600'>
+                  <Text strong className='text-foreground/80'>
                     {Math.floor(details.compute_minutes_remaining / 60)}h{' '}
                     {details.compute_minutes_remaining % 60}m
                   </Text>

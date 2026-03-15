@@ -7,11 +7,11 @@ const Text = React.forwardRef(
     const colorMap = {
       primary: 'text-foreground',
       secondary: 'text-muted-foreground',
-      tertiary: 'text-gray-500 dark:text-gray-400',
-      quaternary: 'text-gray-400 dark:text-gray-500',
-      success: 'text-green-600 dark:text-green-400',
+      tertiary: 'text-muted-foreground dark:text-muted-foreground/60',
+      quaternary: 'text-muted-foreground/60 dark:text-muted-foreground',
+      success: 'text-foreground/80 dark:text-muted-foreground',
       warning: 'text-amber-600 dark:text-amber-400',
-      danger: 'text-red-600 dark:text-red-400',
+      danger: 'text-foreground/80 dark:text-muted-foreground',
     };
     const sizeMap = {
       small: 'text-xs',
@@ -40,7 +40,7 @@ const Text = React.forwardRef(
       return <code ref={ref} className={cn(cls, 'rounded bg-muted px-1 py-0.5 font-mono text-sm')} style={style} {...rest}>{children}</code>;
     }
     if (mark) {
-      return <mark ref={ref} className={cn(cls, 'bg-yellow-200 dark:bg-yellow-800')} style={style} {...rest}>{children}</mark>;
+      return <mark ref={ref} className={cn(cls, 'bg-muted dark:bg-muted')} style={style} {...rest}>{children}</mark>;
     }
     return <span ref={ref} className={cls} style={style} onClick={onClick} {...rest}>{children}</span>;
   }
@@ -71,10 +71,10 @@ const Paragraph = React.forwardRef(
   ({ children, type, size, ellipsis, className, style, ...rest }, ref) => {
     const colorMap = {
       secondary: 'text-muted-foreground',
-      tertiary: 'text-gray-500 dark:text-gray-400',
-      success: 'text-green-600 dark:text-green-400',
+      tertiary: 'text-muted-foreground dark:text-muted-foreground/60',
+      success: 'text-foreground/80 dark:text-muted-foreground',
       warning: 'text-amber-600 dark:text-amber-400',
-      danger: 'text-red-600 dark:text-red-400',
+      danger: 'text-foreground/80 dark:text-muted-foreground',
     };
     return (
       <p ref={ref} className={cn('text-sm leading-relaxed', colorMap[type], ellipsis && 'truncate', className)} style={style} {...rest}>

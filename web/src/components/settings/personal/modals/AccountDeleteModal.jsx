@@ -38,7 +38,7 @@ const AccountDeleteModal = ({
     <Modal
       title={
         <div className='flex items-center'>
-          <IconDelete className='mr-2 text-red-500' />
+          <IconDelete className='mr-2 text-foreground/70' />
           {t('删除账户确认')}
         </div>
       }
@@ -58,7 +58,7 @@ const AccountDeleteModal = ({
         />
 
         <div>
-          <Typography.Text strong className='block mb-2 text-red-600'>
+          <Typography.Text strong className='block mb-2 text-foreground/80'>
             {t('请输入您的用户名以确认删除')}
           </Typography.Text>
           <Input

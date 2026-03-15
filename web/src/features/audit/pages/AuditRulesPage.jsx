@@ -108,11 +108,11 @@ const AuditRulesPage = () => {
                         {ruleType.label}
                       </span>
                       {rule.is_global ? (
-                        <span className='px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
+                        <span className='px-2 py-0.5 rounded-full text-xs bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground'>
                           {t('全局')}
                         </span>
                       ) : (
-                        <span className='px-2 py-0.5 rounded-full text-xs bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'>
+                        <span className='px-2 py-0.5 rounded-full text-xs bg-muted/60 text-foreground/80 dark:bg-muted dark:text-muted-foreground'>
                           {t('自定义')} ({rule.owner_group})
                         </span>
                       )}
@@ -136,7 +136,7 @@ const AuditRulesPage = () => {
                       title={rule.enabled ? t('禁用') : t('启用')}
                     >
                       {rule.enabled ? (
-                        <ToggleRight className='w-5 h-5 text-green-600' />
+                        <ToggleRight className='w-5 h-5 text-foreground/80' />
                       ) : (
                         <ToggleLeft className='w-5 h-5 text-muted-foreground' />
                       )}
@@ -153,7 +153,7 @@ const AuditRulesPage = () => {
                       className='p-1.5 rounded hover:bg-muted transition-colors'
                       title={t('删除')}
                     >
-                      <Trash2 className='w-4 h-4 text-red-500' />
+                      <Trash2 className='w-4 h-4 text-foreground/70' />
                     </button>
                   </div>
                 </div>
@@ -255,7 +255,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
           <button onClick={onClose} className='p-1 rounded hover:bg-muted'><X className='w-4 h-4' /></button>
         </div>
         <div className='p-4 space-y-4'>
-          {error && <div className='p-2 rounded bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 text-sm'>{error}</div>}
+          {error && <div className='p-2 rounded bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground text-sm'>{error}</div>}
 
           <div>
             <label className='text-sm font-medium'>{t('规则名称')}</label>

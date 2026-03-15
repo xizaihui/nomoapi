@@ -17,18 +17,18 @@ const SIZE_MAP = {
 };
 
 const COLOR_MAP = {
-  red: 'bg-red-500',
-  orange: 'bg-orange-500',
+  red: 'bg-foreground/60',
+  orange: 'bg-foreground/60',
   yellow: 'bg-amber-500',
-  green: 'bg-green-500',
-  blue: 'bg-blue-500',
+  green: 'bg-foreground/60',
+  blue: 'bg-foreground/80',
   violet: 'bg-violet-500',
   cyan: 'bg-cyan-500',
-  grey: 'bg-gray-500',
+  grey: 'bg-foreground/50',
   amber: 'bg-amber-500',
-  indigo: 'bg-indigo-500',
-  pink: 'bg-pink-500',
-  purple: 'bg-purple-500',
+  indigo: 'bg-foreground/60',
+  pink: 'bg-foreground/60',
+  purple: 'bg-foreground/60',
   teal: 'bg-teal-500',
   lime: 'bg-lime-600',
   'light-blue': 'bg-sky-500',
@@ -39,7 +39,7 @@ const Avatar = React.forwardRef(
   ({ src, alt, size = 'default', shape = 'circle', color, children, imgAttr, className, style, onClick, ...rest }, ref) => {
     const sizeClass = SIZE_MAP[size] || SIZE_MAP.default;
     const shapeClass = shape === 'square' ? 'rounded-md' : 'rounded-full';
-    const colorClass = color ? (COLOR_MAP[color] || 'bg-blue-500') : 'bg-gray-500';
+    const colorClass = color ? (COLOR_MAP[color] || 'bg-foreground/80') : 'bg-foreground/50';
 
     return (
       <ShadcnAvatar

@@ -147,7 +147,7 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
             }}
           >
             {detailTitle ? <Text strong>{detailTitle}</Text> : null}
-            <div className='font-mono text-xs break-all bg-orange-50 border border-orange-200 rounded-md p-2'>
+            <div className='font-mono text-xs break-all bg-muted/30 border border-orange-200 rounded-md p-2'>
               {detailText}
             </div>
           </div>
@@ -186,7 +186,7 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
             }}
           >
             {inputPrompt ? <Text strong>{inputPrompt}</Text> : null}
-            <div className='font-mono text-xs break-all rounded-md p-2 bg-gray-50 border border-gray-200'>
+            <div className='font-mono text-xs break-all rounded-md p-2 bg-muted/30 border border-gray-200'>
               {requiredText}
             </div>
             <Input

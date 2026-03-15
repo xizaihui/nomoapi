@@ -228,7 +228,7 @@ const MessageContent = ({
               fontSize: styleState.isMobile ? '14px' : '15px',
               lineHeight: '1.6',
             }}
-            className='!border-blue-200 focus:!border-blue-400 !bg-blue-50/50'
+            className='!border-blue-200 focus:!border-blue-400 !bg-muted/30/50'
           />
           <div className='flex items-center gap-2 w-full'>
             <Button
@@ -281,7 +281,7 @@ const MessageContent = ({
                           }}
                         />
                         <div
-                          className='text-red-500 text-sm p-2 bg-red-50 rounded-lg border border-red-200'
+                          className='text-foreground/70 text-sm p-2 bg-muted/30 rounded-lg border border-red-200'
                           style={{ display: 'none' }}
                         >
                           图片加载失败: {imgItem.image_url.url}

@@ -14,7 +14,7 @@ const Highlight = ({ sourceString = '', searchWords = [], highlightStyle, highli
     <span {...rest}>
       {parts.map((part, i) =>
         regex.test(part) ? (
-          <mark key={i} className={highlightClassName || 'bg-yellow-200 dark:bg-yellow-800'} style={highlightStyle}>
+          <mark key={i} className={highlightClassName || 'bg-muted dark:bg-muted'} style={highlightStyle}>
             {part}
           </mark>
         ) : (

@@ -915,9 +915,9 @@ const LoginForm = () => {
       <Modal
         title={
           <div className='flex items-center'>
-            <div className='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3'>
+            <div className='w-8 h-8 rounded-full bg-muted/60 dark:bg-foreground flex items-center justify-center mr-3'>
               <svg
-                className='w-4 h-4 text-green-600 dark:text-green-400'
+                className='w-4 h-4 text-foreground/80 dark:text-muted-foreground'
                 fill='currentColor'
                 viewBox='0 0 20 20'
               >

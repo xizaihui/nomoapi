@@ -130,7 +130,7 @@ const PreferencesSettings = ({ t }) => {
 					<Typography.Text className="text-lg font-medium">
 						{t("偏好设置")}
 					</Typography.Text>
-					<div className="text-xs text-gray-600 dark:text-gray-400">
+					<div className="text-xs text-muted-foreground dark:text-muted-foreground/60">
 						{t("界面语言和其他个人偏好")}
 					</div>
 				</div>
@@ -168,7 +168,7 @@ const PreferencesSettings = ({ t }) => {
 			</Card>
 
 			{/* Additional info */}
-			<div className="mt-4 text-xs text-gray-500 dark:text-gray-400">
+			<div className="mt-4 text-xs text-muted-foreground dark:text-muted-foreground/60">
 				<Typography.Text type="tertiary">
 					{t(
 						"提示：语言偏好会同步到您登录的所有设备，并影响API返回的错误消息语言。",

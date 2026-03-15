@@ -3319,7 +3319,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
               {t('直接编辑 JSON 文本，保存时会校验格式。')}
             </Text>
             {jsonError ? (
-              <Text className='text-red-500 text-xs mt-2'>{jsonError}</Text>
+              <Text className='text-foreground/70 text-xs mt-2'>{jsonError}</Text>
             ) : null}
           </div>
         )}
