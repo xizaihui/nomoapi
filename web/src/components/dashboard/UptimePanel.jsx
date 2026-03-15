@@ -1,20 +1,5 @@
 /*
-Copyright (C) 2025 QuantumNous
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-For commercial licensing, please contact support@quantumnous.com
+Copyright (C) 2025 QuantumNous — AGPL-3.0
 */
 
 import React from 'react';
@@ -27,7 +12,7 @@ import {
   Tag,
   Empty,
 } from '@douyinfe/semi-ui';
-import { Gauge, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import {
   IllustrationConstruction,
   IllustrationConstructionDark,
@@ -47,29 +32,20 @@ const UptimePanel = ({
   t,
 }) => {
   return (
-    <Card
-      {...CARD_PROPS}
-      className='shadow-sm !rounded-2xl lg:col-span-1'
-      title={
-        <div className='flex items-center justify-between w-full gap-2'>
-          <div className='flex items-center gap-2'>
-            <Gauge size={16} />
-            {t('服务可用性')}
-          </div>
-          <Button
-            icon={<RefreshCw size={14} />}
-            onClick={loadUptimeData}
-            loading={uptimeLoading}
-            size='small'
-            theme='borderless'
-            type='tertiary'
-            className='text-gray-500 hover:text-blue-500 hover:bg-blue-50 !rounded-full'
-          />
-        </div>
-      }
-      bodyStyle={{ padding: 0 }}
-    >
-      {/* 内容区域 */}
+    <div className='border border-border/50 rounded-xl lg:col-span-1'>
+      <div className='flex items-center justify-between w-full px-4 pt-4 pb-2'>
+        <span className='text-xs font-medium uppercase tracking-wider text-muted-foreground/60'>
+          {t('服务可用性')}
+        </span>
+        <button
+          onClick={loadUptimeData}
+          disabled={uptimeLoading}
+          className='p-1.5 rounded-md text-muted-foreground/50 hover:text-foreground hover:bg-muted transition-colors disabled:opacity-30'
+        >
+          <RefreshCw size={13} className={uptimeLoading ? 'animate-spin' : ''} />
+        </button>
+      </div>
+
       <div className='relative'>
         <Spin spinning={uptimeLoading}>
           {uptimeData.length > 0 ? (
@@ -89,17 +65,8 @@ const UptimePanel = ({
                   <TabPane
                     tab={
                       <span className='flex items-center gap-2'>
-                        <Gauge size={14} />
                         {group.categoryName}
-                        <Tag
-                          color={
-                            activeUptimeTab === group.categoryName
-                              ? 'red'
-                              : 'grey'
-                          }
-                          size='small'
-                          shape='circle'
-                        >
+                        <Tag size='small' shape='circle'>
                           {group.monitors ? group.monitors.length : 0}
                         </Tag>
                       </span>
@@ -129,23 +96,22 @@ const UptimePanel = ({
         </Spin>
       </div>
 
-      {/* 图例 */}
       {uptimeData.length > 0 && (
-        <div className='p-3 bg-gray-50 rounded-b-2xl'>
-          <div className='flex flex-wrap gap-3 text-xs justify-center'>
+        <div className='p-3 border-t border-border/50'>
+          <div className='flex flex-wrap gap-3 text-[10px] justify-center'>
             {uptimeLegendData.map((legend, index) => (
               <div key={index} className='flex items-center gap-1'>
                 <div
-                  className='w-2 h-2 rounded-full'
+                  className='w-1.5 h-1.5 rounded-full'
                   style={{ backgroundColor: legend.color }}
                 />
-                <span className='text-gray-600'>{legend.label}</span>
+                <span className='text-muted-foreground'>{legend.label}</span>
               </div>
             ))}
           </div>
         </div>
       )}
-    </Card>
+    </div>
   );
 };
 

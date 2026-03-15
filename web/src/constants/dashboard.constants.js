@@ -72,12 +72,12 @@ export const DEFAULT_CHART_SPECS = {
       state: {
         hover: {
           outerRadius: 0.85,
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
         selected: {
           outerRadius: 0.85,
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
       },
@@ -101,7 +101,7 @@ export const DEFAULT_CHART_SPECS = {
     bar: {
       state: {
         hover: {
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
       },
@@ -128,10 +128,10 @@ export const ANNOUNCEMENT_LEGEND_DATA = [
 
 // ========== Uptime 状态映射 ==========
 export const UPTIME_STATUS_MAP = {
-  1: { color: '#10b981', label: '正常', text: '可用率' }, // UP
-  0: { color: '#ef4444', label: '异常', text: '有异常' }, // DOWN
-  2: { color: '#f59e0b', label: '高延迟', text: '高延迟' }, // PENDING
-  3: { color: '#3b82f6', label: '维护中', text: '维护中' }, // MAINTENANCE
+  1: { color: '#404040', label: '正常', text: '可用率' }, // UP
+  0: { color: '#171717', label: '异常', text: '有异常' }, // DOWN
+  2: { color: '#737373', label: '高延迟', text: '高延迟' }, // PENDING
+  3: { color: '#a3a3a3', label: '维护中', text: '维护中' }, // MAINTENANCE
 };
 
 // ========== 本地存储键名 ==========

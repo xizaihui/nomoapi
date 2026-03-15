@@ -100,21 +100,15 @@ export const updateChartSpec = (
 };
 
 export const getTrendSpec = (data, color) => ({
-  type: 'line',
+  type: 'area',
   data: [{ id: 'trend', values: data.map((val, idx) => ({ x: idx, y: val })) }],
   xField: 'x',
   yField: 'y',
   height: 40,
   width: 100,
   axes: [
-    {
-      orient: 'bottom',
-      visible: false,
-    },
-    {
-      orient: 'left',
-      visible: false,
-    },
+    { orient: 'bottom', visible: false },
+    { orient: 'left', visible: false },
   ],
   padding: 0,
   autoFit: false,
@@ -123,16 +117,24 @@ export const getTrendSpec = (data, color) => ({
   crosshair: { visible: false },
   line: {
     style: {
-      stroke: color,
-      lineWidth: 2,
+      stroke: color || '#a3a3a3',
+      lineWidth: 1.5,
     },
   },
-  point: {
-    visible: false,
+  area: {
+    style: {
+      fill: {
+        gradient: 'linear',
+        x0: 0, y0: 0, x1: 0, y1: 1,
+        stops: [
+          { offset: 0, color: color || '#a3a3a3', opacity: 0.15 },
+          { offset: 1, color: color || '#a3a3a3', opacity: 0 },
+        ],
+      },
+    },
   },
-  background: {
-    fill: 'transparent',
-  },
+  point: { visible: false },
+  background: { fill: 'transparent' },
 });
 
 // ========== UI 工具函数 ==========
@@ -196,23 +198,23 @@ export const renderMonitorList = (
   });
 
   const renderItem = (monitor, idx) => (
-    <div key={idx} className='p-2 hover:bg-white rounded-lg transition-colors'>
+    <div key={idx} className='p-2 hover:bg-muted/30 rounded-lg transition-colors'>
       <div className='flex items-center justify-between mb-1'>
         <div className='flex items-center gap-2'>
           <div
-            className='w-2 h-2 rounded-full flex-shrink-0'
+            className='w-1.5 h-1.5 rounded-full flex-shrink-0'
             style={{ backgroundColor: getUptimeStatusColor(monitor.status) }}
           />
-          <span className='text-sm font-medium text-gray-900'>
+          <span className='text-sm font-medium text-foreground'>
             {monitor.name}
           </span>
         </div>
-        <span className='text-xs text-gray-500'>
+        <span className='text-xs text-muted-foreground tabular-nums'>
           {((monitor.uptime || 0) * 100).toFixed(2)}%
         </span>
       </div>
       <div className='flex items-center gap-2'>
-        <span className='text-xs text-gray-500'>
+        <span className='text-[10px] text-muted-foreground/60'>
           {getUptimeStatusText(monitor.status)}
         </span>
         <div className='flex-1'>
@@ -231,7 +233,7 @@ export const renderMonitorList = (
     <div key={gname || 'default'} className='mb-2'>
       {gname && (
         <>
-          <div className='text-md font-semibold text-gray-500 px-2 py-1'>
+          <div className='text-xs font-medium uppercase tracking-wider text-muted-foreground/60 px-2 py-1'>
             {gname}
           </div>
           <Divider />

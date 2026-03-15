@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import { useState, useCallback, useEffect } from 'react';
-import { initVChartSemiTheme } from '@visactor/vchart-semi-theme';
+// vchart-semi-theme no longer used — custom aurora themes registered directly
 import VChart from '@visactor/vchart';
 import {
   modelColorMap,
@@ -69,12 +69,12 @@ export const useDashboardCharts = (
       state: {
         hover: {
           outerRadius: 0.85,
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
         selected: {
           outerRadius: 0.85,
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
       },
@@ -130,7 +130,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
       },
@@ -240,7 +240,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#000',
+          stroke: '#171717',
           lineWidth: 1,
         },
       },
@@ -429,15 +429,95 @@ export const useDashboardCharts = (
 
   // ========== 初始化图表主题 ==========
   useEffect(() => {
-    // Use Semi theme bridge for VChart (Semi CSS vars are bridged to shadcn)
-    initVChartSemiTheme({
-      isWatchingThemeSwitch: true,
-    });
-
-    // Override VChart default colors to match shadcn palette
+    // Register grayscale theme for VChart
     try {
+      const grayscaleTheme = {
+        colorScheme: {
+          default: [
+            '#171717', '#404040', '#737373', '#a3a3a3', '#d4d4d4',
+            '#525252', '#8a8a8a', '#b5b5b5', '#2e2e2e', '#616161',
+          ],
+        },
+        series: {
+          bar: {
+            bar: {
+              style: { fillOpacity: 0.85 },
+              state: { hover: { stroke: '#171717', lineWidth: 1, fillOpacity: 1 } },
+            },
+          },
+          line: {
+            line: { style: { lineWidth: 1.5 } },
+            point: { style: { size: 3, fillOpacity: 0.8 } },
+          },
+          pie: {
+            pie: {
+              style: { fillOpacity: 0.9 },
+              state: { hover: { outerRadius: 0.85, fillOpacity: 1 } },
+            },
+          },
+        },
+        component: {
+          axis: {
+            label: { style: { fill: '#a3a3a3', fontSize: 11 } },
+            tick: { style: { stroke: '#e5e5e5' } },
+            domainLine: { style: { stroke: '#e5e5e5' } },
+            grid: { style: { stroke: '#f0f0f0', lineDash: [3, 3] } },
+          },
+          legend: {
+            label: { style: { fill: '#737373', fontSize: 11 } },
+          },
+          title: {
+            style: { fill: '#171717', fontSize: 13, fontWeight: 500 },
+            subtextStyle: { fill: '#a3a3a3', fontSize: 11 },
+          },
+          tooltip: {
+            panel: { style: { backgroundColor: '#171717', border: { color: '#171717' } } },
+            titleLabel: { style: { fill: '#ffffff', fontSize: 11 } },
+            keyLabel: { style: { fill: '#d4d4d4', fontSize: 11 } },
+            valueLabel: { style: { fill: '#ffffff', fontSize: 11 } },
+          },
+        },
+      };
+
+      const darkGrayscaleTheme = {
+        ...grayscaleTheme,
+        colorScheme: {
+          default: [
+            '#e5e5e5', '#d4d4d4', '#b5b5b5', '#a3a3a3', '#8a8a8a',
+            '#c4c4c4', '#959595', '#737373', '#f0f0f0', '#c8c8c8',
+          ],
+        },
+        component: {
+          ...grayscaleTheme.component,
+          axis: {
+            label: { style: { fill: '#737373', fontSize: 11 } },
+            tick: { style: { stroke: '#333333' } },
+            domainLine: { style: { stroke: '#333333' } },
+            grid: { style: { stroke: '#262626', lineDash: [3, 3] } },
+          },
+          legend: {
+            label: { style: { fill: '#a3a3a3', fontSize: 11 } },
+          },
+          title: {
+            style: { fill: '#e5e5e5', fontSize: 13, fontWeight: 500 },
+            subtextStyle: { fill: '#737373', fontSize: 11 },
+          },
+        },
+      };
+
+      VChart.ThemeManager?.registerTheme?.('aurora-light', grayscaleTheme);
+      VChart.ThemeManager?.registerTheme?.('aurora-dark', darkGrayscaleTheme);
+
       const isDark = document.body.hasAttribute('theme-mode');
-      VChart.ThemeManager?.setCurrentTheme?.(isDark ? 'dark' : 'light');
+      VChart.ThemeManager?.setCurrentTheme?.(isDark ? 'aurora-dark' : 'aurora-light');
+
+      // Watch for theme changes
+      const observer = new MutationObserver(() => {
+        const dark = document.body.hasAttribute('theme-mode');
+        VChart.ThemeManager?.setCurrentTheme?.(dark ? 'aurora-dark' : 'aurora-light');
+      });
+      observer.observe(document.body, { attributes: true, attributeFilter: ['theme-mode'] });
+      return () => observer.disconnect();
     } catch (e) {
       // ignore if ThemeManager not available
     }
