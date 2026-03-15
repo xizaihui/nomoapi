@@ -29,29 +29,29 @@ const DashboardHeader = ({
   loading,
   t,
 }) => {
-  const ICON_BUTTON_CLASS = 'text-white hover:bg-opacity-80 !rounded-full';
-
   return (
-    <div className='flex items-center justify-between mb-4'>
-      <h2
-        className='text-2xl font-semibold text-foreground transition-opacity duration-1000 ease-in-out'
+    <div className='flex items-center justify-between mb-6'>
+      <div
+        className='transition-opacity duration-1000 ease-in-out'
         style={{ opacity: greetingVisible ? 1 : 0 }}
       >
-        {getGreeting}
-      </h2>
-      <div className='flex gap-3'>
+        <h2 className='text-lg font-medium text-foreground tracking-tight'>
+          {getGreeting}
+        </h2>
+      </div>
+      <div className='flex gap-2'>
         <Button
           type='tertiary'
-          icon={<Search size={16} />}
+          icon={<Search size={14} />}
           onClick={showSearchModal}
-          className={`bg-foreground/60 hover:bg-foreground/70 ${ICON_BUTTON_CLASS}`}
+          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-muted-foreground hover:text-foreground'
         />
         <Button
           type='tertiary'
-          icon={<RefreshCw size={16} />}
+          icon={<RefreshCw size={14} />}
           onClick={refresh}
           loading={loading}
-          className={`bg-foreground/80 hover:bg-foreground ${ICON_BUTTON_CLASS}`}
+          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-muted-foreground hover:text-foreground'
         />
       </div>
     </div>

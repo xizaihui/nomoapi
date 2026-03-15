@@ -76,8 +76,16 @@ const UsersTable = (usersData) => {
     const userIds = users.map((u) => u.id);
     batchGetAuditConfigs(userIds).then((res) => {
       if (res?.success && res.data) {
+        // Backend returns { "2": true, "3": false } map format
         const map = {};
-        res.data.forEach((c) => { map[c.user_id] = c.audit_enabled; });
+        if (Array.isArray(res.data)) {
+          res.data.forEach((c) => { map[c.user_id] = c.audit_enabled; });
+        } else {
+          // Object map: { userId: enabled }
+          Object.entries(res.data).forEach(([uid, enabled]) => {
+            map[parseInt(uid)] = enabled;
+          });
+        }
         setAuditMap(map);
       }
     }).catch(() => {});
