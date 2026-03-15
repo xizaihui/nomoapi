@@ -100,7 +100,7 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
         aria-label={t('切换主题')}
         theme='borderless'
         type='tertiary'
-        className='!p-1.5 !text-current focus:!bg-secondary !rounded-full !bg-muted hover:!bg-secondary'
+        className='!p-1.5 !text-current focus:!bg-muted !rounded-lg !bg-transparent hover:!bg-muted transition-colors'
       />
     </Dropdown>
   );

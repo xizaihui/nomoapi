@@ -110,11 +110,11 @@ const Table = ({
   }
 
   if (pagedData.length === 0 && empty) {
-    return <div className={cn(className)} style={style}>{empty}</div>;
+    return <div className={cn('animate-fade-in', className)} style={style}>{empty}</div>;
   }
 
   return (
-    <div className={cn('w-full', className)} style={style}>
+    <div className={cn('w-full animate-fade-in', className)} style={style}>
       <div className={scroll ? 'overflow-auto' : ''} style={scroll ? { maxHeight: scroll.y, maxWidth: scroll.x === 'max-content' ? '100%' : scroll.x } : undefined}>
         <table className={cn('w-full caption-bottom', sizeClass, bordered && 'border')}>
           <thead>

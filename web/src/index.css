@@ -1169,3 +1169,109 @@ html.dark .with-pastel-balls::before {
 body, .sidebar-container, .sidebar-nav, .sidebar-collapse-button {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
+
+/* ==================== Micro-interactions ==================== */
+
+/* Subtle focus ring for all interactive elements */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring) / 0.3);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Page content fade-in on route change */
+.page-content-enter {
+  animation: fade-up 0.35s ease-out both;
+}
+
+/* Staggered list items */
+.stagger-item {
+  animation: fade-up 0.3s ease-out both;
+}
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 40ms; }
+.stagger-item:nth-child(3) { animation-delay: 80ms; }
+.stagger-item:nth-child(4) { animation-delay: 120ms; }
+.stagger-item:nth-child(5) { animation-delay: 160ms; }
+.stagger-item:nth-child(6) { animation-delay: 200ms; }
+.stagger-item:nth-child(7) { animation-delay: 240ms; }
+.stagger-item:nth-child(8) { animation-delay: 280ms; }
+
+/* Button press effect */
+button:not(:disabled):active,
+[role="button"]:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* Smooth button transitions */
+button, [role="button"], a {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-hover:hover {
+  box-shadow: 0 2px 8px hsl(var(--foreground) / 0.04);
+  transform: translateY(-1px);
+}
+
+/* Table row hover highlight line */
+tr {
+  transition: background-color 0.15s ease;
+}
+
+/* Skeleton shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground) / 0.06) 50%, hsl(var(--muted)) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Sidebar nav item transitions */
+.sidebar-nav-item {
+  transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+.sidebar-nav-item:active {
+  transform: scale(0.98);
+}
+
+/* Input focus glow */
+input:focus, textarea:focus, select:focus {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Badge/tag subtle entrance */
+.badge-enter {
+  animation: scale-in 0.2s ease-out both;
+}
+
+/* Tooltip arrow-less smooth entrance handled by Radix */
+
+/* Loading spinner */
+.loading-dot {
+  animation: pulse-subtle 1.4s ease-in-out infinite;
+}
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Scrollbar styling (non-hidden areas) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground) / 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground) / 0.2);
+}

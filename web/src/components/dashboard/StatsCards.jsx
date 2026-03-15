@@ -49,7 +49,7 @@ const StatsCards = ({
           return (
             <div
               key={idx}
-              className='bg-card px-4 py-4 flex flex-col justify-between min-h-[100px] cursor-pointer hover:bg-muted/30 transition-colors'
+              className='bg-card px-4 py-4 flex flex-col justify-between min-h-[100px] cursor-pointer hover:bg-muted/30 transition-all duration-200 stagger-item'
               onClick={item.onClick}
             >
               <div className='flex items-center justify-between'>

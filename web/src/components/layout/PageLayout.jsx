@@ -187,7 +187,7 @@ const PageLayout = () => {
           }}
         >
           <main
-            className='flex-1'
+            className='flex-1 page-content-enter'
             style={{
               overflowY: isMobile ? 'visible' : 'hidden',
               WebkitOverflowScrolling: 'touch',

@@ -26,46 +26,46 @@ const LanguageSelector = ({ currentLang, onLanguageChange, t }) => {
     <Dropdown
       position='bottomRight'
       render={
-        <Dropdown.Menu className='!bg-popover !border-border !shadow-lg !rounded-lg dark:!bg-gray-700 dark:!border-gray-600'>
+        <Dropdown.Menu className='!bg-popover !border-border/60 !shadow-sm !rounded-lg'>
           {/* Language sorting: Order by English name (Chinese, English, French, Japanese, Russian) */}
           <Dropdown.Item
             onClick={() => onLanguageChange('zh-CN')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'zh-CN' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'zh-CN' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
             简体中文
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('zh-TW')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'zh-TW' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'zh-TW' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
         	繁體中文
           </Dropdown.Item>          <Dropdown.Item
             onClick={() => onLanguageChange('en')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'en' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'en' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
             English
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('fr')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'fr' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'fr' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
             Français
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('ja')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'ja' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'ja' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
             日本語
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('ru')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'ru' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'ru' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
             Русский
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => onLanguageChange('vi')}
-            className={`!px-3 !py-1.5 !text-sm !text-foreground dark:!text-gray-200 ${currentLang === 'vi' ? '!bg-primary-light-default dark:!bg-blue-600 !font-semibold' : 'hover:!bg-secondary dark:hover:!bg-gray-600'}`}
+            className={`!px-3 !py-1.5 !text-sm !text-foreground ${currentLang === 'vi' ? '!bg-muted !font-medium' : 'hover:!bg-muted'}`}
           >
             Tiếng Việt
           </Dropdown.Item>
@@ -73,11 +73,11 @@ const LanguageSelector = ({ currentLang, onLanguageChange, t }) => {
       }
     >
       <Button
-        icon={<Languages size={18} />}
+        icon={<Languages size={16} />}
         aria-label={t('common.changeLanguage')}
         theme='borderless'
         type='tertiary'
-        className='!p-1.5 !text-current focus:!bg-secondary dark:focus:!bg-gray-700 !rounded-full !bg-muted dark:!bg-secondary hover:!bg-secondary dark:hover:!bg-accent'
+        className='!p-1.5 !text-current focus:!bg-muted !rounded-lg !bg-transparent hover:!bg-muted transition-colors'
       />
     </Dropdown>
   );

@@ -23,13 +23,13 @@ import { Bell } from 'lucide-react';
 
 const NotificationButton = ({ unreadCount, onNoticeOpen, t }) => {
   const buttonProps = {
-    icon: <Bell size={18} />,
+    icon: <Bell size={16} />,
     'aria-label': t('系统公告'),
     onClick: onNoticeOpen,
     theme: 'borderless',
     type: 'tertiary',
     className:
-      '!p-1.5 !text-current focus:!bg-secondary dark:focus:!bg-gray-700 !rounded-full !bg-muted dark:!bg-secondary hover:!bg-secondary dark:hover:!bg-accent',
+      '!p-1.5 !text-current focus:!bg-muted !rounded-lg !bg-transparent hover:!bg-muted transition-colors',
   };
 
   if (unreadCount > 0) {
