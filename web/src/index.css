@@ -339,60 +339,68 @@ code {
 
 /* 侧边栏导航项样式 */
 .sidebar-nav-item {
-  border-radius: var(--radius);
-  margin: 2px 8px;
+  border-radius: 6px;
+  margin: 1px 8px;
   transition: all 0.15s ease;
-  padding: 8px 12px;
-  color: hsl(var(--sidebar-foreground));
+  padding: 6px 10px;
+  color: hsl(var(--sidebar-foreground) / 0.7);
+  font-size: 13px;
 }
 
 .sidebar-nav-item:hover {
   background-color: hsl(var(--sidebar-accent));
-  color: hsl(var(--sidebar-primary));
+  color: hsl(var(--sidebar-foreground));
 }
 
 .sidebar-nav-item-selected {
   background-color: hsl(var(--sidebar-accent));
-  color: hsl(var(--sidebar-primary));
+  color: hsl(var(--sidebar-foreground));
   font-weight: 500;
 }
 
 /* 图标容器样式 */
 .sidebar-icon-container {
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-  transition: all 0.2s ease;
-}
-
-.sidebar-sub-icon-container {
   width: 18px;
   height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 8px;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav-item-selected .sidebar-icon-container,
+.sidebar-nav-item:hover .sidebar-icon-container {
+  opacity: 1;
+}
+
+.sidebar-sub-icon-container {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
   margin-left: 1px;
+  opacity: 0.5;
   transition: all 0.2s ease;
 }
 
 /* 分割线样式 */
 .sidebar-divider {
-  margin: 4px 8px;
-  opacity: 0.15;
+  margin: 6px 12px;
+  opacity: 0.08;
 }
 
 /* 分组标签样式 */
 .sidebar-group-label {
-  padding: 4px 15px 8px;
-  color: hsl(var(--sidebar-foreground) / 0.6);
-  font-size: 12px;
+  padding: 8px 15px 4px;
+  color: hsl(var(--sidebar-foreground) / 0.4);
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.8;
+  letter-spacing: 0.08em;
+  font-weight: 500;
 }
 
 /* 底部折叠按钮 */

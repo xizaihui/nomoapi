@@ -1,6 +1,5 @@
-// Compat layer: Semi Design Pagination → simple pagination
+// Compat layer: Semi Design Pagination → minimal text pagination
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, showTotal, showSizeChanger, pageSizeOpts, onPageSizeChange, className, style, ...rest }) => {
@@ -8,56 +7,52 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
 
   const getPageNumbers = () => {
     const pages = [];
-    const maxVisible = 7;
-    if (totalPages <= maxVisible) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      if (currentPage > 3) pages.push('...');
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (currentPage < totalPages - 2) pages.push('...');
-      pages.push(totalPages);
-    }
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = Math.min(totalPages, start + maxVisible - 1);
+    if (end - start < maxVisible - 1) start = Math.max(1, end - maxVisible + 1);
+    for (let i = start; i <= end; i++) pages.push(i);
     return pages;
   };
 
   return (
-    <div className={cn('flex items-center gap-2 flex-wrap', className)} style={style} {...rest}>
-      {showTotal && <span className='text-sm text-muted-foreground mr-2'>共 {total} 条</span>}
-      <Button variant='outline' size='sm' disabled={currentPage <= 1} onClick={() => onPageChange?.(currentPage - 1)}>
-        ‹
-      </Button>
-      {getPageNumbers().map((page, idx) =>
-        page === '...' ? (
-          <span key={`ellipsis-${idx}`} className='px-1 text-muted-foreground'>…</span>
-        ) : (
-          <Button
+    <div className={cn('flex items-center justify-between', className)} style={style} {...rest}>
+      <span className='text-xs text-muted-foreground/60 tabular-nums'>
+        {total} results
+      </span>
+      <div className='flex items-center gap-0.5'>
+        <button
+          type='button'
+          disabled={currentPage <= 1}
+          onClick={() => onPageChange?.(currentPage - 1)}
+          className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'
+        >
+          ←
+        </button>
+        {getPageNumbers().map((page) => (
+          <button
             key={page}
-            variant={page === currentPage ? 'default' : 'outline'}
-            size='sm'
+            type='button'
             onClick={() => onPageChange?.(page)}
-            className='min-w-[32px]'
+            className={cn(
+              'w-7 h-7 text-xs rounded transition-colors',
+              page === currentPage
+                ? 'bg-foreground text-background font-medium'
+                : 'text-muted-foreground hover:text-foreground'
+            )}
           >
             {page}
-          </Button>
-        )
-      )}
-      <Button variant='outline' size='sm' disabled={currentPage >= totalPages} onClick={() => onPageChange?.(currentPage + 1)}>
-        ›
-      </Button>
-      {showSizeChanger && pageSizeOpts && (
-        <select
-          value={pageSize}
-          onChange={(e) => onPageSizeChange?.(Number(e.target.value))}
-          className='h-8 rounded-md border border-input bg-background px-2 text-sm'
+          </button>
+        ))}
+        <button
+          type='button'
+          disabled={currentPage >= totalPages}
+          onClick={() => onPageChange?.(currentPage + 1)}
+          className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'
         >
-          {pageSizeOpts.map((s) => (
-            <option key={s} value={s}>{s} 条/页</option>
-          ))}
-        </select>
-      )}
+          →
+        </button>
+      </div>
     </div>
   );
 };

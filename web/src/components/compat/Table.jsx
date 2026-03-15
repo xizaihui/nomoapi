@@ -117,10 +117,10 @@ const Table = ({
     <div className={cn('w-full', className)} style={style}>
       <div className={scroll ? 'overflow-auto' : ''} style={scroll ? { maxHeight: scroll.y, maxWidth: scroll.x === 'max-content' ? '100%' : scroll.x } : undefined}>
         <table className={cn('w-full caption-bottom', sizeClass, bordered && 'border')}>
-          <thead className='border-b bg-muted/50'>
-            <tr>
+          <thead>
+            <tr className='border-b'>
               {rowSelection && (
-                <th className='px-3 py-2 w-10'>
+                <th className='px-3 py-2.5 w-10'>
                   <input
                     type='checkbox'
                     checked={pagedData.length > 0 && pagedData.every((r, i) => selectedRowKeys.includes(getRowKey(r, i)))}
@@ -135,15 +135,15 @@ const Table = ({
                 return (
                   <th
                     key={key}
-                    className={cn('px-3 py-2 text-left font-medium text-muted-foreground', col.sorter && 'cursor-pointer select-none hover:text-foreground', col.fixed && 'sticky bg-background z-10', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0')}
+                    className={cn('px-3 py-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70', col.sorter && 'cursor-pointer select-none hover:text-foreground', col.fixed && 'sticky bg-background z-10', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0')}
                     style={{ width: col.width, minWidth: col.width }}
                     onClick={col.sorter ? () => handleSort(key) : undefined}
                   >
                     <span className='inline-flex items-center gap-1'>
                       {col.title}
                       {col.sorter && (
-                        <span className='text-[10px]'>
-                          {isSorted ? (sortState.order === 'ascend' ? '▲' : '▼') : '⇅'}
+                        <span className='text-[10px] opacity-40'>
+                          {isSorted ? (sortState.order === 'ascend' ? '↑' : '↓') : '↕'}
                         </span>
                       )}
                     </span>
@@ -152,7 +152,7 @@ const Table = ({
               })}
             </tr>
           </thead>
-          <tbody className='divide-y'>
+          <tbody>
             {pagedData.map((record, rowIdx) => {
               const key = getRowKey(record, rowIdx);
               const rowProps = onRow ? onRow(record, rowIdx) : {};
@@ -166,9 +166,9 @@ const Table = ({
               };
               return (
                 <React.Fragment key={key}>
-                  <tr className={cn('hover:bg-muted/50 transition-colors', selectedRowKeys.includes(key) && 'bg-accent/30', expandRowByClick && canExpand && 'cursor-pointer')} {...rowProps} onClick={handleRowClick}>
+                  <tr className={cn('border-b border-border/50 hover:bg-muted/30 transition-colors', selectedRowKeys.includes(key) && 'bg-muted/20', expandRowByClick && canExpand && 'cursor-pointer')} {...rowProps} onClick={handleRowClick}>
                     {rowSelection && (
-                      <td className='px-3 py-2'>
+                      <td className='px-3 py-2.5'>
                         <input
                           type='checkbox'
                           checked={selectedRowKeys.includes(key)}
@@ -183,7 +183,7 @@ const Table = ({
                       return (
                         <td
                           key={colKey}
-                          className={cn('px-3 py-2', col.fixed && 'sticky bg-background', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0', col.align === 'center' && 'text-center', col.align === 'right' && 'text-right')}
+                          className={cn('px-3 py-2.5 text-sm', col.fixed && 'sticky bg-background', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0', col.align === 'center' && 'text-center', col.align === 'right' && 'text-right')}
                           style={{ width: col.width }}
                         >
                           {col.render ? col.render(cellValue, record, rowIdx) : (cellValue ?? '')}
@@ -193,7 +193,7 @@ const Table = ({
                   </tr>
                   {expandedRowRender && isExpanded && (
                     <tr>
-                      <td colSpan={columns.length + (rowSelection ? 1 : 0)} className='px-3 py-2 bg-muted/20'>
+                      <td colSpan={columns.length + (rowSelection ? 1 : 0)} className='px-3 py-2.5 bg-muted/10'>
                         {expandedRowRender(record, rowIdx)}
                       </td>
                     </tr>
@@ -205,19 +205,22 @@ const Table = ({
         </table>
       </div>
       {usePagination && totalItems > pageSize && (
-        <div className='flex items-center justify-between px-2 py-3'>
-          <span className='text-xs text-muted-foreground'>共 {totalItems} 条</span>
-          <div className='flex items-center gap-1'>
-            <button type='button' aria-label='上一页' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>‹</button>
-            {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => i + 1).map((p) => (
-              <button key={p} type='button' aria-label={`第${p}页`} onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('px-2 py-1 text-sm rounded border min-w-[28px]', p === currentPage ? 'bg-primary text-primary-foreground' : 'hover:bg-muted')}>{p}</button>
-            ))}
-            <button type='button' disabled={currentPage >= totalPages} onClick={() => { const p = currentPage + 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-sm rounded border disabled:opacity-40 hover:bg-muted'>›</button>
-            {pagination?.showSizeChanger && pagination?.pageSizeOptions && (
-              <select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setCurrentPage(1); pagination?.onPageSizeChange?.(Number(e.target.value)); }} className='ml-2 h-7 rounded border bg-background px-1 text-xs'>
-                {pagination.pageSizeOptions.map((s) => <option key={s} value={s}>{s} 条/页</option>)}
-              </select>
-            )}
+        <div className='flex items-center justify-between px-3 py-3 border-t border-border/50'>
+          <span className='text-xs text-muted-foreground/60 tabular-nums'>{totalItems} results</span>
+          <div className='flex items-center gap-0.5'>
+            <button type='button' aria-label='上一页' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'>←</button>
+            {(() => {
+              const pages = [];
+              const maxVisible = 5;
+              let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+              let end = Math.min(totalPages, start + maxVisible - 1);
+              if (end - start < maxVisible - 1) start = Math.max(1, end - maxVisible + 1);
+              for (let p = start; p <= end; p++) pages.push(p);
+              return pages.map((p) => (
+                <button key={p} type='button' onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('w-7 h-7 text-xs rounded transition-colors', p === currentPage ? 'bg-foreground text-background font-medium' : 'text-muted-foreground hover:text-foreground')}>{p}</button>
+              ));
+            })()}
+            <button type='button' disabled={currentPage >= totalPages} onClick={() => { const p = currentPage + 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'>→</button>
           </div>
         </div>
       )}
