@@ -50,6 +50,9 @@ const routerMap = {
   deployment: '/console/deployment',
   playground: '/console/playground',
   personal: '/console/personal',
+  // 审计模块（独立，不影响上游）
+  'audit-logs': '/console/audit-logs',
+  'audit-rules': '/console/audit-rules',
 };
 
 const SiderBar = ({ onNavigate = () => {} }) => {
