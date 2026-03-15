@@ -1,9 +1,8 @@
 // Compat layer: Semi Design SideSheet → pure portal-based side panel
-// No Radix Dialog dependency — avoids positioning/animation conflicts
+// Uses inline styles exclusively to avoid any CSS specificity/containment issues
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 const SideSheet = ({
   visible,
@@ -26,6 +25,7 @@ const SideSheet = ({
   afterVisibleChange,
   keepDOM,
   getPopupContainer,
+  closeOnEsc,
   ...rest
 }) => {
   const [mounted, setMounted] = React.useState(false);
@@ -34,19 +34,30 @@ const SideSheet = ({
   React.useEffect(() => {
     if (visible) {
       setMounted(true);
-      // Trigger enter animation on next frame
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setAnimating(true));
       });
+      // Lock body scroll
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
     } else {
       setAnimating(false);
       const timer = setTimeout(() => {
         setMounted(false);
         afterVisibleChange?.(false);
-      }, 200);
+      }, 250);
       return () => clearTimeout(timer);
     }
   }, [visible]);
+
+  // ESC key
+  React.useEffect(() => {
+    if (!visible || closeOnEsc === false) return;
+    const handler = (e) => { if (e.key === 'Escape') onCancel?.(); };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [visible, closeOnEsc, onCancel]);
 
   if (!mounted && !keepDOM) return null;
 
@@ -55,74 +66,122 @@ const SideSheet = ({
   const widthStr = typeof resolvedWidth === 'number' ? `${resolvedWidth}px` : resolvedWidth;
   const heightStr = height ? (typeof height === 'number' ? `${height}px` : height) : '400px';
 
+  // All styles inline to avoid CSS containment issues
+  const overlayStyle = {
+    position: 'fixed',
+    top: 0, left: 0, right: 0, bottom: 0,
+    zIndex: 9999,
+    pointerEvents: visible ? 'auto' : 'none',
+  };
+
+  const maskStyle = {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    opacity: animating ? 1 : 0,
+    transition: 'opacity 0.25s ease',
+  };
+
+  const panelPositionStyle = {
+    right: { top: 0, right: 0, bottom: 0, width: widthStr, maxWidth: '100vw' },
+    left: { top: 0, left: 0, bottom: 0, width: widthStr, maxWidth: '100vw' },
+    top: { top: 0, left: 0, right: 0, height: heightStr },
+    bottom: { bottom: 0, left: 0, right: 0, height: heightStr },
+  };
+
+  const transformMap = {
+    right: animating ? 'translateX(0)' : 'translateX(100%)',
+    left: animating ? 'translateX(0)' : 'translateX(-100%)',
+    top: animating ? 'translateY(0)' : 'translateY(-100%)',
+    bottom: animating ? 'translateY(0)' : 'translateY(100%)',
+  };
+
   const panelStyle = {
-    ...(isHorizontal ? { width: widthStr, maxWidth: '100vw' } : { height: heightStr }),
+    position: 'fixed',
+    zIndex: 10000,
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'var(--background, #fff)',
+    color: 'var(--foreground, #000)',
+    boxShadow: '-4px 0 24px rgba(0,0,0,0.15)',
+    transform: transformMap[placement],
+    transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+    ...panelPositionStyle[placement],
+    ...(isHorizontal ? { borderLeft: '1px solid var(--border, #e5e7eb)' } : { borderTop: '1px solid var(--border, #e5e7eb)' }),
     ...style,
   };
 
-  const positionClasses = {
-    right: 'top-0 right-0 h-full',
-    left: 'top-0 left-0 h-full',
-    top: 'top-0 left-0 w-full',
-    bottom: 'bottom-0 left-0 w-full',
+  const headerContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '16px 24px',
+    borderBottom: '1px solid var(--border, #e5e7eb)',
+    flexShrink: 0,
+    ...headerStyle,
   };
 
-  const transformHidden = {
-    right: 'translateX(100%)',
-    left: 'translateX(-100%)',
-    top: 'translateY(-100%)',
-    bottom: 'translateY(100%)',
+  const bodyContainerStyle = {
+    flex: '1 1 auto',
+    overflow: 'auto',
+    padding: '16px 24px',
+    ...bodyStyle,
+  };
+
+  const footerContainerStyle = {
+    padding: '16px 24px',
+    borderTop: '1px solid var(--border, #e5e7eb)',
+    flexShrink: 0,
+  };
+
+  const closeButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    opacity: 0.7,
+    padding: '4px',
+    marginLeft: '8px',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    color: 'inherit',
   };
 
   const content = (
-    <div className='fixed inset-0 z-50' style={{ pointerEvents: visible ? 'auto' : 'none' }}>
-      {/* Overlay */}
+    <div style={overlayStyle}>
       {mask && (
         <div
-          className={cn(
-            'absolute inset-0 bg-black/80 transition-opacity duration-200',
-            animating ? 'opacity-100' : 'opacity-0'
-          )}
+          style={maskStyle}
           onClick={maskClosable ? onCancel : undefined}
         />
       )}
-      {/* Panel */}
       <div
-        className={cn(
-          'absolute bg-background shadow-lg flex flex-col transition-transform duration-200 ease-out',
-          positionClasses[placement],
-          isHorizontal && 'border-l',
-          className
-        )}
-        style={{
-          ...panelStyle,
-          transform: animating ? 'translate(0, 0)' : transformHidden[placement],
-        }}
+        style={panelStyle}
         role='dialog'
         aria-modal='true'
+        className={className}
       >
-        {/* Header */}
         {(title || closable) && (
-          <div className='flex items-center justify-between px-6 py-4 border-b shrink-0' style={headerStyle}>
-            <div className='text-lg font-semibold flex-1 min-w-0'>{title}</div>
+          <div style={headerContainerStyle}>
+            <div style={{ fontSize: '18px', fontWeight: 600, flex: '1 1 auto', minWidth: 0 }}>{title}</div>
             {closable && closeIcon !== null && (
               <button
                 type='button'
                 onClick={onCancel}
-                className='rounded-sm opacity-70 hover:opacity-100 ml-2 shrink-0'
+                style={closeButtonStyle}
                 aria-label='关闭'
+                onMouseOver={(e) => { e.currentTarget.style.opacity = '1'; }}
+                onMouseOut={(e) => { e.currentTarget.style.opacity = '0.7'; }}
               >
-                {closeIcon || <X className='h-4 w-4' />}
+                {closeIcon || <X size={16} />}
               </button>
             )}
           </div>
         )}
-        {/* Body */}
-        <div className='flex-1 overflow-auto px-6 py-4' style={bodyStyle} data-slot='sheet-content'>
+        <div style={bodyContainerStyle}>
           {children}
         </div>
-        {/* Footer */}
-        {footer && <div className='px-6 py-4 border-t shrink-0'>{footer}</div>}
+        {footer && <div style={footerContainerStyle}>{footer}</div>}
       </div>
     </div>
   );
