@@ -205,7 +205,7 @@ const PageLayout = () => {
         </div>
       </div>
       <ToastContainer />
-      <Toaster richColors position='top-center' />
+      <Toaster position='top-center' toastOptions={{ className: 'bg-background text-foreground border-border shadow-sm', style: { borderRadius: '8px' } }} />
     </div>
   );
 };

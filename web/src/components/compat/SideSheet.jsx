@@ -77,7 +77,8 @@ const SideSheet = ({
   const maskStyle = {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backdropFilter: 'blur(2px)',
     opacity: animating ? 1 : 0,
     transition: 'opacity 0.25s ease',
   };
@@ -103,7 +104,7 @@ const SideSheet = ({
     flexDirection: 'column',
     backgroundColor: 'hsl(var(--background))',
     color: 'hsl(var(--foreground))',
-    boxShadow: '-4px 0 24px rgba(0,0,0,0.15)',
+    boxShadow: '-2px 0 16px rgba(0,0,0,0.08)',
     transform: transformMap[placement],
     transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
     ...panelPositionStyle[placement],
@@ -139,13 +140,14 @@ const SideSheet = ({
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    opacity: 0.7,
+    opacity: 0.4,
     padding: '4px',
     marginLeft: '8px',
     flexShrink: 0,
     display: 'flex',
     alignItems: 'center',
     color: 'inherit',
+    transition: 'opacity 0.15s',
   };
 
   const content = (
@@ -164,7 +166,7 @@ const SideSheet = ({
       >
         {(title || closable) && (
           <div style={headerContainerStyle}>
-            <div style={{ fontSize: '18px', fontWeight: 600, flex: '1 1 auto', minWidth: 0 }}>{title}</div>
+            <div style={{ fontSize: '15px', fontWeight: 500, flex: '1 1 auto', minWidth: 0 }}>{title}</div>
             {closable && closeIcon !== null && (
               <button
                 type='button'
