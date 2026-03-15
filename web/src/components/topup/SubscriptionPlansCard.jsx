@@ -377,7 +377,7 @@ const SubscriptionPlansCard = ({
             {hasAnySubscription ? (
               <>
                 <Divider margin={8} />
-                <div className='max-h-64 overflow-y-auto pr-1 semi-table-body'>
+                <div className='max-h-64 overflow-y-auto pr-1 table-body-scroll'>
                   {allSubscriptions.map((sub, subIndex) => {
                     const isLast = subIndex === allSubscriptions.length - 1;
                     const subscription = sub.subscription;
