@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
+  <g transform="translate(256,256)">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="160" stroke="#e5e5e5" stroke-width="24" fill="none"/>
+    <!-- Key notch at top -->
+    <rect x="-20" y="-184" width="40" height="48" rx="6" fill="#0a0a0a"/>
+    <!-- Inner token circle -->
+    <circle cx="0" cy="0" r="80" stroke="#e5e5e5" stroke-width="16" fill="none"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="24" fill="#e5e5e5"/>
+    <!-- Key teeth - bottom -->
+    <rect x="-12" y="80" width="24" height="120" rx="4" fill="#e5e5e5"/>
+    <rect x="12" y="130" width="36" height="16" rx="4" fill="#e5e5e5"/>
+    <rect x="12" y="160" width="28" height="16" rx="4" fill="#e5e5e5"/>
+  </g>
+</svg>

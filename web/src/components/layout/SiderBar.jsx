@@ -83,7 +83,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const workspaceItems = useMemo(() => {
     const items = [
       {
-        text: t('数据看板'),
+        text: t('概况预览'),
         itemKey: 'detail',
         to: '/detail',
         className:
@@ -92,12 +92,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             : 'tableHiddle',
       },
       {
-        text: t('令牌管理'),
+        text: t('密钥管理'),
         itemKey: 'token',
         to: '/token',
       },
       {
-        text: t('使用日志'),
+        text: t('日志详情'),
         itemKey: 'log',
         to: '/log',
       },

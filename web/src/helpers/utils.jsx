@@ -48,13 +48,13 @@ export function isRoot() {
 
 export function getSystemName() {
   let system_name = localStorage.getItem('system_name');
-  if (!system_name) return 'Aurora';
+  if (!system_name) return 'OpenToken';
   return system_name;
 }
 
 export function getLogo() {
   let logo = localStorage.getItem('logo');
-  if (!logo) return '/logo.png';
+  if (!logo) return '/opentoken-logo.svg';
   return logo;
 }
 

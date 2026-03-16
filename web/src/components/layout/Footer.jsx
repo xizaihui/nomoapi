@@ -36,7 +36,7 @@ const FooterBar = () => {
           © {currentYear} {systemName}
         </span>
         <span className='text-xs text-muted-foreground/40'>
-          Powered by Aurora
+          Powered by OpenToken
         </span>
       </div>
     </footer>
