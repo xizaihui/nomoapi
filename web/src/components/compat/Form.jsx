@@ -480,13 +480,22 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
   }
 
   // --- Single select mode ---
+  // Build a lookup to recover original typed values (numbers, booleans)
+  const valueTypeMap = React.useMemo(() => {
+    const m = new Map();
+    options.forEach((opt) => m.set(String(opt.value), opt.value));
+    return m;
+  }, [options]);
+
   const value = rawValue ?? '';
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <select
         value={value}
         onChange={(e) => {
-          const val = e.target.value;
+          const strVal = e.target.value;
+          // Recover original type (e.g. number) from option list
+          const val = valueTypeMap.has(strVal) ? valueTypeMap.get(strVal) : strVal;
           if (field) formApi.setValue(field, val);
           if (onChangeProp) onChangeProp(val);
         }}
