@@ -540,7 +540,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
             rows={3}
             rules={[{ required: true, message: t('请输入公告内容') }]}
             onChange={(value) =>
-              setAnnouncementForm({ ...announcementForm, content: value })
+              setAnnouncementForm(prev => ({ ...prev, content: value }))
             }
           />
           <Button
@@ -559,7 +559,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
             type='dateTime'
             rules={[{ required: true, message: t('请选择发布日期') }]}
             onChange={(value) =>
-              setAnnouncementForm({ ...announcementForm, publishDate: value })
+              setAnnouncementForm(prev => ({ ...prev, publishDate: value }))
             }
           />
           <Form.Select
@@ -567,7 +567,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
             label={t('公告类型')}
             optionList={typeOptions}
             onChange={(value) =>
-              setAnnouncementForm({ ...announcementForm, type: value })
+              setAnnouncementForm(prev => ({ ...prev, type: value }))
             }
           />
           <Form.Input
@@ -575,7 +575,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
             label={t('说明信息')}
             placeholder={t('可选，公告的补充说明')}
             onChange={(value) =>
-              setAnnouncementForm({ ...announcementForm, extra: value })
+              setAnnouncementForm(prev => ({ ...prev, extra: value }))
             }
           />
         </Form>
@@ -623,7 +623,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
           rows={15}
           style={{ width: '100%' }}
           onChange={(value) =>
-            setAnnouncementForm({ ...announcementForm, content: value })
+            setAnnouncementForm(prev => ({ ...prev, content: value }))
           }
         />
       </Modal>

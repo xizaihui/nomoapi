@@ -473,7 +473,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
             maxLength={50}
             rules={[{ required: true, message: t('请输入分类名称') }]}
             onChange={(value) =>
-              setUptimeForm({ ...uptimeForm, categoryName: value })
+              setUptimeForm(prev => ({ ...prev, categoryName: value }))
             }
           />
           <Form.Input
@@ -484,7 +484,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
             )}
             maxLength={500}
             rules={[{ required: true, message: t('请输入Uptime Kuma地址') }]}
-            onChange={(value) => setUptimeForm({ ...uptimeForm, url: value })}
+            onChange={(value) => setUptimeForm(prev => ({ ...prev, url: value }))}
           />
           <Form.Input
             field='slug'
@@ -492,7 +492,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
             placeholder={t('请输入状态页面的Slug，如：my-status')}
             maxLength={100}
             rules={[{ required: true, message: t('请输入状态页面Slug') }]}
-            onChange={(value) => setUptimeForm({ ...uptimeForm, slug: value })}
+            onChange={(value) => setUptimeForm(prev => ({ ...prev, slug: value }))}
           />
         </Form>
       </Modal>

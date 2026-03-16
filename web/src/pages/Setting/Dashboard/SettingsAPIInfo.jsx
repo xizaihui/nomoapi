@@ -458,27 +458,27 @@ const SettingsAPIInfo = ({ options, refresh }) => {
             label={t('API地址')}
             placeholder='https://api.example.com'
             rules={[{ required: true, message: t('请输入API地址') }]}
-            onChange={(value) => setApiForm({ ...apiForm, url: value })}
+            onChange={(value) => setApiForm(prev => ({ ...prev, url: value }))}
           />
           <Form.Input
             field='route'
             label={t('线路描述')}
             placeholder={t('如：香港线路')}
             rules={[{ required: true, message: t('请输入线路描述') }]}
-            onChange={(value) => setApiForm({ ...apiForm, route: value })}
+            onChange={(value) => setApiForm(prev => ({ ...prev, route: value }))}
           />
           <Form.Input
             field='description'
             label={t('说明')}
             placeholder={t('如：大带宽批量分析图片推荐')}
             rules={[{ required: true, message: t('请输入说明') }]}
-            onChange={(value) => setApiForm({ ...apiForm, description: value })}
+            onChange={(value) => setApiForm(prev => ({ ...prev, description: value }))}
           />
           <Form.Select
             field='color'
             label={t('标识颜色')}
             optionList={colorOptions}
-            onChange={(value) => setApiForm({ ...apiForm, color: value })}
+            onChange={(value) => setApiForm(prev => ({ ...prev, color: value }))}
             render={(option) => (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Avatar size='extra-extra-small' color={option.value} />

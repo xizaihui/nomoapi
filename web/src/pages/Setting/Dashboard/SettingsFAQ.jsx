@@ -451,7 +451,7 @@ const SettingsFAQ = ({ options, refresh }) => {
             placeholder={t('请输入问题标题')}
             maxLength={200}
             rules={[{ required: true, message: t('请输入问题标题') }]}
-            onChange={(value) => setFaqForm({ ...faqForm, question: value })}
+            onChange={(value) => setFaqForm(prev => ({ ...prev, question: value }))}
           />
           <Form.TextArea
             field='answer'
@@ -460,7 +460,7 @@ const SettingsFAQ = ({ options, refresh }) => {
             maxCount={1000}
             rows={6}
             rules={[{ required: true, message: t('请输入回答内容') }]}
-            onChange={(value) => setFaqForm({ ...faqForm, answer: value })}
+            onChange={(value) => setFaqForm(prev => ({ ...prev, answer: value }))}
           />
         </Form>
       </Modal>
