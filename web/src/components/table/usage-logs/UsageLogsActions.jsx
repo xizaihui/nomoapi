@@ -18,10 +18,16 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Tag, Space, Skeleton } from '@douyinfe/semi-ui';
 import { renderQuota } from '../../../helpers';
 import CompactModeToggle from '../../common/ui/CompactModeToggle';
 import { useMinimumLoadingTime } from '../../../hooks/common/useMinimumLoadingTime';
+
+const StatItem = ({ label, value }) => (
+  <div className='flex items-center gap-2 px-3 py-1.5'>
+    <span className='text-xs text-muted-foreground/60 uppercase tracking-wider'>{label}</span>
+    <span className='text-sm font-medium tabular-nums'>{value}</span>
+  </div>
+);
 
 const LogsActions = ({
   stat,
@@ -34,54 +40,21 @@ const LogsActions = ({
   const showSkeleton = useMinimumLoadingTime(loadingStat);
   const needSkeleton = !showStat || showSkeleton;
 
-  const placeholder = (
-    <Space>
-      <Skeleton.Title style={{ width: 108, height: 21, borderRadius: 6 }} />
-      <Skeleton.Title style={{ width: 65, height: 21, borderRadius: 6 }} />
-      <Skeleton.Title style={{ width: 64, height: 21, borderRadius: 6 }} />
-    </Space>
-  );
-
   return (
     <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full'>
-      <Skeleton loading={needSkeleton} active placeholder={placeholder}>
-        <Space>
-          <Tag
-            color='blue'
-            style={{
-              fontWeight: 500,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              padding: 13,
-            }}
-            className='!rounded-lg'
-          >
-            {t('消耗额度')}: {renderQuota(stat.quota)}
-          </Tag>
-          <Tag
-            color='pink'
-            style={{
-              fontWeight: 500,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              padding: 13,
-            }}
-            className='!rounded-lg'
-          >
-            RPM: {stat.rpm}
-          </Tag>
-          <Tag
-            color='white'
-            style={{
-              border: 'none',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              fontWeight: 500,
-              padding: 13,
-            }}
-            className='!rounded-lg'
-          >
-            TPM: {stat.tpm}
-          </Tag>
-        </Space>
-      </Skeleton>
+      {needSkeleton ? (
+        <div className='flex gap-3'>
+          <div className='h-8 w-28 rounded-md bg-muted animate-pulse' />
+          <div className='h-8 w-16 rounded-md bg-muted animate-pulse' />
+          <div className='h-8 w-16 rounded-md bg-muted animate-pulse' />
+        </div>
+      ) : (
+        <div className='flex items-center divide-x divide-border/40 border border-border/60 rounded-lg'>
+          <StatItem label={t('消耗额度')} value={renderQuota(stat.quota)} />
+          <StatItem label='RPM' value={stat.rpm} />
+          <StatItem label='TPM' value={stat.tpm} />
+        </div>
+      )}
 
       <CompactModeToggle
         compactMode={compactMode}
