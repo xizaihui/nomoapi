@@ -173,7 +173,7 @@ const FormField = ({
   return (
     <div
       className={cn(
-        'mb-4',
+        pure ? 'mb-0' : 'mb-4',
         isHorizontal ? 'flex items-start gap-3' : '',
         className
       )}
@@ -221,6 +221,7 @@ const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter
       <div className='flex items-center w-full rounded-md border border-border bg-background transition-colors focus-within:border-foreground/30'>
         {prefix && <span className='flex items-center pl-3 text-muted-foreground'>{prefix}</span>}
         <input
+          id={field}
           type={inputType}
           value={value}
           onChange={(e) => {
@@ -269,6 +270,7 @@ const FormTextArea = ({ field, label, autosize, maxCount, onChange: onChangeProp
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
       <textarea
+        id={field}
         ref={textareaRef}
         value={value}
         onChange={(e) => {
