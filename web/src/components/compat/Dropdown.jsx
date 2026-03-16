@@ -65,12 +65,15 @@ const Menu = ({ children, className, ...rest }) => <>{children}</>;
 // If the child is a button/link, render it directly to avoid nested interactive elements
 const Item = ({ children, onClick, disabled, icon, active, className, type, ...rest }) => {
   // Check if children is a single interactive element (button, a, etc.)
-  const child = React.Children.only(children) || children;
-  const isInteractive = child?.type === 'button' || child?.type === 'a' ||
-    child?.props?.onClick || child?.props?.href ||
-    (typeof child?.type === 'function' || typeof child?.type === 'object');
+  // Only treat as interactive if the CHILD itself is interactive AND no onClick on Item
+  const child = React.Children.count(children) === 1 ? React.Children.only(children) : null;
+  const isInteractive = !onClick && child && (
+    child?.type === 'button' || child?.type === 'a' ||
+    child?.props?.href ||
+    (child?.props?.onClick && (typeof child?.type === 'function' || typeof child?.type === 'object'))
+  );
 
-  if (isInteractive && !onClick) {
+  if (isInteractive) {
     // Wrap in a div with role=menuitem styling instead of DropdownMenuItem
     // to avoid nested button/interactive element issues
     return (
@@ -81,6 +84,7 @@ const Item = ({ children, onClick, disabled, icon, active, className, type, ...r
           'focus:bg-muted focus:text-accent-foreground',
           disabled && 'pointer-events-none opacity-50',
           active && 'bg-muted',
+          type === 'danger' && 'text-destructive focus:text-destructive',
           className
         )}
         {...rest}
@@ -92,7 +96,7 @@ const Item = ({ children, onClick, disabled, icon, active, className, type, ...r
   }
 
   return (
-    <DropdownMenuItem onClick={onClick} disabled={disabled} className={cn(active && 'bg-muted', className)} {...rest}>
+    <DropdownMenuItem onClick={onClick} disabled={disabled} className={cn(active && 'bg-muted', type === 'danger' && 'text-destructive focus:text-destructive', className)} {...rest}>
       {icon && <span className='mr-2'>{icon}</span>}
       {children}
     </DropdownMenuItem>
