@@ -41,7 +41,7 @@ const LogsActions = ({
   const needSkeleton = !showStat || showSkeleton;
 
   return (
-    <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full'>
+    <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full mt-2'>
       {needSkeleton ? (
         <div className='flex gap-3'>
           <div className='h-8 w-28 rounded-md bg-muted animate-pulse' />
