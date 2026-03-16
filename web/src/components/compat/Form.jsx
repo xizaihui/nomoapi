@@ -217,7 +217,7 @@ const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter
   const inputType = mode === 'password' ? 'password' : 'text';
   const { placeholder, disabled, className: inputClassName, style: inputStyle, size, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, name, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <div className='flex items-center w-full rounded-md border border-border bg-background transition-colors focus-within:border-foreground/30'>
         {prefix && <span className='flex items-center pl-3 text-muted-foreground'>{prefix}</span>}
         <input
@@ -268,7 +268,7 @@ const FormTextArea = ({ field, label, autosize, maxCount, onChange: onChangeProp
   }, [value, autosize, minRows, maxRows]);
 
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <textarea
         id={field}
         ref={textareaRef}
@@ -295,7 +295,7 @@ const FormInputNumber = ({ field, label, min, max, step, prefix, suffix, ...rest
   const value = field ? (values[field] ?? '') : '';
   const { placeholder, disabled, style, initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <input
         type='number'
         value={value}
@@ -400,7 +400,7 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
     };
 
     return (
-      <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+      <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
         <div ref={containerRef} className='relative' style={style}>
           <div
             className='flex flex-wrap items-center gap-1 min-h-[36px] w-full rounded-md border border-border bg-background px-2 py-1 text-sm focus-within:border-foreground/30 cursor-text'
@@ -482,7 +482,7 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
   // --- Single select mode ---
   const value = rawValue ?? '';
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <select
         value={value}
         onChange={(e) => {
@@ -511,7 +511,7 @@ const FormSwitch = ({ field, label, checkedText, uncheckedText, ...rest }) => {
   const checked = field ? (values[field] ?? false) : false;
   const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <button
         type='button'
         role='switch'
@@ -538,7 +538,7 @@ const FormCheckbox = ({ field, label, ...rest }) => {
   const checked = field ? (values[field] ?? false) : false;
   const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} noLabel required={required} helpText={helpText} extraText={extraText} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} noLabel required={required} helpText={helpText} extraText={extraText} labelPosition={labelPosition} pure={pure} _noInject>
       <label className='flex items-center gap-2 cursor-pointer'>
         <input
           type='checkbox'
@@ -561,7 +561,7 @@ const FormRadioGroup = ({ field, label, options, direction, ...rest }) => {
   const value = field ? values[field] : undefined;
   const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <div className={cn('flex gap-3', direction === 'vertical' ? 'flex-col' : 'flex-wrap')}>
         {(options || []).map((opt) => {
           const optValue = typeof opt === 'string' ? opt : opt.value;
@@ -626,7 +626,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
     };
 
     return (
-      <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+      <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
         <div className='flex flex-col gap-1'>
           <div className='flex items-center gap-1'>
             <input
@@ -669,7 +669,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
 
   // Single date/datetime
   return (
-    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} _noInject>
+    <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <div className='flex items-center gap-1'>
         <input
           type={inputType}
