@@ -50,7 +50,7 @@ const CARD_STYLES = {
     'w-12 h-12 rounded-xl flex items-center justify-center relative shadow-sm',
   icon: 'w-8 h-8 flex items-center justify-center',
   selected: 'border-blue-500 bg-muted/30',
-  default: 'border-gray-200 hover:border-gray-300',
+  default: 'border-border hover:border-border',
 };
 
 const PricingCardView = ({
@@ -263,7 +263,7 @@ const PricingCardView = ({
                   <div className='flex items-start space-x-3 flex-1 min-w-0'>
                     {getModelIcon(model)}
                     <div className='flex-1 min-w-0'>
-                      <h3 className='text-lg font-bold text-foreground truncate'>
+                      <h3 className='text-lg font-semibold text-foreground truncate'>
                         {model.model_name}
                       </h3>
                       <div className='flex flex-col gap-1 text-xs mt-1'>

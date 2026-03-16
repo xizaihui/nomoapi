@@ -69,17 +69,17 @@ const STATUS_TAG_CONFIG = {
   error: {
     color: 'red',
     labelKey: '错误',
-    icon: <FaExclamationCircle size={12} className='text-foreground/70' />,
+    icon: <FaExclamationCircle size={12} className='text-foreground/80' />,
   },
   failed: {
     color: 'red',
     labelKey: '失败',
-    icon: <FaExclamationCircle size={12} className='text-foreground/70' />,
+    icon: <FaExclamationCircle size={12} className='text-foreground/80' />,
   },
   destroyed: {
     color: 'red',
     labelKey: '已销毁',
-    icon: <FaBan size={12} className='text-foreground/70' />,
+    icon: <FaBan size={12} className='text-foreground/80' />,
   },
   completed: {
     color: 'green',
@@ -241,13 +241,13 @@ const renderResourceConfig = (resource, t) => {
       )}
       {memory && (
         <div className='flex items-center gap-1 text-xs'>
-          <FaMemory className='text-foreground/70' />
+          <FaMemory className='text-foreground/80' />
           <span>内存: {memory}</span>
         </div>
       )}
       {gpu && (
         <div className='flex items-center gap-1 text-xs'>
-          <FaServer className='text-foreground/70' />
+          <FaServer className='text-foreground/80' />
           <span>GPU: {gpu}</span>
         </div>
       )}

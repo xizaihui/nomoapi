@@ -393,7 +393,7 @@ const UpdateConfigModal = ({ visible, onCancel, deployment, onSuccess, t }) => {
                   ))}
 
                   {envVars.length === 0 && (
-                    <div className='text-center text-muted-foreground py-4 border-2 border-dashed border-gray-300 rounded-lg'>
+                    <div className='text-center text-muted-foreground py-4 border-2 border-dashed border-border rounded-lg'>
                       <Text type='secondary'>{t('暂无环境变量')}</Text>
                     </div>
                   )}

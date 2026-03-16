@@ -615,7 +615,7 @@ const NotificationSettings = ({
                       <div className='text-sm text-foreground/80 mb-3'>
                         <strong>{t('模板示例')}</strong>
                       </div>
-                      <div className='text-xs text-muted-foreground font-mono bg-white p-3 rounded-lg shadow-sm mb-4'>
+                      <div className='text-xs text-muted-foreground font-mono bg-background p-3 rounded-lg shadow-sm mb-4'>
                         https://api.day.app/yourkey/{'{{title}}'}/
                         {'{{content}}'}?sound=alarm&group=quota
                       </div>
@@ -626,7 +626,7 @@ const NotificationSettings = ({
                         <div>
                           • <strong>{'content'}:</strong> {t('通知内容')}
                         </div>
-                        <div className='mt-3 pt-3 border-t border-gray-200'>
+                        <div className='mt-3 pt-3 border-t border-border'>
                           <span className='text-muted-foreground/60'>
                             {t('更多参数请参考')}
                           </span>{' '}
@@ -727,7 +727,7 @@ const NotificationSettings = ({
                           )}
                         </div>
                         <div>3. {t('填写Gotify服务器的完整URL地址')}</div>
-                        <div className='mt-3 pt-3 border-t border-gray-200'>
+                        <div className='mt-3 pt-3 border-t border-border'>
                           <span className='text-muted-foreground/60'>
                             {t('更多信息请参考')}
                           </span>{' '}
@@ -882,7 +882,7 @@ const NotificationSettings = ({
                                 xl={8}
                               >
                                 <Card
-                                  className={`!rounded-xl border border-gray-200 hover:border-blue-300 transition-all duration-200 ${
+                                  className={`!rounded-xl border border-border hover:border-foreground/30 transition-all duration-200 ${
                                     sidebarModulesUser[section.key]?.enabled !==
                                     false
                                       ? ''

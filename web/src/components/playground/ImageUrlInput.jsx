@@ -129,7 +129,7 @@ const ImageUrlInput = ({
               theme='borderless'
               type='danger'
               onClick={() => handleRemoveImageUrl(index)}
-              className='!rounded-full !w-6 !h-6 !p-0 !min-w-0 !text-foreground/70 hover:!bg-muted/30 flex-shrink-0'
+              className='!rounded-full !w-6 !h-6 !p-0 !min-w-0 !text-foreground/80 hover:!bg-muted/30 flex-shrink-0'
               disabled={!imageEnabled || disabled}
             />
           </div>

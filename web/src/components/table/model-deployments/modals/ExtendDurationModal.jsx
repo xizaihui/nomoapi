@@ -425,7 +425,7 @@ const ExtendDurationModal = ({
         <Card
           title={
             <div className='flex items-center gap-2'>
-              <FaCalculator className='text-foreground/70' />
+              <FaCalculator className='text-foreground/80' />
               <span>{t('费用预估')}</span>
             </div>
           }
@@ -521,7 +521,7 @@ const ExtendDurationModal = ({
 
         <div className='bg-muted/30 border border-red-200 rounded-lg p-3'>
           <div className='flex items-start gap-2'>
-            <FaExclamationTriangle className='text-foreground/70 mt-0.5' />
+            <FaExclamationTriangle className='text-foreground/80 mt-0.5' />
             <div>
               <Text strong className='text-foreground/80'>
                 {t('确认延长容器时长')}

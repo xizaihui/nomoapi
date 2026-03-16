@@ -217,7 +217,7 @@ const EditDeploymentModal = ({
         </Spin>
       </div>
 
-      <div className='p-4 border-t border-gray-200 bg-muted/30 flex justify-end'>
+      <div className='p-4 border-t border-border bg-muted/30 flex justify-end'>
         <Space>
           <Button theme='outline' onClick={handleClose} disabled={loading}>
             <X size={16} className='mr-1' />

@@ -153,7 +153,7 @@ const AuditRulesPage = () => {
                       className='p-1.5 rounded hover:bg-muted transition-colors'
                       title={t('删除')}
                     >
-                      <Trash2 className='w-4 h-4 text-foreground/70' />
+                      <Trash2 className='w-4 h-4 text-foreground/80' />
                     </button>
                   </div>
                 </div>

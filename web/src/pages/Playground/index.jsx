@@ -467,7 +467,7 @@ const Playground = () => {
               bg-transparent border-r-0 flex-shrink-0 overflow-auto mt-[60px]
               ${
                 isMobile
-                  ? 'fixed top-0 left-0 right-0 bottom-0 z-[1000] w-full h-auto bg-white shadow-sm'
+                  ? 'fixed top-0 left-0 right-0 bottom-0 z-[1000] w-full h-auto bg-background shadow-sm'
                   : 'relative z-[1] w-80 h-[calc(100vh-66px)]'
               }
             `}
@@ -534,7 +534,7 @@ const Playground = () => {
 
             {/* 调试面板 - 移动端覆盖层 */}
             {showDebugPanel && isMobile && (
-              <div className='fixed top-0 left-0 right-0 bottom-0 z-[1000] bg-white overflow-auto shadow-sm'>
+              <div className='fixed top-0 left-0 right-0 bottom-0 z-[1000] bg-background overflow-auto shadow-sm'>
                 <OptimizedDebugPanel
                   debugData={debugData}
                   activeDebugTab={activeDebugTab}

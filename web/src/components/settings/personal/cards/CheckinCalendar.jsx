@@ -291,19 +291,19 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
         {/* 签到统计 */}
         <div className='grid grid-cols-3 gap-3 mb-4 mt-4'>
           <div className='text-center p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg'>
-            <div className='text-xl font-bold text-foreground/80'>
+            <div className='text-xl font-semibold text-foreground/80'>
               {checkinData.stats?.total_checkins || 0}
             </div>
             <div className='text-xs text-muted-foreground'>{t('累计签到')}</div>
           </div>
           <div className='text-center p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg'>
-            <div className='text-xl font-bold text-foreground/80'>
+            <div className='text-xl font-semibold text-foreground/80'>
               {renderQuota(monthlyQuota, 6)}
             </div>
             <div className='text-xs text-muted-foreground'>{t('本月获得')}</div>
           </div>
           <div className='text-center p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg'>
-            <div className='text-xl font-bold text-foreground'>
+            <div className='text-xl font-semibold text-foreground'>
               {renderQuota(checkinData.stats?.total_quota || 0, 6)}
             </div>
             <div className='text-xs text-muted-foreground'>{t('累计获得')}</div>

@@ -216,7 +216,7 @@ const SSEViewer = ({ sseData }) => {
   return (
     <div className='h-full flex flex-col bg-muted/30 dark:bg-foreground/50 rounded-lg'>
       {/* 头部工具栏 */}
-      <div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0'>
+      <div className='flex items-center justify-between p-4 border-b border-border dark:border-border flex-shrink-0'>
         <div className='flex items-center gap-3'>
           <Zap size={16} className='text-foreground/80' />
           <Typography.Text strong>{t('SSE数据流')}</Typography.Text>

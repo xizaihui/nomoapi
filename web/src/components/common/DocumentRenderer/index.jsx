@@ -219,7 +219,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
     return (
       <div className='min-h-screen bg-muted/30'>
         <div className='max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-          <div className='bg-white rounded-lg shadow-sm p-8'>
+          <div className='bg-background rounded-lg shadow-sm p-8'>
             <Title heading={2} className='text-center mb-8'>
               {title}
             </Title>
@@ -237,7 +237,7 @@ const DocumentRenderer = ({ apiEndpoint, title, cacheKey, emptyMessage }) => {
   return (
     <div className='min-h-screen bg-muted/30'>
       <div className='max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='bg-white rounded-lg shadow-sm p-8'>
+        <div className='bg-background rounded-lg shadow-sm p-8'>
           <Title heading={2} className='text-center mb-8'>
             {title}
           </Title>

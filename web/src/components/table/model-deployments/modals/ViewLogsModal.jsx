@@ -384,7 +384,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
   const renderLogEntry = (line, index) => (
     <div
       key={`${index}-${line.slice(0, 20)}`}
-      className='py-1 px-3 hover:bg-muted/30 font-mono text-sm border-b border-gray-100 whitespace-pre-wrap break-words'
+      className='py-1 px-3 hover:bg-muted/30 font-mono text-sm border-b border-border/60 whitespace-pre-wrap break-words'
     >
       {line}
     </div>
@@ -610,7 +610,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       </Text>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <FaServer className='text-foreground/70' />
+                      <FaServer className='text-foreground/80' />
                       <Text type='secondary'>{t('GPU/容器')}</Text>
                       <Text>
                         {containerDetails?.gpus_per_container ??
@@ -619,7 +619,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       </Text>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <FaClock className='text-foreground/70' />
+                      <FaClock className='text-foreground/80' />
                       <Text type='secondary'>{t('创建时间')}</Text>
                       <Text>
                         {containerDetails?.created_at
@@ -630,7 +630,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
                       </Text>
                     </div>
                     <div className='flex items-center gap-2'>
-                      <FaInfoCircle className='text-foreground/70' />
+                      <FaInfoCircle className='text-foreground/80' />
                       <Text type='secondary'>{t('运行时长')}</Text>
                       <Text>
                         {containerDetails?.uptime_percent ??
@@ -682,7 +682,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
         <div className='flex-1 flex flex-col border rounded-lg bg-muted/30 overflow-hidden'>
           <div
             ref={logContainerRef}
-            className='flex-1 overflow-y-auto bg-white'
+            className='flex-1 overflow-y-auto bg-background'
             style={{ maxHeight: '400px' }}
           >
             {loading && logLines.length === 0 ? (

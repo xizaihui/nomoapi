@@ -499,7 +499,7 @@ const TwoFASetting = ({ t }) => {
                     )}
                   </Paragraph>
                   <div className='flex justify-center mb-4'>
-                    <div className='bg-white p-4 rounded-lg shadow-sm'>
+                    <div className='bg-background p-4 rounded-lg shadow-sm'>
                       <QRCodeSVG value={setupData.qr_code_data} size={180} />
                     </div>
                   </div>
@@ -547,7 +547,7 @@ const TwoFASetting = ({ t }) => {
       <Modal
         title={
           <div className='flex items-center'>
-            <IconAlertTriangle className='mr-2 text-foreground/70' />
+            <IconAlertTriangle className='mr-2 text-foreground/80' />
             {t('禁用两步验证')}
           </div>
         }

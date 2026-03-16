@@ -154,7 +154,7 @@ const ChannelKeyDisplay = ({
           {parsedKeys.map((keyItem) => (
             <Card
               key={keyItem.id}
-              className='!rounded-lg !border !border-gray-200 dark:!border-gray-700'
+              className='!rounded-lg !border !border-border dark:!border-border'
             >
               <div className='space-y-2'>
                 <div className='flex items-center justify-between'>

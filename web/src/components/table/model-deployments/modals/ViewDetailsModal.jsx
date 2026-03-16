@@ -230,7 +230,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaChartLine className='text-foreground/70' />
+                <FaChartLine className='text-foreground/80' />
                 <span>{t('硬件与性能')}</span>
               </div>
             }
@@ -257,7 +257,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                           theme='solid'
                           type='primary'
                         >
-                          <FaServer className='text-foreground/70' />
+                          <FaServer className='text-foreground/80' />
                         </Badge>
                         <Text>
                           {t('总计')} {details.total_gpus} {t('个GPU')}
@@ -381,7 +381,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaServer className='text-foreground/70' />
+                <FaServer className='text-foreground/80' />
                 <span>{t('容器实例')}</span>
               </div>
             }
@@ -401,7 +401,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                 {containers.map((ctr) => (
                   <Card
                     key={ctr.container_id}
-                    className='bg-muted/30 border border-gray-100'
+                    className='bg-muted/30 border border-border/60'
                     bodyStyle={{ padding: '12px 16px' }}
                   >
                     <div className='flex flex-wrap items-center justify-between gap-3'>
@@ -446,7 +446,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
                     </div>
 
                     {ctr.events && ctr.events.length > 0 && (
-                      <div className='mt-3 bg-white rounded-md border border-gray-100 p-3'>
+                      <div className='mt-3 bg-background rounded-md border border-border/60 p-3'>
                         <Text
                           size='small'
                           type='secondary'
@@ -484,7 +484,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
             <Card
               title={
                 <div className='flex items-center gap-2'>
-                  <FaMapMarkerAlt className='text-foreground/70' />
+                  <FaMapMarkerAlt className='text-foreground/80' />
                   <span>{t('部署位置')}</span>
                 </div>
               }
@@ -509,7 +509,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaMoneyBillWave className='text-foreground/70' />
+                <FaMoneyBillWave className='text-foreground/80' />
                 <span>{t('费用信息')}</span>
               </div>
             }
@@ -552,7 +552,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           <Card
             title={
               <div className='flex items-center gap-2'>
-                <FaClock className='text-foreground/70' />
+                <FaClock className='text-foreground/80' />
                 <span>{t('时间信息')}</span>
               </div>
             }

@@ -35,7 +35,7 @@ const WeChatBindModal = ({
     <Modal
       title={
         <div className='flex items-center'>
-          <SiWechat className='mr-2 text-foreground/70' size={20} />
+          <SiWechat className='mr-2 text-foreground/80' size={20} />
           {t('绑定微信账户')}
         </div>
       }

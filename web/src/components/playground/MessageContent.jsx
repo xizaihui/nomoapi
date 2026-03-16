@@ -281,7 +281,7 @@ const MessageContent = ({
                           }}
                         />
                         <div
-                          className='text-foreground/70 text-sm p-2 bg-muted/30 rounded-lg border border-red-200'
+                          className='text-foreground/80 text-sm p-2 bg-muted/30 rounded-lg border border-red-200'
                           style={{ display: 'none' }}
                         >
                           图片加载失败: {imgItem.image_url.url}

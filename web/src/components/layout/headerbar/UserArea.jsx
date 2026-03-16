@@ -129,7 +129,7 @@ const UserArea = ({
               {userState.user.username[0].toUpperCase()}
             </Avatar>
             <span className='hidden md:inline'>
-              <Typography.Text className='!text-xs !font-medium !text-foreground/70 mr-1'>
+              <Typography.Text className='!text-xs !font-medium !text-foreground/80 mr-1'>
                 {userState.user.username}
               </Typography.Text>
             </span>
@@ -154,7 +154,7 @@ const UserArea = ({
     let registerButtonClasses = `${commonSizingAndLayoutClass}`;
 
     const loginButtonTextSpanClass =
-      '!text-xs !text-foreground/70 !p-1.5';
+      '!text-xs !text-foreground/80 !p-1.5';
     const registerButtonTextSpanClass = '!text-xs !text-white !p-1.5';
 
     if (showRegisterButton) {

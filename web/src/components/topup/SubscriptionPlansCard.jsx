@@ -559,7 +559,7 @@ const SubscriptionPlansCard = ({
                       {/* 价格区域 */}
                       <div className='py-2'>
                         <div className='flex items-baseline justify-start'>
-                          <span className='text-xl font-bold text-foreground/80'>
+                          <span className='text-xl font-semibold text-foreground/80'>
                             {symbol}
                           </span>
                           <span className='text-3xl font-bold text-foreground/80'>

@@ -353,7 +353,7 @@ const RechargeCard = ({
                           })}
                         </Space>
                       ) : (
-                        <div className='text-muted-foreground text-sm p-3 bg-muted/30 rounded-lg border border-dashed border-gray-300'>
+                        <div className='text-muted-foreground text-sm p-3 bg-muted/30 rounded-lg border border-dashed border-border'>
                           {t('暂无可用的支付方式，请联系管理员配置')}
                         </div>
                       )}
@@ -491,7 +491,7 @@ const RechargeCard = ({
                       <Card
                         key={index}
                         onClick={() => creemPreTopUp(product)}
-                        className='cursor-pointer !rounded-xl transition-all hover:shadow-sm border-gray-200 hover:border-gray-300'
+                        className='cursor-pointer !rounded-xl transition-all hover:shadow-sm border-border hover:border-border'
                         bodyStyle={{ textAlign: 'center', padding: '16px' }}
                       >
                         <div className='font-medium text-lg mb-2'>

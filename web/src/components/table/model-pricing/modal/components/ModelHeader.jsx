@@ -84,7 +84,7 @@ const ModelHeader = ({ modelData, vendorsMap = {}, t }) => {
             onCopy: () => Toast.success({ content: t('已复制模型名称') }),
           }}
         >
-          <span className='truncate max-w-60 font-bold'>
+          <span className='truncate max-w-60 font-semibold'>
             {modelData?.model_name || t('未知模型')}
           </span>
         </Paragraph>
