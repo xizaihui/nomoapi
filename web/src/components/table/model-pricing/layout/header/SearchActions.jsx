@@ -109,6 +109,7 @@ const SearchActions = memo(
               <Select
                 value={currency}
                 onChange={setCurrency}
+                style={{ width: 100 }}
                 optionList={[
                   { value: 'USD', label: 'USD' },
                   { value: 'CNY', label: 'CNY' },
