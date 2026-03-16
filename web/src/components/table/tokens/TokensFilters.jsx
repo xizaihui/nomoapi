@@ -55,7 +55,7 @@ const TokensFilters = ({
       stopValidateWithError={false}
       className='w-full md:w-auto order-1 md:order-2'
     >
-      <div className='flex flex-col md:flex-row items-center gap-2 w-full md:w-auto'>
+      <div className='flex flex-col md:flex-row items-end gap-2 w-full md:w-auto'>
         <div className='relative w-full md:w-56'>
           <Form.Input
             field='searchKeyword'
