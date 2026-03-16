@@ -157,6 +157,7 @@ const OtherSetting = () => {
         SystemName: true,
       }));
       await updateOption('SystemName', inputs.SystemName);
+      localStorage.setItem('system_name', inputs.SystemName);
       showSuccess(t('系统名称已更新'));
     } catch (error) {
       console.error(t('系统名称更新失败'), error);
@@ -174,6 +175,7 @@ const OtherSetting = () => {
     try {
       setLoadingInput((loadingInput) => ({ ...loadingInput, Logo: true }));
       await updateOption('Logo', inputs.Logo);
+      localStorage.setItem('logo', inputs.Logo);
       showSuccess('Logo 已更新');
     } catch (error) {
       console.error('Logo 更新失败', error);

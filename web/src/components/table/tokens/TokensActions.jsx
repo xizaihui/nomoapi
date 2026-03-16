@@ -71,7 +71,6 @@ const TokensActions = ({
             });
             setShowEdit(true);
           }}
-          size='small'
         >
           {t('添加令牌')}
         </Button>
@@ -80,7 +79,6 @@ const TokensActions = ({
           type='tertiary'
           className='flex-1 md:flex-initial'
           onClick={handleCopySelectedTokens}
-          size='small'
         >
           {t('复制所选令牌')}
         </Button>
@@ -89,7 +87,6 @@ const TokensActions = ({
           type='danger'
           className='w-full md:w-auto'
           onClick={handleDeleteSelectedTokens}
-          size='small'
         >
           {t('删除所选令牌')}
         </Button>

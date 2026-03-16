@@ -29,22 +29,22 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
     () => [
       {
         key: 'light',
-        icon: <Sun size={18} />,
-        buttonIcon: <Sun size={18} />,
+        icon: <Sun size={16} />,
+        buttonIcon: <Sun size={16} />,
         label: t('浅色模式'),
         description: t('始终使用浅色主题'),
       },
       {
         key: 'dark',
-        icon: <Moon size={18} />,
-        buttonIcon: <Moon size={18} />,
+        icon: <Moon size={16} />,
+        buttonIcon: <Moon size={16} />,
         label: t('深色模式'),
         description: t('始终使用深色主题'),
       },
       {
         key: 'auto',
-        icon: <Monitor size={18} />,
-        buttonIcon: <Monitor size={18} />,
+        icon: <Monitor size={16} />,
+        buttonIcon: <Monitor size={16} />,
         label: t('自动模式'),
         description: t('跟随系统主题设置'),
       },

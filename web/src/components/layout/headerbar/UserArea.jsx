@@ -145,7 +145,7 @@ const UserArea = ({
     const showRegisterButton = !isSelfUseMode;
 
     const commonSizingAndLayoutClass =
-      'flex items-center justify-center !py-[10px] !px-1.5';
+      'flex items-center justify-center h-9 !px-3';
 
     const loginButtonSpecificStyling =
       '!bg-transparent hover:!bg-muted transition-colors';
@@ -154,8 +154,8 @@ const UserArea = ({
     let registerButtonClasses = `${commonSizingAndLayoutClass}`;
 
     const loginButtonTextSpanClass =
-      '!text-xs !text-foreground/80 !p-1.5';
-    const registerButtonTextSpanClass = '!text-xs !text-white !p-1.5';
+      '!text-sm !text-foreground/80';
+    const registerButtonTextSpanClass = '!text-sm !text-white';
 
     if (showRegisterButton) {
       if (isMobile) {
