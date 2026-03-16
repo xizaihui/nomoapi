@@ -279,7 +279,7 @@ const EditTokenModal = (props) => {
 
   return (
     <SideSheet
-      placement={isEdit ? 'right' : 'left'}
+      placement='right'
       title={
         <Space>
           {isEdit ? (

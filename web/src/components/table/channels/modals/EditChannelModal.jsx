@@ -2087,7 +2087,7 @@ const EditChannelModal = (props) => {
   return (
     <>
       <SideSheet
-        placement={isEdit ? 'right' : 'left'}
+        placement='right'
         title={
           <Space>
             <Tag color='blue' shape='circle'>
