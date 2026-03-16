@@ -88,7 +88,7 @@ const CardPro = ({
         {/* 第一个分隔线 - 在描述信息或统计信息后面 */}
         {((type === 'type1' || type === 'type3') && descriptionArea) ||
         (type === 'type2' && statsArea) ? (
-          <Divider margin='12px' />
+          <Divider margin='8px' />
         ) : null}
 
         {/* 类型切换/标签区域 - 主要用于type3 */}
@@ -161,13 +161,17 @@ const CardPro = ({
   return (
     <Card
       className={`table-scroll-card !rounded-xl ${className}`}
-      title={headerContent}
       footer={footerContent}
       shadows={shadows}
       bordered={bordered}
       style={style}
+      headerStyle={{ paddingBottom: 0 }}
       {...props}
     >
+      {headerContent}
+      {headerContent && (
+        <Divider margin='12px' />
+      )}
       {children}
     </Card>
   );
