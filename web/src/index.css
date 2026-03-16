@@ -1085,6 +1085,7 @@ html.dark .with-pastel-balls::before {
   background-color: hsl(var(--background));
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .pricing-pagination-divider {

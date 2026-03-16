@@ -878,14 +878,14 @@ export const getModelPriceItems = (
 export const formatPriceInfo = (priceData, t, quotaDisplayType = 'USD') => {
   const items = getModelPriceItems(priceData, t, quotaDisplayType);
   return (
-    <>
+    <div className='flex flex-col gap-0.5'>
       {items.map((item) => (
-        <span key={item.key} style={{ color: 'hsl(var(--foreground) / 0.8)' }}>
+        <span key={item.key} className='text-muted-foreground'>
           {item.label} {item.value}
           {item.suffix}
         </span>
       ))}
-    </>
+    </div>
   );
 };
 
