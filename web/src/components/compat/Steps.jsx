@@ -27,13 +27,13 @@ const Steps = ({ current = 0, type = 'default', direction = 'horizontal', childr
                 'flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium',
                 status === 'finish' ? 'bg-primary text-primary-foreground' :
                 status === 'process' ? 'bg-primary text-primary-foreground' :
-                'bg-muted text-muted-foreground'
+                'bg-muted text-foreground/55'
               )}>
                 {status === 'finish' ? '✓' : step.icon || idx + 1}
               </div>
               <div>
-                <div className={cn('text-sm font-medium', status === 'wait' && 'text-muted-foreground')}>{step.title}</div>
-                {step.description && <div className='text-xs text-muted-foreground'>{step.description}</div>}
+                <div className={cn('text-sm font-medium', status === 'wait' && 'text-foreground/55')}>{step.title}</div>
+                {step.description && <div className='text-xs text-foreground/55'>{step.description}</div>}
               </div>
             </div>
           </React.Fragment>

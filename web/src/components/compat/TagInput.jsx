@@ -78,7 +78,7 @@ const TagInput = React.forwardRef(
           onPaste={handlePaste}
           placeholder={currentTags.length === 0 ? placeholder : ''}
           disabled={disabled}
-          className='flex-1 min-w-[60px] bg-transparent outline-none placeholder:text-muted-foreground'
+          className='flex-1 min-w-[60px] bg-transparent outline-none placeholder:text-foreground/55'
         />
       </div>
     );

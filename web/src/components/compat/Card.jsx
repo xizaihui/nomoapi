@@ -54,7 +54,7 @@ const Meta = ({ title, description, avatar, className, ...rest }) => (
     {avatar && <div>{avatar}</div>}
     <div>
       {title && <div className='font-medium'>{title}</div>}
-      {description && <div className='text-sm text-muted-foreground'>{description}</div>}
+      {description && <div className='text-sm text-foreground/60'>{description}</div>}
     </div>
   </div>
 );

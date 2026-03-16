@@ -14,7 +14,7 @@ const List = ({ dataSource, renderItem, header, footer, emptyContent, loading, s
         <ul className={cn('divide-y', layout === 'horizontal' && 'flex flex-wrap divide-y-0 divide-x')}>
           {dataSource && dataSource.length > 0
             ? dataSource.map((item, idx) => renderItem ? renderItem(item, idx) : null)
-            : children || (emptyContent && <li className='py-8 text-center text-muted-foreground'>{emptyContent}</li>)
+            : children || (emptyContent && <li className='py-8 text-center text-foreground/60'>{emptyContent}</li>)
           }
         </ul>
       )}

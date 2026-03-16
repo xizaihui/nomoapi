@@ -44,14 +44,14 @@ const DashboardHeader = ({
           type='tertiary'
           icon={<Search size={14} />}
           onClick={showSearchModal}
-          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-muted-foreground hover:text-foreground'
+          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-foreground/55 hover:text-foreground'
         />
         <Button
           type='tertiary'
           icon={<RefreshCw size={14} />}
           onClick={refresh}
           loading={loading}
-          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-muted-foreground hover:text-foreground'
+          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-foreground/55 hover:text-foreground'
         />
       </div>
     </div>

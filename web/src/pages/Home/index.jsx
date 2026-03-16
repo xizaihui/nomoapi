@@ -211,7 +211,7 @@ const Home = () => {
 
               {/* Provider icons */}
               <div className='mt-16 w-full'>
-                <p className='text-xs uppercase tracking-widest text-muted-foreground/50 mb-6'>
+                <p className='text-xs uppercase tracking-widest text-foreground/40 mb-6'>
                   {t('支持众多的大模型供应商')}
                 </p>
                 <div className='flex flex-wrap items-center justify-center gap-4 md:gap-6 max-w-lg mx-auto opacity-40'>

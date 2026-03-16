@@ -182,7 +182,7 @@ const FormField = ({
       {!noLabel && label && (
         <label
           className={cn(
-            'text-xs font-medium text-muted-foreground',
+            'text-xs font-medium text-foreground/70',
             isHorizontal ? 'flex-shrink-0 pt-2' : 'block mb-1.5',
             required && "after:content-['*'] after:ml-0.5 after:text-destructive"
           )}
@@ -200,8 +200,8 @@ const FormField = ({
               ? React.cloneElement(children, { value, [trigger]: handleChange })
               : children
         }
-        {helpText && <div className='text-xs text-muted-foreground mt-1'>{helpText}</div>}
-        {extraText && <div className='text-xs text-muted-foreground mt-1'>{extraText}</div>}
+        {helpText && <div className='text-xs text-foreground/55 mt-1'>{helpText}</div>}
+        {extraText && <div className='text-xs text-foreground/55 mt-1'>{extraText}</div>}
       </div>
     </div>
   );
@@ -219,7 +219,7 @@ const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter
   return (
     <FormField field={field} label={label} required={required} helpText={helpText} extraText={extraText} noLabel={noLabel} labelPosition={labelPosition} pure={pure} _noInject>
       <div className='flex items-center w-full rounded-md border border-border bg-background transition-colors focus-within:border-foreground/30'>
-        {prefix && <span className='flex items-center pl-3 text-muted-foreground'>{prefix}</span>}
+        {prefix && <span className='flex items-center pl-3 text-foreground/55'>{prefix}</span>}
         <input
           id={field}
           type={inputType}
@@ -236,7 +236,7 @@ const FormInput = ({ field, label, prefix, suffix, mode, addonBefore, addonAfter
           style={inputStyle}
           className='flex h-9 w-full bg-transparent px-3 py-1 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50'
         />
-        {suffix && <span className='flex items-center pr-3 text-muted-foreground'>{suffix}</span>}
+        {suffix && <span className='flex items-center pr-3 text-foreground/55'>{suffix}</span>}
       </div>
     </FormField>
   );
@@ -431,13 +431,13 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
               className='flex-1 min-w-[60px] bg-transparent outline-none text-sm placeholder:text-muted-foreground'
             />
             {showClear && selected.length > 0 && (
-              <button type='button' className='text-muted-foreground hover:text-foreground ml-1' onClick={(e) => { e.stopPropagation(); updateValue([]); }}>×</button>
+              <button type='button' className='text-foreground/45 hover:text-foreground ml-1' onClick={(e) => { e.stopPropagation(); updateValue([]); }}>×</button>
             )}
           </div>
           {isOpen && (
             <div className='absolute z-[9999] mt-1 w-full max-h-60 overflow-auto rounded-md border bg-popover shadow-sm'>
               {filteredOptions.length === 0 && !allowCreate && !allowAdditions ? (
-                <div className='px-3 py-2 text-sm text-muted-foreground'>
+                <div className='px-3 py-2 text-sm text-foreground/50'>
                   {searchVal ? '无匹配结果' : '无选项'}
                 </div>
               ) : (
@@ -474,7 +474,7 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
             </div>
           )}
         </div>
-        {extraText && <div className='text-xs text-muted-foreground mt-1'>{extraText}</div>}
+        {extraText && <div className='text-xs text-foreground/55 mt-1'>{extraText}</div>}
       </FormField>
     );
   }
@@ -645,7 +645,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
               placeholder={placeholders[0]}
               className='flex h-8 flex-1 rounded-md border border-border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:border-foreground/30'
             />
-            <span className='text-muted-foreground text-xs'>~</span>
+            <span className='text-foreground/50 text-xs'>~</span>
             <input
               type={inputType}
               value={formatForInput(rangeVal[1])}
@@ -654,7 +654,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
               className='flex h-8 flex-1 rounded-md border border-border bg-background px-2 py-1 text-xs focus-visible:outline-none focus-visible:border-foreground/30'
             />
             {showClear && (rangeVal[0] || rangeVal[1]) && (
-              <button type='button' onClick={handleClear} className='text-muted-foreground hover:text-foreground text-xs px-1'>✕</button>
+              <button type='button' onClick={handleClear} className='text-foreground/45 hover:text-foreground text-xs px-1'>✕</button>
             )}
           </div>
           {presets && presets.length > 0 && (
@@ -664,7 +664,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
                   key={idx}
                   type='button'
                   onClick={() => applyPreset(preset)}
-                  className='text-xs px-2 py-0.5 rounded border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors'
+                  className='text-xs px-2 py-0.5 rounded border border-border bg-background hover:bg-muted text-foreground/50 hover:text-foreground transition-colors'
                 >
                   {preset.text}
                 </button>
@@ -688,7 +688,7 @@ const FormDatePicker = ({ field, label, type = 'date', presets, showClear, place
           className='flex h-9 w-full rounded-md border border-border bg-background px-3 py-1 text-sm focus-visible:outline-none focus-visible:border-foreground/30'
         />
         {showClear && value && (
-          <button type='button' onClick={() => field && formApi.setValue(field, null)} className='text-muted-foreground hover:text-foreground text-sm px-1'>✕</button>
+          <button type='button' onClick={() => field && formApi.setValue(field, null)} className='text-foreground/45 hover:text-foreground text-sm px-1'>✕</button>
         )}
       </div>
     </FormField>
@@ -775,7 +775,7 @@ const FormTagInput = ({ field, label, ...rest }) => {
 // --- Form.Section ---
 const FormSection = ({ text, children, className, style, ...rest }) => (
   <div className={cn('mb-6', className)} style={style} {...rest}>
-    {text && <div className='text-xs font-medium uppercase tracking-wider text-muted-foreground/60 mb-3 pb-2 border-b border-border/50'>{text}</div>}
+    {text && <div className='text-xs font-medium uppercase tracking-wider text-foreground/50 mb-3 pb-2 border-b border-border/50'>{text}</div>}
     {children}
   </div>
 );

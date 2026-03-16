@@ -34,13 +34,13 @@ const UptimePanel = ({
   return (
     <div className='border border-border/50 rounded-xl lg:col-span-1'>
       <div className='flex items-center justify-between w-full px-4 pt-4 pb-2'>
-        <span className='text-xs font-medium uppercase tracking-wider text-muted-foreground/60'>
+        <span className='text-xs font-medium uppercase tracking-wider text-foreground/50'>
           {t('服务可用性')}
         </span>
         <button
           onClick={loadUptimeData}
           disabled={uptimeLoading}
-          className='p-1.5 rounded-md text-muted-foreground/50 hover:text-foreground hover:bg-muted transition-colors disabled:opacity-30'
+          className='p-1.5 rounded-md text-foreground/45 hover:text-foreground hover:bg-muted transition-colors disabled:opacity-30'
         >
           <RefreshCw size={13} className={uptimeLoading ? 'animate-spin' : ''} />
         </button>
@@ -105,7 +105,7 @@ const UptimePanel = ({
                   className='w-1.5 h-1.5 rounded-full'
                   style={{ backgroundColor: legend.color }}
                 />
-                <span className='text-muted-foreground'>{legend.label}</span>
+                <span className='text-foreground/55'>{legend.label}</span>
               </div>
             ))}
           </div>

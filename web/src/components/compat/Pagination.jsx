@@ -17,7 +17,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
 
   return (
     <div className={cn('flex items-center justify-between', className)} style={style} {...rest}>
-      <span className='text-xs text-muted-foreground/60 tabular-nums'>
+      <span className='text-xs text-foreground/50 tabular-nums'>
         {total} results
       </span>
       <div className='flex items-center gap-0.5'>
@@ -25,7 +25,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
           type='button'
           disabled={currentPage <= 1}
           onClick={() => onPageChange?.(currentPage - 1)}
-          className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'
+          className='px-2 py-1 text-xs text-foreground/50 disabled:opacity-30 hover:text-foreground transition-colors'
         >
           ←
         </button>
@@ -38,7 +38,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
               'w-7 h-7 text-xs rounded transition-colors',
               page === currentPage
                 ? 'bg-foreground text-background font-medium'
-                : 'text-muted-foreground hover:text-foreground'
+                : 'text-foreground/50 hover:text-foreground'
             )}
           >
             {page}
@@ -48,7 +48,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
           type='button'
           disabled={currentPage >= totalPages}
           onClick={() => onPageChange?.(currentPage + 1)}
-          className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'
+          className='px-2 py-1 text-xs text-foreground/50 disabled:opacity-30 hover:text-foreground transition-colors'
         >
           →
         </button>

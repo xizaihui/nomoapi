@@ -26,7 +26,7 @@ const InputNumber = React.forwardRef(
 
     return (
       <div className={cn('relative inline-flex items-center', className)} style={style}>
-        {prefix && <span className='mr-2 text-muted-foreground'>{prefix}</span>}
+        {prefix && <span className='mr-2 text-foreground/55'>{prefix}</span>}
         <Input
           ref={ref}
           type='number'
@@ -40,7 +40,7 @@ const InputNumber = React.forwardRef(
           className={cn('w-full', sizeClass)}
           {...rest}
         />
-        {suffix && <span className='ml-2 text-muted-foreground'>{suffix}</span>}
+        {suffix && <span className='ml-2 text-foreground/55'>{suffix}</span>}
       </div>
     );
   }

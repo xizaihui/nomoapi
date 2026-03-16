@@ -6,12 +6,12 @@ const Text = React.forwardRef(
   ({ children, type, size, strong, underline, delete: del, mark, code, link, href, className, style, ellipsis, copyable, onClick, ...rest }, ref) => {
     const colorMap = {
       primary: 'text-foreground',
-      secondary: 'text-muted-foreground',
-      tertiary: 'text-muted-foreground dark:text-muted-foreground/60',
-      quaternary: 'text-muted-foreground/60 dark:text-muted-foreground',
-      success: 'text-foreground/80 dark:text-muted-foreground',
+      secondary: 'text-foreground/70',
+      tertiary: 'text-muted-foreground',
+      quaternary: 'text-muted-foreground/80',
+      success: 'text-foreground/80',
       warning: 'text-amber-600 dark:text-amber-400',
-      danger: 'text-foreground/80 dark:text-muted-foreground',
+      danger: 'text-foreground/80',
     };
     const sizeMap = {
       small: 'text-xs',
@@ -70,11 +70,11 @@ Title.displayName = 'Title';
 const Paragraph = React.forwardRef(
   ({ children, type, size, ellipsis, className, style, ...rest }, ref) => {
     const colorMap = {
-      secondary: 'text-muted-foreground',
-      tertiary: 'text-muted-foreground dark:text-muted-foreground/60',
-      success: 'text-foreground/80 dark:text-muted-foreground',
+      secondary: 'text-foreground/70',
+      tertiary: 'text-muted-foreground',
+      success: 'text-foreground/80',
       warning: 'text-amber-600 dark:text-amber-400',
-      danger: 'text-foreground/80 dark:text-muted-foreground',
+      danger: 'text-foreground/80',
     };
     return (
       <p ref={ref} className={cn('text-sm leading-relaxed', colorMap[type], ellipsis && 'truncate', className)} style={style} {...rest}>

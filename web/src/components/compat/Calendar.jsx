@@ -100,7 +100,7 @@ const CalendarGrid = ({ month, renderDay }) => {
       <thead>
         <tr>
           {weekDays.map((d) => (
-            <th key={d} className='p-1 text-center text-xs font-normal text-muted-foreground'>
+            <th key={d} className='p-1 text-center text-xs font-normal text-foreground/50'>
               {d}
             </th>
           ))}

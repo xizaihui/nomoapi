@@ -30,14 +30,14 @@ const Tag = React.forwardRef(
       tagClass = cn(tagClass, 'text-white border-transparent');
       tagStyle = { backgroundColor: color, ...style };
     } else if (type === 'danger' || type === 'warning') {
-      tagClass = cn(tagClass, 'bg-foreground/5 text-foreground border-border/50');
+      tagClass = cn(tagClass, 'bg-foreground/5 text-foreground/80 border-border/50');
     } else if (style?.color === 'white') {
       // White text requested → dark bg
       tagClass = cn(tagClass, 'bg-foreground text-background border-transparent');
       tagStyle = { ...style, color: undefined };
     } else {
       // Default: subtle monochrome
-      tagClass = cn(tagClass, 'bg-muted text-muted-foreground border-transparent');
+      tagClass = cn(tagClass, 'bg-muted text-foreground/75 border-transparent');
     }
 
     return (

@@ -29,7 +29,7 @@ const Radio = React.forwardRef(
             />
             <span className='text-sm font-medium'>{children}</span>
           </div>
-          {extra && <span className='text-xs text-muted-foreground pl-6'>{extra}</span>}
+          {extra && <span className='text-xs text-foreground/60 pl-6'>{extra}</span>}
         </label>
       );
     }
@@ -48,7 +48,7 @@ const Radio = React.forwardRef(
           {...rest}
         />
         <span className='text-sm'>{children}</span>
-        {extra && <span className='text-xs text-muted-foreground'>{extra}</span>}
+        {extra && <span className='text-xs text-foreground/60'>{extra}</span>}
       </label>
     );
   }
@@ -84,7 +84,7 @@ const RadioGroup = ({ value, defaultValue, onChange, options, direction = 'horiz
               disabled={disabled}
               className={cn(
                 'px-3 py-1.5 text-sm font-medium rounded-sm transition-colors',
-                isActive ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                isActive ? 'bg-background text-foreground shadow-sm' : 'text-foreground/60 hover:text-foreground'
               )}
             >
               {optLabel}

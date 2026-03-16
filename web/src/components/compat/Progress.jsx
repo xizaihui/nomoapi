@@ -38,7 +38,7 @@ const Progress = ({ percent = 0, type = 'line', showInfo = true, size = 'default
         {...rest}
       />
       {showInfo && (
-        <span className='text-xs text-muted-foreground whitespace-nowrap'>
+        <span className='text-xs text-foreground/55 whitespace-nowrap'>
           {format ? format(percent) : `${Math.round(percent)}%`}
         </span>
       )}

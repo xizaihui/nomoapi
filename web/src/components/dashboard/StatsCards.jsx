@@ -53,12 +53,12 @@ const StatsCards = ({
               onClick={item.onClick}
             >
               <div className='flex items-center justify-between'>
-                <span className='text-xs text-muted-foreground font-medium uppercase tracking-wide'>
+                <span className='text-xs text-foreground/55 font-medium uppercase tracking-wide'>
                   {item.title}
                 </span>
                 {isBalance && (
                   <button
-                    className='text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-0.5'
+                    className='text-xs text-foreground/50 hover:text-foreground transition-colors flex items-center gap-0.5'
                     onClick={(e) => {
                       e.stopPropagation();
                       navigate('/console/topup');

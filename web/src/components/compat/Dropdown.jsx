@@ -105,7 +105,7 @@ const Item = ({ children, onClick, disabled, icon, active, className, type, ...r
 
 const DividerItem = () => <DropdownMenuSeparator />;
 const Title = ({ children, className, ...rest }) => (
-  <div className={cn('px-2 py-1.5 text-xs font-semibold text-muted-foreground', className)} {...rest}>{children}</div>
+  <div className={cn('px-2 py-1.5 text-xs font-semibold text-foreground/60', className)} {...rest}>{children}</div>
 );
 
 Dropdown.Menu = Menu;

@@ -32,10 +32,10 @@ const FooterBar = () => {
   return (
     <footer className='w-full border-t border-border py-6 px-6'>
       <div className='max-w-[1200px] mx-auto flex items-center justify-between'>
-        <span className='text-xs text-muted-foreground/60'>
+        <span className='text-xs text-foreground/45'>
           © {currentYear} {systemName}
         </span>
-        <span className='text-xs text-muted-foreground/40'>
+        <span className='text-xs text-foreground/35'>
           Powered by OpenToken
         </span>
       </div>

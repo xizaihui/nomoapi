@@ -16,7 +16,7 @@ const Divider = ({ layout = 'horizontal', children, align, dashed, margin, class
         {...rest}
       >
         <Separator orientation={layout} className={cn('flex-1', dashed && 'border-dashed')} />
-        <span className='text-xs text-muted-foreground whitespace-nowrap'>{children}</span>
+        <span className='text-xs text-foreground/50 whitespace-nowrap'>{children}</span>
         <Separator orientation={layout} className={cn('flex-1', dashed && 'border-dashed')} />
       </div>
     );
