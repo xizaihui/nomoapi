@@ -3,7 +3,37 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const Radio = React.forwardRef(
-  ({ checked, defaultChecked, onChange, children, disabled, value, className, style, ...rest }, ref) => {
+  ({ checked, defaultChecked, onChange, children, disabled, value, extra, _cardMode, className, style, ...rest }, ref) => {
+    // Card mode: render as selectable card
+    if (_cardMode) {
+      return (
+        <label
+          className={cn(
+            'flex flex-col gap-1 rounded-lg border p-4 cursor-pointer transition-colors',
+            checked ? 'border-foreground bg-muted/50' : 'border-border hover:border-foreground/30',
+            disabled && 'opacity-50 cursor-not-allowed',
+            className,
+          )}
+          style={style}
+        >
+          <div className='flex items-center gap-2'>
+            <input
+              ref={ref}
+              type='radio'
+              checked={checked}
+              defaultChecked={defaultChecked}
+              onChange={onChange}
+              disabled={disabled}
+              value={value}
+              className='h-4 w-4 accent-[hsl(var(--primary))]'
+            />
+            <span className='text-sm font-medium'>{children}</span>
+          </div>
+          {extra && <span className='text-xs text-muted-foreground pl-6'>{extra}</span>}
+        </label>
+      );
+    }
+
     return (
       <label className={cn('flex items-center gap-2 cursor-pointer', disabled && 'opacity-50 cursor-not-allowed', className)} style={style}>
         <input
@@ -17,7 +47,8 @@ const Radio = React.forwardRef(
           className='h-4 w-4 accent-[hsl(var(--primary))]'
           {...rest}
         />
-        {children && <span className='text-sm'>{children}</span>}
+        <span className='text-sm'>{children}</span>
+        {extra && <span className='text-xs text-muted-foreground'>{extra}</span>}
       </label>
     );
   }
@@ -66,6 +97,7 @@ const RadioGroup = ({ value, defaultValue, onChange, options, direction = 'horiz
 
   // If children provided (Semi pattern)
   if (children) {
+    const isCard = type === 'card';
     return (
       <div className={cn('flex gap-3', direction === 'vertical' ? 'flex-col' : 'flex-row flex-wrap', className)} style={style} {...rest}>
         {React.Children.map(children, (child) => {
@@ -74,6 +106,7 @@ const RadioGroup = ({ value, defaultValue, onChange, options, direction = 'horiz
             checked: currentValue === child.props.value,
             onChange: () => handleChange(child.props.value),
             disabled: disabled || child.props.disabled,
+            ...(isCard ? { _cardMode: true } : {}),
           });
         })}
       </div>
