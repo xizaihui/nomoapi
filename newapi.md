@@ -176,11 +176,25 @@ git push opentoken v0.x.x-opentoken
 - 新增 `redis.conf`: RDB 持久化、禁用 FLUSHDB/FLUSHALL、连接超时/keepalive
 - docker-compose 更新: 挂载 redis.conf + redis_data volume（下次重启生效）
 
-#### P3: 代码结构优化
-- 🔲 巨型文件拆分
-- 🔲 Docker 镜像瘦身
-- 🔲 Semi CSS 清理
-- 🔲 监控告警
+#### P3: 代码结构优化 (commit: `f8ee5035`)
+**Semi UI 完全剥离（运行时零依赖）:**
+- 移除 `vite-plugin-semi`（不再自动注入 Semi CSS）
+- 移除 `semi.css` 导入（原 1.13MB → 0）
+- 移除 Semi locale 导入（zh_CN/en_GB，compat LocaleProvider 已是 no-op）
+- Chat 组件替换为 stub（Playground 计划移除）
+- 7 个深路径 Semi 导入改为 compat barrel 导入
+- 移除 `@douyinfe/semi-ui__real` 转义别名
+- 清理 `@layer` CSS 声明（移除 `semi` 层）
+- CSS 总量: 1.26MB → 133KB（Semi CSS 完全消除）
+- JS: semi-ui chunk (691KB) 完全消除
+- dist 总量: 16MB → 14MB
+
+**Dockerfile 优化:**
+- 基础镜像: `debian:bookworm-slim` → `alpine:3.20`（移除 libasan8）
+- 添加 `NODE_OPTIONS="--max-old-space-size=4096"` 防止 bun build OOM
+- 镜像大小: ~108MB
+
+**本机已部署 Docker 测试版（2026-03-17 03:13 UTC）**
 
 ### 2026-03-16 — OpenToken 品牌 + 交互修复
 - **品牌重塑**: Aurora → OpenToken（名称/Logo/Favicon/Footer/侧栏菜单）
