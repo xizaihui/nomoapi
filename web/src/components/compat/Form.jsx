@@ -474,7 +474,6 @@ const FormSelect = ({ field, label, optionList, children, multiple, filter, plac
             </div>
           )}
         </div>
-        {extraText && <div className='text-xs text-foreground/55 mt-1'>{extraText}</div>}
       </FormField>
     );
   }
