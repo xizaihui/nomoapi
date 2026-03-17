@@ -23,6 +23,7 @@ import { VChart } from '@visactor/react-vchart';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowUpRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const StatsCards = ({
   groupedStatsData,
@@ -33,6 +34,17 @@ const StatsCards = ({
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  // Detect dark mode for VChart canvas (can't use CSS variables)
+  const [isDark, setIsDark] = useState(() => document.body.hasAttribute('theme-mode'));
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.body.hasAttribute('theme-mode'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['theme-mode'] });
+    return () => observer.disconnect();
+  }, []);
+  const sparklineColor = isDark ? '#a3a3a3' : '#404040';
 
   // 扁平化所有 items
   const allItems = groupedStatsData.flatMap((group) =>
@@ -91,7 +103,7 @@ const StatsCards = ({
                   <div className='w-16 h-6 opacity-40'>
                     <VChart
                       spec={{
-                        ...getTrendSpec(item.trendData, 'hsl(var(--foreground))'),
+                        ...getTrendSpec(item.trendData, sparklineColor),
                         height: 24,
                         width: 64,
                       }}
