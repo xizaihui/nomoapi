@@ -21,12 +21,12 @@ import { Toast, Pagination } from '@douyinfe/semi-ui';
 import { toastConstants } from '../constants';
 import React from 'react';
 import { toast } from 'react-toastify';
-import {
-  THINK_TAG_REGEX,
-  MESSAGE_ROLES,
-} from '../constants/playground.constants';
 import { TABLE_COMPACT_MODES_KEY } from '../constants';
 import { MOBILE_BREAKPOINT } from '../hooks/common/useIsMobile';
+
+// Inlined from removed playground.constants
+const THINK_TAG_REGEX = /<think>([\s\S]*?)<\/think>/g;
+const MESSAGE_ROLES = { USER: 'user', ASSISTANT: 'assistant', SYSTEM: 'system' };
 
 const HTMLToastContent = ({ htmlContent }) => {
   return <div dangerouslySetInnerHTML={{ __html: htmlContent }} />;

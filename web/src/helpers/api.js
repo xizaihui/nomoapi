@@ -24,7 +24,8 @@ import {
   isValidMessage,
 } from './utils';
 import axios from 'axios';
-import { MESSAGE_ROLES } from '../constants/playground.constants';
+// Message roles (inlined, playground removed)
+const MESSAGE_ROLES = { USER: 'user', ASSISTANT: 'assistant', SYSTEM: 'system' };
 
 export let API = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_SERVER_URL

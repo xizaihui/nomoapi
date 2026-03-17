@@ -52,7 +52,6 @@ const Pricing = lazy(() => import('./pages/Pricing'));
 const Task = lazy(() => import('./pages/Task'));
 const ModelPage = lazy(() => import('./pages/Model'));
 const ModelDeploymentPage = lazy(() => import('./pages/ModelDeployment'));
-const Playground = lazy(() => import('./pages/Playground'));
 const Subscription = lazy(() => import('./pages/Subscription'));
 const PersonalSetting = lazy(() => import('./components/settings/PersonalSetting'));
 const PasswordResetForm = lazy(() => import('./components/auth/PasswordResetForm'));
@@ -161,16 +160,6 @@ function App() {
             <PrivateRoute>
               <Suspense fallback={<Loading />}>
                 <Token />
-              </Suspense>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/console/playground'
-          element={
-            <PrivateRoute>
-              <Suspense fallback={<Loading />}>
-                <Playground />
               </Suspense>
             </PrivateRoute>
           }

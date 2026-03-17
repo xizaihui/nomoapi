@@ -40,7 +40,7 @@ import {
   showSuccess,
   showError,
 } from '../../../../helpers';
-import CodeViewer from '../../../playground/CodeViewer';
+import CodeViewer from '../../../common/CodeViewer';
 import { StatusContext } from '../../../../context/Status';
 import { UserContext } from '../../../../context/User';
 import { useUserPermissions } from '../../../../hooks/common/useUserPermissions';
@@ -66,7 +66,6 @@ const NotificationSettings = ({
   const [sidebarModulesUser, setSidebarModulesUser] = useState({
     chat: {
       enabled: true,
-      playground: true,
       chat: true,
     },
     console: {
@@ -156,7 +155,7 @@ const NotificationSettings = ({
 
   const resetSidebarModules = () => {
     const defaultConfig = {
-      chat: { enabled: true, playground: true, chat: true },
+      chat: { enabled: true, chat: true },
       console: {
         enabled: true,
         detail: true,
@@ -249,11 +248,6 @@ const NotificationSettings = ({
       title: t('聊天区域'),
       description: t('操练场和聊天功能'),
       modules: [
-        {
-          key: 'playground',
-          title: t('操练场'),
-          description: t('AI模型测试环境'),
-        },
         { key: 'chat', title: t('聊天'), description: t('聊天会话管理') },
       ],
     },

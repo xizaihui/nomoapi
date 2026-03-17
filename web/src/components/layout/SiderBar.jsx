@@ -48,7 +48,6 @@ const routerMap = {
   task: '/console/task',
   models: '/console/models',
   deployment: '/console/deployment',
-  playground: '/console/playground',
   personal: '/console/personal',
   // 审计模块（独立，不影响上游）
   'audit-logs': '/console/audit-logs',
@@ -214,11 +213,6 @@ const SiderBar = ({ onNavigate = () => {} }) => {
 
   const chatMenuItems = useMemo(() => {
     const items = [
-      {
-        text: t('操练场'),
-        itemKey: 'playground',
-        to: '/playground',
-      },
       {
         text: t('聊天'),
         itemKey: 'chat',
