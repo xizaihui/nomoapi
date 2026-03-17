@@ -4,7 +4,7 @@ Copyright (C) 2025 QuantumNous — AGPL-3.0
 
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { Tag, Avatar, Typography, Modal } from '@douyinfe/semi-ui';
-import { getLobeHubIcon } from '../../../../../helpers';
+import { getLobeHubIcon } from '../../../../../helpers/lobe-icons';
 import SearchActions from './SearchActions';
 
 const { Paragraph } = Typography;

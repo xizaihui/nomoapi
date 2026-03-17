@@ -26,6 +26,7 @@ import {
   showSuccess,
   verifyJSON,
 } from '../../../../helpers';
+import { getChannelIcon, getModelCategories } from '../../../../helpers/lobe-icons';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 import { CHANNEL_OPTIONS, MODEL_FETCHABLE_CHANNEL_TYPES } from '../../../../constants';
 import {
@@ -51,8 +52,6 @@ import {
 import {
   getChannelModels,
   copy,
-  getChannelIcon,
-  getModelCategories,
   selectFilter,
 } from '../../../../helpers';
 import ModelSelectModal from './ModelSelectModal';
