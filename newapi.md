@@ -79,9 +79,11 @@
 ### 残留项
 - 1 个真 Semi 引用（Chat 组件，必须保留）
 - 23 个 .semi-chat-* CSS 选择器（Chat 组件需要）
-- semi.css 仍在 index.jsx 加载（Chat 依赖）
+- semi.css 仍在 index.jsx 加载（Chat 依赖，P3 移除尝试失败已回退）
+- vite-plugin-semi 仍保留（P3 移除后白屏已回退）
 - ModelTestModal 白屏（遗留 bug，未修复）
 - 上游 test channel 502（nginx bad gateway，非代码问题）
+- `ModelRatioSettings.jsx` / `GroupRatioSettings.jsx` 存在同类闭包 bug（未修复）
 
 ### 可继续优化的方向
 - [ ] 更多页面的细节打磨（根据用户反馈）
@@ -89,8 +91,11 @@
 - [ ] 暗色模式细节调整
 - [ ] 审计模块 v2（更多规则类型、导出功能）
 - [ ] 上游同步（QuantumNous/new-api 新功能合并）
-- [ ] 性能：进一步 chunk 拆分、图片懒加载
-- [ ] Chat 组件脱离真实 Semi（难度高）
+- [ ] Chat 组件脱离真实 Semi → 才能彻底移除 Semi CSS（1.16MB）
+- [ ] 巨型文件拆分（EditChannelModal 4101行、ParamOverrideEditorModal 3511行、render.jsx 3027行）
+- [ ] 官方定价配置（AWS Claude / OpenAI / Gemini ModelRatio + CompletionRatio）
+- [ ] 香港服务器部署（api.oneaiai.com 待确认 IP 和域名）
+- [ ] PG 重启生效：shared_buffers 8GB + max_connections 300 + wal_buffers 64MB
 
 ---
 
@@ -137,64 +142,90 @@ git push opentoken v0.x.x-opentoken
 
 ## 📅 更新日志
 
-### 2026-03-17 — 系统优化（P0-P3）
+### 2026-03-17 — 系统优化 P0-P3 轮
 
-#### Bug 修复
-- **字体颜色全局优化**: 42 个文件，统一四级透明度体系（`foreground` 100%/70%/55-60%/45-50%），`--muted-foreground` 35%，侧栏/导航/图标全部加深 (commit: `1aa1ed3f`)
-- **Form.Select 重复 extraText**: 渠道编辑弹窗"填入相关模型"按钮显示两行，移除 FormSelect 内部多余渲染，保留 FormField 统一渲染 (commit: `0cadef18`)
-- **Dashboard Settings 闭包 Bug**: 5 个设置页 onChange 使用 `{...form}` 导致字段互相覆盖，改为函数式更新 `prev => ({...prev})` (commit: `ec0677e4`)
+> 本轮目标：全面系统优化（备份、数据库、Redis、前端包体积、Docker镜像、Semi依赖清理）
 
-#### P0: 自动备份 (commit: `2f54c85d`)
-- 备份脚本: `/opt/apps/newapis/scripts/pg-backup.sh`（支持 `--production` 参数）
-- 本机 cron: 每 6 小时自动备份
-- 生产 cron: 每 6 小时自动备份 + 本机每 12 小时拉取远程备份
-- 30 天保留，最多 60 份，自动清理
+#### Bug 修复（已部署生产）
+| 项目 | 说明 | Commit |
+|------|------|--------|
+| Dashboard Settings 闭包 Bug | 5个设置页 onChange `{...form}` 互相覆盖，改为函数式 `prev => ({...prev})` | `ec0677e4` |
+| 字体颜色全局优化 | 42个文件，统一四级透明度体系，侧栏/导航/图标全部加深 | `1aa1ed3f` |
+| Form.Select 重复 extraText | 渠道编辑弹窗"填入相关模型"按钮两行→一行 | `0cadef18` |
 
-#### P1: 性能调优
-**PostgreSQL（生产已生效，无需重启）:**
-- `effective_cache_size`: 4GB → 24GB
-- `work_mem`: 4MB → 16MB
-- `maintenance_work_mem`: 64MB → 512MB
-- `random_page_cost`: 4 → 1.1（SSD 优化）
-- `effective_io_concurrency`: 1 → 200
-- `max_parallel_workers_per_gather`: 2 → 4
-- `max_wal_size`: 1GB → 2GB
-- 慢查询日志: >1 秒记录（`log_min_duration_statement = 1000`）
-- ⏳ 待重启生效: `shared_buffers` 128MB→8GB, `max_connections` 100→300, `wal_buffers` 4MB→64MB
+#### P0: 自动数据库备份 ✅ (commit: `2f54c85d`)
+- 脚本: `/opt/apps/newapis/scripts/pg-backup.sh`（`--production` 参数支持远程）
+- 本机 cron: 每 6h（0/6/12/18 UTC）
+- 生产 cron: 每 6h 自备 + 本机每 12h 拉取
+- 策略: 30 天保留，最多 60 份，gzip 压缩（本机~12K/生产~20K）
+- 状态: **本机+生产均已部署运行**
 
-**Swap（生产已生效）:**
-- 添加 4GB swap，swappiness=10，已写入 fstab
+#### P1: PostgreSQL 调优 ✅（生产热加载）
+| 参数 | 旧值 | 新值 | 状态 |
+|------|------|------|------|
+| effective_cache_size | 4GB | 24GB | ✅ 已生效 |
+| work_mem | 4MB | 16MB | ✅ 已生效 |
+| maintenance_work_mem | 64MB | 512MB | ✅ 已生效 |
+| random_page_cost | 4 | 1.1 | ✅ 已生效 |
+| effective_io_concurrency | 1 | 200 | ✅ 已生效 |
+| max_parallel_workers_per_gather | 2 | 4 | ✅ 已生效 |
+| max_wal_size | 1GB | 2GB | ✅ 已生效 |
+| log_min_duration_statement | -1 | 1000ms | ✅ 已生效 |
+| shared_buffers | 128MB | 8GB | ⏳ 待PG重启 |
+| max_connections | 100 | 300 | ⏳ 待PG重启 |
+| wal_buffers | 4MB | 64MB | ⏳ 待PG重启 |
 
-**首屏包体积优化 (commit: `b340d6b5`):**
-- 主入口 JS: 5,400KB → 1,082KB（gzip 1,290KB → 515KB，减少 60%）
-- Vite `manualChunks` 从静态对象改为函数，精细分包
-- 拆分 `helpers/lobe-icons.jsx`（`import * as LobeIcons` 从 render.jsx 剥离，避免 3.8MB 图标污染主包）
-- 新增独立 chunk: `lobe-icons`(3.8MB), `markdown-vendor`(3.1MB), `page-channels`(343KB), `page-settings`(308KB), `page-playground`(67KB), `compat-layer`(126KB), `lucide-icons`(57KB), `form-libs`
+#### P1: Swap ✅（生产已生效）
+- 4GB swap `/swapfile`，swappiness=10，已写入 fstab
 
-#### P2: Redis 安全加固 (commit: `3c8e9a1c`)
-- 运行时已生效: `maxmemory 2GB`, `allkeys-lru` 淘汰策略
-- 新增 `redis.conf`: RDB 持久化、禁用 FLUSHDB/FLUSHALL、连接超时/keepalive
-- docker-compose 更新: 挂载 redis.conf + redis_data volume（下次重启生效）
+#### P1: 前端包分割 ⚠️ 部分回退 (commit: `b340d6b5` → `3e793e0e`)
+- **原计划**: 函数式 `manualChunks`，主入口 5.4MB → 1.1MB
+- **问题**: 函数式分包过于激进，`react-core` 与 `charts` 形成循环依赖，浏览器报 `Cannot access 'Ki' before initialization` TDZ 错误，**白屏**
+- **修复**: 回退到对象式 `manualChunks`（只指定入口包名，Rollup 自动处理依赖图）
+- **最终效果**: 主入口 ~1.6MB（仍比原始 5.4MB 小 70%），零运行时错误
+- **保留的拆分**: react-core(164KB), semi-ui(1.4MB), shadcn-ui(115KB), charts(1.9MB), tools, i18n, react-components
+- **教训**: manualChunks 用对象模式更安全；函数模式会强制切割依赖图，容易产生循环依赖
 
-#### P3: 代码结构优化 (commit: `f8ee5035`)
-**Semi UI 完全剥离（运行时零依赖）:**
-- 移除 `vite-plugin-semi`（不再自动注入 Semi CSS）
-- 移除 `semi.css` 导入（原 1.13MB → 0）
-- 移除 Semi locale 导入（zh_CN/en_GB，compat LocaleProvider 已是 no-op）
-- Chat 组件替换为 stub（Playground 计划移除）
-- 7 个深路径 Semi 导入改为 compat barrel 导入
-- 移除 `@douyinfe/semi-ui__real` 转义别名
-- 清理 `@layer` CSS 声明（移除 `semi` 层）
-- CSS 总量: 1.26MB → 133KB（Semi CSS 完全消除）
-- JS: semi-ui chunk (691KB) 完全消除
-- dist 总量: 16MB → 14MB
+#### P2: Redis 安全加固 ✅ (commit: `3c8e9a1c`)
+- 运行时已生效: `maxmemory 2GB` + `allkeys-lru`
+- redis.conf: RDB 持久化 + 禁用 FLUSHDB/FLUSHALL + 超时/keepalive
+- docker-compose: 挂载 redis.conf + redis_data volume（下次容器重启生效）
 
-**Dockerfile 优化:**
-- 基础镜像: `debian:bookworm-slim` → `alpine:3.20`（移除 libasan8）
-- 添加 `NODE_OPTIONS="--max-old-space-size=4096"` 防止 bun build OOM
+#### P2: 数据库索引审计 ✅
+- 所有表数据量极小（<300行），已有完整索引，无需额外优化
+
+#### P3: Semi CSS 移除 ❌ 已回退 (commit: `f8ee5035` → `d28203a1`)
+- **尝试**: 移除 vite-plugin-semi + semi.css + locale + Chat stub，CSS 1.26MB→133KB
+- **问题**: 移除后导致白屏（与 P1 循环依赖问题叠加）
+- **回退**: 完全恢复 Semi 运行时（vite-plugin-semi + semi.css + locale + Chat 真实导出）
+- **结论**: Semi 完全移除需要先去掉 Chat 组件对真实 Semi 的依赖，工作量较大
+
+#### P3: Dockerfile 优化 ✅ (commit: `ef84c137`)
+- 基础镜像: `debian:bookworm-slim` → `alpine:3.20`（更小）
+- 构建方式: 不再在容器内运行 `bun install` + `bun run build`，改为使用本机 pre-built `web/dist`
+- `.dockerignore` 移除 `/web/dist` 排除项
+- Go 编译器通过 `//go:embed web/dist` 嵌入预构建前端
 - 镜像大小: ~108MB
 
-**本机已部署 Docker 测试版（2026-03-17 03:13 UTC）**
+---
+
+**本轮最终 commit 链:**
+```
+ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
+  → f8ee5035(❌回退) → ef84c137 → d28203a1(回退Semi) → 3e793e0e(修复分包)
+```
+
+**本轮总成果:**
+| 指标 | 优化前 | 优化后 | 变化 |
+|------|--------|--------|------|
+| 首屏 JS (minified) | 5,400KB | ~1,650KB | **-70%** |
+| Semi CSS | 1.16MB | 1.16MB | 未变（回退） |
+| PG 缓存命中 | 低 | 高 | ✅ 8 项热加载 |
+| Swap | 0 | 4GB | ✅ OOM 安全网 |
+| 自动备份 | 无 | 每 6h | ✅ |
+| Redis 保护 | 无限制 | 2GB+LRU | ✅ |
+| Docker 镜像 | debian | alpine 108MB | ✅ |
+| Docker 构建 | 容器内 bun build | pre-built dist | ✅ 一致性 |
 
 ### 2026-03-16 — OpenToken 品牌 + 交互修复
 - **品牌重塑**: Aurora → OpenToken（名称/Logo/Favicon/Footer/侧栏菜单）
