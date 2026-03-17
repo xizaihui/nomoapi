@@ -83,12 +83,12 @@
 - vite-plugin-semi 仍保留（P3 移除后白屏已回退）
 - ModelTestModal 白屏（遗留 bug，未修复）
 - 上游 test channel 502（nginx bad gateway，非代码问题）
-- `ModelRatioSettings.jsx` / `GroupRatioSettings.jsx` 存在同类闭包 bug（未修复）
 
 ### 可继续优化的方向
 - [ ] 更多页面的细节打磨（根据用户反馈）
 - [ ] 移动端适配优化
 - [ ] 暗色模式细节调整
+- [ ] 浅色模式图表色彩优化（当前纯灰度，用户反馈单调，彩色方案待定）
 - [ ] 审计模块 v2（更多规则类型、导出功能）
 - [ ] 上游同步（QuantumNous/new-api 新功能合并）
 - [ ] Chat 组件脱离真实 Semi → 才能彻底移除 Semi CSS（1.16MB）
@@ -96,6 +96,51 @@
 - [ ] 官方定价配置（AWS Claude / OpenAI / Gemini ModelRatio + CompletionRatio）
 - [ ] 香港服务器部署（api.oneaiai.com 待确认 IP 和域名）
 - [ ] PG 重启生效：shared_buffers 8GB + max_connections 300 + wal_buffers 64MB
+
+---
+
+### 2026-03-17 (下午) — P4-1 / P5-2 / 暗色模式修复 / Go embed 修复
+
+#### P4-1: @lobehub/icons 隔离 ✅ (commit: `107ad9f1`)
+- 32 个 named icon imports + getModelCategories/getChannelIcon/renderModelTag 从 render.jsx 移至 lobe-icons.jsx
+- 16 个调用方更新为直接从 helpers/lobe-icons 导入
+- 主入口: 1,744KB → 1,267KB (-27%)
+- lobe-icons: 3,604KB 隔离为按需加载 chunk（仅后台管理页面加载）
+
+#### P4-4: Playground 移除 ✅ (commit: `05189132`)
+- 移除 Playground 页面（最后一个真实 Semi UI 运行时依赖）
+
+#### P5-2: 闭包 Bug 修复 ✅ (commit: `f207a45f`)
+- ModelRatioSettings.jsx / GroupRatioSettings.jsx 的 10+ 个 onChange 改为函数式更新
+
+#### Go embed 修复 ✅ (commit: `107ad9f1`)
+- `//go:embed web/dist` → `//go:embed all:web/dist`（修复下划线文件 _arrayReduce 等 404）
+- 禁用 gin-contrib/gzip on web router（修复 Content-Length: 23 导致 JS 加载失败）
+- **教训**: Go embed 默认排除 `_` 和 `.` 开头的文件，必须用 `all:` 前缀
+
+#### 暗色模式图表修复 ✅ (commits: `8402a1d3` → `484c65c4` → `fbf9ef11`)
+- VChart 暗色主题: 透明背景、柔和灰色色板
+- 4 个图表 spec 显式设 `background: 'transparent'`（VChart 主题 background 不够）
+- StatsCards 迷你折线图: CSS 变量 → 运行时检测暗色模式 + 硬编码颜色（VChart canvas 不解析 CSS 变量）
+- **教训**: VChart 是 canvas 渲染，不认 CSS 变量，必须传实际颜色值
+
+#### Dockerfile 同步 ✅
+- 生产环境 Dockerfile 从旧版（容器内 bun build）更新为新版（pre-built dist + alpine）
+
+#### PG 重启参数生效 ✅（生产环境）
+- shared_buffers: 128MB → 8GB ✅
+- max_connections: 100 → 300 ✅
+- wal_buffers: 4MB → 64MB ✅
+
+**当前 HEAD**: `fbf9ef11` on `feat/shadcn-ui`
+
+| 指标 | 优化前 | 优化后 | 变化 |
+|------|--------|--------|------|
+| 首屏 JS | ~1,650KB | ~1,267KB | **-23%** |
+| lobe-icons | 主入口内 | 按需加载 | ✅ 隔离 |
+| PG shared_buffers | 128MB | 8GB | ✅ 已重启生效 |
+| 暗色图表 | 白色背景 | 透明+柔和 | ✅ |
+| 闭包 Bug | 存在 | 已修复 | ✅ |
 
 ---
 
