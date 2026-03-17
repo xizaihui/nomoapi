@@ -51,6 +51,7 @@ export const useDashboardCharts = (
   // ========== 图表规格状态 ==========
   const [spec_pie, setSpecPie] = useState({
     type: 'pie',
+    background: 'transparent',
     data: [
       {
         id: 'id0',
@@ -108,6 +109,7 @@ export const useDashboardCharts = (
 
   const [spec_line, setSpecLine] = useState({
     type: 'bar',
+    background: 'transparent',
     data: [
       {
         id: 'barData',
@@ -183,6 +185,7 @@ export const useDashboardCharts = (
   // 模型消耗趋势折线图
   const [spec_model_line, setSpecModelLine] = useState({
     type: 'line',
+    background: 'transparent',
     data: [
       {
         id: 'lineData',
@@ -219,6 +222,7 @@ export const useDashboardCharts = (
   // 模型调用次数排行柱状图
   const [spec_rank_bar, setSpecRankBar] = useState({
     type: 'bar',
+    background: 'transparent',
     data: [
       {
         id: 'rankData',
