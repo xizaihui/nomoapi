@@ -13,9 +13,7 @@ import (
 )
 
 func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
-	// gzip disabled for web: gin-contrib/gzip sets wrong Content-Length with embed.FS
-	// causing "Failed to fetch dynamically imported module" in browsers
-	// API routes still have gzip enabled
+	// gzip disabled: gin-contrib/gzip sets wrong Content-Length with embed.FS
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
 	router.Use(static.Serve("/", common.EmbedFolder(buildFS, "web/dist")))

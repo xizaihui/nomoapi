@@ -21,8 +21,8 @@ import {
   stringToColor,
   calculateModelPrice,
   formatPriceInfo,
+  getLobeHubIcon,
 } from '../../../../../helpers';
-import { getLobeHubIcon } from '../../../../../helpers/lobe-icons';
 import PricingCardSkeleton from './PricingCardSkeleton';
 import { useMinimumLoadingTime } from '../../../../../hooks/common/useMinimumLoadingTime';
 import { renderLimitedItems } from '../../../../common/ui/RenderUtils';

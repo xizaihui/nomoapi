@@ -36,7 +36,7 @@ import {
 } from '@/components/compat/illustrations';
 import { IconSearch, IconInfoCircle } from '@/components/compat/icons';
 import { useTranslation } from 'react-i18next';
-import { getModelCategories } from '../../../../helpers/lobe-icons';
+import { getModelCategories } from '../../../../helpers/render';
 
 const ModelSelectModal = ({
   visible,

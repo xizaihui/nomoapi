@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Typography, Toast, Avatar } from '@douyinfe/semi-ui';
-import { getLobeHubIcon } from '../../../../../helpers/lobe-icons';
+import { getLobeHubIcon } from '../../../../../helpers';
 
 const { Paragraph } = Typography;
 

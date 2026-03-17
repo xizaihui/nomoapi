@@ -22,6 +22,42 @@ import { Modal, Tag, Typography, Avatar } from '@douyinfe/semi-ui';
 import { copy, showSuccess } from './utils';
 import { MOBILE_BREAKPOINT } from '../hooks/common/useIsMobile';
 import { visit } from 'unist-util-visit';
+// NOTE: `import * as LobeIcons` moved to helpers/lobe-icons.jsx to avoid
+// 3.7MB bundle pollution. getLobeHubIcon is now imported from there directly.
+import {
+  OpenAI,
+  Claude,
+  Gemini,
+  Moonshot,
+  Zhipu,
+  Qwen,
+  DeepSeek,
+  Minimax,
+  Wenxin,
+  Spark,
+  Midjourney,
+  Hunyuan,
+  Cohere,
+  Cloudflare,
+  Ai360,
+  Yi,
+  Jina,
+  Mistral,
+  XAI,
+  Ollama,
+  Doubao,
+  Suno,
+  Xinference,
+  OpenRouter,
+  Dify,
+  Coze,
+  SiliconCloud,
+  FastGPT,
+  Kling,
+  Jimeng,
+  Perplexity,
+  Replicate,
+} from '@lobehub/icons';
 
 import {
   LayoutDashboard,
@@ -116,17 +152,267 @@ export function getLucideIcon(key, selected = false) {
 }
 
 // 获取模型分类
+export const getModelCategories = (() => {
+  let categoriesCache = null;
+  let lastLocale = null;
 
+  return (t) => {
+    const currentLocale = i18next.language;
+    if (categoriesCache && lastLocale === currentLocale) {
+      return categoriesCache;
+    }
+
+    categoriesCache = {
+      all: {
+        label: t('全部模型'),
+        icon: null,
+        filter: () => true,
+      },
+      openai: {
+        label: 'OpenAI',
+        icon: <OpenAI />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('gpt') ||
+          model.model_name.toLowerCase().includes('dall-e') ||
+          model.model_name.toLowerCase().includes('whisper') ||
+          model.model_name.toLowerCase().includes('tts-1') ||
+          model.model_name.toLowerCase().includes('text-embedding-3') ||
+          model.model_name.toLowerCase().includes('text-moderation') ||
+          model.model_name.toLowerCase().includes('babbage') ||
+          model.model_name.toLowerCase().includes('davinci') ||
+          model.model_name.toLowerCase().includes('curie') ||
+          model.model_name.toLowerCase().includes('ada') ||
+          model.model_name.toLowerCase().includes('o1') ||
+          model.model_name.toLowerCase().includes('o3') ||
+          model.model_name.toLowerCase().includes('o4'),
+      },
+      anthropic: {
+        label: 'Anthropic',
+        icon: <Claude.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('claude'),
+      },
+      gemini: {
+        label: 'Gemini',
+        icon: <Gemini.Color />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('gemini') ||
+          model.model_name.toLowerCase().includes('gemma') ||
+          model.model_name.toLowerCase().includes('learnlm') ||
+          model.model_name.toLowerCase().startsWith('embedding-') ||
+          model.model_name.toLowerCase().includes('text-embedding-004') ||
+          model.model_name.toLowerCase().includes('imagen-4') ||
+          model.model_name.toLowerCase().includes('veo-') ||
+          model.model_name.toLowerCase().includes('aqa'),
+      },
+      moonshot: {
+        label: 'Moonshot',
+        icon: <Moonshot />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('moonshot') ||
+          model.model_name.toLowerCase().includes('kimi'),
+      },
+      zhipu: {
+        label: t('智谱'),
+        icon: <Zhipu.Color />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('chatglm') ||
+          model.model_name.toLowerCase().includes('glm-') ||
+          model.model_name.toLowerCase().includes('cogview') ||
+          model.model_name.toLowerCase().includes('cogvideo'),
+      },
+      qwen: {
+        label: t('通义千问'),
+        icon: <Qwen.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('qwen'),
+      },
+      deepseek: {
+        label: 'DeepSeek',
+        icon: <DeepSeek.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('deepseek'),
+      },
+      minimax: {
+        label: 'MiniMax',
+        icon: <Minimax.Color />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('abab') ||
+          model.model_name.toLowerCase().includes('minimax'),
+      },
+      baidu: {
+        label: t('文心一言'),
+        icon: <Wenxin.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('ernie'),
+      },
+      xunfei: {
+        label: t('讯飞星火'),
+        icon: <Spark.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('spark'),
+      },
+      midjourney: {
+        label: 'Midjourney',
+        icon: <Midjourney />,
+        filter: (model) => model.model_name.toLowerCase().includes('mj_'),
+      },
+      tencent: {
+        label: t('腾讯混元'),
+        icon: <Hunyuan.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('hunyuan'),
+      },
+      cohere: {
+        label: 'Cohere',
+        icon: <Cohere.Color />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('command') ||
+          model.model_name.toLowerCase().includes('c4ai-') ||
+          model.model_name.toLowerCase().includes('embed-'),
+      },
+      cloudflare: {
+        label: 'Cloudflare',
+        icon: <Cloudflare.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('@cf/'),
+      },
+      ai360: {
+        label: t('360智脑'),
+        icon: <Ai360.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('360'),
+      },
+      jina: {
+        label: 'Jina',
+        icon: <Jina />,
+        filter: (model) => model.model_name.toLowerCase().includes('jina'),
+      },
+      mistral: {
+        label: 'Mistral AI',
+        icon: <Mistral.Color />,
+        filter: (model) =>
+          model.model_name.toLowerCase().includes('mistral') ||
+          model.model_name.toLowerCase().includes('codestral') ||
+          model.model_name.toLowerCase().includes('pixtral') ||
+          model.model_name.toLowerCase().includes('voxtral') ||
+          model.model_name.toLowerCase().includes('magistral'),
+      },
+      xai: {
+        label: 'xAI',
+        icon: <XAI />,
+        filter: (model) => model.model_name.toLowerCase().includes('grok'),
+      },
+      llama: {
+        label: 'Llama',
+        icon: <Ollama />,
+        filter: (model) => model.model_name.toLowerCase().includes('llama'),
+      },
+      doubao: {
+        label: t('豆包'),
+        icon: <Doubao.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('doubao'),
+      },
+      yi: {
+        label: t('零一万物'),
+        icon: <Yi.Color />,
+        filter: (model) => model.model_name.toLowerCase().includes('yi'),
+      },
+    };
+
+    lastLocale = currentLocale;
+    return categoriesCache;
+  };
+})();
 
 /**
  * 根据渠道类型返回对应的厂商图标
  * @param {number} channelType - 渠道类型值
  * @returns {JSX.Element|null} - 对应的厂商图标组件
  */
+export function getChannelIcon(channelType) {
+  const iconSize = 14;
 
+  switch (channelType) {
+    case 1: // OpenAI
+    case 3: // Azure OpenAI
+    case 57: // Codex
+      return <OpenAI size={iconSize} />;
+    case 2: // Midjourney Proxy
+    case 5: // Midjourney Proxy Plus
+      return <Midjourney size={iconSize} />;
+    case 36: // Suno API
+      return <Suno size={iconSize} />;
+    case 4: // Ollama
+      return <Ollama size={iconSize} />;
+    case 14: // Anthropic Claude
+    case 33: // AWS Claude
+      return <Claude.Color size={iconSize} />;
+    case 41: // Vertex AI
+      return <Gemini.Color size={iconSize} />;
+    case 34: // Cohere
+      return <Cohere.Color size={iconSize} />;
+    case 39: // Cloudflare
+      return <Cloudflare.Color size={iconSize} />;
+    case 43: // DeepSeek
+      return <DeepSeek.Color size={iconSize} />;
+    case 15: // 百度文心千帆
+    case 46: // 百度文心千帆V2
+      return <Wenxin.Color size={iconSize} />;
+    case 17: // 阿里通义千问
+      return <Qwen.Color size={iconSize} />;
+    case 18: // 讯飞星火认知
+      return <Spark.Color size={iconSize} />;
+    case 16: // 智谱 ChatGLM
+    case 26: // 智谱 GLM-4V
+      return <Zhipu.Color size={iconSize} />;
+    case 24: // Google Gemini
+    case 11: // Google PaLM2
+      return <Gemini.Color size={iconSize} />;
+    case 47: // Xinference
+      return <Xinference.Color size={iconSize} />;
+    case 25: // Moonshot
+      return <Moonshot size={iconSize} />;
+    case 27: // Perplexity
+      return <Perplexity.Color size={iconSize} />;
+    case 20: // OpenRouter
+      return <OpenRouter size={iconSize} />;
+    case 19: // 360 智脑
+      return <Ai360.Color size={iconSize} />;
+    case 23: // 腾讯混元
+      return <Hunyuan.Color size={iconSize} />;
+    case 31: // 零一万物
+      return <Yi.Color size={iconSize} />;
+    case 35: // MiniMax
+      return <Minimax.Color size={iconSize} />;
+    case 37: // Dify
+      return <Dify.Color size={iconSize} />;
+    case 38: // Jina
+      return <Jina size={iconSize} />;
+    case 40: // SiliconCloud
+      return <SiliconCloud.Color size={iconSize} />;
+    case 42: // Mistral AI
+      return <Mistral.Color size={iconSize} />;
+    case 45: // 字节火山方舟、豆包通用
+      return <Doubao.Color size={iconSize} />;
+    case 48: // xAI
+      return <XAI size={iconSize} />;
+    case 49: // Coze
+      return <Coze size={iconSize} />;
+    case 50: // 可灵 Kling
+      return <Kling.Color size={iconSize} />;
+    case 51: // 即梦 Jimeng
+      return <Jimeng.Color size={iconSize} />;
+    case 54: // 豆包视频 Doubao Video
+      return <Doubao.Color size={iconSize} />;
+    case 56: // Replicate
+      return <Replicate size={iconSize} />;
+    case 8: // 自定义渠道
+    case 22: // 知识库：FastGPT
+      return <FastGPT.Color size={iconSize} />;
+    case 21: // 知识库：AI Proxy
+    case 44: // 嵌入模型：MokaAI M3E
+    default:
+      return null; // 未知类型或自定义渠道不显示图标
+  }
+}
 
+// getLobeHubIcon moved to helpers/lobe-icons.jsx to avoid 3.7MB bundle bloat.
+// Import it from there: import { getLobeHubIcon } from '@/helpers/lobe-icons'
 // Re-export for backward compatibility via barrel (lazy).
-
+export { getLobeHubIcon } from './lobe-icons';
 
 const oauthProviderIconMap = {
   github: SiGithub,
@@ -355,6 +641,39 @@ export function stringToColor(str) {
   return colors[i];
 }
 
+// 渲染带有模型图标的标签
+export function renderModelTag(modelName, options = {}) {
+  const {
+    color,
+    size = 'default',
+    shape = 'circle',
+    onClick,
+    suffixIcon,
+  } = options;
+
+  const categories = getModelCategories(i18next.t);
+  let icon = null;
+
+  for (const [key, category] of Object.entries(categories)) {
+    if (key !== 'all' && category.filter({ model_name: modelName })) {
+      icon = category.icon;
+      break;
+    }
+  }
+
+  return (
+    <Tag
+      color={color || stringToColor(modelName)}
+      prefixIcon={icon}
+      suffixIcon={suffixIcon}
+      size={size}
+      shape={shape}
+      onClick={onClick}
+    >
+      {modelName}
+    </Tag>
+  );
+}
 
 export function renderText(text, limit) {
   if (text.length > limit) {
