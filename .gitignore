@@ -30,3 +30,6 @@ data/
 .gocache-temp
 .gopath
 .github/workflows/
+
+# Backups
+backups/
