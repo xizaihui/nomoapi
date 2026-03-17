@@ -69,12 +69,12 @@ export const useDashboardCharts = (
       state: {
         hover: {
           outerRadius: 0.85,
-          stroke: '#171717',
+          stroke: '#737373',
           lineWidth: 1,
         },
         selected: {
           outerRadius: 0.85,
-          stroke: '#171717',
+          stroke: '#737373',
           lineWidth: 1,
         },
       },
@@ -130,7 +130,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#171717',
+          stroke: '#737373',
           lineWidth: 1,
         },
       },
@@ -240,7 +240,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#171717',
+          stroke: '#737373',
           lineWidth: 1,
         },
       },
@@ -432,6 +432,7 @@ export const useDashboardCharts = (
     // Register grayscale theme for VChart
     try {
       const grayscaleTheme = {
+        background: 'transparent',
         colorScheme: {
           default: [
             '#171717', '#404040', '#737373', '#a3a3a3', '#d4d4d4',
@@ -480,27 +481,50 @@ export const useDashboardCharts = (
       };
 
       const darkGrayscaleTheme = {
-        ...grayscaleTheme,
+        background: 'transparent',
         colorScheme: {
           default: [
-            '#e5e5e5', '#d4d4d4', '#b5b5b5', '#a3a3a3', '#8a8a8a',
-            '#c4c4c4', '#959595', '#737373', '#f0f0f0', '#c8c8c8',
+            '#a3a3a3', '#737373', '#8a8a8a', '#d4d4d4', '#525252',
+            '#b5b5b5', '#616161', '#959595', '#c4c4c4', '#404040',
           ],
         },
+        series: {
+          bar: {
+            bar: {
+              style: { fillOpacity: 0.75 },
+              state: { hover: { stroke: '#a3a3a3', lineWidth: 1, fillOpacity: 1 } },
+            },
+          },
+          line: {
+            line: { style: { lineWidth: 1.5 } },
+            point: { style: { size: 3, fillOpacity: 0.7 } },
+          },
+          pie: {
+            pie: {
+              style: { fillOpacity: 0.8 },
+              state: { hover: { outerRadius: 0.85, fillOpacity: 1, stroke: '#a3a3a3', lineWidth: 1 } },
+            },
+          },
+        },
         component: {
-          ...grayscaleTheme.component,
           axis: {
-            label: { style: { fill: '#737373', fontSize: 11 } },
-            tick: { style: { stroke: '#333333' } },
-            domainLine: { style: { stroke: '#333333' } },
-            grid: { style: { stroke: '#262626', lineDash: [3, 3] } },
+            label: { style: { fill: '#525252', fontSize: 11 } },
+            tick: { style: { stroke: '#2a2a2a' } },
+            domainLine: { style: { stroke: '#2a2a2a' } },
+            grid: { style: { stroke: '#1f1f1f', lineDash: [3, 3] } },
           },
           legend: {
-            label: { style: { fill: '#a3a3a3', fontSize: 11 } },
+            label: { style: { fill: '#737373', fontSize: 11 } },
           },
           title: {
-            style: { fill: '#e5e5e5', fontSize: 13, fontWeight: 500 },
-            subtextStyle: { fill: '#737373', fontSize: 11 },
+            style: { fill: '#a3a3a3', fontSize: 13, fontWeight: 500 },
+            subtextStyle: { fill: '#525252', fontSize: 11 },
+          },
+          tooltip: {
+            panel: { style: { backgroundColor: '#1a1a1a', border: { color: '#2a2a2a', width: 1 } } },
+            titleLabel: { style: { fill: '#d4d4d4', fontSize: 11 } },
+            keyLabel: { style: { fill: '#a3a3a3', fontSize: 11 } },
+            valueLabel: { style: { fill: '#d4d4d4', fontSize: 11 } },
           },
         },
       };
