@@ -33,7 +33,7 @@ import {
   IllustrationNoResultDark,
 } from '@/components/compat/illustrations';
 import { IconSearch } from '@/components/compat/icons';
-import { getModelCategories } from '../../../../helpers/render';
+import { getModelCategories } from '../../../../helpers/lobe-icons';
 
 const SingleModelSelectModal = ({
   visible,
