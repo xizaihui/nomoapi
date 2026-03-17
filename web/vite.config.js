@@ -19,16 +19,23 @@ For commercial licensing, please contact support@quantumnous.com
 
 import react from '@vitejs/plugin-react';
 import { defineConfig, transformWithEsbuild } from 'vite';
+import pkg from '@douyinfe/vite-plugin-semi';
 import path from 'path';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
+const { vitePluginSemi } = pkg;
 
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(__dirname, './src') },
-      // bare '@douyinfe/semi-ui' → compat layer (all Semi components replaced)
+      // Deep path imports MUST come before the bare module alias
+      { find: '@douyinfe/semi-ui/dist', replacement: path.resolve(__dirname, './node_modules/@douyinfe/semi-ui/dist') },
+      { find: '@douyinfe/semi-ui/lib', replacement: path.resolve(__dirname, './node_modules/@douyinfe/semi-ui/lib') },
+      // Phase 2: bare '@douyinfe/semi-ui' → compat layer
       { find: /^@douyinfe\/semi-ui$/, replacement: path.resolve(__dirname, './src/components/compat/index.js') },
+      // Escape hatch for compat barrel to import real Semi
+      { find: '@douyinfe/semi-ui__real', replacement: path.resolve(__dirname, './node_modules/@douyinfe/semi-ui') },
     ],
   },
   plugins: [
@@ -51,6 +58,9 @@ export default defineConfig({
       },
     },
     react(),
+    vitePluginSemi({
+      cssLayer: true,
+    }),
   ],
   optimizeDeps: {
     force: true,

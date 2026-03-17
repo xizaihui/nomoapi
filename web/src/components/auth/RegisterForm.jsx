@@ -42,8 +42,8 @@ import {
   Icon,
   Modal,
 } from '@douyinfe/semi-ui';
-import { Typography } from '@douyinfe/semi-ui';
-const { Title, Text } = Typography;
+import Title from '@douyinfe/semi-ui/lib/es/typography/title';
+import Text from '@douyinfe/semi-ui/lib/es/typography/text';
 import {
   IconGithubLogo,
   IconMail,

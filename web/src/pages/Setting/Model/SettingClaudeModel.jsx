@@ -28,8 +28,7 @@ import {
   verifyJSON,
 } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@douyinfe/semi-ui';
-const { Text } = Typography;
+import Text from '@douyinfe/semi-ui/lib/es/typography/text';
 
 const CLAUDE_HEADER = {
   'claude-3-7-sonnet-20250219-thinking': {

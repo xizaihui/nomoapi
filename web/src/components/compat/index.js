@@ -54,8 +54,6 @@ export { Timeline } from './Timeline';
 export { Image, ImagePreview } from './Image';
 export { LocaleProvider } from './LocaleProvider';
 // Chat: re-export from real Semi (only used by Playground ChatArea)
+export { Chat } from '@douyinfe/semi-ui__real';
 export { Form } from './Form';
 export { Table } from './Table';
-
-// Chat stub — Playground being removed, no longer importing real Semi Chat
-export const Chat = () => null;
