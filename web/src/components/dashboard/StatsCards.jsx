@@ -91,7 +91,7 @@ const StatsCards = ({
                   <div className='w-16 h-6 opacity-40'>
                     <VChart
                       spec={{
-                        ...getTrendSpec(item.trendData, 'hsl(var(--muted-foreground))'),
+                        ...getTrendSpec(item.trendData, 'hsl(var(--foreground))'),
                         height: 24,
                         width: 64,
                       }}
