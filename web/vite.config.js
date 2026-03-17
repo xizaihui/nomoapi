@@ -74,67 +74,24 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          // Vendor: React core
-          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/react-router')) {
-            return 'react-core';
-          }
-          // Vendor: Semi Design (compat layer keeps importing the real package)
-          if (id.includes('node_modules/@douyinfe/')) {
-            return 'semi-ui';
-          }
-          // Vendor: Radix UI (shadcn primitives)
-          if (id.includes('node_modules/@radix-ui/')) {
-            return 'shadcn-ui';
-          }
-          // Vendor: Charts (VChart) — only loaded on Dashboard
-          if (id.includes('node_modules/@visactor/')) {
-            return 'charts';
-          }
-          // Vendor: LobeHub icons — 52MB source, split into own chunk for lazy pages
-          if (id.includes('node_modules/@lobehub/icons')) {
-            return 'lobe-icons';
-          }
-          // Vendor: Markdown rendering (mermaid, katex, rehype, remark)
-          if (id.includes('node_modules/mermaid') || id.includes('node_modules/katex') || id.includes('node_modules/rehype-') || id.includes('node_modules/remark-') || id.includes('node_modules/react-markdown') || id.includes('node_modules/cytoscape')) {
-            return 'markdown-vendor';
-          }
-          // Vendor: i18n
-          if (id.includes('node_modules/i18next') || id.includes('node_modules/react-i18next')) {
-            return 'i18n';
-          }
-          // Vendor: Utilities
-          if (id.includes('node_modules/axios') || id.includes('node_modules/history') || id.includes('node_modules/marked') || id.includes('node_modules/dayjs')) {
-            return 'tools';
-          }
-          // Vendor: Other React components
-          if (id.includes('node_modules/react-dropzone') || id.includes('node_modules/react-fireworks') || id.includes('node_modules/react-telegram-login') || id.includes('node_modules/react-toastify') || id.includes('node_modules/react-turnstile') || id.includes('node_modules/qrcode.react') || id.includes('node_modules/sonner')) {
-            return 'react-components';
-          }
-          // Vendor: Lucide icons
-          if (id.includes('node_modules/lucide-react')) {
-            return 'lucide-icons';
-          }
-          // Vendor: Form libraries
-          if (id.includes('node_modules/react-hook-form') || id.includes('node_modules/@hookform/') || id.includes('node_modules/zod')) {
-            return 'form-libs';
-          }
-          // App: Compat layer (Semi bridge)
-          if (id.includes('src/components/compat/')) {
-            return 'compat-layer';
-          }
-          // App: Channel management (heaviest page — 13K+ lines)
-          if (id.includes('src/components/table/channels/') || id.includes('src/hooks/channels/')) {
-            return 'page-channels';
-          }
-          // App: Settings pages (13K+ lines)
-          if (id.includes('src/pages/Setting/') || id.includes('src/components/settings/')) {
-            return 'page-settings';
-          }
-          // App: Playground
-          if (id.includes('src/components/playground/') || id.includes('src/hooks/playground/')) {
-            return 'page-playground';
-          }
+        manualChunks: {
+          'react-core': ['react', 'react-dom', 'react-router-dom'],
+          'semi-ui': ['@douyinfe/semi-icons', '@douyinfe/semi-ui'],
+          'shadcn-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select', '@radix-ui/react-tabs', '@radix-ui/react-tooltip', '@radix-ui/react-popover'],
+          'charts': ['@visactor/react-vchart'],
+          tools: ['axios', 'history', 'marked'],
+          'react-components': [
+            'react-dropzone',
+            'react-fireworks',
+            'react-telegram-login',
+            'react-toastify',
+            'react-turnstile',
+          ],
+          i18n: [
+            'i18next',
+            'react-i18next',
+            'i18next-browser-languagedetector',
+          ],
         },
       },
     },
