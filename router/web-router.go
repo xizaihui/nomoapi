@@ -8,13 +8,14 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/controller"
 	"github.com/QuantumNous/new-api/middleware"
-	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
 func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
-	router.Use(gzip.Gzip(gzip.DefaultCompression))
+	// gzip disabled for web: gin-contrib/gzip sets wrong Content-Length with embed.FS
+	// causing "Failed to fetch dynamically imported module" in browsers
+	// API routes still have gzip enabled
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
 	router.Use(static.Serve("/", common.EmbedFolder(buildFS, "web/dist")))
