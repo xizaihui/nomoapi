@@ -27,12 +27,13 @@ import {
   Modal,
   Space,
   Card,
+  Typography,
 } from '@douyinfe/semi-ui';
 import { API, showError, showSuccess, timestamp2string } from '../../helpers';
 import { marked } from 'marked';
 import { useTranslation } from 'react-i18next';
 import { StatusContext } from '../../context/Status';
-import Text from '@douyinfe/semi-ui/lib/es/typography/text';
+const { Text } = Typography;
 
 const LEGAL_USER_AGREEMENT_KEY = 'legal.user_agreement';
 const LEGAL_PRIVACY_POLICY_KEY = 'legal.privacy_policy';

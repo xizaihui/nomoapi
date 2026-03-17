@@ -137,6 +137,51 @@ git push opentoken v0.x.x-opentoken
 
 ## 📅 更新日志
 
+### 2026-03-17 — 系统优化（P0-P3）
+
+#### Bug 修复
+- **字体颜色全局优化**: 42 个文件，统一四级透明度体系（`foreground` 100%/70%/55-60%/45-50%），`--muted-foreground` 35%，侧栏/导航/图标全部加深 (commit: `1aa1ed3f`)
+- **Form.Select 重复 extraText**: 渠道编辑弹窗"填入相关模型"按钮显示两行，移除 FormSelect 内部多余渲染，保留 FormField 统一渲染 (commit: `0cadef18`)
+- **Dashboard Settings 闭包 Bug**: 5 个设置页 onChange 使用 `{...form}` 导致字段互相覆盖，改为函数式更新 `prev => ({...prev})` (commit: `ec0677e4`)
+
+#### P0: 自动备份 (commit: `2f54c85d`)
+- 备份脚本: `/opt/apps/newapis/scripts/pg-backup.sh`（支持 `--production` 参数）
+- 本机 cron: 每 6 小时自动备份
+- 生产 cron: 每 6 小时自动备份 + 本机每 12 小时拉取远程备份
+- 30 天保留，最多 60 份，自动清理
+
+#### P1: 性能调优
+**PostgreSQL（生产已生效，无需重启）:**
+- `effective_cache_size`: 4GB → 24GB
+- `work_mem`: 4MB → 16MB
+- `maintenance_work_mem`: 64MB → 512MB
+- `random_page_cost`: 4 → 1.1（SSD 优化）
+- `effective_io_concurrency`: 1 → 200
+- `max_parallel_workers_per_gather`: 2 → 4
+- `max_wal_size`: 1GB → 2GB
+- 慢查询日志: >1 秒记录（`log_min_duration_statement = 1000`）
+- ⏳ 待重启生效: `shared_buffers` 128MB→8GB, `max_connections` 100→300, `wal_buffers` 4MB→64MB
+
+**Swap（生产已生效）:**
+- 添加 4GB swap，swappiness=10，已写入 fstab
+
+**首屏包体积优化 (commit: `b340d6b5`):**
+- 主入口 JS: 5,400KB → 1,082KB（gzip 1,290KB → 515KB，减少 60%）
+- Vite `manualChunks` 从静态对象改为函数，精细分包
+- 拆分 `helpers/lobe-icons.jsx`（`import * as LobeIcons` 从 render.jsx 剥离，避免 3.8MB 图标污染主包）
+- 新增独立 chunk: `lobe-icons`(3.8MB), `markdown-vendor`(3.1MB), `page-channels`(343KB), `page-settings`(308KB), `page-playground`(67KB), `compat-layer`(126KB), `lucide-icons`(57KB), `form-libs`
+
+#### P2: Redis 安全加固 (commit: `3c8e9a1c`)
+- 运行时已生效: `maxmemory 2GB`, `allkeys-lru` 淘汰策略
+- 新增 `redis.conf`: RDB 持久化、禁用 FLUSHDB/FLUSHALL、连接超时/keepalive
+- docker-compose 更新: 挂载 redis.conf + redis_data volume（下次重启生效）
+
+#### P3: 代码结构优化
+- 🔲 巨型文件拆分
+- 🔲 Docker 镜像瘦身
+- 🔲 Semi CSS 清理
+- 🔲 监控告警
+
 ### 2026-03-16 — OpenToken 品牌 + 交互修复
 - **品牌重塑**: Aurora → OpenToken（名称/Logo/Favicon/Footer/侧栏菜单）
 - **模型广场**: PricingCardView 纯 Tailwind 重写，滚动修复，价格垂直排列

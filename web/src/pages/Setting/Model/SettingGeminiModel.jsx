@@ -28,7 +28,8 @@ import {
   verifyJSON,
 } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
-import Text from '@douyinfe/semi-ui/lib/es/typography/text';
+import { Typography } from '@douyinfe/semi-ui';
+const { Text } = Typography;
 
 const GEMINI_SETTING_EXAMPLE = {
   default: 'OFF',
