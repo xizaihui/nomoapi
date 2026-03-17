@@ -159,7 +159,7 @@ export default function ModelRatioSettings(props) {
                   message: '不是合法的 JSON 字符串',
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, ModelPrice: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, ModelPrice: value }))}
             />
           </Col>
         </Row>
@@ -178,7 +178,7 @@ export default function ModelRatioSettings(props) {
                   message: '不是合法的 JSON 字符串',
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, ModelRatio: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, ModelRatio: value }))}
             />
           </Col>
         </Row>
@@ -197,7 +197,7 @@ export default function ModelRatioSettings(props) {
                   message: '不是合法的 JSON 字符串',
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, CacheRatio: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, CacheRatio: value }))}
             />
           </Col>
         </Row>
@@ -220,7 +220,7 @@ export default function ModelRatioSettings(props) {
                 },
               ]}
               onChange={(value) =>
-                setInputs({ ...inputs, CreateCacheRatio: value })
+                setInputs(prev => ({ ...prev, CreateCacheRatio: value }))
               }
             />
           </Col>
@@ -242,7 +242,7 @@ export default function ModelRatioSettings(props) {
                 },
               ]}
               onChange={(value) =>
-                setInputs({ ...inputs, CompletionRatio: value })
+                setInputs(prev => ({ ...prev, CompletionRatio: value }))
               }
             />
           </Col>
@@ -267,7 +267,7 @@ export default function ModelRatioSettings(props) {
                   message: '不是合法的 JSON 字符串',
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, ImageRatio: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, ImageRatio: value }))}
             />
           </Col>
         </Row>
@@ -289,7 +289,7 @@ export default function ModelRatioSettings(props) {
                   message: '不是合法的 JSON 字符串',
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, AudioRatio: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, AudioRatio: value }))}
             />
           </Col>
         </Row>
@@ -314,7 +314,7 @@ export default function ModelRatioSettings(props) {
                 },
               ]}
               onChange={(value) =>
-                setInputs({ ...inputs, AudioCompletionRatio: value })
+                setInputs(prev => ({ ...prev, AudioCompletionRatio: value }))
               }
             />
           </Col>
@@ -325,7 +325,7 @@ export default function ModelRatioSettings(props) {
               label={t('暴露倍率接口')}
               field={'ExposeRatioEnabled'}
               onChange={(value) =>
-                setInputs({ ...inputs, ExposeRatioEnabled: value })
+                setInputs(prev => ({ ...prev, ExposeRatioEnabled: value }))
               }
             />
           </Col>

@@ -134,7 +134,7 @@ export default function GroupRatioSettings(props) {
                   message: t('不是合法的 JSON 字符串'),
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, GroupRatio: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, GroupRatio: value }))}
             />
           </Col>
         </Row>
@@ -157,7 +157,7 @@ export default function GroupRatioSettings(props) {
                 },
               ]}
               onChange={(value) =>
-                setInputs({ ...inputs, UserUsableGroups: value })
+                setInputs(prev => ({ ...prev, UserUsableGroups: value }))
               }
             />
           </Col>
@@ -181,7 +181,7 @@ export default function GroupRatioSettings(props) {
                 },
               ]}
               onChange={(value) =>
-                setInputs({ ...inputs, GroupGroupRatio: value })
+                setInputs(prev => ({ ...prev, GroupGroupRatio: value }))
               }
             />
           </Col>
@@ -205,10 +205,7 @@ export default function GroupRatioSettings(props) {
                 },
               ]}
               onChange={(value) =>
-                setInputs({
-                  ...inputs,
-                  'group_ratio_setting.group_special_usable_group': value,
-                })
+                setInputs(prev => ({ ...prev, 'group_ratio_setting.group_special_usable_group': value }))
               }
             />
           </Col>
@@ -247,7 +244,7 @@ export default function GroupRatioSettings(props) {
                   message: t('必须是有效的 JSON 字符串数组，例如：["g1","g2"]'),
                 },
               ]}
-              onChange={(value) => setInputs({ ...inputs, AutoGroups: value })}
+              onChange={(value) => setInputs(prev => ({ ...prev, AutoGroups: value }))}
             />
           </Col>
         </Row>
@@ -259,7 +256,7 @@ export default function GroupRatioSettings(props) {
               )}
               field={'DefaultUseAutoGroup'}
               onChange={(value) =>
-                setInputs({ ...inputs, DefaultUseAutoGroup: value })
+                setInputs(prev => ({ ...prev, DefaultUseAutoGroup: value }))
               }
             />
           </Col>
