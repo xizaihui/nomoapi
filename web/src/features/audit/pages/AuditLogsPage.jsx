@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
 import { useAuditLogs, useAuditStats } from '../hooks/useAuditLogs';
 import { reviewAuditLog } from '../api';
 import { RISK_LEVELS, CATEGORIES } from '../constants';
-import { Shield, Search, Eye, CheckCircle, AlertTriangle, XCircle, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Shield, Search, Eye, CheckCircle, AlertTriangle, XCircle, Filter, ChevronLeft, ChevronRight, Calendar, X } from 'lucide-react';
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
+
+const TIME_RANGE_PRESETS = [
+  { key: 'today', label: '今天', start: () => dayjs().startOf('day'), end: () => dayjs().endOf('day') },
+  { key: '7d', label: '近 7 天', start: () => dayjs().subtract(6, 'day').startOf('day'), end: () => dayjs().endOf('day') },
+  { key: 'week', label: '本周', start: () => dayjs().startOf('week'), end: () => dayjs().endOf('week') },
+  { key: '30d', label: '近 30 天', start: () => dayjs().subtract(29, 'day').startOf('day'), end: () => dayjs().endOf('day') },
+  { key: 'month', label: '本月', start: () => dayjs().startOf('month'), end: () => dayjs().endOf('month') },
+];
 
 const AuditLogsPage = () => {
   const { t } = useTranslation();
@@ -14,9 +23,23 @@ const AuditLogsPage = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [reviewNote, setReviewNote] = useState('');
   const [filters, setFilters] = useState({ risk_level: '', risk_category: '', username: '', keyword: '' });
+  const [activeTimeRange, setActiveTimeRange] = useState('');
 
   const pageSize = params.page_size || 20;
   const totalPages = Math.ceil(total / pageSize);
+
+  const handleTimeRange = (preset) => {
+    if (activeTimeRange === preset.key) {
+      // Deselect — clear time filter
+      setActiveTimeRange('');
+      setParams({ start_time: '', end_time: '', page: 1 });
+      return;
+    }
+    setActiveTimeRange(preset.key);
+    const startTs = Math.floor(preset.start().valueOf() / 1000);
+    const endTs = Math.floor(preset.end().valueOf() / 1000);
+    setParams({ start_time: startTs, end_time: endTs, page: 1 });
+  };
 
   const applyFilters = () => {
     const p = { ...filters };
@@ -60,6 +83,34 @@ const AuditLogsPage = () => {
           <Filter className='w-4 h-4 text-muted-foreground' />
           <span className='text-sm font-medium'>{t('筛选条件')}</span>
         </div>
+
+        {/* 时间快捷选择 */}
+        <div className='flex items-center gap-2 mb-3 flex-wrap'>
+          <Calendar className='w-4 h-4 text-muted-foreground' />
+          {TIME_RANGE_PRESETS.map((preset) => (
+            <button
+              key={preset.key}
+              onClick={() => handleTimeRange(preset)}
+              className={`h-7 px-3 rounded-md text-xs font-medium transition-colors ${
+                activeTimeRange === preset.key
+                  ? 'bg-foreground text-background'
+                  : 'border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
+              }`}
+            >
+              {t(preset.label)}
+            </button>
+          ))}
+          {activeTimeRange && (
+            <button
+              onClick={() => { setActiveTimeRange(''); setParams({ start_time: '', end_time: '', page: 1 }); }}
+              className='h-7 px-2 rounded-md text-xs text-muted-foreground hover:text-foreground transition-colors'
+              title={t('清除时间筛选')}
+            >
+              <X className='w-3.5 h-3.5' />
+            </button>
+          )}
+        </div>
+
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3'>
           <input
             type='text'
