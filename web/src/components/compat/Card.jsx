@@ -11,7 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const Card = React.forwardRef(
-  ({ title, headerLine, headerExtraContent, children, footer, footerLine, footerStyle, bodyStyle, style, className, bordered = true, shadows, loading, cover, actions, headerStyle, ...rest }, ref) => {
+  ({ title, headerLine, headerExtraContent, children, footer, footerLine, footerStyle, bodyStyle, bodyClassName, style, className, bordered = true, shadows, loading, cover, actions, headerStyle, ...rest }, ref) => {
     return (
       <ShadcnCard
         ref={ref}
@@ -28,7 +28,7 @@ const Card = React.forwardRef(
             </div>
           </CardHeader>
         )}
-        <CardContent style={bodyStyle}>
+        <CardContent className={bodyClassName} style={bodyStyle}>
           {loading ? (
             <div className='flex items-center justify-center py-8'>
               <div className='h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent' />

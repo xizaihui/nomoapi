@@ -19,40 +19,40 @@
   --sidebar-width-collapsed: 64px;
   --sidebar-current-width: var(--sidebar-width);
 
-  /* shadcn/ui CSS variables - light mode (pure monochrome) */
-  --background: 0 0% 99%;
-  --foreground: 0 0% 3.9%;
+  /* shadcn/ui CSS variables - light mode (OpenAI warm neutral) */
+  --background: 240 5% 97.5%;
+  --foreground: 240 6% 17%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
+  --card-foreground: 240 6% 17%;
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
+  --popover-foreground: 240 6% 17%;
+  --primary: 240 6% 17%;
   --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 96.1%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 35%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
+  --secondary: 240 5% 95%;
+  --secondary-foreground: 240 6% 17%;
+  --muted: 240 5% 95%;
+  --muted-foreground: 240 4% 46%;
+  --accent: 240 5% 95%;
+  --accent-foreground: 240 6% 17%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 3.9%;
+  --border: 240 5% 91%;
+  --input: 240 5% 91%;
+  --ring: 240 6% 17%;
   --radius: 0.5rem;
-  --chart-1: 0 0% 20%;
-  --chart-2: 0 0% 40%;
-  --chart-3: 0 0% 60%;
-  --chart-4: 0 0% 75%;
-  --chart-5: 0 0% 85%;
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 0 0% 12%;
-  --sidebar-primary: 0 0% 9%;
+  --chart-1: 240 5% 26%;
+  --chart-2: 240 4% 46%;
+  --chart-3: 240 4% 60%;
+  --chart-4: 240 4% 74%;
+  --chart-5: 240 5% 85%;
+  --sidebar-background: 240 5% 97%;
+  --sidebar-foreground: 240 6% 17%;
+  --sidebar-primary: 240 6% 17%;
   --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 0 0% 96.1%;
-  --sidebar-accent-foreground: 0 0% 9%;
-  --sidebar-border: 0 0% 89.8%;
-  --sidebar-ring: 0 0% 3.9%;
+  --sidebar-accent: 240 5% 93%;
+  --sidebar-accent-foreground: 240 6% 17%;
+  --sidebar-border: 240 5% 91%;
+  --sidebar-ring: 240 6% 17%;
 
   /* ===== Semi → shadcn bridge (light) ===== */
   --semi-color-bg-0: hsl(var(--background));
@@ -143,38 +143,38 @@
 }
 
 [data-theme='dark'], .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
+  --background: 240 6% 9%;
+  --foreground: 240 5% 93%;
+  --card: 240 6% 9%;
+  --card-foreground: 240 5% 93%;
+  --popover: 240 6% 9%;
+  --popover-foreground: 240 5% 93%;
+  --primary: 240 5% 93%;
+  --primary-foreground: 240 6% 9%;
+  --secondary: 240 5% 15%;
+  --secondary-foreground: 240 5% 93%;
+  --muted: 240 5% 15%;
+  --muted-foreground: 240 4% 55%;
+  --accent: 240 5% 15%;
+  --accent-foreground: 240 5% 93%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
-  --chart-1: 0 0% 80%;
-  --chart-2: 0 0% 60%;
-  --chart-3: 0 0% 45%;
-  --chart-4: 0 0% 30%;
-  --chart-5: 0 0% 20%;
-  --sidebar-background: 0 0% 3.9%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-primary: 0 0% 98%;
-  --sidebar-primary-foreground: 0 0% 9%;
-  --sidebar-accent: 0 0% 14.9%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-border: 0 0% 14.9%;
-  --sidebar-ring: 0 0% 83.1%;
+  --border: 240 5% 17%;
+  --input: 240 5% 17%;
+  --ring: 240 5% 80%;
+  --chart-1: 240 5% 80%;
+  --chart-2: 240 4% 60%;
+  --chart-3: 240 4% 45%;
+  --chart-4: 240 5% 30%;
+  --chart-5: 240 5% 20%;
+  --sidebar-background: 240 6% 9%;
+  --sidebar-foreground: 240 5% 93%;
+  --sidebar-primary: 240 5% 93%;
+  --sidebar-primary-foreground: 240 6% 9%;
+  --sidebar-accent: 240 5% 15%;
+  --sidebar-accent-foreground: 240 5% 93%;
+  --sidebar-border: 240 5% 17%;
+  --sidebar-ring: 240 5% 80%;
 
   /* ===== Semi → shadcn bridge (dark) ===== */
   --semi-color-bg-0: hsl(var(--background));
@@ -1285,4 +1285,29 @@ input:focus, textarea:focus, select:focus {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--foreground) / 0.2);
+}
+
+/* ==================== TextArea 滚动条修复 ==================== */
+/* Force all textareas to show scrollbar (Semi autosize sets overflow:hidden) */
+textarea {
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground));
 }

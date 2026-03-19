@@ -70,12 +70,12 @@ export const useDashboardCharts = (
       state: {
         hover: {
           outerRadius: 0.85,
-          stroke: '#737373',
+          stroke: '#6e6e80',
           lineWidth: 1,
         },
         selected: {
           outerRadius: 0.85,
-          stroke: '#737373',
+          stroke: '#6e6e80',
           lineWidth: 1,
         },
       },
@@ -132,7 +132,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#737373',
+          stroke: '#6e6e80',
           lineWidth: 1,
         },
       },
@@ -244,7 +244,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#737373',
+          stroke: '#6e6e80',
           lineWidth: 1,
         },
       },
@@ -439,8 +439,8 @@ export const useDashboardCharts = (
         background: 'transparent',
         colorScheme: {
           default: [
-            '#171717', '#404040', '#737373', '#a3a3a3', '#d4d4d4',
-            '#525252', '#8a8a8a', '#b5b5b5', '#2e2e2e', '#616161',
+            '#2b2b3b', '#52526b', '#7a7a95', '#a3a3b8', '#c5c5d2',
+            '#3d3d55', '#65658a', '#8e8ea0', '#b5b5c8', '#d8d8e5',
           ],
         },
         series: {
@@ -463,22 +463,22 @@ export const useDashboardCharts = (
         },
         component: {
           axis: {
-            label: { style: { fill: '#a3a3a3', fontSize: 11 } },
-            tick: { style: { stroke: '#e5e5e5' } },
-            domainLine: { style: { stroke: '#e5e5e5' } },
-            grid: { style: { stroke: '#f0f0f0', lineDash: [3, 3] } },
+            label: { style: { fill: '#8e8ea0', fontSize: 11 } },
+            tick: { style: { stroke: '#ececf1' } },
+            domainLine: { style: { stroke: '#ececf1' } },
+            grid: { style: { stroke: '#f3f3f7', lineDash: [3, 3] } },
           },
           legend: {
-            label: { style: { fill: '#737373', fontSize: 11 } },
+            label: { style: { fill: '#6e6e80', fontSize: 11 } },
           },
           title: {
-            style: { fill: '#171717', fontSize: 13, fontWeight: 500 },
-            subtextStyle: { fill: '#a3a3a3', fontSize: 11 },
+            style: { fill: '#2b2b3b', fontSize: 13, fontWeight: 500 },
+            subtextStyle: { fill: '#8e8ea0', fontSize: 11 },
           },
           tooltip: {
-            panel: { style: { backgroundColor: '#171717', border: { color: '#171717' } } },
+            panel: { style: { backgroundColor: '#2b2b3b', border: { color: '#2b2b3b' }, borderRadius: 8 } },
             titleLabel: { style: { fill: '#ffffff', fontSize: 11 } },
-            keyLabel: { style: { fill: '#d4d4d4', fontSize: 11 } },
+            keyLabel: { style: { fill: '#c5c5d2', fontSize: 11 } },
             valueLabel: { style: { fill: '#ffffff', fontSize: 11 } },
           },
         },
@@ -488,8 +488,8 @@ export const useDashboardCharts = (
         background: 'transparent',
         colorScheme: {
           default: [
-            '#a3a3a3', '#737373', '#8a8a8a', '#d4d4d4', '#525252',
-            '#b5b5b5', '#616161', '#959595', '#c4c4c4', '#404040',
+            '#8e8ea0', '#6e6e80', '#7a7a95', '#b5b5c8', '#52526b',
+            '#a3a3b8', '#65658a', '#9595a8', '#c5c5d2', '#3d3d55',
           ],
         },
         series: {
@@ -512,23 +512,23 @@ export const useDashboardCharts = (
         },
         component: {
           axis: {
-            label: { style: { fill: '#525252', fontSize: 11 } },
-            tick: { style: { stroke: '#2a2a2a' } },
-            domainLine: { style: { stroke: '#2a2a2a' } },
-            grid: { style: { stroke: '#1f1f1f', lineDash: [3, 3] } },
+            label: { style: { fill: '#52526b', fontSize: 11 } },
+            tick: { style: { stroke: '#2b2b3b' } },
+            domainLine: { style: { stroke: '#2b2b3b' } },
+            grid: { style: { stroke: '#1e1e2a', lineDash: [3, 3] } },
           },
           legend: {
-            label: { style: { fill: '#737373', fontSize: 11 } },
+            label: { style: { fill: '#8e8ea0', fontSize: 11 } },
           },
           title: {
-            style: { fill: '#a3a3a3', fontSize: 13, fontWeight: 500 },
-            subtextStyle: { fill: '#525252', fontSize: 11 },
+            style: { fill: '#b5b5c8', fontSize: 13, fontWeight: 500 },
+            subtextStyle: { fill: '#52526b', fontSize: 11 },
           },
           tooltip: {
-            panel: { style: { backgroundColor: '#1a1a1a', border: { color: '#2a2a2a', width: 1 } } },
-            titleLabel: { style: { fill: '#d4d4d4', fontSize: 11 } },
-            keyLabel: { style: { fill: '#a3a3a3', fontSize: 11 } },
-            valueLabel: { style: { fill: '#d4d4d4', fontSize: 11 } },
+            panel: { style: { backgroundColor: '#1a1a25', border: { color: '#2b2b3b', width: 1 }, borderRadius: 8 } },
+            titleLabel: { style: { fill: '#d8d8e5', fontSize: 11 } },
+            keyLabel: { style: { fill: '#8e8ea0', fontSize: 11 } },
+            valueLabel: { style: { fill: '#d8d8e5', fontSize: 11 } },
           },
         },
       };

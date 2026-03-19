@@ -161,6 +161,7 @@ const CardPro = ({
   return (
     <Card
       className={`table-scroll-card !rounded-xl ${className}`}
+      bodyClassName='card-body'
       footer={footerContent}
       shadows={shadows}
       bordered={bordered}

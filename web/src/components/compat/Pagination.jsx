@@ -1,8 +1,8 @@
-// Compat layer: Semi Design Pagination → minimal text pagination
+// Compat layer: Semi Design Pagination → minimal text pagination with page size selector
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, showTotal, showSizeChanger, pageSizeOpts, onPageSizeChange, className, style, ...rest }) => {
+const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, showTotal, showSizeChanger, pageSizeOpts = [10, 20, 50, 100], onPageSizeChange, className, style, ...rest }) => {
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   const getPageNumbers = () => {
@@ -16,10 +16,23 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
   };
 
   return (
-    <div className={cn('flex items-center justify-between', className)} style={style} {...rest}>
-      <span className='text-xs text-foreground/50 tabular-nums'>
-        {total} results
-      </span>
+    <div className={cn('flex items-center gap-4', className)} style={style} {...rest}>
+      {/* Page size selector */}
+      {showSizeChanger && pageSizeOpts?.length > 0 && (
+        <div className='flex items-center gap-1.5'>
+          <select
+            value={pageSize}
+            onChange={(e) => onPageSizeChange?.(Number(e.target.value))}
+            className='h-7 rounded-md border border-border bg-background px-1.5 text-xs text-foreground/70 cursor-pointer'
+          >
+            {pageSizeOpts.map((size) => (
+              <option key={size} value={size}>{size} / page</option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* Page numbers */}
       <div className='flex items-center gap-0.5'>
         <button
           type='button'

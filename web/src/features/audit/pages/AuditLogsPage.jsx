@@ -5,6 +5,8 @@ import { reviewAuditLog } from '../api';
 import { RISK_LEVELS, CATEGORIES } from '../constants';
 import { Shield, Search, Eye, CheckCircle, AlertTriangle, XCircle, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 
+const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
+
 const AuditLogsPage = () => {
   const { t } = useTranslation();
   const { logs, total, loading, params, setParams, refresh } = useAuditLogs();
@@ -13,7 +15,8 @@ const AuditLogsPage = () => {
   const [reviewNote, setReviewNote] = useState('');
   const [filters, setFilters] = useState({ risk_level: '', risk_category: '', username: '', keyword: '' });
 
-  const totalPages = Math.ceil(total / (params.page_size || 20));
+  const pageSize = params.page_size || 20;
+  const totalPages = Math.ceil(total / pageSize);
 
   const applyFilters = () => {
     const p = { ...filters };
@@ -103,8 +106,8 @@ const AuditLogsPage = () => {
       </div>
 
       {/* 日志表格 */}
-      <div className='rounded-lg border bg-card overflow-hidden'>
-        <div className='overflow-x-auto'>
+      <div className='rounded-lg border bg-card overflow-hidden flex flex-col' style={{ maxHeight: 'calc(100vh - 380px)' }}>
+        <div className='overflow-auto flex-1' style={{ scrollbarWidth: 'thin' }}>
           <table className='w-full text-sm'>
             <thead>
               <tr className='border-b bg-muted/50'>
@@ -232,26 +235,42 @@ const AuditLogsPage = () => {
 
         {/* 分页 */}
         {total > 0 && (
-          <div className='flex items-center justify-between px-4 py-3 border-t'>
+          <div className='flex items-center justify-between px-4 py-3 border-t flex-wrap gap-2'>
             <span className='text-sm text-muted-foreground'>
-              {t('共 {{total}} 条记录', { total })}
+              {t('显示第')} {(params.page - 1) * pageSize + 1} {t('条 - 第')} {Math.min(params.page * pageSize, total)} {t('条，共')} {total} {t('条')}
             </span>
-            <div className='flex items-center gap-2'>
-              <button
-                disabled={params.page <= 1}
-                onClick={() => setParams({ page: params.page - 1 })}
-                className='h-8 w-8 rounded-md border flex items-center justify-center disabled:opacity-50 hover:bg-muted transition-colors'
-              >
-                <ChevronLeft className='w-4 h-4' />
-              </button>
-              <span className='text-sm'>{params.page} / {totalPages}</span>
-              <button
-                disabled={params.page >= totalPages}
-                onClick={() => setParams({ page: params.page + 1 })}
-                className='h-8 w-8 rounded-md border flex items-center justify-center disabled:opacity-50 hover:bg-muted transition-colors'
-              >
-                <ChevronRight className='w-4 h-4' />
-              </button>
+            <div className='flex items-center gap-3'>
+              {/* 每页条数 */}
+              <div className='flex items-center gap-1.5'>
+                <span className='text-sm text-muted-foreground'>{t('每页')}</span>
+                <select
+                  value={pageSize}
+                  onChange={(e) => setParams({ page_size: Number(e.target.value), page: 1 })}
+                  className='h-8 rounded-md border border-border bg-background px-2 text-sm'
+                >
+                  {PAGE_SIZE_OPTIONS.map((size) => (
+                    <option key={size} value={size}>{size} {t('条')}</option>
+                  ))}
+                </select>
+              </div>
+              {/* 翻页 */}
+              <div className='flex items-center gap-2'>
+                <button
+                  disabled={params.page <= 1}
+                  onClick={() => setParams({ page: params.page - 1 })}
+                  className='h-8 w-8 rounded-md border flex items-center justify-center disabled:opacity-50 hover:bg-muted transition-colors'
+                >
+                  <ChevronLeft className='w-4 h-4' />
+                </button>
+                <span className='text-sm'>{params.page} / {totalPages}</span>
+                <button
+                  disabled={params.page >= totalPages}
+                  onClick={() => setParams({ page: params.page + 1 })}
+                  className='h-8 w-8 rounded-md border flex items-center justify-center disabled:opacity-50 hover:bg-muted transition-colors'
+                >
+                  <ChevronRight className='w-4 h-4' />
+                </button>
+              </div>
             </div>
           </div>
         )}
