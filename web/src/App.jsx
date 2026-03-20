@@ -31,37 +31,56 @@ import RegisterForm from './components/auth/RegisterForm';
 import NotFound from './pages/NotFound';
 import Forbidden from './pages/Forbidden';
 
+// Lazy import with auto-retry: if chunk fetch fails (e.g. after deploy),
+// reload the page once to get fresh asset references.
+function lazyRetry(importFn) {
+  return lazy(() =>
+    importFn().catch((err) => {
+      const key = 'chunk_reload';
+      const lastReload = sessionStorage.getItem(key);
+      const now = Date.now();
+      // Only auto-reload once per 30 seconds to avoid infinite loops
+      if (!lastReload || now - Number(lastReload) > 30000) {
+        sessionStorage.setItem(key, String(now));
+        window.location.reload();
+        return new Promise(() => {}); // Never resolves — page is reloading
+      }
+      throw err; // Already retried recently, let ErrorBoundary handle it
+    })
+  );
+}
+
 // Lazy-loaded pages — split into separate chunks
-const Home = lazy(() => import('./pages/Home'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const About = lazy(() => import('./pages/About'));
-const UserAgreement = lazy(() => import('./pages/UserAgreement'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const Setup = lazy(() => import('./pages/Setup'));
-const User = lazy(() => import('./pages/User'));
-const Setting = lazy(() => import('./pages/Setting'));
-const Channel = lazy(() => import('./pages/Channel'));
-const Token = lazy(() => import('./pages/Token'));
-const Redemption = lazy(() => import('./pages/Redemption'));
-const TopUp = lazy(() => import('./pages/TopUp'));
-const Log = lazy(() => import('./pages/Log'));
-const Chat = lazy(() => import('./pages/Chat'));
-const Chat2Link = lazy(() => import('./pages/Chat2Link'));
-const Midjourney = lazy(() => import('./pages/Midjourney'));
-const Pricing = lazy(() => import('./pages/Pricing'));
-const Task = lazy(() => import('./pages/Task'));
-const ModelPage = lazy(() => import('./pages/Model'));
-const ModelDeploymentPage = lazy(() => import('./pages/ModelDeployment'));
-const Subscription = lazy(() => import('./pages/Subscription'));
-const PersonalSetting = lazy(() => import('./components/settings/PersonalSetting'));
-const PasswordResetForm = lazy(() => import('./components/auth/PasswordResetForm'));
-const PasswordResetConfirm = lazy(() => import('./components/auth/PasswordResetConfirm'));
-const OAuth2Callback = lazy(() => import('./components/auth/OAuth2Callback'));
+const Home = lazyRetry(() => import('./pages/Home'));
+const Dashboard = lazyRetry(() => import('./pages/Dashboard'));
+const About = lazyRetry(() => import('./pages/About'));
+const UserAgreement = lazyRetry(() => import('./pages/UserAgreement'));
+const PrivacyPolicy = lazyRetry(() => import('./pages/PrivacyPolicy'));
+const Setup = lazyRetry(() => import('./pages/Setup'));
+const User = lazyRetry(() => import('./pages/User'));
+const Setting = lazyRetry(() => import('./pages/Setting'));
+const Channel = lazyRetry(() => import('./pages/Channel'));
+const Token = lazyRetry(() => import('./pages/Token'));
+const Redemption = lazyRetry(() => import('./pages/Redemption'));
+const TopUp = lazyRetry(() => import('./pages/TopUp'));
+const Log = lazyRetry(() => import('./pages/Log'));
+const Chat = lazyRetry(() => import('./pages/Chat'));
+const Chat2Link = lazyRetry(() => import('./pages/Chat2Link'));
+const Midjourney = lazyRetry(() => import('./pages/Midjourney'));
+const Pricing = lazyRetry(() => import('./pages/Pricing'));
+const Task = lazyRetry(() => import('./pages/Task'));
+const ModelPage = lazyRetry(() => import('./pages/Model'));
+const ModelDeploymentPage = lazyRetry(() => import('./pages/ModelDeployment'));
+const Subscription = lazyRetry(() => import('./pages/Subscription'));
+const PersonalSetting = lazyRetry(() => import('./components/settings/PersonalSetting'));
+const PasswordResetForm = lazyRetry(() => import('./components/auth/PasswordResetForm'));
+const PasswordResetConfirm = lazyRetry(() => import('./components/auth/PasswordResetConfirm'));
+const OAuth2Callback = lazyRetry(() => import('./components/auth/OAuth2Callback'));
 
 // 审计模块（独立功能，不影响上游）
-const AuditLogsPage = lazy(() => import('./features/audit/pages/AuditLogsPage'));
-const AuditRulesPage = lazy(() => import('./features/audit/pages/AuditRulesPage'));
-const AuditRetentionPage = lazy(() => import('./features/audit/pages/AuditRetentionPage'));
+const AuditLogsPage = lazyRetry(() => import('./features/audit/pages/AuditLogsPage'));
+const AuditRulesPage = lazyRetry(() => import('./features/audit/pages/AuditRulesPage'));
+const AuditRetentionPage = lazyRetry(() => import('./features/audit/pages/AuditRetentionPage'));
 
 function DynamicOAuth2Callback() {
   const { provider } = useParams();

@@ -23,7 +23,7 @@ func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 			controller.RelayNotFound(c)
 			return
 		}
-		c.Header("Cache-Control", "no-cache")
+		c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
 		c.Data(http.StatusOK, "text/html; charset=utf-8", indexPage)
 	})
 }
