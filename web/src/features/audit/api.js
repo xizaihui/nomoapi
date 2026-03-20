@@ -66,3 +66,29 @@ export async function batchGetAuditConfigs(userIds) {
   const res = await API.post(`${BASE}/config/batch`, { user_ids: userIds });
   return res.data;
 }
+
+// --- 保存策略 ---
+export async function fetchRetentionPolicies() {
+  const res = await API.get(`${BASE}/retention/policies`);
+  return res.data;
+}
+
+export async function fetchRetentionSummary() {
+  const res = await API.get(`${BASE}/retention/summary`);
+  return res.data;
+}
+
+export async function upsertRetentionPolicy(data) {
+  const res = await API.post(`${BASE}/retention/policies`, data);
+  return res.data;
+}
+
+export async function deleteRetentionPolicy(id) {
+  const res = await API.delete(`${BASE}/retention/policies/${id}`);
+  return res.data;
+}
+
+export async function triggerRetentionCleanup() {
+  const res = await API.post(`${BASE}/retention/cleanup`);
+  return res.data;
+}

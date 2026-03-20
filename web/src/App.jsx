@@ -61,6 +61,7 @@ const OAuth2Callback = lazy(() => import('./components/auth/OAuth2Callback'));
 // 审计模块（独立功能，不影响上游）
 const AuditLogsPage = lazy(() => import('./features/audit/pages/AuditLogsPage'));
 const AuditRulesPage = lazy(() => import('./features/audit/pages/AuditRulesPage'));
+const AuditRetentionPage = lazy(() => import('./features/audit/pages/AuditRetentionPage'));
 
 function DynamicOAuth2Callback() {
   const { provider } = useParams();
@@ -409,6 +410,16 @@ function App() {
             <PrivateRoute>
               <Suspense fallback={<Loading></Loading>} key={location.pathname}>
                 <AuditRulesPage />
+              </Suspense>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/console/audit-retention'
+          element={
+            <PrivateRoute>
+              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+                <AuditRetentionPage />
               </Suspense>
             </PrivateRoute>
           }

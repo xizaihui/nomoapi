@@ -297,6 +297,9 @@ func InitResources() error {
 	if err := audit.InitAuditTables(model.DB); err != nil {
 		common.SysError("审计模块初始化失败: " + err.Error())
 	}
+	if err := audit.InitRetentionTable(model.DB); err != nil {
+		common.SysError("审计保存策略表初始化失败: " + err.Error())
+	}
 	audit.SeedDefaultRules(model.DB)
 	audit.InitScanner(model.DB)
 	esURL := os.Getenv("ES_URL")
@@ -306,6 +309,8 @@ func InitResources() error {
 	if err := audit.InitES(esURL); err != nil {
 		common.SysError("ES 初始化失败: " + err.Error())
 	}
+	// 启动审计日志定时清理
+	audit.StartRetentionCleaner(model.DB)
 
 	// 启动系统监控
 	common.StartSystemMonitor()

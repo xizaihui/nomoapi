@@ -52,6 +52,7 @@ const routerMap = {
   // 审计模块（独立，不影响上游）
   'audit-logs': '/console/audit-logs',
   'audit-rules': '/console/audit-rules',
+  'audit-retention': '/console/audit-retention',
 };
 
 const SiderBar = ({ onNavigate = () => {} }) => {
@@ -505,6 +506,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
                 )}
                 {renderNavItem({ text: t('审计日志'), itemKey: 'audit-logs', to: '/console/audit-logs' })}
                 {renderNavItem({ text: t('审计规则'), itemKey: 'audit-rules', to: '/console/audit-rules' })}
+                {renderNavItem({ text: t('保存策略'), itemKey: 'audit-retention', to: '/console/audit-retention' })}
               </div>
             </>
           )}

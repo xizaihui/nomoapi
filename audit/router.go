@@ -37,5 +37,16 @@ func SetAuditRouter(apiRouter *gin.RouterGroup) {
 			adminRouter.POST("/user/:user_id", SetAuditConfigHandler)
 			adminRouter.POST("/batch", BatchGetAuditConfigsHandler)
 		}
+
+		// 管理员专用：保存策略管理
+		retentionRouter := auditRouter.Group("/retention")
+		retentionRouter.Use(middleware.AdminAuth())
+		{
+			retentionRouter.GET("/policies", GetRetentionPoliciesHandler)
+			retentionRouter.GET("/summary", GetRetentionSummaryHandler)
+			retentionRouter.POST("/policies", UpsertRetentionPolicyHandler)
+			retentionRouter.DELETE("/policies/:id", DeleteRetentionPolicyHandler)
+			retentionRouter.POST("/cleanup", ManualRetentionCleanupHandler)
+		}
 	}
 }
