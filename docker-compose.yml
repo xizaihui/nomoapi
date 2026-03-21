@@ -35,6 +35,8 @@ services:
       - BATCH_UPDATE_ENABLED=true  # 是否启用批量更新 (Whether to enable batch update)
 #      - STREAMING_TIMEOUT=300  # 流模式无响应超时时间，单位秒，默认120秒，如果出现空补全可以尝试改为更大值 （Streaming timeout in seconds, default is 120s. Increase if experiencing empty completions）
       - SESSION_SECRET=opentoken_session_2026_xz527  # 固定会话密钥，容器重启不会失效
+      - GLOBAL_WEB_RATE_LIMIT=500  # SPA单次加载需要很多chunk请求
+      - GLOBAL_WEB_RATE_LIMIT_DURATION=60
 #      - SYNC_FREQUENCY=60  # Uncomment if regular database syncing is needed
 #      - GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX  # Google Analytics 的测量 ID (Google Analytics Measurement ID)
 #      - UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Umami 网站 ID (Umami Website ID)

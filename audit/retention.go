@@ -51,7 +51,7 @@ func GetRetentionPolicyByGroup(db *gorm.DB, group string) (*RetentionPolicy, err
 	err = db.Where("\"group\" = ?", "*").First(&policy).Error
 	if err == gorm.ErrRecordNotFound {
 		// 没有任何策略，返回默认 90 天
-		return &RetentionPolicy{Group: "*", RetentionDays: 90, Description: "系统默认"}, nil
+		return &RetentionPolicy{Group: "*", RetentionDays: 30, Description: "系统默认"}, nil
 	}
 	return &policy, err
 }
@@ -95,13 +95,13 @@ func InitRetentionTable(db *gorm.DB) error {
 	if count == 0 {
 		defaultPolicy := &RetentionPolicy{
 			Group:         "*",
-			RetentionDays: 90,
-			Description:   "全局默认：保存 90 天",
+			RetentionDays: 30,
+			Description:   "全局默认：保存 30 天",
 		}
 		if err := db.Create(defaultPolicy).Error; err != nil {
 			return err
 		}
-		common.SysLog("审计日志保存策略初始化：全局默认 90 天")
+		common.SysLog("审计日志保存策略初始化：全局默认 30 天")
 	}
 	return nil
 }
@@ -142,7 +142,7 @@ func runRetentionCleanup(db *gorm.DB) {
 
 	// 构建 group -> retention_days 映射
 	groupRetention := make(map[string]int)
-	globalDays := 90 // 最终兜底
+	globalDays := 30 // 最终兜底
 	for _, p := range policies {
 		if p.Group == "*" {
 			globalDays = p.RetentionDays
