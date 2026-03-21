@@ -84,6 +84,13 @@
 - ModelTestModal 白屏（遗留 bug，未修复）
 - 上游 test channel 502（nginx bad gateway，非代码问题）
 
+### 三环境部署
+| 环境 | 地址 | 域名 | 状态 |
+|------|------|------|------|
+| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `da43ecec` |
+| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署（需同步最新代码） |
+| 生产 | 38.58.59.161 | api.opentoken.io | ⏳ 待部署 |
+
 ### 可继续优化的方向
 - [ ] 更多页面的细节打磨（根据用户反馈）
 - [ ] 移动端适配优化
@@ -96,6 +103,56 @@
 - [ ] 官方定价配置（AWS Claude / OpenAI / Gemini ModelRatio + CompletionRatio）
 - [ ] 香港服务器部署（api.oneaiai.com 待确认 IP 和域名）
 - [ ] PG 重启生效：shared_buffers 8GB + max_connections 300 + wal_buffers 64MB
+
+---
+
+### 2026-03-20/21 — UI修复 + 审计保存策略 + 部署优化
+
+#### 审计日志保存策略 ✅ (commit: `b79bf09c`)
+- 新增 `audit/retention.go` — RetentionPolicy 模型、CRUD、每日3AM自动清理协程
+- 新增 `audit/retention_controller.go` — API handlers (admin-only)
+- 新增路由: `/api/audit/retention/policies`, `/retention/summary`, `/retention/cleanup`
+- PG 表: `audit_retention_policies` (group unique key, retention_days)
+- 全局默认 `*`: 30天（可自定义修改）
+- 分组策略优先级 > 全局默认，retention_days=0 表示永久保存
+- 清理方式: ES `_delete_by_query` 按分组粒度，非索引删除
+- 前端页面: `AuditRetentionPage.jsx` at `/console/audit-retention`
+- 预设天数: 30/60/90/180/365/永久/自定义
+
+#### Lazy Import 自动重试 ✅ (commit: `a1f2347e`)
+- `App.jsx`: 所有 `lazy()` → `lazyRetry()` 包装
+- 部署新版本后用户旧页面自动刷新获取新资源（30秒防重复）
+- 解决 "Failed to fetch dynamically imported module" 部署后报错
+
+#### Cache-Control 优化 ✅ (commit: `a1f2347e`)
+- `middleware/cache.go`: HTML → `no-cache, no-store, must-revalidate`; 带哈希资源 → `immutable, max-age=1年`
+- `router/web-router.go`: SPA fallback 路由也设 `no-store`
+- 移除无用的 `Cache-Version` header
+
+#### Session 持久化 ✅ (commit: `a1f2347e`)
+- `docker-compose.yml`: 添加 `SESSION_SECRET` 环境变量
+- 容器重启后登录状态不再失效
+
+#### Web 限流调整 ✅ (commit: `da43ecec`)
+- `GLOBAL_WEB_RATE_LIMIT`: 60/180s → **500/60s** (per IP)
+- SPA 单次加载 ~20 个 chunk 请求，原值太低
+
+#### 其他修改
+- `audit/retention.go`: 全局默认 90天 → 30天 (commit: `da43ecec`)
+- 时间快捷筛选 (commit: `ec2f3432`): 审计日志页增加今天/近7天/本周/近30天/本月
+- UI优化 (commit: `6e35b5e0`): textarea滚动条、分页器、配色方案
+
+**Commit 链:**
+```
+6e35b5e0 → ec2f3432 → b79bf09c → a1f2347e → da43ecec
+```
+
+| 指标 | 说明 |
+|------|------|
+| 审计保存策略 | 按分组配置，默认30天，支持永久 |
+| 部署体验 | lazy import 自动重试，用户无感更新 |
+| 限流 | 500/min/IP，不影响正常SPA加载 |
+| Session | 固定密钥，容器重启不掉线 |
 
 ---
 
@@ -132,7 +189,7 @@
 - max_connections: 100 → 300 ✅
 - wal_buffers: 4MB → 64MB ✅
 
-**当前 HEAD**: `fbf9ef11` on `feat/shadcn-ui`
+**当前 HEAD**: `da43ecec` on `feat/shadcn-ui`
 
 | 指标 | 优化前 | 优化后 | 变化 |
 |------|--------|--------|------|
