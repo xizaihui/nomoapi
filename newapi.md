@@ -106,6 +106,49 @@
 
 ---
 
+### 2026-03-21 — Typography 统一规范 + i18n 审计翻译 + 滚动条/固定列修复
+
+#### Typography & Visual Hierarchy ✅ (commit: `2ce578de`, 75 files)
+- **字号收敛**: 10种 → 5级标准 (H1=text-xl, H2=text-base, Body=text-sm, Caption=text-xs, Stat=text-2xl)
+- **字重统一**: font-bold → font-semibold (仅保留1处红色价格 bold)
+- **颜色层级**: 10种散乱透明度 → 3级 (text-foreground / text-foreground/80 / text-muted-foreground)
+- **消灭 text-slate-***: 101处硬编码全部替换为语义 token
+- **SideSheet 标题**: inline style → Tailwind class
+- **Table 表头**: text-[11px] → text-xs
+- **Typography.Title**: h1-h6 重映射到新标准
+- **全局 --radius**: 0.5rem → 0.625rem (更圆润)
+- **letter-spacing**: -0.011em (Inter 字体最佳紧凑度)
+- **侧边栏**: 圆角 6px→8px, selected weight 600→500
+
+#### 审计模块 i18n 完整翻译 ✅ (commit: `3e7b54b6`)
+- 🇺🇸 English / 🇹🇼 繁體中文 / 🇯🇵 日本語 各 121 个翻译 key
+- 修复: TIME_RANGE_PRESETS / RETENTION_PRESETS 硬编码中文 → t() 包裹
+- 修复: constants.js RISK_LEVELS/CATEGORIES/RULE_TYPES label 引用加 t()
+- 修复: 日期 toLocaleString('zh-CN') → toLocaleString(i18n.language)
+- 覆盖: 安全审计 + 审计规则 + 日志保存策略 三个页面
+
+#### 全局细滚动条 ✅ (commit: `3e7b54b6`)
+- scrollbar-width: thin, 宽度 6px
+- 滚动条轨道完全透明 (消除 SideSheet 右侧灰条)
+- thumb 半透明前景色, hover 加深
+
+#### 表格固定列背景修复 ✅ (commit: `3e7b54b6`)
+- sticky 列 bg-background → bg-card
+- 修复浅色主题下固定列灰条 (background=#f7f7f8 vs card=#fff 不匹配)
+
+**Commit 链:**
+```
+da43ecec → e75a7f76 → 2ce578de → 3e7b54b6
+```
+
+| 环境 | 状态 | 版本 |
+|------|------|------|
+| 本地 dev (154.40.40.48:3000) | ✅ 已部署 | `3e7b54b6` |
+| 测试 (154.36.173.198) | ⏳ 同步中 | — |
+| 生产 (38.58.59.161) | ⏳ 同步中 | — |
+
+---
+
 ### 2026-03-20/21 — UI修复 + 审计保存策略 + 部署优化
 
 #### 审计日志保存策略 ✅ (commit: `b79bf09c`)
