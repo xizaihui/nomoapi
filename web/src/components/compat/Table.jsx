@@ -135,7 +135,7 @@ const Table = ({
                 return (
                   <th
                     key={key}
-                    className={cn('px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground', col.sorter && 'cursor-pointer select-none hover:text-foreground', col.fixed && 'sticky bg-background z-10', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0')}
+                    className={cn('px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground', col.sorter && 'cursor-pointer select-none hover:text-foreground', col.fixed && 'sticky bg-card z-10', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0')}
                     style={{ width: col.width, minWidth: col.width }}
                     onClick={col.sorter ? () => handleSort(key) : undefined}
                   >
@@ -183,7 +183,7 @@ const Table = ({
                       return (
                         <td
                           key={colKey}
-                          className={cn('px-3 py-2.5 text-sm', col.fixed && 'sticky bg-background', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0', col.align === 'center' && 'text-center', col.align === 'right' && 'text-right')}
+                          className={cn('px-3 py-2.5 text-sm', col.fixed && 'sticky bg-card', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0', col.align === 'center' && 'text-center', col.align === 'right' && 'text-right')}
                           style={{ width: col.width }}
                         >
                           {col.render ? col.render(cellValue, record, rowIdx) : (cellValue ?? '')}

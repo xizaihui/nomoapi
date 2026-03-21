@@ -73,7 +73,7 @@ const AuditRulesPage = () => {
             onClick={() => handleFilterChange(key)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${categoryFilter === key ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted/80'}`}
           >
-            {cat.icon} {cat.label}
+            {cat.icon} {t(cat.label)}
           </button>
         ))}
       </div>
@@ -99,13 +99,13 @@ const AuditRulesPage = () => {
                     <div className='flex items-center gap-2 flex-wrap'>
                       <span className='font-medium'>{rule.name}</span>
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${risk.badge}`}>
-                        {risk.label}
+                        {t(risk.label)}
                       </span>
                       <span className='px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground'>
-                        {cat.icon} {cat.label}
+                        {cat.icon} {t(cat.label)}
                       </span>
                       <span className='px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground'>
-                        {ruleType.label}
+                        {t(ruleType.label)}
                       </span>
                       {rule.is_global ? (
                         <span className='px-2 py-0.5 rounded-full text-xs bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground'>
@@ -277,7 +277,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
                 className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
               >
                 {Object.entries(CATEGORIES).map(([k, v]) => (
-                  <option key={k} value={k}>{v.icon} {v.label}</option>
+                  <option key={k} value={k}>{v.icon} {t(v.label)}</option>
                 ))}
               </select>
             </div>
@@ -289,7 +289,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
                 className='mt-1 h-9 w-full rounded-md border border-border bg-background px-3 text-sm'
               >
                 {Object.entries(RULE_TYPES).map(([k, v]) => (
-                  <option key={k} value={k}>{v.label}</option>
+                  <option key={k} value={k}>{t(v.label)}</option>
                 ))}
               </select>
             </div>

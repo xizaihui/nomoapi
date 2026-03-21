@@ -4,12 +4,12 @@ import { fetchRetentionPolicies, fetchRetentionSummary, upsertRetentionPolicy, d
 import { Clock, Database, Plus, Pencil, Trash2, Play, X, Infinity, AlertTriangle } from 'lucide-react';
 
 const PRESET_DAYS = [
-  { label: '30 天', value: 30 },
-  { label: '60 天', value: 60 },
-  { label: '90 天', value: 90 },
-  { label: '180 天', value: 180 },
-  { label: '365 天', value: 365 },
-  { label: '永久', value: 0 },
+  { labelKey: '30 天', value: 30 },
+  { labelKey: '60 天', value: 60 },
+  { labelKey: '90 天', value: 90 },
+  { labelKey: '180 天', value: 180 },
+  { labelKey: '365 天', value: 365 },
+  { labelKey: '永久', value: 0 },
 ];
 
 const AuditRetentionPage = () => {
@@ -324,7 +324,7 @@ const RetentionModal = ({ policy, isGlobal, onClose, onSave }) => {
                       : 'border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
                   }`}
                 >
-                  {preset.value === 0 ? <><Infinity className='w-3 h-3 inline mr-1' />{preset.label}</> : preset.label}
+                  {preset.value === 0 ? <><Infinity className='w-3 h-3 inline mr-1' />{t(preset.labelKey)}</> : t(preset.labelKey)}
                 </button>
               ))}
               <button

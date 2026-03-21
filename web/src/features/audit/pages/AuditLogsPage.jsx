@@ -9,15 +9,15 @@ import { Shield, Search, Eye, CheckCircle, AlertTriangle, XCircle, Filter, Chevr
 const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
 
 const TIME_RANGE_PRESETS = [
-  { key: 'today', label: '今天', start: () => dayjs().startOf('day'), end: () => dayjs().endOf('day') },
-  { key: '7d', label: '近 7 天', start: () => dayjs().subtract(6, 'day').startOf('day'), end: () => dayjs().endOf('day') },
-  { key: 'week', label: '本周', start: () => dayjs().startOf('week'), end: () => dayjs().endOf('week') },
-  { key: '30d', label: '近 30 天', start: () => dayjs().subtract(29, 'day').startOf('day'), end: () => dayjs().endOf('day') },
-  { key: 'month', label: '本月', start: () => dayjs().startOf('month'), end: () => dayjs().endOf('month') },
+  { key: 'today', labelKey: '今天', start: () => dayjs().startOf('day'), end: () => dayjs().endOf('day') },
+  { key: '7d', labelKey: '近 7 天', start: () => dayjs().subtract(6, 'day').startOf('day'), end: () => dayjs().endOf('day') },
+  { key: 'week', labelKey: '本周', start: () => dayjs().startOf('week'), end: () => dayjs().endOf('week') },
+  { key: '30d', labelKey: '近 30 天', start: () => dayjs().subtract(29, 'day').startOf('day'), end: () => dayjs().endOf('day') },
+  { key: 'month', labelKey: '本月', start: () => dayjs().startOf('month'), end: () => dayjs().endOf('month') },
 ];
 
 const AuditLogsPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { logs, total, loading, params, setParams, refresh } = useAuditLogs();
   const { stats } = useAuditStats();
   const [expandedId, setExpandedId] = useState(null);
@@ -97,7 +97,7 @@ const AuditLogsPage = () => {
                   : 'border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
               }`}
             >
-              {t(preset.label)}
+              {t(preset.labelKey)}
             </button>
           ))}
           {activeTimeRange && (
@@ -133,7 +133,7 @@ const AuditLogsPage = () => {
           >
             <option value=''>{t('全部风险等级')}</option>
             {Object.entries(RISK_LEVELS).map(([k, v]) => (
-              <option key={k} value={k}>{v.label}</option>
+              <option key={k} value={k}>{t(v.label)}</option>
             ))}
           </select>
           <select
@@ -143,7 +143,7 @@ const AuditLogsPage = () => {
           >
             <option value=''>{t('全部规则类型')}</option>
             {Object.entries(CATEGORIES).map(([k, v]) => (
-              <option key={k} value={k}>{v.icon} {v.label}</option>
+              <option key={k} value={k}>{v.icon} {t(v.label)}</option>
             ))}
           </select>
           <button
@@ -187,7 +187,7 @@ const AuditLogsPage = () => {
                     <React.Fragment key={log.request_id}>
                       <tr className='border-b hover:bg-muted/30 transition-colors'>
                         <td className='p-3 whitespace-nowrap text-muted-foreground'>
-                          {new Date(log.created_at * 1000).toLocaleString('zh-CN')}
+                          {new Date(log.created_at * 1000).toLocaleString(i18n.language)}
                         </td>
                         <td className='p-3 font-medium'>{log.username}</td>
                         <td className='p-3 text-muted-foreground'>{log.token_name}</td>
@@ -197,12 +197,12 @@ const AuditLogsPage = () => {
                         </td>
                         <td className='p-3'>
                           <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${risk.badge}`}>
-                            {risk.label}
+                            {t(risk.label)}
                           </span>
                         </td>
                         <td className='p-3 text-xs'>
                           {cat.icon && <span className='mr-1'>{cat.icon}</span>}
-                          {cat.label || '-'}
+                          {t(cat.label) || '-'}
                         </td>
                         <td className='p-3'>
                           {log.reviewed ? (

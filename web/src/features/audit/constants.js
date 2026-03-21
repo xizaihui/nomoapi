@@ -1,4 +1,4 @@
-// 审计模块常量
+// 审计模块常量 — label values are i18n keys (pass through t() when rendering)
 export const RISK_LEVELS = {
   0: { label: '正常', color: 'green', badge: 'bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground' },
   1: { label: '可疑', color: 'yellow', badge: 'bg-muted/60 text-foreground dark:bg-muted dark:text-muted-foreground' },
