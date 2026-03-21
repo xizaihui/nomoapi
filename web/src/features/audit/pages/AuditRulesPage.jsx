@@ -46,7 +46,7 @@ const AuditRulesPage = () => {
             <BookOpen className='w-6 h-6 text-primary' />
           </div>
           <div>
-            <h1 className='text-2xl font-semibold tracking-tight'>{t('审计规则')}</h1>
+            <h1 className='text-xl font-semibold tracking-tight'>{t('审计规则')}</h1>
             <p className='text-sm text-muted-foreground'>{t('管理安全审计的匹配规则')}</p>
           </div>
         </div>
@@ -251,7 +251,7 @@ const RuleModal = ({ rule, onClose, onSave }) => {
     <div className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/50' onClick={onClose}>
       <div className='bg-background rounded-lg border shadow-sm w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto' onClick={(e) => e.stopPropagation()}>
         <div className='flex items-center justify-between p-4 border-b'>
-          <h2 className='text-lg font-semibold'>{rule ? t('编辑规则') : t('添加规则')}</h2>
+          <h2 className='text-base font-medium'>{rule ? t('编辑规则') : t('添加规则')}</h2>
           <button onClick={onClose} className='p-1 rounded hover:bg-muted'><X className='w-4 h-4' /></button>
         </div>
         <div className='p-4 space-y-4'>

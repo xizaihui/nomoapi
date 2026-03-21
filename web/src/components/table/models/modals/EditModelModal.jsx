@@ -294,7 +294,7 @@ const EditModelModal = (props) => {
                     <FileText size={16} />
                   </Avatar>
                   <div>
-                    <Text className='text-lg font-medium'>{t('基本信息')}</Text>
+                    <Text className='text-base font-medium'>{t('基本信息')}</Text>
                     <div className='text-xs text-muted-foreground'>
                       {t('设置模型的基本信息')}
                     </div>

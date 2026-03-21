@@ -8,7 +8,7 @@ const SemiBadge = ({ count, dot, maxCount = 99, overflowCount, type = 'danger', 
     danger: 'bg-destructive text-destructive-foreground',
     primary: 'bg-primary text-primary-foreground',
     secondary: 'bg-secondary text-secondary-foreground',
-    tertiary: 'bg-muted text-foreground/60',
+    tertiary: 'bg-muted text-muted-foreground',
     warning: 'bg-[hsl(var(--chart-4))] text-white',
     success: 'bg-[hsl(var(--chart-2))] text-white',
   };

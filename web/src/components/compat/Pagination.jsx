@@ -23,7 +23,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
           <select
             value={pageSize}
             onChange={(e) => onPageSizeChange?.(Number(e.target.value))}
-            className='h-7 rounded-md border border-border bg-background px-1.5 text-xs text-foreground/70 cursor-pointer'
+            className='h-7 rounded-md border border-border bg-background px-1.5 text-xs text-muted-foreground cursor-pointer'
           >
             {pageSizeOpts.map((size) => (
               <option key={size} value={size}>{size} / page</option>
@@ -38,7 +38,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
           type='button'
           disabled={currentPage <= 1}
           onClick={() => onPageChange?.(currentPage - 1)}
-          className='px-2 py-1 text-xs text-foreground/50 disabled:opacity-30 hover:text-foreground transition-colors'
+          className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'
         >
           ←
         </button>
@@ -51,7 +51,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
               'w-7 h-7 text-xs rounded transition-colors',
               page === currentPage
                 ? 'bg-foreground text-background font-medium'
-                : 'text-foreground/50 hover:text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             )}
           >
             {page}
@@ -61,7 +61,7 @@ const Pagination = ({ total = 0, pageSize = 10, currentPage = 1, onPageChange, s
           type='button'
           disabled={currentPage >= totalPages}
           onClick={() => onPageChange?.(currentPage + 1)}
-          className='px-2 py-1 text-xs text-foreground/50 disabled:opacity-30 hover:text-foreground transition-colors'
+          className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'
         >
           →
         </button>

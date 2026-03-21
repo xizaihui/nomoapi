@@ -159,7 +159,7 @@ const ModelPricingTable = ({
           <IconCoinMoneyStroked size={16} />
         </Avatar>
         <div>
-          <Text className='text-lg font-medium'>{t('分组价格')}</Text>
+          <Text className='text-base font-medium'>{t('分组价格')}</Text>
           <div className='text-xs text-muted-foreground'>
             {t('不同用户分组的价格信息')}
           </div>

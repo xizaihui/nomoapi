@@ -76,7 +76,7 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
             >
               <div className='flex flex-col'>
                 <span>{option.label}</span>
-                <span className='text-xs text-foreground/55'>
+                <span className='text-xs text-muted-foreground'>
                   {option.description}
                 </span>
               </div>
@@ -86,7 +86,7 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
           {theme === 'auto' && (
             <>
               <Dropdown.Divider />
-              <div className='px-3 py-2 text-xs text-foreground/55'>
+              <div className='px-3 py-2 text-xs text-muted-foreground'>
                 {t('当前跟随系统')}：
                 {actualTheme === 'dark' ? t('深色') : t('浅色')}
               </div>

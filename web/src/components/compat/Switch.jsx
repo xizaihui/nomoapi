@@ -21,7 +21,7 @@ const Switch = React.forwardRef(
           {...rest}
         />
         {(checkedText || uncheckedText) && (
-          <span className='text-sm text-foreground/55'>
+          <span className='text-sm text-muted-foreground'>
             {checked ? checkedText : uncheckedText}
           </span>
         )}

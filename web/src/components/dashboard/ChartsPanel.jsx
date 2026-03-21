@@ -37,7 +37,7 @@ const ChartsPanel = ({
   return (
     <div className={`border border-border/50 rounded-xl bg-card ${hasApiInfoPanel ? 'lg:col-span-3' : ''}`}>
       <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between w-full gap-3 px-4 pt-4 pb-2'>
-        <span className='text-xs font-medium uppercase tracking-wider text-foreground/50'>
+        <span className='text-xs font-medium uppercase tracking-wider text-muted-foreground'>
           {t('模型数据分析')}
         </span>
         <Tabs

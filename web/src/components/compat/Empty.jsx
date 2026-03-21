@@ -13,9 +13,9 @@ const Empty = ({ image, title, description, children, darkModeImage, className, 
       style={style}
       {...rest}
     >
-      {image && <div className='text-foreground/50'>{typeof image === 'string' ? <img src={image} alt='' className='h-24 w-24 opacity-50' /> : image}</div>}
+      {image && <div className='text-muted-foreground'>{typeof image === 'string' ? <img src={image} alt='' className='h-24 w-24 opacity-50' /> : image}</div>}
       {title && <div className='text-base font-medium text-foreground'>{title}</div>}
-      {description && <div className='text-sm text-foreground/50'>{description}</div>}
+      {description && <div className='text-sm text-muted-foreground'>{description}</div>}
       {children && <div className='mt-2'>{children}</div>}
     </div>
   );

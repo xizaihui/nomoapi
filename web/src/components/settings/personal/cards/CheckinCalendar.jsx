@@ -249,7 +249,7 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
           </Avatar>
           <div className='flex-1'>
             <div className='flex items-center gap-2'>
-              <Typography.Text className='text-lg font-medium'>
+              <Typography.Text className='text-base font-medium'>
                 {t('每日签到')}
               </Typography.Text>
               {isCollapsed ? (

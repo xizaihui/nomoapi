@@ -384,7 +384,7 @@ const NotificationSettings = ({
           <Bell size={16} />
         </Avatar>
         <div>
-          <Typography.Text className='text-lg font-medium'>
+          <Typography.Text className='text-base font-medium'>
             {t('其他设置')}
           </Typography.Text>
           <div className='text-xs text-muted-foreground'>

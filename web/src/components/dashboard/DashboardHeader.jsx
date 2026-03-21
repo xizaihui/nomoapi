@@ -35,7 +35,7 @@ const DashboardHeader = ({
         className='transition-opacity duration-1000 ease-in-out'
         style={{ opacity: greetingVisible ? 1 : 0 }}
       >
-        <h2 className='text-lg font-medium text-foreground tracking-tight'>
+        <h2 className='text-xl font-semibold text-foreground tracking-tight'>
           {getGreeting}
         </h2>
       </div>
@@ -44,14 +44,14 @@ const DashboardHeader = ({
           type='tertiary'
           icon={<Search size={14} />}
           onClick={showSearchModal}
-          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-foreground/55 hover:text-foreground'
+          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-muted-foreground hover:text-foreground'
         />
         <Button
           type='tertiary'
           icon={<RefreshCw size={14} />}
           onClick={refresh}
           loading={loading}
-          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-foreground/55 hover:text-foreground'
+          className='!h-8 !w-8 !p-0 !rounded-lg !bg-transparent hover:!bg-muted text-muted-foreground hover:text-foreground'
         />
       </div>
     </div>

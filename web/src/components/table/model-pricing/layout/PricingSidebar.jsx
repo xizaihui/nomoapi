@@ -93,7 +93,7 @@ const PricingSidebar = ({
   return (
     <div className='p-2'>
       <div className='flex items-center justify-between mb-6'>
-        <div className='text-lg font-semibold text-foreground'>{t('筛选')}</div>
+        <div className='text-base font-medium text-foreground'>{t('筛选')}</div>
         <Button
           theme='outline'
           type='tertiary'

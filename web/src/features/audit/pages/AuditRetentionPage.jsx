@@ -114,7 +114,7 @@ const AuditRetentionPage = () => {
             <Clock className='w-6 h-6 text-primary' />
           </div>
           <div>
-            <h1 className='text-2xl font-semibold tracking-tight'>{t('日志保存策略')}</h1>
+            <h1 className='text-xl font-semibold tracking-tight'>{t('日志保存策略')}</h1>
             <p className='text-sm text-muted-foreground'>{t('配置审计日志的保存时间，支持按分组（公司）设置不同策略')}</p>
           </div>
         </div>
@@ -159,9 +159,9 @@ const AuditRetentionPage = () => {
                 <div className='flex-1 min-w-0'>
                   <div className='flex items-center gap-2 flex-wrap'>
                     {item.is_global ? (
-                      <span className='font-semibold text-lg'>🌐 {t('全局默认')}</span>
+                      <span className='font-semibold text-base'>🌐 {t('全局默认')}</span>
                     ) : (
-                      <span className='font-medium text-lg'>{item.group}</span>
+                      <span className='font-medium text-base'>{item.group}</span>
                     )}
                     {/* 保存天数 badge */}
                     <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-muted text-foreground'>
@@ -186,7 +186,7 @@ const AuditRetentionPage = () => {
                       {(item.doc_count || 0).toLocaleString()} {t('条记录')}
                     </span>
                     {item.retention_days > 0 && item.doc_count > 0 && (
-                      <span className='flex items-center gap-1 text-foreground/60'>
+                      <span className='flex items-center gap-1 text-muted-foreground'>
                         <AlertTriangle className='w-3 h-3' />
                         {t('超过')} {item.retention_days} {t('天的记录将被自动清理')}
                       </span>
@@ -207,7 +207,7 @@ const AuditRetentionPage = () => {
                       className='p-1.5 rounded hover:bg-muted transition-colors'
                       title={t('删除')}
                     >
-                      <Trash2 className='w-4 h-4 text-foreground/60' />
+                      <Trash2 className='w-4 h-4 text-muted-foreground' />
                     </button>
                   )}
                 </div>
@@ -275,7 +275,7 @@ const RetentionModal = ({ policy, isGlobal, onClose, onSave }) => {
     <div className='fixed inset-0 z-[9999] flex items-center justify-center bg-black/50' onClick={onClose}>
       <div className='bg-background rounded-lg border shadow-sm w-full max-w-md mx-4' onClick={(e) => e.stopPropagation()}>
         <div className='flex items-center justify-between p-4 border-b'>
-          <h2 className='text-lg font-semibold'>
+          <h2 className='text-base font-medium'>
             {policy ? t('编辑保存策略') : t('添加保存策略')}
           </h2>
           <button onClick={onClose} className='p-1 rounded hover:bg-muted'><X className='w-4 h-4' /></button>

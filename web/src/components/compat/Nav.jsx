@@ -32,7 +32,7 @@ const Nav = React.forwardRef(({
         return (
           <div key={item.itemKey} className='mb-1'>
             {!isCollapsed && (
-              <div className='px-3 py-1.5 text-xs font-medium text-foreground/60 uppercase tracking-wider'>
+              <div className='px-3 py-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wider'>
                 {item.icon && <span className='mr-2'>{item.icon}</span>}
                 {item.text}
               </div>
@@ -51,7 +51,7 @@ const Nav = React.forwardRef(({
           onClick={() => handleSelect({ itemKey: item.itemKey, selectedKeys: [item.itemKey] })}
           className={cn(
             'flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
-            isActive ? 'bg-muted text-accent-foreground font-medium' : 'text-foreground/60 hover:bg-muted hover:text-foreground',
+            isActive ? 'bg-muted text-accent-foreground font-medium' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
             isCollapsed && 'justify-center px-2'
           )}
           title={isCollapsed ? item.text : undefined}

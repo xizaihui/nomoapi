@@ -211,7 +211,7 @@ const TwoFASetting = ({ t }) => {
       <Card className='!rounded-xl' style={{ width: '100%' }}>
         <div className='space-y-3'>
           <div className='flex items-center justify-between'>
-            <Text strong className='text-slate-700 dark:text-slate-200'>
+            <Text strong className='text-foreground'>
               {title}
             </Text>
           </div>
@@ -222,7 +222,7 @@ const TwoFASetting = ({ t }) => {
                 <div className='flex items-center justify-between'>
                   <Text
                     code
-                    className='text-sm font-mono text-slate-700 dark:text-slate-200'
+                    className='text-sm font-mono text-foreground'
                   >
                     {code}
                   </Text>
@@ -372,7 +372,7 @@ const TwoFASetting = ({ t }) => {
             <div className='w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-4 flex-shrink-0'>
               <IconShield
                 size='large'
-                className='text-slate-600 dark:text-slate-300'
+                className='text-foreground/80'
               />
             </div>
             <div className='flex-1'>
@@ -456,7 +456,7 @@ const TwoFASetting = ({ t }) => {
       <Modal
         title={
           <div className='flex items-center'>
-            <IconShield className='mr-2 text-slate-600' />
+            <IconShield className='mr-2 text-muted-foreground' />
             {t('设置两步验证')}
           </div>
         }
@@ -578,11 +578,11 @@ const TwoFASetting = ({ t }) => {
             <div>
               <Text
                 strong
-                className='block mb-2 text-slate-700 dark:text-slate-200'
+                className='block mb-2 text-foreground'
               >
                 {t('禁用后的影响：')}
               </Text>
-              <ul className='space-y-2 text-sm text-slate-600 dark:text-slate-300'>
+              <ul className='space-y-2 text-sm text-foreground/80'>
                 <li className='flex items-start gap-2'>
                   <Badge dot type='warning' />
                   {t('降低您账户的安全性')}
@@ -608,7 +608,7 @@ const TwoFASetting = ({ t }) => {
               <div>
                 <Text
                   strong
-                  className='block mb-2 text-slate-700 dark:text-slate-200'
+                  className='block mb-2 text-foreground'
                 >
                   {t('验证身份')}
                 </Text>
@@ -641,7 +641,7 @@ const TwoFASetting = ({ t }) => {
       <Modal
         title={
           <div className='flex items-center'>
-            <IconRefresh className='mr-2 text-slate-600' />
+            <IconRefresh className='mr-2 text-muted-foreground' />
             {t('重新生成备用码')}
           </div>
         }
@@ -674,7 +674,7 @@ const TwoFASetting = ({ t }) => {
                 <div>
                   <Text
                     strong
-                    className='block mb-2 text-slate-700 dark:text-slate-200'
+                    className='block mb-2 text-foreground'
                   >
                     {t('验证身份')}
                   </Text>
@@ -696,12 +696,12 @@ const TwoFASetting = ({ t }) => {
                   <Badge dot type='success' />
                   <Text
                     strong
-                    className='text-lg text-slate-700 dark:text-slate-200'
+                    className='text-base font-medium text-foreground'
                   >
                     {t('新的备用码已生成')}
                   </Text>
                 </div>
-                <Text className='text-slate-500 dark:text-slate-400 text-sm'>
+                <Text className='text-muted-foreground text-sm'>
                   {t('旧的备用码已失效，请保存新的备用码')}
                 </Text>
 

@@ -263,7 +263,7 @@ const AddEditSubscriptionModal = ({
                       <IconCalendarClock size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('基本信息')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>
@@ -392,7 +392,7 @@ const AddEditSubscriptionModal = ({
                       <Clock size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('有效期设置')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>
@@ -454,7 +454,7 @@ const AddEditSubscriptionModal = ({
                       <RefreshCw size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('额度重置')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>
@@ -512,7 +512,7 @@ const AddEditSubscriptionModal = ({
                       <IconCreditCard size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('第三方支付配置')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>

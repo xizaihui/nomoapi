@@ -2179,7 +2179,7 @@ const EditChannelModal = (props) => {
                         <IconServer size={16} />
                       </Avatar>
                       <div>
-                        <Text className='text-lg font-medium'>
+                        <Text className='text-base font-medium'>
                           {t('基本信息')}
                         </Text>
                         <div className='text-xs text-muted-foreground'>
@@ -2856,7 +2856,7 @@ const EditChannelModal = (props) => {
                           <IconGlobe size={16} />
                         </Avatar>
                         <div>
-                          <Text className='text-lg font-medium'>
+                          <Text className='text-base font-medium'>
                             {t('API 配置')}
                           </Text>
                           <div className='text-xs text-muted-foreground'>
@@ -3087,7 +3087,7 @@ const EditChannelModal = (props) => {
                         <IconCode size={16} />
                       </Avatar>
                       <div>
-                        <Text className='text-lg font-medium'>
+                        <Text className='text-base font-medium'>
                           {t('模型配置')}
                         </Text>
                         <div className='text-xs text-muted-foreground'>
@@ -3376,7 +3376,7 @@ const EditChannelModal = (props) => {
                         <IconSetting size={16} />
                       </Avatar>
                       <div>
-                        <Text className='text-lg font-medium'>
+                        <Text className='text-base font-medium'>
                           {t('高级设置')}
                         </Text>
                         <div className='text-xs text-muted-foreground'>
@@ -3813,7 +3813,7 @@ const EditChannelModal = (props) => {
                         <IconBolt size={16} />
                       </Avatar>
                       <div>
-                        <Text className='text-lg font-medium'>
+                        <Text className='text-base font-medium'>
                           {t('渠道额外设置')}
                         </Text>
                       </div>

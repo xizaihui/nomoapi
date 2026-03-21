@@ -55,7 +55,7 @@ const Input = React.forwardRef(
     return (
       <div className={cn('relative flex items-center', className)} style={style}>
         {(prefix || addonBefore) && (
-          <span className='mr-2 flex items-center text-foreground/55'>
+          <span className='mr-2 flex items-center text-muted-foreground'>
             {addonBefore}
             {prefix}
           </span>
@@ -74,13 +74,13 @@ const Input = React.forwardRef(
           <button
             type='button'
             onClick={handleClear}
-            className='absolute right-2 text-foreground/50 hover:text-foreground'
+            className='absolute right-2 text-muted-foreground hover:text-foreground'
           >
             ✕
           </button>
         )}
         {(suffix || addonAfter) && (
-          <span className='ml-2 flex items-center text-foreground/55'>
+          <span className='ml-2 flex items-center text-muted-foreground'>
             {suffix}
             {addonAfter}
           </span>
@@ -114,7 +114,7 @@ const TextArea = React.forwardRef(
           {...rest}
         />
         {maxCount && (
-          <span className='absolute bottom-2 right-2 text-xs text-foreground/50'>
+          <span className='absolute bottom-2 right-2 text-xs text-muted-foreground'>
             {currentValue.length}/{maxCount}
           </span>
         )}

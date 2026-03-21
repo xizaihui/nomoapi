@@ -93,7 +93,7 @@ const ApiInfoPanel = ({
                   >
                     {api.url}
                   </div>
-                  <div className='text-foreground/60'>{api.description}</div>
+                  <div className='text-muted-foreground'>{api.description}</div>
                 </div>
               </div>
               <Divider />

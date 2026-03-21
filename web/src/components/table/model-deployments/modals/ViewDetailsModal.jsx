@@ -518,7 +518,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
             <div className='space-y-3'>
               <div className='flex items-center justify-between p-3 bg-muted/30 rounded-lg'>
                 <Text>{t('已支付金额')}</Text>
-                <Text strong className='text-lg text-foreground/80'>
+                <Text strong className='text-base font-semibold text-foreground/80'>
                   $
                   {details.amount_paid
                     ? details.amount_paid.toFixed(2)

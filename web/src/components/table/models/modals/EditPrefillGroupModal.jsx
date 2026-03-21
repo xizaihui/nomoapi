@@ -194,7 +194,7 @@ const EditPrefillGroupModal = ({
                   <IconLayers size={16} />
                 </Avatar>
                 <div>
-                  <Text className='text-lg font-medium'>{t('基本信息')}</Text>
+                  <Text className='text-base font-medium'>{t('基本信息')}</Text>
                   <div className='text-xs text-muted-foreground'>
                     {t('设置预填组的基本信息')}
                   </div>

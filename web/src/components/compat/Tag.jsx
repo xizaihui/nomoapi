@@ -37,7 +37,7 @@ const Tag = React.forwardRef(
       tagStyle = { ...style, color: undefined };
     } else {
       // Default: subtle monochrome
-      tagClass = cn(tagClass, 'bg-muted text-foreground/75 border-transparent');
+      tagClass = cn(tagClass, 'bg-muted text-foreground/80 border-transparent');
     }
 
     return (

@@ -135,7 +135,7 @@ const Table = ({
                 return (
                   <th
                     key={key}
-                    className={cn('px-3 py-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-foreground/55', col.sorter && 'cursor-pointer select-none hover:text-foreground', col.fixed && 'sticky bg-background z-10', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0')}
+                    className={cn('px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground', col.sorter && 'cursor-pointer select-none hover:text-foreground', col.fixed && 'sticky bg-background z-10', col.fixed === 'left' && 'left-0', col.fixed === 'right' && 'right-0')}
                     style={{ width: col.width, minWidth: col.width }}
                     onClick={col.sorter ? () => handleSort(key) : undefined}
                   >
@@ -206,9 +206,9 @@ const Table = ({
       </div>
       {usePagination && totalItems > pageSize && (
         <div className='flex items-center justify-between px-3 py-3 border-t border-border/50'>
-          <span className='text-xs text-foreground/50 tabular-nums'>{totalItems} results</span>
+          <span className='text-xs text-muted-foreground tabular-nums'>{totalItems} results</span>
           <div className='flex items-center gap-0.5'>
-            <button type='button' aria-label='上一页' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-xs text-foreground/50 disabled:opacity-30 hover:text-foreground transition-colors'>←</button>
+            <button type='button' aria-label='上一页' disabled={currentPage <= 1} onClick={() => { const p = currentPage - 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'>←</button>
             {(() => {
               const pages = [];
               const maxVisible = 5;
@@ -217,10 +217,10 @@ const Table = ({
               if (end - start < maxVisible - 1) start = Math.max(1, end - maxVisible + 1);
               for (let p = start; p <= end; p++) pages.push(p);
               return pages.map((p) => (
-                <button key={p} type='button' onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('w-7 h-7 text-xs rounded transition-colors', p === currentPage ? 'bg-foreground text-background font-medium' : 'text-foreground/50 hover:text-foreground')}>{p}</button>
+                <button key={p} type='button' onClick={() => { setCurrentPage(p); pagination?.onPageChange?.(p); }} className={cn('w-7 h-7 text-xs rounded transition-colors', p === currentPage ? 'bg-foreground text-background font-medium' : 'text-muted-foreground hover:text-foreground')}>{p}</button>
               ));
             })()}
-            <button type='button' disabled={currentPage >= totalPages} onClick={() => { const p = currentPage + 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-xs text-foreground/50 disabled:opacity-30 hover:text-foreground transition-colors'>→</button>
+            <button type='button' disabled={currentPage >= totalPages} onClick={() => { const p = currentPage + 1; setCurrentPage(p); pagination?.onPageChange?.(p); }} className='px-2 py-1 text-xs text-muted-foreground disabled:opacity-30 hover:text-foreground transition-colors'>→</button>
           </div>
         </div>
       )}

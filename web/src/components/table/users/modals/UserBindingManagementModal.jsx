@@ -202,7 +202,7 @@ const UserBindingManagementModal = ({
       icon: (
         <IconMail
           size='default'
-          className='text-slate-600 dark:text-slate-300'
+          className='text-foreground/80'
         />
       ),
     },
@@ -215,7 +215,7 @@ const UserBindingManagementModal = ({
       icon: (
         <IconGithubLogo
           size='default'
-          className='text-slate-600 dark:text-slate-300'
+          className='text-foreground/80'
         />
       ),
     },
@@ -226,7 +226,7 @@ const UserBindingManagementModal = ({
       enabled: Boolean(statusInfo.discord_oauth),
       value: getBuiltInBindingValue('discord_id'),
       icon: (
-        <SiDiscord size={20} className='text-slate-600 dark:text-slate-300' />
+        <SiDiscord size={20} className='text-foreground/80' />
       ),
     },
     {
@@ -238,7 +238,7 @@ const UserBindingManagementModal = ({
       icon: (
         <IconLink
           size='default'
-          className='text-slate-600 dark:text-slate-300'
+          className='text-foreground/80'
         />
       ),
     },
@@ -249,7 +249,7 @@ const UserBindingManagementModal = ({
       enabled: Boolean(statusInfo.wechat_login),
       value: getBuiltInBindingValue('wechat_id'),
       icon: (
-        <SiWechat size={20} className='text-slate-600 dark:text-slate-300' />
+        <SiWechat size={20} className='text-foreground/80' />
       ),
     },
     {
@@ -259,7 +259,7 @@ const UserBindingManagementModal = ({
       enabled: Boolean(statusInfo.telegram_oauth),
       value: getBuiltInBindingValue('telegram_id'),
       icon: (
-        <SiTelegram size={20} className='text-slate-600 dark:text-slate-300' />
+        <SiTelegram size={20} className='text-foreground/80' />
       ),
     },
     {
@@ -269,7 +269,7 @@ const UserBindingManagementModal = ({
       enabled: Boolean(statusInfo.linuxdo_oauth),
       value: getBuiltInBindingValue('linux_do_id'),
       icon: (
-        <SiLinux size={20} className='text-slate-600 dark:text-slate-300' />
+        <SiLinux size={20} className='text-foreground/80' />
       ),
     },
   ];

@@ -11,7 +11,7 @@ const Slider = React.forwardRef(
 
     return (
       <div className={cn('flex items-center gap-3', vertical && 'flex-col', className)} style={style}>
-        {showBoundary && <span className='text-xs text-foreground/55'>{min}</span>}
+        {showBoundary && <span className='text-xs text-muted-foreground'>{min}</span>}
         <input
           ref={ref}
           type='range'
@@ -25,7 +25,7 @@ const Slider = React.forwardRef(
           className={cn('flex-1 accent-[hsl(var(--primary))]', vertical && 'writing-mode-vertical-lr h-40')}
           {...rest}
         />
-        {showBoundary && <span className='text-xs text-foreground/55'>{max}</span>}
+        {showBoundary && <span className='text-xs text-muted-foreground'>{max}</span>}
       </div>
     );
   }

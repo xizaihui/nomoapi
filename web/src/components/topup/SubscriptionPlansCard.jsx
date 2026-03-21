@@ -562,7 +562,7 @@ const SubscriptionPlansCard = ({
                           <span className='text-xl font-semibold text-foreground/80'>
                             {symbol}
                           </span>
-                          <span className='text-3xl font-bold text-foreground/80'>
+                          <span className='text-3xl font-semibold text-foreground/80'>
                             {displayPrice}
                           </span>
                         </div>

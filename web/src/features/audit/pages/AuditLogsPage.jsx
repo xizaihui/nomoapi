@@ -64,7 +64,7 @@ const AuditLogsPage = () => {
           <Shield className='w-6 h-6 text-primary' />
         </div>
         <div>
-          <h1 className='text-2xl font-semibold tracking-tight'>{t('安全审计')}</h1>
+          <h1 className='text-xl font-semibold tracking-tight'>{t('安全审计')}</h1>
           <p className='text-sm text-muted-foreground'>{t('监控员工 AI 使用行为，识别潜在安全风险')}</p>
         </div>
       </div>
@@ -344,7 +344,7 @@ const StatCard = ({ label, value, icon, color }) => {
         <span className='text-sm font-medium opacity-80'>{label}</span>
         {icon}
       </div>
-      <div className='text-2xl font-bold mt-1'>{value.toLocaleString()}</div>
+      <div className='text-2xl font-semibold mt-1'>{value.toLocaleString()}</div>
     </div>
   );
 };

@@ -176,7 +176,7 @@ const AccountManagement = ({
           <UserPlus size={16} />
         </Avatar>
         <div>
-          <Typography.Text className='text-lg font-medium'>
+          <Typography.Text className='text-base font-medium'>
             {t('账户管理')}
           </Typography.Text>
           <div className='text-xs text-muted-foreground'>
@@ -205,7 +205,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <IconMail
                         size='default'
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -242,7 +242,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <SiWechat
                         size={20}
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -283,7 +283,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <IconGithubLogo
                         size='default'
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -324,7 +324,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <SiDiscord
                         size={20}
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -365,7 +365,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <IconShield
                         size='default'
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -408,7 +408,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <SiTelegram
                         size={20}
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -483,7 +483,7 @@ const AccountManagement = ({
                     <div className='w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0'>
                       <SiLinux
                         size={20}
-                        className='text-slate-600 dark:text-slate-300'
+                        className='text-foreground/80'
                       />
                     </div>
                     <div className='flex-1 min-w-0'>
@@ -596,7 +596,7 @@ const AccountManagement = ({
                   <div className='flex flex-col sm:flex-row items-start sm:justify-between gap-4'>
                     <div className='flex items-start w-full sm:w-auto'>
                       <div className='w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mr-4 flex-shrink-0'>
-                        <IconKey size='large' className='text-slate-600' />
+                        <IconKey size='large' className='text-muted-foreground' />
                       </div>
                       <div className='flex-1'>
                         <Typography.Title heading={6} className='mb-1'>
@@ -635,7 +635,7 @@ const AccountManagement = ({
                   <div className='flex flex-col sm:flex-row items-start sm:justify-between gap-4'>
                     <div className='flex items-start w-full sm:w-auto'>
                       <div className='w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mr-4 flex-shrink-0'>
-                        <IconLock size='large' className='text-slate-600' />
+                        <IconLock size='large' className='text-muted-foreground' />
                       </div>
                       <div>
                         <Typography.Title heading={6} className='mb-1'>
@@ -663,7 +663,7 @@ const AccountManagement = ({
                   <div className='flex flex-col sm:flex-row items-start sm:justify-between gap-4'>
                     <div className='flex items-start w-full sm:w-auto'>
                       <div className='w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mr-4 flex-shrink-0'>
-                        <IconKey size='large' className='text-slate-600' />
+                        <IconKey size='large' className='text-muted-foreground' />
                       </div>
                       <div>
                         <Typography.Title heading={6} className='mb-1'>
@@ -737,12 +737,12 @@ const AccountManagement = ({
                   <div className='flex flex-col sm:flex-row items-start sm:justify-between gap-4'>
                     <div className='flex items-start w-full sm:w-auto'>
                       <div className='w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mr-4 flex-shrink-0'>
-                        <IconDelete size='large' className='text-slate-600' />
+                        <IconDelete size='large' className='text-muted-foreground' />
                       </div>
                       <div>
                         <Typography.Title
                           heading={6}
-                          className='mb-1 text-slate-700'
+                          className='mb-1 text-foreground'
                         >
                           {t('删除账户')}
                         </Typography.Title>

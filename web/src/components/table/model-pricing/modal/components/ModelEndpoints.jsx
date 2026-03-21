@@ -68,7 +68,7 @@ const ModelEndpoints = ({ modelData, endpointMap = {}, t }) => {
           <IconLink size={16} />
         </Avatar>
         <div>
-          <Text className='text-lg font-medium'>{t('API端点')}</Text>
+          <Text className='text-base font-medium'>{t('API端点')}</Text>
           <div className='text-xs text-muted-foreground'>
             {t('模型支持的接口端点信息')}
           </div>

@@ -130,7 +130,7 @@ const AddUserModal = (props) => {
                     <IconUserAdd size={16} />
                   </Avatar>
                   <div>
-                    <Text className='text-lg font-medium'>{t('用户信息')}</Text>
+                    <Text className='text-base font-medium'>{t('用户信息')}</Text>
                     <div className='text-xs text-muted-foreground'>
                       {t('创建新用户账户')}
                     </div>

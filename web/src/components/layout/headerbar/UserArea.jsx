@@ -68,7 +68,7 @@ const UserArea = ({
                 <div className='flex items-center gap-2'>
                   <IconUserSetting
                     size='small'
-                    className='text-foreground/60'
+                    className='text-muted-foreground'
                   />
                   <span>{t('个人设置')}</span>
                 </div>
@@ -82,7 +82,7 @@ const UserArea = ({
                 <div className='flex items-center gap-2'>
                   <IconKey
                     size='small'
-                    className='text-foreground/60'
+                    className='text-muted-foreground'
                   />
                   <span>{t('令牌管理')}</span>
                 </div>
@@ -96,7 +96,7 @@ const UserArea = ({
                 <div className='flex items-center gap-2'>
                   <IconCreditCard
                     size='small'
-                    className='text-foreground/60'
+                    className='text-muted-foreground'
                   />
                   <span>{t('钱包管理')}</span>
                 </div>
@@ -108,7 +108,7 @@ const UserArea = ({
                 <div className='flex items-center gap-2'>
                   <IconExit
                     size='small'
-                    className='text-foreground/60'
+                    className='text-muted-foreground'
                   />
                   <span>{t('退出')}</span>
                 </div>
@@ -135,7 +135,7 @@ const UserArea = ({
             </span>
             <ChevronDown
               size={14}
-              className='text-xs text-foreground/50'
+              className='text-xs text-muted-foreground'
             />
           </Button>
         </Dropdown>

@@ -186,7 +186,7 @@ function createImperativeModal(type, config) {
             </DialogTitle>
           </DialogHeader>
           {config.content && (
-            <div className='text-sm text-foreground/55 py-2'>
+            <div className='text-sm text-muted-foreground py-2'>
               {config.content}
             </div>
           )}

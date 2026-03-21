@@ -219,7 +219,7 @@ const EditUserModal = (props) => {
                       <IconUser size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('基本信息')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>
@@ -281,7 +281,7 @@ const EditUserModal = (props) => {
                         <IconUserGroup size={16} />
                       </Avatar>
                       <div>
-                        <Text className='text-lg font-medium'>
+                        <Text className='text-base font-medium'>
                           {t('权限设置')}
                         </Text>
                         <div className='text-xs text-muted-foreground'>
@@ -340,7 +340,7 @@ const EditUserModal = (props) => {
                           <IconLink size={16} />
                         </Avatar>
                         <div className='min-w-0'>
-                          <Text className='text-lg font-medium'>
+                          <Text className='text-base font-medium'>
                             {t('绑定信息')}
                           </Text>
                           <div className='text-xs text-muted-foreground'>

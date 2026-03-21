@@ -397,13 +397,13 @@ const RechargeCard = ({
                         className='cursor-pointer !rounded-xl transition-all hover:shadow-sm border-border hover:border-border'
                         bodyStyle={{ textAlign: 'center', padding: '16px' }}
                       >
-                        <div className='font-medium text-lg mb-2'>
+                        <div className='font-medium text-base mb-2'>
                           {product.name}
                         </div>
                         <div className='text-sm text-muted-foreground mb-2'>
                           {t('充值额度')}: {product.quota}
                         </div>
-                        <div className='text-lg font-semibold text-foreground'>
+                        <div className='text-base font-medium text-foreground'>
                           {product.currency === 'EUR' ? '€' : '$'}
                           {product.price}
                         </div>

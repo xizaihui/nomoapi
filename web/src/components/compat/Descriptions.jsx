@@ -9,7 +9,7 @@ const DescriptionsItem = ({ itemKey, children, className, style, span, ...rest }
       style={{ ...(span ? { gridColumn: `span ${span}` } : {}), ...style }}
       {...rest}
     >
-      <dt className='text-xs text-foreground/60'>{itemKey}</dt>
+      <dt className='text-xs text-muted-foreground'>{itemKey}</dt>
       <dd className='text-sm font-medium'>{children}</dd>
     </div>
   );

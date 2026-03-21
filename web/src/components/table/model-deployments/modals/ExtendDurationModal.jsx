@@ -476,10 +476,10 @@ const ExtendDurationModal = ({
               <Divider margin='12px' />
 
               <div className='flex items-center justify-between'>
-                <Text strong className='text-lg'>
+                <Text strong className='text-base font-semibold'>
                   {t('预估总费用')}:
                 </Text>
-                <Text strong className='text-lg text-foreground/80'>
+                <Text strong className='text-base font-semibold text-foreground/80'>
                   {typeof estimatedTotalCost === 'number'
                     ? `${estimatedTotalCost.toFixed(4)} ${currencyLabel}`
                     : '--'}

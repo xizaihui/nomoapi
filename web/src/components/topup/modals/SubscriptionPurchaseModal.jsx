@@ -95,52 +95,52 @@ const SubscriptionPurchaseModal = ({
           <Card className='!rounded-xl !border-0 bg-slate-50 dark:bg-slate-800'>
             <div className='space-y-3'>
               <div className='flex justify-between items-center'>
-                <Text strong className='text-slate-700 dark:text-slate-200'>
+                <Text strong className='text-foreground'>
                   {t('套餐名称')}：
                 </Text>
                 <Typography.Text
                   ellipsis={{ rows: 1, showTooltip: true }}
-                  className='text-slate-900 dark:text-slate-100'
+                  className='text-foreground'
                   style={{ maxWidth: 200 }}
                 >
                   {plan.title}
                 </Typography.Text>
               </div>
               <div className='flex justify-between items-center'>
-                <Text strong className='text-slate-700 dark:text-slate-200'>
+                <Text strong className='text-foreground'>
                   {t('有效期')}：
                 </Text>
                 <div className='flex items-center'>
-                  <CalendarClock size={14} className='mr-1 text-slate-500' />
-                  <Text className='text-slate-900 dark:text-slate-100'>
+                  <CalendarClock size={14} className='mr-1 text-muted-foreground' />
+                  <Text className='text-foreground'>
                     {formatSubscriptionDuration(plan, t)}
                   </Text>
                 </div>
               </div>
               {formatSubscriptionResetPeriod(plan, t) !== t('不重置') && (
                 <div className='flex justify-between items-center'>
-                  <Text strong className='text-slate-700 dark:text-slate-200'>
+                  <Text strong className='text-foreground'>
                     {t('重置周期')}：
                   </Text>
-                  <Text className='text-slate-900 dark:text-slate-100'>
+                  <Text className='text-foreground'>
                     {formatSubscriptionResetPeriod(plan, t)}
                   </Text>
                 </div>
               )}
               <div className='flex justify-between items-center'>
-                <Text strong className='text-slate-700 dark:text-slate-200'>
+                <Text strong className='text-foreground'>
                   {t('总额度')}：
                 </Text>
                 <div className='flex items-center'>
-                  <Package size={14} className='mr-1 text-slate-500' />
+                  <Package size={14} className='mr-1 text-muted-foreground' />
                   {totalAmount > 0 ? (
                     <Tooltip content={`${t('原生额度')}：${totalAmount}`}>
-                      <Text className='text-slate-900 dark:text-slate-100'>
+                      <Text className='text-foreground'>
                         {renderQuota(totalAmount)}
                       </Text>
                     </Tooltip>
                   ) : (
-                    <Text className='text-slate-900 dark:text-slate-100'>
+                    <Text className='text-foreground'>
                       {t('不限')}
                     </Text>
                   )}
@@ -148,17 +148,17 @@ const SubscriptionPurchaseModal = ({
               </div>
               {plan?.upgrade_group ? (
                 <div className='flex justify-between items-center'>
-                  <Text strong className='text-slate-700 dark:text-slate-200'>
+                  <Text strong className='text-foreground'>
                     {t('升级分组')}：
                   </Text>
-                  <Text className='text-slate-900 dark:text-slate-100'>
+                  <Text className='text-foreground'>
                     {plan.upgrade_group}
                   </Text>
                 </div>
               ) : null}
               <Divider margin={8} />
               <div className='flex justify-between items-center'>
-                <Text strong className='text-slate-700 dark:text-slate-200'>
+                <Text strong className='text-foreground'>
                   {t('应付金额')}：
                 </Text>
                 <Text strong className='text-xl text-foreground/80'>

@@ -36,12 +36,12 @@ const HeaderLogo = ({
           {systemName}
         </span>
         {isSelfUseMode && !isLoading && (
-          <span className='text-[10px] text-foreground/45 border border-border rounded px-1 py-0.5 leading-none'>
+          <span className='text-[10px] text-muted-foreground border border-border rounded px-1 py-0.5 leading-none'>
             {t('自用模式')}
           </span>
         )}
         {isDemoSiteMode && !isLoading && (
-          <span className='text-[10px] text-foreground/45 border border-border rounded px-1 py-0.5 leading-none'>
+          <span className='text-[10px] text-muted-foreground border border-border rounded px-1 py-0.5 leading-none'>
             {t('演示站点')}
           </span>
         )}

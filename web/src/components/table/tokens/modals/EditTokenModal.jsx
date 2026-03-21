@@ -342,7 +342,7 @@ const EditTokenModal = (props) => {
                     <IconKey size={16} />
                   </Avatar>
                   <div>
-                    <Text className='text-lg font-medium'>{t('基本信息')}</Text>
+                    <Text className='text-base font-medium'>{t('基本信息')}</Text>
                     <div className='text-xs text-muted-foreground'>
                       {t('设置令牌的基本信息')}
                     </div>
@@ -481,7 +481,7 @@ const EditTokenModal = (props) => {
                     <IconCreditCard size={16} />
                   </Avatar>
                   <div>
-                    <Text className='text-lg font-medium'>{t('额度设置')}</Text>
+                    <Text className='text-base font-medium'>{t('额度设置')}</Text>
                     <div className='text-xs text-muted-foreground'>
                       {t('设置令牌可用额度和数量')}
                     </div>
@@ -535,7 +535,7 @@ const EditTokenModal = (props) => {
                     <IconLink size={16} />
                   </Avatar>
                   <div>
-                    <Text className='text-lg font-medium'>{t('访问限制')}</Text>
+                    <Text className='text-base font-medium'>{t('访问限制')}</Text>
                     <div className='text-xs text-muted-foreground'>
                       {t('设置令牌的访问限制')}
                     </div>

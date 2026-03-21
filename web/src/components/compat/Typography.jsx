@@ -6,7 +6,7 @@ const Text = React.forwardRef(
   ({ children, type, size, strong, underline, delete: del, mark, code, link, href, className, style, ellipsis, copyable, onClick, ...rest }, ref) => {
     const colorMap = {
       primary: 'text-foreground',
-      secondary: 'text-foreground/70',
+      secondary: 'text-muted-foreground',
       tertiary: 'text-muted-foreground',
       quaternary: 'text-muted-foreground/80',
       success: 'text-foreground/80',
@@ -50,12 +50,12 @@ Text.displayName = 'Text';
 const Title = React.forwardRef(
   ({ heading = 1, children, type, ellipsis, className, style, ...rest }, ref) => {
     const sizeMap = {
-      1: 'text-4xl font-bold',
-      2: 'text-3xl font-bold',
-      3: 'text-2xl font-semibold',
-      4: 'text-xl font-semibold',
-      5: 'text-lg font-medium',
-      6: 'text-base font-medium',
+      1: 'text-2xl font-semibold tracking-tight',
+      2: 'text-xl font-semibold tracking-tight',
+      3: 'text-base font-medium',
+      4: 'text-sm font-medium',
+      5: 'text-sm font-medium text-muted-foreground',
+      6: 'text-xs font-medium text-muted-foreground',
     };
     const Tag = `h${heading}`;
     return (
@@ -70,7 +70,7 @@ Title.displayName = 'Title';
 const Paragraph = React.forwardRef(
   ({ children, type, size, ellipsis, className, style, ...rest }, ref) => {
     const colorMap = {
-      secondary: 'text-foreground/70',
+      secondary: 'text-muted-foreground',
       tertiary: 'text-muted-foreground',
       success: 'text-foreground/80',
       warning: 'text-amber-600 dark:text-amber-400',

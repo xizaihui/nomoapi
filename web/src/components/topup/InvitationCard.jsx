@@ -47,7 +47,7 @@ const InvitationCard = ({
           <Gift size={16} />
         </Avatar>
         <div>
-          <Typography.Text className='text-lg font-medium'>
+          <Typography.Text className='text-base font-medium'>
             {t('邀请奖励')}
           </Typography.Text>
           <div className='text-xs'>{t('邀请好友获得额外奖励')}</div>
@@ -97,7 +97,7 @@ const InvitationCard = ({
                   {/* 待使用收益 */}
                   <div className='text-center'>
                     <div
-                      className='text-base sm:text-2xl font-bold mb-2'
+                      className='text-base sm:text-2xl font-semibold mb-2'
                       style={{ color: 'white' }}
                     >
                       {renderQuota(userState?.user?.aff_quota || 0)}
@@ -122,7 +122,7 @@ const InvitationCard = ({
                   {/* 总收益 */}
                   <div className='text-center'>
                     <div
-                      className='text-base sm:text-2xl font-bold mb-2'
+                      className='text-base sm:text-2xl font-semibold mb-2'
                       style={{ color: 'white' }}
                     >
                       {renderQuota(userState?.user?.aff_history_quota || 0)}
@@ -147,7 +147,7 @@ const InvitationCard = ({
                   {/* 邀请人数 */}
                   <div className='text-center'>
                     <div
-                      className='text-base sm:text-2xl font-bold mb-2'
+                      className='text-base sm:text-2xl font-semibold mb-2'
                       style={{ color: 'white' }}
                     >
                       {userState?.user?.aff_count || 0}

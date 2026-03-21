@@ -36,7 +36,7 @@ const Banner = ({ type = 'info', title, description, children, icon, closable, o
       {icon && <div className='flex-shrink-0 mt-0.5 opacity-60'>{icon}</div>}
       <div className='flex-1 min-w-0'>
         {title && <div className='font-medium text-sm'>{title}</div>}
-        {description && <div className='text-xs mt-0.5 text-foreground/65'>{description}</div>}
+        {description && <div className='text-xs mt-0.5 text-muted-foreground'>{description}</div>}
         {children}
       </div>
       {showClose && (

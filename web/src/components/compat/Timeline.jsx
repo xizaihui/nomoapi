@@ -26,7 +26,7 @@ const Item = ({ children, time, type, color, dot, extra, className, style, ...re
         <div className='flex-1 w-px bg-border mt-1' />
       </div>
       <div className='flex-1 min-w-0 pb-2'>
-        {time && <div className='text-xs text-foreground/55 mb-1'>{time}</div>}
+        {time && <div className='text-xs text-muted-foreground mb-1'>{time}</div>}
         <div className='text-sm'>{children}</div>
         {extra && <div className='mt-1'>{extra}</div>}
       </div>

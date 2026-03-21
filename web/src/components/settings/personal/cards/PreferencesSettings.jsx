@@ -127,7 +127,7 @@ const PreferencesSettings = ({ t }) => {
 					<Languages size={16} />
 				</Avatar>
 				<div>
-					<Typography.Text className="text-lg font-medium">
+					<Typography.Text className="text-base font-medium">
 						{t("偏好设置")}
 					</Typography.Text>
 					<div className="text-xs text-muted-foreground dark:text-muted-foreground/60">

@@ -227,7 +227,7 @@ const EditRedemptionModal = (props) => {
                       <IconGift size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('基本信息')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>
@@ -275,7 +275,7 @@ const EditRedemptionModal = (props) => {
                       <IconCreditCard size={16} />
                     </Avatar>
                     <div>
-                      <Text className='text-lg font-medium'>
+                      <Text className='text-base font-medium'>
                         {t('额度设置')}
                       </Text>
                       <div className='text-xs text-muted-foreground'>

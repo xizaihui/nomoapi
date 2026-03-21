@@ -166,7 +166,7 @@ const SideSheet = ({
       >
         {(title || closable) && (
           <div style={headerContainerStyle}>
-            <div style={{ fontSize: '15px', fontWeight: 500, flex: '1 1 auto', minWidth: 0 }}>{title}</div>
+            <div className='text-base font-medium flex-1 min-w-0 truncate'>{title}</div>
             {closable && closeIcon !== null && (
               <button
                 type='button'
