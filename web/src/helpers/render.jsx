@@ -40,6 +40,9 @@ import {
   Package,
   Server,
   CalendarClock,
+  FileSearch,
+  ShieldCheck,
+  Timer,
 } from 'lucide-react';
 import {
   SiAtlassian,
@@ -110,6 +113,12 @@ export function getLucideIcon(key, selected = false) {
       return <CalendarClock {...commonProps} color={iconColor} />;
     case 'setting':
       return <Settings {...commonProps} color={iconColor} />;
+    case 'audit-logs':
+      return <FileSearch {...commonProps} color={iconColor} />;
+    case 'audit-rules':
+      return <ShieldCheck {...commonProps} color={iconColor} />;
+    case 'audit-retention':
+      return <Timer {...commonProps} color={iconColor} />;
     default:
       return <CircleUser {...commonProps} color={iconColor} />;
   }
