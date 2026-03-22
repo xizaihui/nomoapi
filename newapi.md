@@ -87,9 +87,9 @@
 ### 三环境部署
 | 环境 | 地址 | 域名 | 状态 |
 |------|------|------|------|
-| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `19cbc627` |
-| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署 `19cbc627` |
-| 生产 | 38.58.59.161 | api.opentoken.io | ✅ 已部署 `19cbc627` |
+| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `fa8a08ea` |
+| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署 `fa8a08ea` |
+| 生产 | 38.58.59.161 | api.opentoken.io | ✅ 已部署 `fa8a08ea` |
 
 ### 可继续优化的方向
 - [ ] 更多页面的细节打磨（根据用户反馈）
@@ -232,7 +232,7 @@ da43ecec → e75a7f76 → 2ce578de → 3e7b54b6
 - max_connections: 100 → 300 ✅
 - wal_buffers: 4MB → 64MB ✅
 
-**当前 HEAD**: `19cbc627` on `feat/shadcn-ui`
+**当前 HEAD**: `fa8a08ea` on `feat/shadcn-ui` (`main` = `5d8aac01`)
 
 | 指标 | 优化前 | 优化后 | 变化 |
 |------|--------|--------|------|
@@ -287,7 +287,7 @@ git push opentoken v0.x.x-opentoken
 
 ## 📅 更新日志
 
-### 2026-03-22 — 色彩体系重构(钢蓝灰) + 侧栏精简 + 图标差异化
+### 2026-03-22 — 色彩体系重构(钢蓝灰) + 侧栏精简 + 图标差异化 + 规则页合并
 
 #### 色彩体系重构 ✅ (commit: `19cbc627`)
 - **核心变更**: 全站色彩从紫灰色系 (hue 240) → 纯中性灰 + 钢蓝点缀 (hue 215)
@@ -328,6 +328,38 @@ git push opentoken v0.x.x-opentoken
 | 开发 (154.40.40.48:3000) | ✅ 已部署 | `19cbc627` |
 | 测试 (154.36.173.198) | ✅ 已部署 | `19cbc627` |
 | 生产 (38.58.59.161) | ✅ 已部署 | `19cbc627` |
+
+#### 侧栏菜单名称精简 (第二轮) ✅ (commit: `fa8a08ea`)
+| 旧名称 | 新名称 |
+|--------|--------|
+| 模型管理 | 模型 |
+| 兑换码管理 | 兑换码 |
+| 审计日志 | 日志 |
+| 审计规则 | 规则 |
+- 涉及: SiderBar, SettingsSidebarModulesAdmin, NotificationSettings, RedemptionsDescription, AuditRulesPage
+- i18n: 7语言 (zh-CN/en/zh-TW/ja/ru/fr/vi) 新增 模型/兑换码/规则 短键翻译
+
+#### 保存策略合并到规则页面 ✅ (commit: `fa8a08ea`)
+- AuditRulesPage.jsx 重构为 Tab 页面: 「审计规则」|「保存策略」两个 Tab
+- 保存策略代码从 AuditRetentionPage.jsx 整合到 AuditRulesPage.jsx 内 (`RetentionPanel`)
+- 侧栏移除独立的"保存策略"入口
+- App.jsx: 移除 AuditRetentionPage lazy import，`/console/audit-retention` → `Navigate` redirect 到 `/console/audit-rules`
+- AuditRetentionPage.jsx 文件保留但不再引用（可后续清理）
+
+#### Git main 分支合并 ✅
+- `feat/shadcn-ui` fast-forward 合并到 `main`（122 commits）
+- 推送 `main` 到 `nomoapi` + `opentoken` 两个 remote
+
+**Commit 链:**
+```
+04963cd9 → 18438b65 → 19cbc627 → 904fc9ff → 5d8aac01 → 65e061c4 → fa8a08ea
+```
+
+| 环境 | 状态 | 版本 |
+|------|------|------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `fa8a08ea` |
+| 测试 (154.36.173.198) | ✅ 已部署 | `fa8a08ea` |
+| 生产 (38.58.59.161) | ✅ 已部署 | `fa8a08ea` |
 
 ---
 
