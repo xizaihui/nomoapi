@@ -87,15 +87,15 @@
 ### 三环境部署
 | 环境 | 地址 | 域名 | 状态 |
 |------|------|------|------|
-| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `da43ecec` |
-| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署（需同步最新代码） |
-| 生产 | 38.58.59.161 | api.opentoken.io | ✅ 已部署 `8cc70d74` |
+| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `19cbc627` |
+| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署 `19cbc627` |
+| 生产 | 38.58.59.161 | api.opentoken.io | ✅ 已部署 `19cbc627` |
 
 ### 可继续优化的方向
 - [ ] 更多页面的细节打磨（根据用户反馈）
 - [ ] 移动端适配优化
 - [ ] 暗色模式细节调整
-- [ ] 浅色模式图表色彩优化（当前纯灰度，用户反馈单调，彩色方案待定）
+- [ ] 浅色模式图表色彩优化（当前钢蓝灰色系，用户反馈待收集）
 - [ ] 审计模块 v2（更多规则类型、导出功能）
 - [ ] 上游同步（QuantumNous/new-api 新功能合并）
 - [ ] Chat 组件脱离真实 Semi → 才能彻底移除 Semi CSS（1.16MB）
@@ -232,7 +232,7 @@ da43ecec → e75a7f76 → 2ce578de → 3e7b54b6
 - max_connections: 100 → 300 ✅
 - wal_buffers: 4MB → 64MB ✅
 
-**当前 HEAD**: `da43ecec` on `feat/shadcn-ui`
+**当前 HEAD**: `19cbc627` on `feat/shadcn-ui`
 
 | 指标 | 优化前 | 优化后 | 变化 |
 |------|--------|--------|------|
@@ -286,6 +286,50 @@ git push opentoken v0.x.x-opentoken
 ---
 
 ## 📅 更新日志
+
+### 2026-03-22 — 色彩体系重构(钢蓝灰) + 侧栏精简 + 图标差异化
+
+#### 色彩体系重构 ✅ (commit: `19cbc627`)
+- **核心变更**: 全站色彩从紫灰色系 (hue 240) → 纯中性灰 + 钢蓝点缀 (hue 215)
+- **设计理念**: 高端、现代、稳重 — 低饱和、高质感、极简风格
+- 主色 (light): `215 20% 30%` 钢蓝深灰 | (dark): `215 18% 68%` 钢蓝浅色
+- 背景/边框/muted: 纯中性灰 `0 0%`，零色相偏移
+- **CSS 变量**: 浅色 + 暗色主题全部重写 (`index.css`)
+- **VChart 图表**: 10色浅色 + 10色暗色色板重写 (`useDashboardCharts.jsx`)
+- **模型色板**: 基础10色 + 扩展20色 + 30+ 模型映射全部迁移 (`render.jsx`)
+- **Stats 卡片**: 趋势线颜色 + Avatar 颜色统一中性化 (`useDashboardStats.jsx`, `StatsCards.jsx`)
+- **装饰元素**: blur-ball (indigo+teal → 钢蓝双色)、pastel-balls (马卡龙 → 钢蓝灰)、shine-text (金黄 → 银蓝)
+- **Avatar 组件**: 所有彩色映射 → foreground 不透明度层级 (`Avatar.jsx`)
+- **杂项**: PreferencesSettings violet→grey、ModelPricingEditor Tag→grey/white
+
+#### 侧栏菜单名称精简 ✅ (commit: `19cbc627`)
+| 旧名称 | 新名称 |
+|--------|--------|
+| 概况预览 | 概览 |
+| 令牌管理 | 令牌 |
+| 日志详情 | 日志 |
+| 渠道管理 | 渠道 |
+| 用户管理 | 用户 |
+- 涉及: SiderBar, UserArea, SettingsSidebarModulesAdmin, NotificationSettings, UsersDescription, TokensDescription
+- i18n: 7语言 (zh-CN/en/zh-TW/ja/ru/fr/vi) 全部新增短键翻译
+
+#### 审计模块侧栏图标差异化 ✅ (commit: `18438b65`)
+- 审计日志 → `FileSearch` (放大镜+文档)
+- 审计规则 → `ShieldCheck` (盾牌+勾)
+- 保存策略 → `Timer` (计时器)
+
+**Commit 链:**
+```
+04963cd9 → 18438b65 → 19cbc627
+```
+
+| 环境 | 状态 | 版本 |
+|------|------|------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `19cbc627` |
+| 测试 (154.36.173.198) | ✅ 已部署 | `19cbc627` |
+| 生产 (38.58.59.161) | ✅ 已部署 | `19cbc627` |
+
+---
 
 ### 2026-03-17 — 系统优化 P0-P3 轮
 
