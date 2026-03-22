@@ -84,7 +84,7 @@ const UserArea = ({
                     size='small'
                     className='text-muted-foreground'
                   />
-                  <span>{t('令牌管理')}</span>
+                  <span>{t('令牌')}</span>
                 </div>
               </Dropdown.Item>
               <Dropdown.Item

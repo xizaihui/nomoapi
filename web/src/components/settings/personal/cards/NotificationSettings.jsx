@@ -257,7 +257,7 @@ const NotificationSettings = ({
       description: t('数据管理和日志查看'),
       modules: [
         { key: 'detail', title: t('数据看板'), description: t('系统数据统计') },
-        { key: 'token', title: t('令牌管理'), description: t('API令牌管理') },
+        { key: 'token', title: t('令牌'), description: t('API令牌管理') },
         { key: 'log', title: t('使用日志'), description: t('API使用记录') },
         {
           key: 'midjourney',
@@ -286,7 +286,7 @@ const NotificationSettings = ({
       title: t('管理员区域'),
       description: t('系统管理功能'),
       modules: [
-        { key: 'channel', title: t('渠道管理'), description: t('API渠道配置') },
+        { key: 'channel', title: t('渠道'), description: t('API渠道配置') },
         { key: 'models', title: t('模型管理'), description: t('AI模型配置') },
         {
           key: 'deployment',
@@ -303,7 +303,7 @@ const NotificationSettings = ({
           title: t('兑换码管理'),
           description: t('兑换码生成管理'),
         },
-        { key: 'user', title: t('用户管理'), description: t('用户账户管理') },
+        { key: 'user', title: t('用户'), description: t('用户账户管理') },
         {
           key: 'setting',
           title: t('系统设置'),

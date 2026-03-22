@@ -44,7 +44,7 @@ const StatsCards = ({
     observer.observe(document.body, { attributes: true, attributeFilter: ['theme-mode'] });
     return () => observer.disconnect();
   }, []);
-  const sparklineColor = isDark ? '#8e8ea0' : '#52526b';
+  const sparklineColor = isDark ? '#8fa0ae' : '#4a5c6e';
 
   // 扁平化所有 items
   const allItems = groupedStatsData.flatMap((group) =>

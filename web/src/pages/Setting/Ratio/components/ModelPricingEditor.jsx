@@ -175,7 +175,7 @@ export default function ModelPricingEditor({
         dataIndex: 'billingMode',
         key: 'billingMode',
         render: (_, record) => (
-          <Tag color={record.billingMode === 'per-request' ? 'teal' : 'violet'}>
+          <Tag color={record.billingMode === 'per-request' ? 'grey' : 'white'}>
             {record.billingMode === 'per-request'
               ? t('按次计费')
               : t('按量计费')}

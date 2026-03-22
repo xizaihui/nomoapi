@@ -123,7 +123,7 @@ const PreferencesSettings = ({ t }) => {
 		<Card className="!rounded-xl shadow-sm border-0">
 			{/* Card Header */}
 			<div className="flex items-center mb-4">
-				<Avatar size="small" color="violet" className="mr-3 shadow-sm">
+				<Avatar size="small" color="grey" className="mr-3 shadow-sm">
 					<Languages size={16} />
 				</Avatar>
 				<div>
@@ -139,10 +139,10 @@ const PreferencesSettings = ({ t }) => {
 			<Card className="!rounded-xl border dark:border-border">
 				<div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4">
 					<div className="flex items-start w-full sm:w-auto">
-						<div className="w-12 h-12 rounded-full bg-violet-50 dark:bg-violet-900/30 flex items-center justify-center mr-4 flex-shrink-0">
+						<div className="w-12 h-12 rounded-full bg-muted dark:bg-muted flex items-center justify-center mr-4 flex-shrink-0">
 							<Languages
 								size={20}
-								className="text-violet-600 dark:text-violet-400"
+								className="text-foreground/60 dark:text-foreground/60"
 							/>
 						</div>
 						<div>

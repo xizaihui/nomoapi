@@ -408,7 +408,7 @@ export const useLogsData = () => {
       }
       if (logs[i].type === 2) {
         expandDataLocal.push({
-          key: t('日志详情'),
+          key: t('日志'),
           value: other?.claude
             ? renderClaudeLogContent(
                 other?.model_ratio,

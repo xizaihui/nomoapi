@@ -83,7 +83,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const workspaceItems = useMemo(() => {
     const items = [
       {
-        text: t('概况预览'),
+        text: t('概览'),
         itemKey: 'detail',
         to: '/detail',
         className:
@@ -92,12 +92,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             : 'tableHiddle',
       },
       {
-        text: t('令牌管理'),
+        text: t('令牌'),
         itemKey: 'token',
         to: '/token',
       },
       {
-        text: t('日志详情'),
+        text: t('日志'),
         itemKey: 'log',
         to: '/log',
       },
@@ -160,7 +160,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   const adminItems = useMemo(() => {
     const items = [
       {
-        text: t('渠道管理'),
+        text: t('渠道'),
         itemKey: 'channel',
         to: '/channel',
         className: isAdmin() ? '' : 'tableHiddle',
@@ -190,7 +190,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('用户管理'),
+        text: t('用户'),
         itemKey: 'user',
         to: '/user',
         className: isAdmin() ? '' : 'tableHiddle',

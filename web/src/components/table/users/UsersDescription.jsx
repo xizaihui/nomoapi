@@ -29,7 +29,7 @@ const UsersDescription = ({ compactMode, setCompactMode, t }) => {
     <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full'>
       <div className='flex items-center text-foreground/80'>
         <IconUserAdd className='mr-2' />
-        <Text>{t('用户管理')}</Text>
+        <Text>{t('用户')}</Text>
       </div>
       <CompactModeToggle
         compactMode={compactMode}

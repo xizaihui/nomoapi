@@ -29,7 +29,7 @@ const TokensDescription = ({ compactMode, setCompactMode, t }) => {
     <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full'>
       <div className='flex items-center text-foreground/80'>
         <Key size={16} className='mr-2' />
-        <Text>{t('令牌管理')}</Text>
+        <Text>{t('令牌')}</Text>
       </div>
 
       <CompactModeToggle
