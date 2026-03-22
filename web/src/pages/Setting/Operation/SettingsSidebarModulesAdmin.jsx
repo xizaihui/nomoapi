@@ -247,7 +247,7 @@ export default function SettingsSidebarModulesAdmin(props) {
       description: t('系统管理功能'),
       modules: [
         { key: 'channel', title: t('渠道'), description: t('API渠道配置') },
-        { key: 'models', title: t('模型管理'), description: t('AI模型配置') },
+        { key: 'models', title: t('模型'), description: t('AI模型配置') },
         {
           key: 'deployment',
           title: t('模型部署'),
@@ -260,7 +260,7 @@ export default function SettingsSidebarModulesAdmin(props) {
         },
         {
           key: 'redemption',
-          title: t('兑换码管理'),
+          title: t('兑换码'),
           description: t('兑换码生成管理'),
         },
         { key: 'user', title: t('用户'), description: t('用户账户管理') },

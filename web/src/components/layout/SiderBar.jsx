@@ -172,7 +172,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('模型管理'),
+        text: t('模型'),
         itemKey: 'models',
         to: '/console/models',
         className: isAdmin() ? '' : 'tableHiddle',
@@ -184,7 +184,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {
-        text: t('兑换码管理'),
+        text: t('兑换码'),
         itemKey: 'redemption',
         to: '/redemption',
         className: isAdmin() ? '' : 'tableHiddle',
@@ -504,9 +504,8 @@ const SiderBar = ({ onNavigate = () => {} }) => {
                 {!collapsed && (
                   <div className='sidebar-group-label'>{t('安全审计')}</div>
                 )}
-                {renderNavItem({ text: t('审计日志'), itemKey: 'audit-logs', to: '/console/audit-logs' })}
-                {renderNavItem({ text: t('审计规则'), itemKey: 'audit-rules', to: '/console/audit-rules' })}
-                {renderNavItem({ text: t('保存策略'), itemKey: 'audit-retention', to: '/console/audit-retention' })}
+                {renderNavItem({ text: t('日志'), itemKey: 'audit-logs', to: '/console/audit-logs' })}
+                {renderNavItem({ text: t('规则'), itemKey: 'audit-rules', to: '/console/audit-rules' })}
               </div>
             </>
           )}

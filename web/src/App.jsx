@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { lazy, Suspense, useContext, useMemo } from 'react';
-import { Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation, useParams } from 'react-router-dom';
 import Loading from './components/common/ui/Loading';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { AuthRedirect, PrivateRoute, AdminRoute } from './helpers';
@@ -80,7 +80,6 @@ const OAuth2Callback = lazyRetry(() => import('./components/auth/OAuth2Callback'
 // 审计模块（独立功能，不影响上游）
 const AuditLogsPage = lazyRetry(() => import('./features/audit/pages/AuditLogsPage'));
 const AuditRulesPage = lazyRetry(() => import('./features/audit/pages/AuditRulesPage'));
-const AuditRetentionPage = lazyRetry(() => import('./features/audit/pages/AuditRetentionPage'));
 
 function DynamicOAuth2Callback() {
   const { provider } = useParams();
@@ -433,16 +432,8 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
-          path='/console/audit-retention'
-          element={
-            <PrivateRoute>
-              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
-                <AuditRetentionPage />
-              </Suspense>
-            </PrivateRoute>
-          }
-        />
+        {/* audit-retention redirects to audit-rules (merged) */}
+        <Route path='/console/audit-retention' element={<Navigate to='/console/audit-rules' replace />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       </ErrorBoundary>

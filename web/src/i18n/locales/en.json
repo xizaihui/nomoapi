@@ -1793,7 +1793,7 @@
                 "检测到多个密钥，您可以单独复制每个密钥，或点击复制全部获取完整内容。": "Detected multiple keys, you can copy each key individually or click Copy All to get the complete content.",
                 "检测到该消息后有AI回复，是否删除后续回复并重新生成？": "AI reply detected after this message, delete subsequent replies and regenerate?",
                 "检测必须等待绘图成功才能进行放大等操作": "Detection must wait for drawing to succeed before performing zooming and other operations",
-                "模型": "Model",
+                "模型": "Models",
                 "模型: {{ratio}}": "Model: {{ratio}}",
                 "模型专用区域": "Model-specific area",
                 "模型价格": "Model price",
@@ -2517,7 +2517,7 @@
                 "覆盖模式：将完全替换现有的所有密钥": "Overwrite mode: completely replace all existing keys",
                 "覆盖模板": "",
                 "覆盖现有密钥": "Overwrite existing key",
-                "规则": "",
+                "规则": "Rules",
                 "规则 JSON": "",
                 "规则 JSON 格式不正确": "",
                 "规则 ttl_seconds 为 0 时使用。0 表示使用后端默认 TTL：3600 秒。": "",
@@ -3388,7 +3388,8 @@
                 "确定删除分组「{{group}}」的保存策略？删除后将使用全局默认策略。": "Delete retention policy for group \"{{group}}\"? The global default policy will apply after deletion.",
                 "确定删除规则「{{name}}」？": "Delete rule \"{{name}}\"?",
                 "概览": "Overview",
-                "日志": "Logs"
+                "日志": "Logs",
+                "兑换码": "Codes"
         },
         "概况预览": "Overview",
         "密钥管理": "Key Management",

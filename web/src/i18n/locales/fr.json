@@ -1776,7 +1776,7 @@
                 "检测到多个密钥，您可以单独复制每个密钥，或点击复制全部获取完整内容。": "Plusieurs clés détectées, vous pouvez copier chaque clé individuellement ou cliquer sur Tout copier pour obtenir le contenu complet.",
                 "检测到该消息后有AI回复，是否删除后续回复并重新生成？": "Une réponse IA a été détectée après ce message, voulez-vous supprimer les réponses suivantes et régénérer ?",
                 "检测必须等待绘图成功才能进行放大等操作": "La détection doit attendre que le dessin réussisse avant d'effectuer un zoom et d'autres opérations",
-                "模型": "Modèle",
+                "模型": "Modèles",
                 "模型: {{ratio}}": "Modèle : {{ratio}}",
                 "模型专用区域": "Zone dédiée au modèle",
                 "模型价格": "Prix du modèle",
@@ -2471,7 +2471,7 @@
                 "覆盖模式：将完全替换现有的所有密钥": "Mode de remplacement : remplacera complètement toutes les clés existantes",
                 "覆盖模板": "",
                 "覆盖现有密钥": "Remplacer les clés existantes",
-                "规则": "",
+                "规则": "Règles",
                 "规则 JSON": "",
                 "规则 JSON 格式不正确": "",
                 "规则 ttl_seconds 为 0 时使用。0 表示使用后端默认 TTL：3600 秒。": "",
@@ -3249,7 +3249,8 @@
                 "输出：{{tokens}} / 1M * 模型倍率 {{modelRatio}} * 输出倍率 {{completionRatio}} * {{ratioType}} {{ratio}} = {{amount}}": "Sortie : {{tokens}} / 1M * ratio du modèle {{modelRatio}} * ratio de sortie {{completionRatio}} * {{ratioType}} {{ratio}} = {{amount}}",
                 "空": "Vide",
                 "概览": "Aperçu",
-                "日志": "Journaux"
+                "日志": "Journaux",
+                "兑换码": "Codes"
         },
         "概况预览": "Aperçu",
         "密钥管理": "Gestion des clés",
