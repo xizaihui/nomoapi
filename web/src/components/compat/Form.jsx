@@ -721,10 +721,153 @@ const FormAutoComplete = ({ field, label, data = [], ...rest }) => {
 };
 
 // --- Form.Upload ---
-const FormUpload = ({ field, label, action, accept, children, ...rest }) => {
+const FormUpload = ({
+  field,
+  label,
+  action,
+  accept,
+  multiple,
+  draggable,
+  dragIcon,
+  dragMainText,
+  dragSubText,
+  uploadTrigger,
+  beforeUpload,
+  onChange,
+  fileList: controlledFileList,
+  children,
+  ...rest
+}) => {
+  const ctx = useFormApi();
+  const inputRef = React.useRef(null);
+  const [internalFiles, setInternalFiles] = React.useState([]);
+  const [isDragOver, setIsDragOver] = React.useState(false);
+  const fileList = controlledFileList !== undefined ? controlledFileList : internalFiles;
+
+  const processFiles = React.useCallback((nativeFiles) => {
+    const items = Array.from(nativeFiles).map((f, idx) => ({
+      uid: `${Date.now()}-${idx}-${f.name}`,
+      name: f.name,
+      size: f.size,
+      status: 'success',
+      fileInstance: f,
+    }));
+
+    let newList;
+    if (multiple) {
+      newList = [...fileList, ...items];
+    } else {
+      newList = items.slice(-1);
+    }
+
+    if (controlledFileList === undefined) {
+      setInternalFiles(newList);
+    }
+    if (ctx?.formApi && field) {
+      ctx.formApi.setValue(field, newList);
+    }
+    onChange?.({ fileList: newList, currentFile: items[items.length - 1] });
+  }, [fileList, multiple, controlledFileList, onChange, ctx, field]);
+
+  const handleInputChange = React.useCallback((e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    processFiles(files);
+    // Reset native input so same file can be re-selected
+    if (inputRef.current) inputRef.current.value = '';
+  }, [processFiles]);
+
+  const handleDrop = React.useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+    const files = e.dataTransfer?.files;
+    if (!files || files.length === 0) return;
+    processFiles(files);
+  }, [processFiles]);
+
+  const handleDragOver = React.useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(true);
+  }, []);
+
+  const handleDragLeave = React.useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  }, []);
+
+  const removeFile = React.useCallback((uid) => {
+    const newList = fileList.filter((f) => f.uid !== uid);
+    if (controlledFileList === undefined) {
+      setInternalFiles(newList);
+    }
+    if (ctx?.formApi && field) {
+      ctx.formApi.setValue(field, newList);
+    }
+    onChange?.({ fileList: newList, currentFile: null });
+  }, [fileList, controlledFileList, onChange, ctx, field]);
+
+  const triggerSelect = () => inputRef.current?.click();
+
   return (
-    <FormField field={field} label={label} {...rest}>
-      <input type='file' accept={accept} className='text-sm' />
+    <FormField field={field} label={label} _noInject {...rest}>
+      <input
+        ref={inputRef}
+        type='file'
+        accept={accept}
+        multiple={multiple}
+        className='hidden'
+        onChange={handleInputChange}
+      />
+
+      {draggable ? (
+        /* Drag-and-drop zone */
+        <div
+          onClick={triggerSelect}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          className={cn(
+            'relative flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 cursor-pointer transition-colors',
+            isDragOver
+              ? 'border-primary bg-primary/5'
+              : 'border-border hover:border-primary/50 hover:bg-muted/30'
+          )}
+        >
+          {dragIcon && <div className='mb-2 text-muted-foreground'>{dragIcon}</div>}
+          {dragMainText && <p className='text-sm font-medium'>{dragMainText}</p>}
+          {dragSubText && <p className='text-xs text-muted-foreground mt-1'>{dragSubText}</p>}
+        </div>
+      ) : (
+        /* Simple button trigger */
+        <button
+          type='button'
+          onClick={triggerSelect}
+          className='h-9 rounded-md border border-border bg-background px-4 text-sm hover:bg-muted transition-colors'
+        >
+          {children || '选择文件'}
+        </button>
+      )}
+
+      {/* File list */}
+      {fileList.length > 0 && (
+        <div className='mt-2 space-y-1'>
+          {fileList.map((f) => (
+            <div key={f.uid || f.name} className='flex items-center justify-between rounded-md bg-muted/50 px-3 py-1.5 text-sm'>
+              <span className='truncate flex-1 mr-2'>{f.name}</span>
+              <button
+                type='button'
+                onClick={(e) => { e.stopPropagation(); removeFile(f.uid); }}
+                className='text-muted-foreground hover:text-foreground transition-colors flex-shrink-0'
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </FormField>
   );
 };
