@@ -87,9 +87,9 @@
 ### 三环境部署
 | 环境 | 地址 | 域名 | 状态 |
 |------|------|------|------|
-| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `fa8a08ea` |
-| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署 `fa8a08ea` |
-| 生产 | 38.58.59.161 | api.opentoken.io | ✅ 已部署 `fa8a08ea` |
+| 开发 | 154.40.40.48:3000 | - | ✅ 已部署 `9c5e03fe` |
+| 测试 | 154.36.173.198 | api.opentokens.net | ✅ 已部署 `9c5e03fe` |
+| 生产 | 38.58.59.161 | api.opentoken.io | ✅ 已部署 `9c5e03fe` |
 
 ### 可继续优化的方向
 - [ ] 更多页面的细节打磨（根据用户反馈）
@@ -232,7 +232,7 @@ da43ecec → e75a7f76 → 2ce578de → 3e7b54b6
 - max_connections: 100 → 300 ✅
 - wal_buffers: 4MB → 64MB ✅
 
-**当前 HEAD**: `fa8a08ea` on `feat/shadcn-ui` (`main` = `5d8aac01`)
+**当前 HEAD**: `9c5e03fe` on `feat/shadcn-ui` (`main` = `9c5e03fe`)
 
 | 指标 | 优化前 | 优化后 | 变化 |
 |------|--------|--------|------|
@@ -256,26 +256,37 @@ da43ecec → e75a7f76 → 2ce578de → 3e7b54b6
 | Calendar 纯 JS | date-fns v3/v4 与现有 date-fns-tz 冲突 |
 | ES 异步审计 | 不阻塞用户请求，ES 故障不影响服务 |
 | FormField id={field} | OtherSetting 的 handleInputChange 依赖 e.target.id |
+| FormUpload `_noInject` | file input 禁止 JS 设 value，必须阻止 FormField 的 cloneElement 注入 |
+| 部署先 git pull 再 build | Go embed 会用 git 工作树的 dist，SCP 的新 dist 会被旧代码覆盖 |
+| 钢蓝灰色系 (hue 215) | 纯灰太单调，低饱和钢蓝兼顾专业感和视觉层次 |
+| 保存策略合并到规则页 Tab | 都是审计规则策略类型，减少侧栏入口数量 |
 
 ---
 
 ## 🔧 构建 & 部署速查
 
 ```bash
-# 构建前端
+# 构建前端（必须先清理！）
 export PATH="$HOME/.bun/bin:$PATH"
 cd /opt/apps/newapis/web
+rm -rf dist node_modules/.vite    # ← 关键：防止旧文件混入
 NODE_OPTIONS="--max-old-space-size=4096" bun run build
 
-# Docker 构建部署
+# Docker 构建部署（本地）
 cd /opt/apps/newapis
-docker compose down
-docker build -t newapi-aurora:latest .
-docker compose up -d
+docker build --no-cache -t newapi-aurora:latest .
+docker compose up -d --force-recreate --no-deps new-api
 
-# 推送代码
-git push nomoapi feat/shadcn-ui
-git push opentoken feat/shadcn-ui
+# 一键三环境部署（推荐）
+./scripts/deploy.sh              # 全部
+./scripts/deploy.sh prod         # 仅生产
+./scripts/deploy.sh test prod    # 测试+生产
+
+# 推送代码 + 合并 main
+git push nomoapi feat/shadcn-ui && git push opentoken feat/shadcn-ui
+git checkout main && git merge feat/shadcn-ui --ff-only
+git push nomoapi main && git push opentoken main
+git checkout feat/shadcn-ui
 
 # 打 tag
 git tag v0.x.x-opentoken
@@ -352,14 +363,41 @@ git push opentoken v0.x.x-opentoken
 
 **Commit 链:**
 ```
-04963cd9 → 18438b65 → 19cbc627 → 904fc9ff → 5d8aac01 → 65e061c4 → fa8a08ea
+04963cd9 → 18438b65 → 19cbc627 → 904fc9ff → 5d8aac01 → 65e061c4 → fa8a08ea → 561a9ce5 → 5ac15797 → 9c5e03fe
 ```
 
 | 环境 | 状态 | 版本 |
 |------|------|------|
-| 开发 (154.40.40.48:3000) | ✅ 已部署 | `fa8a08ea` |
-| 测试 (154.36.173.198) | ✅ 已部署 | `fa8a08ea` |
-| 生产 (38.58.59.161) | ✅ 已部署 | `fa8a08ea` |
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `9c5e03fe` |
+| 测试 (154.36.173.198) | ✅ 已部署 | `9c5e03fe` |
+| 生产 (38.58.59.161) | ✅ 已部署 | `9c5e03fe` |
+
+#### Form.Upload 完整重写 ✅ (commit: `9c5e03fe`)
+- **问题**: Vertex AI 渠道上传 JSON 密钥文件时，双击选文件后页面崩溃
+- **根因**: 旧 `Form.Upload` 是占位组件，只有裸 `<input type="file">`。FormField 的 `cloneElement` 注入 `value` prop，但浏览器禁止 JS 设置 file input 的 value（安全限制），触发 `Failed to set the 'value' property on 'HTMLInputElement'`
+- **修复**: 完整重写 FormUpload（146 行），功能包括：
+  - 隐藏原生 input，用 `_noInject` 阻止 FormField 注入 value
+  - 拖拽上传区 (`draggable` + `dragMainText/dragSubText`)
+  - 多文件 / 单文件模式 (`multiple`)
+  - 文件列表展示 + 删除按钮
+  - `onChange({ fileList, currentFile })` 兼容 Semi Upload 回调格式
+  - `fileList` 受控模式，兼容 `handleVertexUploadChange` 逻辑
+  - 选择相同文件可重复触发（reset native input after change）
+- **影响范围**: EditChannelModal.jsx 中 Vertex AI 的两处 `Form.Upload` 调用（批量/单个模式）
+
+#### 安全部署脚本 ✅ (commit: `5ac15797`)
+- 新增 `scripts/deploy.sh` — 一键三环境部署
+- **核心改进**: Docker build 失败时不执行 `docker compose up`，旧容器继续运行
+- 前端只本机构建一次，SCP dist 到远程
+- 远程先 `git pull` 再 build（避免代码不同步）
+- 部署后 30 秒健康检查循环（不是盲等 sleep）
+- 失败时打印容器日志
+- 用法: `./scripts/deploy.sh [local|test|prod]`
+
+#### 生产环境事件记录
+- **部署不生效排查**: 发现旧部署流程只 SCP dist 但不 git pull，Docker build 时 Go embed 用的旧代码覆盖了新 dist
+- **生产服务器重启**: 15:38 UTC 服务器异常重启（原因未确定，疑似机房维护），ES 启动吃 120% CPU 导致约 2 分钟不可用，后自动恢复
+- **教训**: 远程部署必须先 git pull 再 docker build；deploy.sh 脚本已固化此流程
 
 ---
 
