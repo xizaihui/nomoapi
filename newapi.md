@@ -298,7 +298,7 @@ git push opentoken v0.x.x-opentoken
 
 ## 📅 更新日志
 
-### 2026-03-24 — 靛蓝色彩体系 + 色彩精修 + Dropdown 崩溃修复
+### 2026-03-24 — 靛蓝色彩体系 + 色彩精修 + Dropdown/Checkbox 修复
 
 #### 色彩体系升级：钢蓝灰 → 靛蓝双色系统 ✅
 - **设计理念**: 黑白灰基底保持不变，交互元素使用靛蓝 `hsl(220 60% 50%)` 作为信号色
@@ -321,8 +321,13 @@ git push opentoken v0.x.x-opentoken
 - **原因**: Radix `DropdownMenuTrigger asChild` 内部 Slot 要求恰好一个 React element child，Semi compat Button 经两层包装后某些场景不满足
 - **修复**: `Dropdown.jsx` 在传给 Trigger 前校验 children，非单元素则包 `<span>`；`Dropdown.Item` 的 `React.Children.only` 加 try-catch 防御
 
-**影响文件**: `index.css`, `Dropdown.jsx`, `StatsCards.jsx`, `useDashboardCharts.jsx`
-**commit**: 待提交
+#### Form.Checkbox 保存失效修复 ✅
+- **问题**: 系统设置→配置登录注册，勾选框无文字标签 + 勾选后不保存
+- **原因1**: `FormCheckbox` 只接收 `label` prop，未处理 `children`（Semi 用 children 传文字）
+- **原因2**: `FormCheckbox` 未透传外部 `onChange`，导致 `handleCheckboxChange` → `updateOptions()` 从未被调用
+- **修复**: 新增 `children` 解构，`displayLabel = label || children`；显式解构 `onChange` 并在 input 事件中调用
+
+**影响文件**: `index.css`, `Dropdown.jsx`, `Form.jsx`, `StatsCards.jsx`, `useDashboardCharts.jsx`
 
 ### 2026-03-24 — 视觉清晰度优化 + 布局层次增强
 

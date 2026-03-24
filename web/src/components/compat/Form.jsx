@@ -539,23 +539,27 @@ const FormSwitch = ({ field, label, checkedText, uncheckedText, ...rest }) => {
 };
 
 // --- Form.Checkbox ---
-const FormCheckbox = ({ field, label, ...rest }) => {
+const FormCheckbox = ({ field, label, children, onChange, ...rest }) => {
   const ctx = useFormApi();
   if (!ctx) return null;
   const { formApi, values } = ctx;
   const checked = field ? (values[field] ?? false) : false;
   const { initValue, rules, helpText, extraText, noLabel, labelPosition, convert, validate: _v, pure, trigger, required, disabled, ...safeRest } = rest;
+  const displayLabel = label || children;
   return (
-    <FormField field={field} label={label} noLabel required={required} helpText={helpText} extraText={extraText} labelPosition={labelPosition} pure={pure} _noInject>
-      <label className='flex items-center gap-2 cursor-pointer'>
+    <FormField field={field} label={noLabel ? undefined : (typeof displayLabel === 'string' ? displayLabel : undefined)} noLabel={noLabel} required={required} helpText={helpText} extraText={extraText} labelPosition={labelPosition} pure={pure} _noInject>
+      <label className='flex items-center gap-2 cursor-pointer py-1'>
         <input
           type='checkbox'
           checked={checked}
           disabled={disabled}
-          onChange={(e) => field && formApi.setValue(field, e.target.checked)}
+          onChange={(e) => {
+            if (field) formApi.setValue(field, e.target.checked);
+            if (onChange) onChange(e);
+          }}
           className='h-4 w-4 rounded border-border accent-[hsl(var(--primary))]'
         />
-        {label && <span className='text-sm'>{label}</span>}
+        {displayLabel && <span className='text-sm'>{displayLabel}</span>}
       </label>
     </FormField>
   );
