@@ -298,6 +298,44 @@ git push opentoken v0.x.x-opentoken
 
 ## 📅 更新日志
 
+### 2026-03-24 — 视觉清晰度优化 + 布局层次增强
+
+#### 文字清晰度修复 ✅
+- **前景色加深**: `--foreground` 从 `0 0% 12%` → `0 0% 9%`（更黑更实）
+- **muted-foreground 提亮**: 亮色 44%→36%，暗色 52%→60%（辅助文字不再"隐形"）
+- **Semi text 层级优化**: text-1 opacity 0.88→0.92，text-3 0.75→0.85
+- **暗色 text-1**: 0.92→0.95，text-3: 0.7→0.85
+- **disabled-text 提亮**: 亮色 0.5→0.6，暗色 0.4→0.55
+- **全局基准字号**: body 新增 `font-size: 14px; line-height: 1.5; font-weight: 400`
+
+#### 字重层次分层 ✅
+- 表头 `.semi-table-thead` → `font-weight: 500`
+- 页面标题 h1-h3 → `font-weight: 600`
+- 卡片标题 / h4-h6 → `font-weight: 500`
+- 表格 Tag/Strong → `font-weight: 500`
+- 侧边栏分组标签 → `font-weight: 600`（原 500）
+
+#### 边框 & 阴影层次 ✅
+- **边框加深**: 亮色 `--border` 90%→86%，暗色 16%→18%
+- **卡片静态阴影**: `.semi-card` 添加轻微投影（亮/暗色不同强度）
+- **Header 分层**: `header.fixed` 底部加 border + 微阴影
+- **Header 透明度**: `bg-background/80` → `bg-background/95`（更实更清晰）
+- **主按钮投影**: `.semi-button-primary` 添加轻微 box-shadow
+- **shadow 变量**: `--semi-color-shadow` 0.06→0.08
+
+#### 布局优化 ✅
+- **内容区限宽**: `main.page-content-enter > * { max-width: 1600px }`
+- **表格行间距**: 单元格 padding 12px，提升呼吸感
+- **表格 hover**: 使用 `hsl(var(--accent))` 增强悬浮底色
+
+#### 侧边栏清晰度 ✅
+- 图标 opacity: 0.75→0.85（主图标），0.65→0.75（子图标）
+- 文字颜色: `sidebar-foreground / 0.8` → `0.85`
+- 分组标签: `sidebar-foreground / 0.5` → `0.55`
+
+**影响文件**: `index.css`, `headerbar/index.jsx`
+**影响范围**: 全站浅色 + 暗色主题
+
 ### 2026-03-22 — 色彩体系重构(钢蓝灰) + 侧栏精简 + 图标差异化 + 规则页合并
 
 #### 色彩体系重构 ✅ (commit: `19cbc627`)

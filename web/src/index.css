@@ -21,38 +21,38 @@
 
   /* shadcn/ui CSS variables - light mode (高端中性灰 + 钢蓝点缀) */
   --background: 0 0% 97.5%;
-  --foreground: 0 0% 12%;
+  --foreground: 0 0% 9%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 12%;
+  --card-foreground: 0 0% 9%;
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 12%;
-  --primary: 215 20% 30%;
+  --popover-foreground: 0 0% 9%;
+  --primary: 215 25% 32%;
   --primary-foreground: 0 0% 98%;
   --secondary: 0 0% 95%;
-  --secondary-foreground: 0 0% 12%;
+  --secondary-foreground: 0 0% 9%;
   --muted: 0 0% 95.5%;
-  --muted-foreground: 0 0% 44%;
+  --muted-foreground: 0 0% 36%;
   --accent: 215 14% 93%;
-  --accent-foreground: 0 0% 12%;
+  --accent-foreground: 0 0% 9%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --ring: 215 20% 30%;
+  --border: 0 0% 86%;
+  --input: 0 0% 86%;
+  --ring: 215 25% 32%;
   --radius: 0.625rem;
-  --chart-1: 215 20% 28%;
+  --chart-1: 215 25% 30%;
   --chart-2: 215 12% 44%;
   --chart-3: 215 10% 58%;
   --chart-4: 215 8% 72%;
   --chart-5: 215 6% 84%;
   --sidebar-background: 0 0% 97.5%;
-  --sidebar-foreground: 0 0% 12%;
-  --sidebar-primary: 215 20% 30%;
+  --sidebar-foreground: 0 0% 9%;
+  --sidebar-primary: 215 25% 32%;
   --sidebar-primary-foreground: 0 0% 98%;
   --sidebar-accent: 0 0% 93%;
-  --sidebar-accent-foreground: 0 0% 12%;
-  --sidebar-border: 0 0% 90%;
-  --sidebar-ring: 215 20% 30%;
+  --sidebar-accent-foreground: 0 0% 9%;
+  --sidebar-border: 0 0% 86%;
+  --sidebar-ring: 215 25% 32%;
 
   /* ===== Semi → shadcn bridge (light) ===== */
   --semi-color-bg-0: hsl(var(--background));
@@ -61,9 +61,9 @@
   --semi-color-bg-3: hsl(var(--secondary));
   --semi-color-bg-4: hsl(var(--accent));
   --semi-color-text-0: hsl(var(--foreground));
-  --semi-color-text-1: hsl(var(--foreground) / 0.88);
+  --semi-color-text-1: hsl(var(--foreground) / 0.92);
   --semi-color-text-2: hsl(var(--muted-foreground));
-  --semi-color-text-3: hsl(var(--muted-foreground) / 0.75);
+  --semi-color-text-3: hsl(var(--muted-foreground) / 0.85);
   --semi-color-primary: hsl(var(--primary));
   --semi-color-primary-hover: hsl(var(--primary) / 0.9);
   --semi-color-primary-active: hsl(var(--primary) / 0.8);
@@ -123,12 +123,12 @@
   --semi-color-link-hover: hsl(var(--primary) / 0.8);
   --semi-color-link-active: hsl(var(--primary) / 0.7);
   --semi-color-link-visited: hsl(var(--primary) / 0.6);
-  --semi-color-disabled-text: hsl(var(--muted-foreground) / 0.5);
+  --semi-color-disabled-text: hsl(var(--muted-foreground) / 0.6);
   --semi-color-disabled-border: hsl(var(--border) / 0.5);
   --semi-color-disabled-bg: hsl(var(--muted) / 0.5);
   --semi-color-disabled-fill: hsl(var(--muted) / 0.3);
   --semi-color-focus-border: hsl(var(--ring));
-  --semi-color-shadow: rgba(0, 0, 0, 0.06);
+  --semi-color-shadow: rgba(0, 0, 0, 0.08);
   --semi-color-overlay-bg: rgba(0, 0, 0, 0.5);
   --semi-color-nav-bg: hsl(var(--card));
   --semi-color-highlight-bg: #fef9c3;
@@ -154,13 +154,13 @@
   --secondary: 0 0% 14%;
   --secondary-foreground: 0 0% 92%;
   --muted: 0 0% 14%;
-  --muted-foreground: 0 0% 52%;
+  --muted-foreground: 0 0% 60%;
   --accent: 215 10% 18%;
   --accent-foreground: 0 0% 92%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 16%;
-  --input: 0 0% 16%;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
   --ring: 215 18% 68%;
   --chart-1: 215 16% 75%;
   --chart-2: 215 12% 58%;
@@ -173,7 +173,7 @@
   --sidebar-primary-foreground: 0 0% 7%;
   --sidebar-accent: 0 0% 14%;
   --sidebar-accent-foreground: 0 0% 92%;
-  --sidebar-border: 0 0% 16%;
+  --sidebar-border: 0 0% 18%;
   --sidebar-ring: 215 18% 68%;
 
   /* ===== Semi → shadcn bridge (dark) ===== */
@@ -183,9 +183,9 @@
   --semi-color-bg-3: hsl(var(--secondary));
   --semi-color-bg-4: hsl(var(--accent));
   --semi-color-text-0: hsl(var(--foreground));
-  --semi-color-text-1: hsl(var(--foreground) / 0.92);
+  --semi-color-text-1: hsl(var(--foreground) / 0.95);
   --semi-color-text-2: hsl(var(--muted-foreground));
-  --semi-color-text-3: hsl(var(--muted-foreground) / 0.7);
+  --semi-color-text-3: hsl(var(--muted-foreground) / 0.85);
   --semi-color-primary: hsl(var(--primary));
   --semi-color-primary-hover: hsl(var(--primary) / 0.85);
   --semi-color-primary-active: hsl(var(--primary) / 0.75);
@@ -245,7 +245,7 @@
   --semi-color-link-hover: hsl(var(--primary) / 0.8);
   --semi-color-link-active: hsl(var(--primary) / 0.7);
   --semi-color-link-visited: hsl(var(--primary) / 0.6);
-  --semi-color-disabled-text: hsl(var(--muted-foreground) / 0.4);
+  --semi-color-disabled-text: hsl(var(--muted-foreground) / 0.55);
   --semi-color-disabled-border: hsl(var(--border) / 0.4);
   --semi-color-disabled-bg: hsl(var(--muted) / 0.4);
   --semi-color-disabled-fill: hsl(var(--muted) / 0.25);
@@ -271,6 +271,9 @@ body {
   font-family: 'Inter', 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif, 'PingFang SC', 'Microsoft YaHei';
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
   letter-spacing: -0.011em;
   -webkit-text-size-adjust: 100%;
   color: hsl(var(--foreground));
@@ -368,7 +371,7 @@ code {
   margin: 1px 8px;
   transition: all 0.15s ease;
   padding: 6px 10px;
-  color: hsl(var(--sidebar-foreground) / 0.8);
+  color: hsl(var(--sidebar-foreground) / 0.85);
   font-size: 13px;
 }
 
@@ -391,7 +394,7 @@ code {
   align-items: center;
   justify-content: center;
   margin-right: 8px;
-  opacity: 0.75;
+  opacity: 0.85;
   transition: all 0.2s ease;
 }
 
@@ -408,7 +411,7 @@ code {
   justify-content: center;
   margin-right: 8px;
   margin-left: 1px;
-  opacity: 0.65;
+  opacity: 0.75;
   transition: all 0.2s ease;
 }
 
@@ -421,11 +424,11 @@ code {
 /* 分组标签样式 */
 .sidebar-group-label {
   padding: 8px 15px 4px;
-  color: hsl(var(--sidebar-foreground) / 0.5);
+  color: hsl(var(--sidebar-foreground) / 0.55);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* 底部折叠按钮 */
@@ -1249,10 +1252,11 @@ button, [role="button"], a {
 
 /* Card hover lift */
 .card-hover {
+  box-shadow: 0 1px 3px hsl(var(--foreground) / 0.04), 0 1px 2px hsl(var(--foreground) / 0.03);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .card-hover:hover {
-  box-shadow: 0 2px 8px hsl(var(--foreground) / 0.04);
+  box-shadow: 0 4px 12px hsl(var(--foreground) / 0.07), 0 1px 3px hsl(var(--foreground) / 0.04);
   transform: translateY(-1px);
 }
 
@@ -1334,4 +1338,75 @@ textarea::-webkit-scrollbar-thumb {
 
 textarea::-webkit-scrollbar-thumb:hover {
   background-color: hsl(var(--muted-foreground));
+}
+
+/* ==================== 字重层次优化 ==================== */
+/* Semi 表格表头加粗 */
+.semi-table-thead > .semi-table-row > .semi-table-row-head {
+  font-weight: 500 !important;
+}
+
+/* 页面标题 h1-h3 */
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+/* 卡片标题 */
+.semi-card-header-wrapper .semi-card-header-title,
+.semi-typography-h4,
+.semi-typography-h5,
+.semi-typography-h6 {
+  font-weight: 500;
+}
+
+/* 表格中数字/金额/关键数据 */
+.semi-table-row .semi-tag,
+.semi-table-row .semi-typography-strong {
+  font-weight: 500;
+}
+
+/* ==================== 卡片静态阴影 ==================== */
+/* Semi Card 添加轻微静态阴影，区分于背景 */
+.semi-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+.dark .semi-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* ==================== 表格行间距 ==================== */
+/* 增加表格行高，提升呼吸感 */
+.semi-table-tbody > .semi-table-row > .semi-table-row-cell {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+/* 表格行悬浮底色增强 */
+.semi-table-row-hover > .semi-table-row-cell,
+.semi-table-tbody > .semi-table-row:hover > .semi-table-row-cell {
+  background-color: hsl(var(--accent)) !important;
+}
+
+/* ==================== Header 分层阴影 ==================== */
+/* Header 底部添加分割阴影 */
+header.fixed {
+  box-shadow: 0 1px 0 hsl(var(--border)), 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+.dark header.fixed {
+  box-shadow: 0 1px 0 hsl(var(--border)), 0 1px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== 内容区最大宽度 ==================== */
+/* 超宽屏限制内容区宽度，保持可读性 */
+main.page-content-enter > * {
+  max-width: 1600px;
+}
+
+/* ==================== 主按钮对比度增强 ==================== */
+/* 提升主按钮视觉权重 */
+.semi-button-primary {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.semi-button-primary:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 }

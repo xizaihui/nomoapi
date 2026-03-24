@@ -65,7 +65,7 @@ const HeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   const { mainNavLinks } = useNavigation(t, docsLink, headerNavModules);
 
   return (
-    <header className='sticky top-0 z-50 transition-colors duration-300 bg-background/80 backdrop-blur-lg border-b border-border'>
+    <header className='sticky top-0 z-50 transition-colors duration-300 bg-background/95 backdrop-blur-md border-b border-border'>
       <NoticeModal
         visible={noticeVisible}
         onClose={handleNoticeClose}
