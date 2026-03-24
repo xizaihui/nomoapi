@@ -9,7 +9,7 @@
 ### 快速恢复
 **一句话唤醒**: "继续 OpenToken" 或 "看看 newapi.md"
 **项目状态文件**: `/opt/apps/newapis/newapi.md` ← **最完整的项目追踪文档，必读**
-**上次更新**: 2026-03-22，commit `9c5e03fe`
+**上次更新**: 2026-03-24，commit `20baf1bf`
 
 ### 项目概要
 - Go + React 全栈 Web 应用，API 管理平台
@@ -21,7 +21,7 @@
 ### 三环境
 | 环境 | 地址 | 部署方式 | 当前版本 |
 |------|------|----------|----------|
-| 开发 | 154.40.40.48:3000 | 本机 Docker | `9c5e03fe` |
+| 开发 | 154.40.40.48:3000 | 本机 Docker | `20baf1bf` |
 | 测试 | 154.36.173.198 (api.opentokens.net) | SSH deploy | `9c5e03fe` |
 | 生产 | 38.58.59.161 (api.opentoken.io) | SSH deploy | `9c5e03fe` |
 
@@ -50,9 +50,10 @@ docker compose up -d --force-recreate --no-deps new-api
 
 ### 当前设计风格
 - 黑白灰基调 + 钢蓝(hue 215)点缀
-- Light primary: `hsl(215 20% 30%)` ≈ `#3d4f60`
+- Light primary: `hsl(215 25% 32%)` — **最终确定，用户否决过高饱和蓝 #3b82f6**
 - Dark primary: `hsl(215 18% 68%)` ≈ `#9db0c0`
 - 高端、现代、稳重、极简 — 禁止 AI 渐变、鲜艳彩色
+- 视觉优化方向: 对比度/字重/阴影/间距，不要换主色
 
 ### 已完成核心里程碑
 - ✅ Semi UI → shadcn/ui 迁移 (Phase 0-7)
@@ -66,6 +67,7 @@ docker compose up -d --force-recreate --no-deps new-api
 - ✅ 保存策略合并到规则页面 Tab
 - ✅ Form.Upload 完整重写 (修复 Vertex AI 文件上传崩溃)
 - ✅ 安全部署脚本 (deploy.sh)
+- ✅ 视觉清晰度优化 (文字加深/字重分层/边框阴影/布局层次) — `20baf1bf`
 
 ### 待办方向
 - [ ] 移动端适配优化
@@ -88,6 +90,8 @@ docker compose up -d --force-recreate --no-deps new-api
 - **Docker build + SCP**: 只 SCP dist 不 git pull 会被旧代码覆盖
 - **manualChunks**: 用对象模式更安全，函数模式容易循环依赖导致白屏
 - **bun build**: 必须先 rm -rf dist node_modules/.vite，否则旧 CSS/JS 混入
+- **高饱和蓝色主题被否决**: 用户试过 #3b82f6 后不满意，退回钢蓝灰 — 不要再建议类似方案
+- **Docker 502**: 服务器重启后 docker-proxy 端口转发断裂，需 `systemctl restart docker`（不只是重启容器）
 
 ---
 
