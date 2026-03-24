@@ -70,12 +70,12 @@ export const useDashboardCharts = (
       state: {
         hover: {
           outerRadius: 0.85,
-          stroke: '#6b7f8f',
+          stroke: '#3355a0',
           lineWidth: 1,
         },
         selected: {
           outerRadius: 0.85,
-          stroke: '#6b7f8f',
+          stroke: '#3355a0',
           lineWidth: 1,
         },
       },
@@ -132,7 +132,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#6b7f8f',
+          stroke: '#3355a0',
           lineWidth: 1,
         },
       },
@@ -244,7 +244,7 @@ export const useDashboardCharts = (
     bar: {
       state: {
         hover: {
-          stroke: '#6b7f8f',
+          stroke: '#3355a0',
           lineWidth: 1,
         },
       },
@@ -439,15 +439,15 @@ export const useDashboardCharts = (
         background: 'transparent',
         colorScheme: {
           default: [
-            '#2e3a48', '#4a5c6e', '#6b7f8f', '#8fa0ae', '#b3c2cc',
-            '#3a4d5e', '#587082', '#7a919f', '#9db0bc', '#c2d0d8',
+            '#3355a0', '#6389cc', '#8ca3bf', '#4a6db8', '#a8b8ca',
+            '#2d4a8e', '#7a97b5', '#5c7dad', '#b5c4d4', '#9ab0c8',
           ],
         },
         series: {
           bar: {
             bar: {
               style: { fillOpacity: 0.85 },
-              state: { hover: { stroke: '#1a1a1a', lineWidth: 1, fillOpacity: 1 } },
+              state: { hover: { stroke: '#2d4a8e', lineWidth: 1, fillOpacity: 1 } },
             },
           },
           line: {
@@ -463,22 +463,22 @@ export const useDashboardCharts = (
         },
         component: {
           axis: {
-            label: { style: { fill: '#8fa0ae', fontSize: 11 } },
+            label: { style: { fill: '#6b7280', fontSize: 11 } },
             tick: { style: { stroke: '#e0e4e8' } },
             domainLine: { style: { stroke: '#e0e4e8' } },
             grid: { style: { stroke: '#eef1f3', lineDash: [3, 3] } },
           },
           legend: {
-            label: { style: { fill: '#6b7f8f', fontSize: 11 } },
+            label: { style: { fill: '#4b5563', fontSize: 11 } },
           },
           title: {
-            style: { fill: '#2e3a48', fontSize: 13, fontWeight: 500 },
-            subtextStyle: { fill: '#8fa0ae', fontSize: 11 },
+            style: { fill: '#1f2937', fontSize: 13, fontWeight: 500 },
+            subtextStyle: { fill: '#6b7280', fontSize: 11 },
           },
           tooltip: {
-            panel: { style: { backgroundColor: '#2e3a48', border: { color: '#2e3a48' }, borderRadius: 8 } },
+            panel: { style: { backgroundColor: '#1e293b', border: { color: '#1e293b' }, borderRadius: 8 } },
             titleLabel: { style: { fill: '#ffffff', fontSize: 11 } },
-            keyLabel: { style: { fill: '#b3c2cc', fontSize: 11 } },
+            keyLabel: { style: { fill: '#94a3b8', fontSize: 11 } },
             valueLabel: { style: { fill: '#ffffff', fontSize: 11 } },
           },
         },

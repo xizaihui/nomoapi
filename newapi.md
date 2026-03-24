@@ -298,6 +298,32 @@ git push opentoken v0.x.x-opentoken
 
 ## 📅 更新日志
 
+### 2026-03-24 — 靛蓝色彩体系 + 色彩精修 + Dropdown 崩溃修复
+
+#### 色彩体系升级：钢蓝灰 → 靛蓝双色系统 ✅
+- **设计理念**: 黑白灰基底保持不变，交互元素使用靛蓝 `hsl(220 60% 50%)` 作为信号色
+- **主色**: `--primary: 220 60% 50%`（靛蓝），仅用于按钮/选中态/聚焦态
+- **accent**: `220 30% 95%` 极淡靛蓝底色，用于 hover/选中背景
+- **ring/sidebar-primary/sidebar-ring**: 统一靛蓝
+- **chart 色板**: `220 55% 48%` → `215 10% 78%` 靛蓝到冷灰渐变
+- **Semi hover/active**: 实色 `hsl(220 60% 45%)` / `hsl(220 60% 40%)`，不再用透明度
+
+#### 色彩精修（5项） ✅
+- **状态色色温统一**: success 纯绿→青绿 `#0d9488`(teal)，warning 亮橙→深琥珀 `#c2820a`，info 跟主色靛蓝统一
+- **Semi 底层色板覆写**: `--semi-green-*` / `--semi-blue-*` / `--semi-orange-*` 全部重映射
+- **图表色板优化**: 靛蓝→冷灰自然渐变，相邻色辨识度拉开
+- **侧栏交互增强**: hover 极淡靛蓝底 `220 60% 50% / 0.06`，选中态靛蓝文字+图标
+- **按钮阴影色调**: 投影从纯黑→靛蓝调 `rgba(51,85,153)`
+- **sparkline 迷你图**: 颜色改为靛蓝 `#3355a0`
+
+#### Dropdown 崩溃修复 ✅
+- **问题**: 模型页→供应商 Tab→"操作"按钮点击报错 `React.Children.only expected to receive a single React element child`
+- **原因**: Radix `DropdownMenuTrigger asChild` 内部 Slot 要求恰好一个 React element child，Semi compat Button 经两层包装后某些场景不满足
+- **修复**: `Dropdown.jsx` 在传给 Trigger 前校验 children，非单元素则包 `<span>`；`Dropdown.Item` 的 `React.Children.only` 加 try-catch 防御
+
+**影响文件**: `index.css`, `Dropdown.jsx`, `StatsCards.jsx`, `useDashboardCharts.jsx`
+**commit**: 待提交
+
 ### 2026-03-24 — 视觉清晰度优化 + 布局层次增强
 
 #### 文字清晰度修复 ✅

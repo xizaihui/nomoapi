@@ -46,10 +46,25 @@ const renderMenuItems = (menu) => {
 const Dropdown = ({ trigger = 'hover', position, children, render, menu, clickToHide, className, style, visible, onVisibleChange, ...rest }) => {
   // Semi Dropdown accepts `render` as a ReactNode for the menu content
   // or `menu` as an array of items
+  
+  // DropdownMenuTrigger asChild uses Radix Slot which requires a single React element child.
+  // If children is not a single valid element (e.g. string, fragment, multiple children),
+  // wrap it in a <span> to satisfy the Slot contract.
+  let triggerChild = children;
+  try {
+    // Validate single element
+    const count = React.Children.count(children);
+    if (count !== 1 || !React.isValidElement(children)) {
+      triggerChild = <span>{children}</span>;
+    }
+  } catch {
+    triggerChild = <span>{children}</span>;
+  }
+
   return (
     <DropdownMenu open={visible} onOpenChange={onVisibleChange}>
       <DropdownMenuTrigger asChild>
-        {children}
+        {triggerChild}
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn(className)} style={style} onClick={(e) => e.stopPropagation()}>
         {render || (menu && renderMenuItems(menu))}
@@ -66,8 +81,13 @@ const Menu = ({ children, className, ...rest }) => <>{children}</>;
 const Item = ({ children, onClick, disabled, icon, active, className, type, ...rest }) => {
   // Check if children is a single interactive element (button, a, etc.)
   // Only treat as interactive if the CHILD itself is interactive AND no onClick on Item
-  const child = React.Children.count(children) === 1 ? React.Children.only(children) : null;
-  const isInteractive = !onClick && child && (
+  let child = null;
+  try {
+    child = React.Children.count(children) === 1 ? React.Children.only(children) : null;
+  } catch {
+    child = null;
+  }
+  const isInteractive = !onClick && child && typeof child === 'object' && (
     child?.type === 'button' || child?.type === 'a' ||
     child?.props?.href ||
     (child?.props?.onClick && (typeof child?.type === 'function' || typeof child?.type === 'object'))
