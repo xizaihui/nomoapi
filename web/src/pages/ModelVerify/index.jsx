@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Select, Button, Typography, Tag, Spin, Progress, Tooltip } from '@douyinfe/semi-ui';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Select, Button, Typography, Tag, Spin, Progress } from '@douyinfe/semi-ui';
 import {
   ShieldCheck, ShieldAlert, ShieldX, Play, Server, Brain, Terminal, FileSignature,
   Wrench, CheckCircle2, XCircle, AlertTriangle, Info, RotateCcw, Sparkles
@@ -48,6 +48,17 @@ const BADGE_CONFIG = {
   '检测失败': { color: 'grey', icon: <ShieldX size={20} />, bg: 'bg-muted/30', border: 'border-border' },
 };
 
+// 渠道类型映射
+const CHANNEL_TYPE_LABELS = {
+  1: 'OpenAI',
+  3: 'Anthropic',
+  8: 'Custom',
+  14: 'Azure',
+  15: 'Google',
+  24: 'AWS Bedrock',
+  31: 'Vertex AI',
+};
+
 // ==================== 主组件 ====================
 export default function ModelVerify() {
   const { t } = useTranslation();
@@ -55,21 +66,29 @@ export default function ModelVerify() {
   // 状态
   const [channels, setChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
-  const [selectedModel, setSelectedModel] = useState('claude-sonnet-4-5-20250929');
+  const [selectedModel, setSelectedModel] = useState('');
   const [loading, setLoading] = useState(false);
   const [initLoading, setInitLoading] = useState(true);
   const [result, setResult] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Claude 模型列表
-  const claudeModels = [
-    'claude-sonnet-4-5-20250929',
-    'claude-3-5-sonnet-20241022',
-    'claude-3-5-haiku-20241022',
-    'claude-3-opus-20240229',
-    'claude-3-sonnet-20240229',
-    'claude-3-haiku-20240307',
-  ];
+  // 从选中渠道解析模型列表
+  const channelModels = useMemo(() => {
+    if (!selectedChannel) return [];
+    const channel = channels.find(ch => String(ch.id) === String(selectedChannel));
+    if (!channel || !channel.models) return [];
+    // models 字段是逗号分隔的字符串
+    return channel.models.split(',').map(m => m.trim()).filter(Boolean);
+  }, [selectedChannel, channels]);
+
+  // 选择渠道时自动选第一个模型
+  useEffect(() => {
+    if (channelModels.length > 0) {
+      setSelectedModel(channelModels[0]);
+    } else {
+      setSelectedModel('');
+    }
+  }, [channelModels]);
 
   // 初始化
   useEffect(() => {
@@ -82,14 +101,12 @@ export default function ModelVerify() {
         }
 
         // 获取渠道列表（管理员）
-        const channelRes = await API.get('/api/channel/?p=0&page_size=100');
+        const channelRes = await API.get('/api/channel/?p=0&page_size=200');
         if (channelRes.data?.success) {
-          // 过滤 Anthropic 类型渠道
-          const anthropicChannels = channelRes.data.data.filter(ch =>
-            ch.type === 3 || // Anthropic
-            ch.models?.toLowerCase().includes('claude')
-          );
-          setChannels(anthropicChannels);
+          const data = channelRes.data.data;
+          // API 可能返回数组或 {items: [...]} 对象
+          const channelList = Array.isArray(data) ? data : (data?.items || data?.list || []);
+          setChannels(channelList);
         }
       } catch (e) {
         console.error('Init error:', e);
@@ -104,6 +121,10 @@ export default function ModelVerify() {
   const runVerify = useCallback(async () => {
     if (!selectedChannel) {
       showError('请选择渠道');
+      return;
+    }
+    if (!selectedModel) {
+      showError('请选择模型');
       return;
     }
 
@@ -162,7 +183,7 @@ export default function ModelVerify() {
           <ShieldCheck size={24} className="text-primary" />
           <div>
             <h1 className="text-lg font-semibold">模型鉴真</h1>
-            <p className="text-xs text-muted-foreground">检测 Claude 模型真伪，识别逆向渠道特征</p>
+            <p className="text-xs text-muted-foreground">检测渠道模型真伪，识别逆向渠道特征</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -187,17 +208,34 @@ export default function ModelVerify() {
               placeholder="选择要检测的渠道"
               filter
               showClear
-            >
-              {channels.map(ch => (
-                <Select.Option key={ch.id} value={String(ch.id)}>
-                  <span className="flex items-center gap-2">
-                    <span className="text-muted-foreground">#{ch.id}</span>
-                    <span>{ch.name}</span>
-                    {ch.type === 3 && <Tag size="small" color="purple">Anthropic</Tag>}
+              optionList={channels.map(ch => ({
+                value: String(ch.id),
+                label: `#${ch.id} ${ch.name}`,
+                otherKey: ch.type,
+              }))}
+              renderSelectedItem={(option) => {
+                const ch = channels.find(c => String(c.id) === option.value);
+                return (
+                  <span className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground text-xs">#{ch?.id}</span>
+                    <span>{ch?.name || option.label}</span>
                   </span>
-                </Select.Option>
-              ))}
-            </Select>
+                );
+              }}
+              renderOptionItem={({ disabled, selected, label, value, ...rest }) => {
+                const ch = channels.find(c => String(c.id) === value);
+                const typeLabel = ch ? CHANNEL_TYPE_LABELS[ch.type] : '';
+                return (
+                  <div className="flex items-center justify-between w-full px-3 py-2" style={{ cursor: 'pointer' }}>
+                    <span className="flex items-center gap-2">
+                      <span className="text-muted-foreground text-xs">#{ch?.id}</span>
+                      <span className={selected ? 'font-medium' : ''}>{ch?.name}</span>
+                    </span>
+                    {typeLabel && <Tag size="small" color={ch?.type === 3 ? 'purple' : 'blue'}>{typeLabel}</Tag>}
+                  </div>
+                );
+              }}
+            />
           </div>
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-1.5 block flex items-center gap-1">
@@ -208,13 +246,18 @@ export default function ModelVerify() {
               style={{ width: '100%' }}
               value={selectedModel}
               onChange={setSelectedModel}
+              placeholder={selectedChannel ? '选择模型' : '请先选择渠道'}
+              disabled={!selectedChannel}
               filter
-              allowCreate
-            >
-              {claudeModels.map(m => (
-                <Select.Option key={m} value={m}>{m}</Select.Option>
-              ))}
-            </Select>
+              showClear
+              optionList={channelModels.map(m => ({
+                value: m,
+                label: m,
+              }))}
+            />
+            {selectedChannel && channelModels.length === 0 && (
+              <p className="text-xs text-orange-500 mt-1">该渠道未配置模型</p>
+            )}
           </div>
         </div>
 
@@ -223,7 +266,7 @@ export default function ModelVerify() {
           type="primary"
           icon={<Play size={16} />}
           loading={loading}
-          disabled={!selectedChannel}
+          disabled={!selectedChannel || !selectedModel}
           onClick={runVerify}
           style={{ width: '100%' }}
         >
@@ -251,7 +294,7 @@ export default function ModelVerify() {
               </div>
               <div className="text-right">
                 <p className="text-xs text-muted-foreground">检测耗时</p>
-                <p className="text-lg font-mono">{result.duration_ms}ms</p>
+                <p className="text-lg font-mono">{result.duration_ms ? `${(result.duration_ms / 1000).toFixed(1)}s` : '-'}</p>
               </div>
             </div>
 
