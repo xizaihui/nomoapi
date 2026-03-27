@@ -102,48 +102,8 @@ deploy_remote() {
 
   # 3. 远程: git pull + 替换 dist + docker build + 验证
   info "远程构建部署..."
-  remote_ssh "$host" bash -s "$extra_build_args" << 'REMOTE_SCRIPT'
-    set -euo pipefail
-    EXTRA_BUILD="$1"
-    cd /opt/apps/opentoken
-
-    echo "[1/5] Git pull..."
-    git fetch --all 2>&1 | tail -2
-    git pull origin feat/shadcn-ui 2>&1 | tail -3
-
-    echo "[2/5] 替换 dist..."
-    rm -rf web/dist
-    tar xzf /tmp/dist.tar.gz -C web/
-    rm -f /tmp/dist.tar.gz
-
-    echo "[3/5] Docker build..."
-    if ! docker build --no-cache $EXTRA_BUILD -t newapi-aurora:latest . 2>&1 | tee /tmp/docker-build.log | tail -5; then
-      echo "=========================================="
-      echo "[✗] Docker 构建失败! 不会重启容器。"
-      echo "    旧版本继续运行，不受影响。"
-      echo "    查看完整日志: cat /tmp/docker-build.log"
-      echo "=========================================="
-      exit 1
-    fi
-
-    echo "[4/5] 重启容器..."
-    docker compose up -d --force-recreate --no-deps new-api 2>&1 | tail -3
-
-    echo "[5/5] 健康检查..."
-    for i in $(seq 1 6); do
-      sleep 5
-      STATUS=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 5 http://localhost:3000/api/status 2>/dev/null || echo "000")
-      if [ "$STATUS" = "200" ]; then
-        echo "[✓] 部署成功 (HTTP 200)"
-        exit 0
-      fi
-      echo "  等待启动... ($i/6, HTTP $STATUS)"
-    done
-
-    echo "[✗] 健康检查超时 (30s)"
-    docker logs --tail 20 new-api 2>&1
-    exit 1
-REMOTE_SCRIPT
+  local extra_build="$extra_build_args"
+  remote_ssh "$host" "bash -c 'set -eo pipefail; EXTRA_BUILD=\"$extra_build\"; cd /opt/apps/opentoken; echo \"[1/5] Git pull...\"; git fetch --all 2>&1 | tail -2; git pull origin feat/shadcn-ui 2>&1 | tail -3; echo \"[2/5] 替换 dist...\"; rm -rf web/dist; tar xzf /tmp/dist.tar.gz -C web/; rm -f /tmp/dist.tar.gz; echo \"[3/5] Docker build...\"; if ! docker build --no-cache \$EXTRA_BUILD -t newapi-aurora:latest . 2>&1 | tee /tmp/docker-build.log | tail -5; then echo \"[✗] Docker 构建失败!\"; exit 1; fi; echo \"[4/5] 重启容器...\"; docker compose up -d --force-recreate --no-deps new-api 2>&1 | tail -3; echo \"[5/5] 健康检查...\"; for i in 1 2 3 4 5 6; do sleep 5; STATUS=\$(curl -s -o /dev/null -w \"%{http_code}\" --connect-timeout 5 http://localhost:3000/api/status 2>/dev/null || echo \"000\"); if [ \"\$STATUS\" = \"200\" ]; then echo \"[✓] 部署成功 (HTTP 200)\"; exit 0; fi; echo \"  等待启动... (\$i/6, HTTP \$STATUS)\"; done; echo \"[✗] 健康检查超时\"; docker logs --tail 20 new-api 2>&1; exit 1'"
 
   if [ $? -eq 0 ]; then
     info "${name}部署成功 ✅"

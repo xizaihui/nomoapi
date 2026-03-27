@@ -583,3 +583,43 @@ ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
 ### 2026-03-14 ~ 03-15 — SideSheet/Avatar/Typography/Tag 修复
 
 ### 2026-03-13 ~ 03-14 — Phase 0-7 主体迁移
+
+### 2026-03-27 — Playground功能测试 + 上游价格同步修复 + Token亲和性 + 额度显示优化
+
+**commit `85e160b9`**
+
+#### Playground 功能测试页面 (新增)
+- **6个测试场景** 分两组:
+  - 基础功能: 基础对话、Function Calling、Streaming
+  - 工具兼容性: Claude Code、Cursor、Cline/Continue
+- **管理员渠道选择**: 选渠道后模型列表联动过滤(读渠道 models 字段)
+- **渠道指定机制**: token后缀 `sk-xxx-channelId`，100%走指定渠道
+- **API格式自动检测**: 模型名含 claude/anthropic → Anthropic，否则 → OpenAI
+- **流式解析**: 真正解析 SSE 数据块，分析 tool_use/tool_calls
+- **测试汇总面板**: 实时显示通过/失败统计 + 耗时
+- **cURL一键复制 + 响应折叠展示**
+- **PlaygroundEnabled 运营开关**: constants/option/status/localStorage/sidebar/设置UI 完整链路
+- 文件: `web/src/pages/Playground/index.jsx` (~985行)
+- 路由: `/console/playground`, 侧栏 FlaskConical 图标
+
+#### 上游价格同步修复
+- **复制模型名修复**: navigator.clipboard fallback 到 execCommand('copy')
+- **对比预览修复**: 添加 debug logging, Tab 点击自动触发对比
+- **对比功能**: 拿上游模型和系统现有倍率/价格比较，显示新增/变更/无变化
+
+#### Channel Affinity — Token 亲和性规则
+- 新增第3条默认规则: `token affinity`
+- key source: `context_int:id` (token/用户维度)
+- 匹配: 所有模型 `.*`, 路径 `/v1/chat/completions`, `/v1/messages`, `/v1/responses`
+- TTL: 600s, 包含 using_group + rule_name
+- 优先级: Codex CLI → Claude CLI → Token 通用
+
+#### 令牌额度显示优化
+- 隐藏进度条百分比文字，只显示剩余/总量
+
+**关键文件:**
+- `controller/upstream_pricing_sync.go` — 上游价格同步后端 (693行)
+- `web/src/components/settings/UpstreamPricingSyncSetting.jsx` — 上游价格同步前端 (589行)
+- `web/src/pages/Playground/index.jsx` — 功能测试页面 (985行)
+- `setting/operation_setting/channel_affinity_setting.go` — 亲和性规则
+- `web/src/pages/Setting/Operation/SettingsGeneral.jsx` — PlaygroundEnabled 开关
