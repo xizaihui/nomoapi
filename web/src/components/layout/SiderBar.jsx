@@ -47,6 +47,7 @@ const routerMap = {
   pricing: '/pricing',
   task: '/console/task',
   models: '/console/models',
+  'model-verify': '/console/model-verify',
   deployment: '/console/deployment',
   personal: '/console/personal',
   // 审计模块（独立，不影响上游）
@@ -186,6 +187,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         text: t('模型'),
         itemKey: 'models',
         to: '/console/models',
+        className: isAdmin() ? '' : 'tableHiddle',
+      },
+      {
+        text: t('模型鉴真'),
+        itemKey: 'model-verify',
+        to: '/console/model-verify',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {

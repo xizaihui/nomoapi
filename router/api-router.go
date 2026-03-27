@@ -343,6 +343,13 @@ func SetApiRouter(router *gin.Engine) {
 			vendorRoute.DELETE("/:id", controller.DeleteVendorMeta)
 		}
 
+		// 模型鉴真
+		modelRoute := apiRouter.Group("/model")
+		modelRoute.Use(middleware.AdminAuth())
+		{
+			modelRoute.POST("/verify", controller.ModelVerify)
+		}
+
 		modelsRoute := apiRouter.Group("/models")
 		modelsRoute.Use(middleware.AdminAuth())
 		{

@@ -70,6 +70,7 @@ const Midjourney = lazyRetry(() => import('./pages/Midjourney'));
 const Pricing = lazyRetry(() => import('./pages/Pricing'));
 const Task = lazyRetry(() => import('./pages/Task'));
 const ModelPage = lazyRetry(() => import('./pages/Model'));
+const ModelVerifyPage = lazyRetry(() => import('./pages/ModelVerify'));
 const ModelDeploymentPage = lazyRetry(() => import('./pages/ModelDeployment'));
 const Subscription = lazyRetry(() => import('./pages/Subscription'));
 const PersonalSetting = lazyRetry(() => import('./components/settings/PersonalSetting'));
@@ -140,6 +141,16 @@ function App() {
             <AdminRoute>
               <Suspense fallback={<Loading />}>
                 <ModelPage />
+              </Suspense>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/console/model-verify'
+          element={
+            <AdminRoute>
+              <Suspense fallback={<Loading />}>
+                <ModelVerifyPage />
               </Suspense>
             </AdminRoute>
           }
