@@ -200,6 +200,13 @@ const ChannelSelectorModal = forwardRef(
             </Tag>
           );
           break;
+        case 4:
+          statusTag = (
+            <Tag color='orange' shape='circle'>
+              {t('鉴真禁用')}
+            </Tag>
+          );
+          break;
         default:
           statusTag = (
             <Tag color='grey' shape='circle'>

@@ -176,6 +176,8 @@ const EditChannelModal = (props) => {
     status_code_mapping: '',
     models: [],
     auto_ban: 1,
+    auto_verify: 0,
+    verify_model: '',
     test_model: '',
     groups: ['default'],
     priority: 0,
@@ -1789,6 +1791,7 @@ const EditChannelModal = (props) => {
 
     let res;
     localInputs.auto_ban = localInputs.auto_ban ? 1 : 0;
+    localInputs.auto_verify = localInputs.auto_verify ? 1 : 0;
     localInputs.models = localInputs.models.join(',');
     localInputs.group = (localInputs.groups || []).join(',');
 
@@ -3452,6 +3455,16 @@ const EditChannelModal = (props) => {
                         '仅当自动禁用开启时有效，关闭后不会自动禁用该渠道',
                       )}
                       initValue={autoBan}
+                    />
+
+                    <Form.Switch
+                      field='auto_verify'
+                      label={t('自动鉴真')}
+                      checkedText={t('开')}
+                      uncheckedText={t('关')}
+                      extraText={t(
+                        '开启后每5分钟自动检测模型真伪，掺假自动禁用，恢复自动启用',
+                      )}
                     />
 
                     <Form.Switch

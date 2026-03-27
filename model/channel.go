@@ -42,6 +42,10 @@ type Channel struct {
 	StatusCodeMapping *string `json:"status_code_mapping" gorm:"type:varchar(1024);default:''"`
 	Priority          *int64  `json:"priority" gorm:"bigint;default:0"`
 	AutoBan           *int    `json:"auto_ban" gorm:"default:1"`
+	AutoVerify        *int    `json:"auto_verify" gorm:"default:0"`
+	VerifyModel       *string `json:"verify_model" gorm:"type:varchar(255)"`
+	LastVerifyTime    int64   `json:"last_verify_time" gorm:"bigint"`
+	LastVerifyScore   int     `json:"last_verify_score" gorm:"default:0"`
 	OtherInfo         string  `json:"other_info"`
 	Tag               *string `json:"tag" gorm:"index"`
 	Setting           *string `json:"setting" gorm:"type:text"` // 渠道额外设置
@@ -247,6 +251,31 @@ func (channel *Channel) GetAutoBan() bool {
 		return false
 	}
 	return *channel.AutoBan == 1
+}
+
+func (channel *Channel) GetAutoVerify() bool {
+	if channel.AutoVerify == nil {
+		return false
+	}
+	return *channel.AutoVerify == 1
+}
+
+func (channel *Channel) GetVerifyModel() string {
+	if channel.VerifyModel == nil || *channel.VerifyModel == "" {
+		// 自动选第一个包含 claude 的模型
+		models := channel.GetModels()
+		for _, m := range models {
+			if strings.Contains(strings.ToLower(m), "claude") {
+				return m
+			}
+		}
+		// 没有 claude 模型就用第一个
+		if len(models) > 0 {
+			return models[0]
+		}
+		return ""
+	}
+	return *channel.VerifyModel
 }
 
 func (channel *Channel) Save() error {
@@ -1005,4 +1034,20 @@ func CountChannelsGroupByType() (map[int64]int64, error) {
 		counts[r.Type] = r.Count
 	}
 	return counts, nil
+}
+
+// GetAutoVerifyChannels 获取所有开启了自动鉴真的渠道（启用中或鉴真禁用中的）
+func GetAutoVerifyChannels() ([]Channel, error) {
+	var channels []Channel
+	err := DB.Where("auto_verify = ? AND (status = ? OR status = ?)",
+		1, common.ChannelStatusEnabled, common.ChannelStatusVerifyDisabled).Find(&channels).Error
+	return channels, err
+}
+
+// UpdateChannelVerifyResult 更新渠道鉴真结果
+func UpdateChannelVerifyResult(channelId int, verifyTime int, score int) {
+	DB.Model(&Channel{}).Where("id = ?", channelId).Updates(map[string]interface{}{
+		"last_verify_time":  verifyTime,
+		"last_verify_score": score,
+	})
 }
