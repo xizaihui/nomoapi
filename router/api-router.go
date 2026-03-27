@@ -199,6 +199,19 @@ func SetApiRouter(router *gin.Engine) {
 			ratioSyncRoute.GET("/channels", controller.GetSyncableChannels)
 			ratioSyncRoute.POST("/fetch", controller.FetchUpstreamRatios)
 		}
+		// 上游价格同步
+		pricingSyncRoute := apiRouter.Group("/pricing_sync")
+		pricingSyncRoute.Use(middleware.RootAuth())
+		{
+			pricingSyncRoute.GET("/config", controller.GetPricingSyncConfig)
+			pricingSyncRoute.POST("/config", controller.SavePricingSyncConfig)
+			pricingSyncRoute.GET("/fetch", controller.FetchUpstreamPricing)
+			pricingSyncRoute.POST("/preview", controller.PreviewUpstreamModels)
+			pricingSyncRoute.POST("/diff", controller.DiffUpstreamModels)
+			pricingSyncRoute.POST("/sync", controller.SyncUpstreamPricing)
+			pricingSyncRoute.GET("/backups", controller.ListPricingSyncBackups)
+			pricingSyncRoute.POST("/restore", controller.RestorePricingSyncBackup)
+		}
 		channelRoute := apiRouter.Group("/channel")
 		channelRoute.Use(middleware.AdminAuth())
 		{

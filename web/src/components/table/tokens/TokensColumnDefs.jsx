@@ -310,7 +310,8 @@ const renderQuotaUsage = (text, record, t) => {
             percent={percent}
             stroke={getProgressColor(percent)}
             aria-label='quota usage'
-            format={() => `${percent.toFixed(0)}%`}
+            format={() => ''}
+            showInfo={false}
             style={{ width: '100%', marginTop: '1px', marginBottom: 0 }}
           />
         </div>

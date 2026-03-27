@@ -108,6 +108,21 @@ var channelAffinitySetting = ChannelAffinitySetting{
 			IncludeRuleName:       true,
 			UserAgentInclude:      nil,
 		},
+		{
+			Name:       "token affinity",
+			ModelRegex: []string{".*"},
+			PathRegex:  []string{"/v1/chat/completions", "/v1/messages", "/v1/responses"},
+			KeySources: []ChannelAffinityKeySource{
+				{Type: "context_int", Key: "id"},
+			},
+			ValueRegex:            "",
+			TTLSeconds:            600,
+			ParamOverrideTemplate: nil,
+			SkipRetryOnFailure:    false,
+			IncludeUsingGroup:     true,
+			IncludeRuleName:       true,
+			UserAgentInclude:      nil,
+		},
 	},
 }
 

@@ -43,6 +43,7 @@ import {
   FileSearch,
   ShieldCheck,
   Timer,
+  FlaskConical,
 } from 'lucide-react';
 import {
   SiAtlassian,
@@ -119,6 +120,8 @@ export function getLucideIcon(key, selected = false) {
       return <ShieldCheck {...commonProps} color={iconColor} />;
     case 'audit-retention':
       return <Timer {...commonProps} color={iconColor} />;
+    case 'playground':
+      return <FlaskConical {...commonProps} color={iconColor} />;
     default:
       return <CircleUser {...commonProps} color={iconColor} />;
   }

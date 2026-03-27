@@ -53,6 +53,7 @@ const routerMap = {
   'audit-logs': '/console/audit-logs',
   'audit-rules': '/console/audit-rules',
   'audit-retention': '/console/audit-retention',
+  playground: '/console/playground',
 };
 
 const SiderBar = ({ onNavigate = () => {} }) => {
@@ -97,6 +98,15 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         to: '/token',
       },
       {
+        text: t('功能测试'),
+        itemKey: 'playground',
+        to: '/console/playground',
+        className:
+          localStorage.getItem('enable_playground') === 'true'
+            ? ''
+            : 'tableHiddle',
+      },
+      {
         text: t('日志'),
         itemKey: 'log',
         to: '/log',
@@ -130,6 +140,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
     localStorage.getItem('enable_data_export'),
     localStorage.getItem('enable_drawing'),
     localStorage.getItem('enable_task'),
+    localStorage.getItem('enable_playground'),
     t,
     isModuleVisible,
   ]);

@@ -34,6 +34,7 @@ import {
   CreditCard,
   Server,
   Activity,
+  RefreshCw,
 } from 'lucide-react';
 
 import SystemSetting from '../../components/settings/SystemSetting';
@@ -49,6 +50,7 @@ import DrawingSetting from '../../components/settings/DrawingSetting';
 import PaymentSetting from '../../components/settings/PaymentSetting';
 import ModelDeploymentSetting from '../../components/settings/ModelDeploymentSetting';
 import PerformanceSetting from '../../components/settings/PerformanceSetting';
+import UpstreamPricingSyncSetting from '../../components/settings/UpstreamPricingSyncSetting';
 
 const Setting = () => {
   const { t } = useTranslation();
@@ -117,6 +119,16 @@ const Setting = () => {
       ),
       content: <RatioSetting />,
       itemKey: 'ratio',
+    });
+    panes.push({
+      tab: (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <RefreshCw size={18} />
+          {t('上游价格同步')}
+        </span>
+      ),
+      content: <UpstreamPricingSyncSetting />,
+      itemKey: 'pricing-sync',
     });
     panes.push({
       tab: (

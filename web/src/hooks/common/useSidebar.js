@@ -34,6 +34,7 @@ export const DEFAULT_ADMIN_CONFIG = {
     enabled: true,
     detail: true,
     token: true,
+    playground: true,
     log: true,
     midjourney: true,
     task: true,

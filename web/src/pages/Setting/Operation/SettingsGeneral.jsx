@@ -56,6 +56,7 @@ export default function GeneralSettings(props) {
     DefaultCollapseSidebar: false,
     DemoSiteEnabled: false,
     SelfUseModeEnabled: false,
+    PlaygroundEnabled: true,
     'token_setting.max_user_tokens': 1000,
   });
   const refForm = useRef();
@@ -285,6 +286,17 @@ export default function GeneralSettings(props) {
                   checkedText='｜'
                   uncheckedText='〇'
                   onChange={handleFieldChange('SelfUseModeEnabled')}
+                />
+              </Col>
+              <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+                <Form.Switch
+                  field={'PlaygroundEnabled'}
+                  label={t('功能测试页面')}
+                  extraText={t('用户侧栏显示「功能测试」，可检测模型兼容性')}
+                  size='default'
+                  checkedText='｜'
+                  uncheckedText='〇'
+                  onChange={handleFieldChange('PlaygroundEnabled')}
                 />
               </Col>
             </Row>

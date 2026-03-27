@@ -80,6 +80,7 @@ const OAuth2Callback = lazyRetry(() => import('./components/auth/OAuth2Callback'
 // 审计模块（独立功能，不影响上游）
 const AuditLogsPage = lazyRetry(() => import('./features/audit/pages/AuditLogsPage'));
 const AuditRulesPage = lazyRetry(() => import('./features/audit/pages/AuditRulesPage'));
+const Playground = lazyRetry(() => import('./pages/Playground'));
 
 function DynamicOAuth2Callback() {
   const { provider } = useParams();
@@ -179,6 +180,16 @@ function App() {
             <PrivateRoute>
               <Suspense fallback={<Loading />}>
                 <Token />
+              </Suspense>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/console/playground'
+          element={
+            <PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <Playground />
               </Suspense>
             </PrivateRoute>
           }
