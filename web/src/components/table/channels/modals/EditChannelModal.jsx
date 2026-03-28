@@ -2742,6 +2742,7 @@ const EditChannelModal = (props) => {
                           optionList={[
                             { label: t('随机'), value: 'random' },
                             { label: t('轮询'), value: 'polling' },
+                            { label: t('哈希亲和'), value: 'hash' },
                           ]}
                           style={{ width: '100%' }}
                           value={inputs.multi_key_mode || 'random'}
@@ -2750,6 +2751,15 @@ const EditChannelModal = (props) => {
                             handleInputChange('multi_key_mode', value);
                           }}
                         />
+                        {inputs.multi_key_mode === 'hash' && (
+                          <Banner
+                            type='info'
+                            description={t(
+                              '哈希亲和模式会根据调用令牌(Token)将请求固定分配到同一个密钥，最大化上游 Prompt Caching 命中率。适合自建大号池场景。',
+                            )}
+                            className='!rounded-lg mt-2'
+                          />
+                        )}
                         {inputs.multi_key_mode === 'polling' && (
                           <Banner
                             type='warning'

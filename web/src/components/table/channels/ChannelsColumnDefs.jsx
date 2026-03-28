@@ -69,6 +69,11 @@ const renderType = (type, record = {}, t) => {
           <FaRandom className='text-foreground/80' />
           {icon}
         </div>
+      ) : channelInfo?.multi_key_mode === 'hash' ? (
+        <div className='flex items-center gap-1'>
+          <span className='text-foreground/80 text-xs font-mono'>#</span>
+          {icon}
+        </div>
       ) : (
         <div className='flex items-center gap-1'>
           <IconTreeTriangleDown className='text-foreground/80' />

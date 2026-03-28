@@ -107,6 +107,13 @@ func (channel *Channel) GetKeys() []string {
 }
 
 func (channel *Channel) GetNextEnabledKey() (string, int, *types.NewAPIError) {
+	return channel.GetNextEnabledKeyWithHint(0)
+}
+
+// GetNextEnabledKeyWithHint selects a key based on the channel's multi-key mode.
+// hashHint is used only for MultiKeyModeHash: a stable integer (e.g. token_id) that
+// determines which key to pin to. If hashHint <= 0 in hash mode, falls back to random.
+func (channel *Channel) GetNextEnabledKeyWithHint(hashHint int) (string, int, *types.NewAPIError) {
 	// If not in multi-key mode, return the original key string directly.
 	if !channel.ChannelInfo.IsMultiKey {
 		return channel.Key, 0, nil
@@ -153,6 +160,18 @@ func (channel *Channel) GetNextEnabledKey() (string, int, *types.NewAPIError) {
 	case constant.MultiKeyModeRandom:
 		// Randomly pick one enabled key
 		selectedIdx := enabledIdx[rand.Intn(len(enabledIdx))]
+		return keys[selectedIdx], selectedIdx, nil
+	case constant.MultiKeyModeHash:
+		// Hash affinity: pin the same token_id to the same key for upstream prompt caching.
+		// Use hashHint (token_id) to deterministically select from enabled keys.
+		// If the pinned key gets disabled, the hash simply falls to another enabled key —
+		// one cache miss, then re-established on the new key.
+		if hashHint <= 0 {
+			// No hint available (e.g. internal calls without context), fall back to random
+			selectedIdx := enabledIdx[rand.Intn(len(enabledIdx))]
+			return keys[selectedIdx], selectedIdx, nil
+		}
+		selectedIdx := enabledIdx[hashHint%len(enabledIdx)]
 		return keys[selectedIdx], selectedIdx, nil
 	case constant.MultiKeyModePolling:
 		// Use channel-specific lock to ensure thread-safe polling
