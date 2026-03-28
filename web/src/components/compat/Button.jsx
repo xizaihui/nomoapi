@@ -53,11 +53,19 @@ const Button = React.forwardRef(
     const mappedSize = SIZE_MAP[size] || 'default';
     const isIconOnly = icon && !children;
 
+    let finalSize;
+    if (isIconOnly) {
+      // icon-only 按钮根据 size prop 选择对应的 icon 尺寸
+      finalSize = size === 'small' ? 'icon-sm' : 'icon';
+    } else {
+      finalSize = mappedSize;
+    }
+
     return (
       <ShadcnButton
         ref={ref}
         variant={variant}
-        size={isIconOnly ? 'icon' : mappedSize}
+        size={finalSize}
         disabled={disabled || loading}
         className={`${block ? 'w-full' : ''} ${className}`}
         type={htmlType || 'button'}
