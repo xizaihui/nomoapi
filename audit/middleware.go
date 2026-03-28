@@ -35,6 +35,31 @@ func ExtractPromptFromRequest(request interface{}) string {
 		}
 		// 没有 user 消息，取最后一条
 		return req.Messages[len(req.Messages)-1].StringContent()
+
+	case *dto.ClaudeRequest:
+		if req == nil || len(req.Messages) == 0 {
+			return ""
+		}
+		// 取最后一条 user 消息
+		for i := len(req.Messages) - 1; i >= 0; i-- {
+			if req.Messages[i].Role == "user" {
+				return extractClaudeMessageContent(req.Messages[i].Content)
+			}
+		}
+		return extractClaudeMessageContent(req.Messages[len(req.Messages)-1].Content)
+
+	case *dto.GeminiChatRequest:
+		if req == nil || len(req.Contents) == 0 {
+			return ""
+		}
+		// 取最后一条 user 内容
+		for i := len(req.Contents) - 1; i >= 0; i-- {
+			if req.Contents[i].Role == "user" {
+				return extractGeminiParts(req.Contents[i].Parts)
+			}
+		}
+		return extractGeminiParts(req.Contents[len(req.Contents)-1].Parts)
+
 	default:
 		// 尝试 JSON 序列化后提取
 		data, err := json.Marshal(request)
@@ -47,16 +72,89 @@ func ExtractPromptFromRequest(request interface{}) string {
 		}
 		if messages, ok := generic["messages"]; ok {
 			if msgArr, ok := messages.([]interface{}); ok && len(msgArr) > 0 {
-				last := msgArr[len(msgArr)-1]
-				if msgMap, ok := last.(map[string]interface{}); ok {
-					if content, ok := msgMap["content"].(string); ok {
-						return content
+				// 从后往前找 user 消息
+				for i := len(msgArr) - 1; i >= 0; i-- {
+					if msgMap, ok := msgArr[i].(map[string]interface{}); ok {
+						role, _ := msgMap["role"].(string)
+						if role == "user" || i == 0 {
+							return extractContentFromMap(msgMap)
+						}
 					}
+				}
+				// fallback: 取最后一条
+				if msgMap, ok := msgArr[len(msgArr)-1].(map[string]interface{}); ok {
+					return extractContentFromMap(msgMap)
 				}
 			}
 		}
 		return ""
 	}
+}
+
+// extractClaudeMessageContent 从 Claude 消息的 content 字段提取文本
+func extractClaudeMessageContent(content any) string {
+	if content == nil {
+		return ""
+	}
+	// content 可能是 string
+	if s, ok := content.(string); ok {
+		return s
+	}
+	// content 可能是 []ClaudeMessageContent 数组
+	data, err := json.Marshal(content)
+	if err != nil {
+		return ""
+	}
+	var blocks []struct {
+		Type string `json:"type"`
+		Text string `json:"text"`
+	}
+	if err := json.Unmarshal(data, &blocks); err != nil {
+		return ""
+	}
+	var texts []string
+	for _, b := range blocks {
+		if b.Type == "text" && b.Text != "" {
+			texts = append(texts, b.Text)
+		}
+	}
+	return strings.Join(texts, "\n")
+}
+
+// extractGeminiParts 从 Gemini Parts 提取文本
+func extractGeminiParts(parts []dto.GeminiPart) string {
+	var texts []string
+	for _, p := range parts {
+		if p.Text != "" {
+			texts = append(texts, p.Text)
+		}
+	}
+	return strings.Join(texts, "\n")
+}
+
+// extractContentFromMap 从 generic map 提取 content 文本
+func extractContentFromMap(msgMap map[string]interface{}) string {
+	content := msgMap["content"]
+	if content == nil {
+		return ""
+	}
+	// string content
+	if s, ok := content.(string); ok {
+		return s
+	}
+	// array content (OpenAI multimodal format)
+	if arr, ok := content.([]interface{}); ok {
+		var texts []string
+		for _, item := range arr {
+			if m, ok := item.(map[string]interface{}); ok {
+				if t, ok := m["text"].(string); ok {
+					texts = append(texts, t)
+				}
+			}
+		}
+		return strings.Join(texts, "\n")
+	}
+	return ""
 }
 
 // AsyncAuditCheck 异步审计检查 — 在请求处理完成后调用，不阻塞用户请求
