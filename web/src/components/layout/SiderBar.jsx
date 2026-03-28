@@ -522,7 +522,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
                 {!collapsed && (
                   <div className='sidebar-group-label'>{t('安全审计')}</div>
                 )}
-                {renderNavItem({ text: t('日志'), itemKey: 'audit-logs', to: '/console/audit-logs' })}
+                {renderNavItem({ text: t('审计'), itemKey: 'audit-logs', to: '/console/audit-logs' })}
                 {renderNavItem({ text: t('规则'), itemKey: 'audit-rules', to: '/console/audit-rules' })}
               </div>
             </>
