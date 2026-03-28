@@ -69,6 +69,7 @@ type ChannelMeta struct {
 	Organization         string
 	ChannelCreateTime    int64
 	ParamOverride        map[string]interface{}
+	ParamOverrideAudit   []string
 	HeadersOverride      map[string]interface{}
 	ChannelSetting       dto.ChannelSettings
 	ChannelOtherSettings dto.ChannelOtherSettings

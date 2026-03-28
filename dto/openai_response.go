@@ -235,6 +235,10 @@ type Usage struct {
 	ClaudeCacheCreation5mTokens int `json:"claude_cache_creation_5_m_tokens"`
 	ClaudeCacheCreation1hTokens int `json:"claude_cache_creation_1_h_tokens"`
 
+	// Usage metadata for billing semantics
+	UsageSemantic string `json:"usage_semantic,omitempty"`
+	UsageSource   string `json:"usage_source,omitempty"`
+
 	// OpenRouter Params
 	Cost any `json:"cost,omitempty"`
 }

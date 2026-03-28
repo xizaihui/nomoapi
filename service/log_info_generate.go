@@ -73,8 +73,17 @@ func GenerateTextOtherInfo(ctx *gin.Context, relayInfo *relaycommon.RelayInfo, m
 	other["admin_info"] = adminInfo
 	appendRequestPath(ctx, relayInfo, other)
 	appendRequestConversionChain(relayInfo, other)
+	appendFinalRequestFormat(relayInfo, other)
 	appendBillingInfo(relayInfo, other)
+	appendParamOverrideInfo(relayInfo, other)
 	return other
+}
+
+func appendParamOverrideInfo(relayInfo *relaycommon.RelayInfo, other map[string]interface{}) {
+	if relayInfo == nil || other == nil || len(relayInfo.ParamOverrideAudit) == 0 {
+		return
+	}
+	other["po"] = relayInfo.ParamOverrideAudit
 }
 
 func appendBillingInfo(relayInfo *relaycommon.RelayInfo, other map[string]interface{}) {
@@ -213,4 +222,15 @@ func GenerateMjOtherInfo(relayInfo *relaycommon.RelayInfo, priceData types.Price
 	}
 	appendRequestPath(nil, relayInfo, other)
 	return other
+}
+
+func appendFinalRequestFormat(relayInfo *relaycommon.RelayInfo, other map[string]interface{}) {
+	if relayInfo == nil || other == nil {
+		return
+	}
+	if relayInfo.GetFinalRequestRelayFormat() == types.RelayFormatClaude {
+		// claude indicates the final upstream request format is Claude Messages.
+		// Frontend log rendering uses this to keep the original Claude input display.
+		other["claude"] = true
+	}
 }
