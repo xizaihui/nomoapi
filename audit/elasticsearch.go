@@ -209,6 +209,7 @@ type SearchParams struct {
 	Username     string `json:"username"`
 	TokenName    string `json:"token_name"`
 	Group        string `json:"group"`
+	UserId       int    `json:"user_id"`
 	RiskLevel    *int   `json:"risk_level"`
 	RiskCategory string `json:"risk_category"`
 	Keyword      string `json:"keyword"`
@@ -245,6 +246,9 @@ func SearchAuditLogs(params SearchParams) (*SearchResult, error) {
 	}
 	if params.Group != "" {
 		must = append(must, map[string]interface{}{"term": map[string]interface{}{"group": params.Group}})
+	}
+	if params.UserId > 0 {
+		must = append(must, map[string]interface{}{"term": map[string]interface{}{"user_id": params.UserId}})
 	}
 	if params.RiskLevel != nil {
 		must = append(must, map[string]interface{}{"term": map[string]interface{}{"risk_level": *params.RiskLevel}})
@@ -343,7 +347,7 @@ type AuditStats struct {
 	ByCategory map[string]int64 `json:"by_category"`
 }
 
-func GetAuditStats(group string, startTime, endTime int64) (*AuditStats, error) {
+func GetAuditStats(group string, userId int, startTime, endTime int64) (*AuditStats, error) {
 	if !IsESEnabled() {
 		return &AuditStats{ByLevel: map[string]int64{}, ByCategory: map[string]int64{}}, nil
 	}
@@ -351,6 +355,9 @@ func GetAuditStats(group string, startTime, endTime int64) (*AuditStats, error) 
 	must := []map[string]interface{}{}
 	if group != "" {
 		must = append(must, map[string]interface{}{"term": map[string]interface{}{"group": group}})
+	}
+	if userId > 0 {
+		must = append(must, map[string]interface{}{"term": map[string]interface{}{"user_id": userId}})
 	}
 	if startTime > 0 || endTime > 0 {
 		rangeQ := map[string]interface{}{}

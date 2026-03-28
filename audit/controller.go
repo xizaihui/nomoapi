@@ -229,10 +229,14 @@ func SearchAuditLogsHandler(c *gin.Context) {
 		params.Reviewed = &reviewed
 	}
 
-	// 权限：管理员看所有，普通用户看本组
+	// 权限：管理员看所有，普通用户只能看自己的
 	role := c.GetInt("role")
+	userId := c.GetInt("id")
 	if role < common.RoleAdminUser {
-		params.Group = c.GetString("group")
+		// 普通用户强制只能查自己的审计日志
+		params.UserId = userId
+		params.Username = ""  // 防止普通用户通过 username 参数查别人
+		params.Group = ""     // group 也不允许普通用户指定
 	} else {
 		params.Group = c.Query("group")
 	}
@@ -255,9 +259,12 @@ func SearchAuditLogsHandler(c *gin.Context) {
 
 func GetAuditStatsHandler(c *gin.Context) {
 	role := c.GetInt("role")
+	userId := c.GetInt("id")
 	group := ""
+	statsUserId := 0
 	if role < common.RoleAdminUser {
-		group = c.GetString("group")
+		// 普通用户只能看自己的统计
+		statsUserId = userId
 	} else {
 		group = c.Query("group")
 	}
@@ -265,7 +272,7 @@ func GetAuditStatsHandler(c *gin.Context) {
 	startTime, _ := strconv.ParseInt(c.DefaultQuery("start_time", "0"), 10, 64)
 	endTime, _ := strconv.ParseInt(c.DefaultQuery("end_time", "0"), 10, 64)
 
-	stats, err := GetAuditStats(group, startTime, endTime)
+	stats, err := GetAuditStats(group, statsUserId, startTime, endTime)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"success": false, "message": err.Error()})
 		return
