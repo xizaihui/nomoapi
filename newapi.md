@@ -623,3 +623,41 @@ ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
 - `web/src/pages/Playground/index.jsx` — 功能测试页面 (985行)
 - `setting/operation_setting/channel_affinity_setting.go` — 亲和性规则
 - `web/src/pages/Setting/Operation/SettingsGeneral.jsx` — PlaygroundEnabled 开关
+
+---
+
+### 2026-03-27 ~ 2026-03-28: 模型鉴真功能 + 自动巡检
+
+#### 模型鉴真页面 (Model Verify)
+- **后端**: `POST /api/model/verify` — 5维度检测 (is_claude 70%, not_reverse 20%, thinking 3%, signature 3%, tools 4%)
+- **前端**: `/console/model-verify` — admin-only 页面，评分环 + 检测详情 + 模型自述
+- 渠道选择器显示所有渠道（标注类型标签），选择后动态加载渠道模型列表
+- 侧栏 `useSidebar.js` DEFAULT_ADMIN_CONFIG 注册 `model-verify: true`
+
+#### 模型鉴真自动巡检引擎
+- **新增 `ChannelStatusVerifyDisabled = 4`**: 鉴真禁用状态，系统自带测试不会恢复
+- **渠道新字段**: `auto_verify` (开关), `verify_model`, `last_verify_time`, `last_verify_score`
+- **巡检逻辑**: 每1分钟扫描，每5分钟对开启 auto_verify 的渠道执行鉴真
+  - 启用中 + 分数<70 + 连续2次 → 自动禁用(status=4) + 通知管理员
+  - 鉴真禁用 + 分数≥70 → 自动恢复(status=1) + 通知管理员
+  - 网络错误不算掺假，不触发禁用
+- **防冲突**: 系统自带 `testAllChannels` 跳过 status=4 渠道，`ShouldEnableChannel` 只恢复 status=3
+- **渠道编辑页**: 新增「自动鉴真」开关
+- **渠道列表**: status=4 显示橙色「鉴真禁用」标签
+
+#### SplitButtonGroup 按钮对齐修复
+- `button.jsx` 新增 `icon-sm` 尺寸变体 (h-8 w-8)
+- `Button.jsx` compat 层: icon-only + size=small → icon-sm，与 sm 按钮等高
+
+**关键文件:**
+- `controller/model_verify.go` — 鉴真检测 API (485行)
+- `controller/model_verify_patrol.go` — 自动巡检引擎 (154行)
+- `web/src/pages/ModelVerify/index.jsx` — 鉴真前端页面 (410行)
+- `common/constants.go` — ChannelStatusVerifyDisabled = 4
+- `model/channel.go` — auto_verify/verify_model/last_verify_time/last_verify_score 字段
+
+**Commits:**
+- `292da58a` feat: 添加模型鉴真功能页面
+- `76ace910` fix: 模型鉴真侧栏可见性+渠道模型联动选择
+- `c3f513fd` feat: 模型鉴真自动巡检 — status=4鉴真禁用，渠道auto_verify开关，5分钟巡检引擎
+- `277b8979` fix: SplitButtonGroup icon-only按钮高度对齐 — 新增icon-sm尺寸
