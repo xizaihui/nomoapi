@@ -661,3 +661,48 @@ ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
 - `76ace910` fix: 模型鉴真侧栏可见性+渠道模型联动选择
 - `c3f513fd` feat: 模型鉴真自动巡检 — status=4鉴真禁用，渠道auto_verify开关，5分钟巡检引擎
 - `277b8979` fix: SplitButtonGroup icon-only按钮高度对齐 — 新增icon-sm尺寸
+
+---
+
+### 2026-03-28 — 上游关键修复同步 + 计费重构 + 审计安全修复
+
+#### 上游 🔴 关键修复 cherry-pick (commit: `5ff73e35`)
+从上游 QuantumNous/new-api 手动同步 5 个关键修复:
+1. **`ded4a124`** — `dto/openai_request.go`: Detail 字段加 omitempty，防止空 detail 发到上游
+2. **`62b9aaa5`** — `relay/channel/task/taskcommon/helpers.go`: metadata 删除 model 字段防计费模型覆盖
+3. **`e520977e`** — `relay/channel/claude/adaptor.go`: Claude beta query 时序修复，在最终 URL 阶段追加
+4. **`b09337e6`** — `middleware/distributor.go` + `service/channel_affinity.go`: affinity 首选渠道被禁用时 skip-retry → 403
+5. **`926e1781`** — `service/convert.go`: OpenAI→Claude 转换保留 cache usage (CachedCreationTokens, CachedTokens, 5m/1h)
+
+#### 上游计费重构合并 (commit: `5ead0d0b`)
+- **`9ecad906`**: `PostClaudeConsumeQuota` + `postConsumeQuota` → 统一 `PostTextConsumeQuota` (新文件 `service/text_quota.go`, 427行)
+- **`d4a470a6`**: OpenRouter 计费语义修复 — cache token 从 prompt 分离计费
+- 12 个 handler 调用点迁移 (compatible/claude/gemini/embedding/rerank/image/audio/responses)
+- `relay/compatible_handler.go` 从 512 → 227 行 (移除 postConsumeQuota 284 行)
+- 新增字段: `dto.Usage.UsageSemantic/UsageSource`, `RelayInfo.ParamOverrideAudit`
+- `service/log_info_generate.go`: appendFinalRequestFormat + appendParamOverrideInfo
+- **7 个单元测试全部 PASS** (text_quota_test.go)
+
+#### ⚠️ 审计日志安全修复 (commit: `af63cb08`)
+- **漏洞**: 普通用户获得审计权限后可看到同 group 所有人的审计日志（含 prompt 内容）
+- **修复**: SearchAuditLogsHandler/GetAuditStatsHandler 非管理员强制按 user_id 过滤
+- **新增**: SearchParams.UserId 字段, GetAuditStats userId 参数
+- 管理员不受影响
+
+#### 审计日志覆盖不全修复 (commit: `91f02537`)
+- **原因**: ExtractPromptFromRequest 只处理 *dto.GeneralOpenAIRequest
+- Claude `/v1/messages` 走 *dto.ClaudeRequest → content 数组时提取为空 → 不记录
+- Gemini 走 *dto.GeminiChatRequest → 结构不同 → 不记录
+- **修复**: 新增 ClaudeRequest/GeminiChatRequest/multimodal 专用提取
+- 辅助函数: extractClaudeMessageContent, extractGeminiParts, extractContentFromMap
+
+#### UI: 审计侧栏命名优化 (commit: `59a98cad`)
+- 安全审计下「日志」→「审计」，避免与请求日志混淆
+- i18n 7 语言同步
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `59a98cad` |
+| 测试 (154.36.173.198) | ⏳ 待部署 | |
+| 生产 (38.58.59.161) | ⏳ 待部署 | |
