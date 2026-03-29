@@ -21,44 +21,69 @@ func SetDB(db *gorm.DB) {
 }
 
 // ExtractPromptFromRequest 从请求中提取用户提问内容
+// 策略：从后往前找最后一条有文本内容的 user 消息；
+// 如果最后一条 user 消息只有 tool_result（无 text），继续往前找。
 func ExtractPromptFromRequest(request interface{}) string {
 	switch req := request.(type) {
 	case *dto.GeneralOpenAIRequest:
 		if req == nil || len(req.Messages) == 0 {
 			return ""
 		}
-		// 取最后一条 user 消息
+		// 从后往前找有文本的 user 消息
 		for i := len(req.Messages) - 1; i >= 0; i-- {
 			if req.Messages[i].Role == "user" {
-				return req.Messages[i].StringContent()
+				text := req.Messages[i].StringContent()
+				if text != "" {
+					return text
+				}
 			}
 		}
-		// 没有 user 消息，取最后一条
+		// fallback: 取最后一条消息的内容
 		return req.Messages[len(req.Messages)-1].StringContent()
 
 	case *dto.ClaudeRequest:
 		if req == nil || len(req.Messages) == 0 {
 			return ""
 		}
-		// 取最后一条 user 消息
+		// 从后往前找有文本的 user 消息（跳过纯 tool_result 的消息）
 		for i := len(req.Messages) - 1; i >= 0; i-- {
 			if req.Messages[i].Role == "user" {
-				return extractClaudeMessageContent(req.Messages[i].Content)
+				text := extractClaudeMessageContent(req.Messages[i].Content)
+				if text != "" {
+					return text
+				}
 			}
 		}
-		return extractClaudeMessageContent(req.Messages[len(req.Messages)-1].Content)
+		// 所有 user 消息都没文本，尝试提取 tool_result 的 content 作为上下文
+		for i := len(req.Messages) - 1; i >= 0; i-- {
+			if req.Messages[i].Role == "user" {
+				text := extractClaudeToolResultContent(req.Messages[i].Content)
+				if text != "" {
+					return "[tool_result] " + text
+				}
+			}
+		}
+		return ""
 
 	case *dto.GeminiChatRequest:
 		if req == nil || len(req.Contents) == 0 {
 			return ""
 		}
-		// 取最后一条 user 内容
 		for i := len(req.Contents) - 1; i >= 0; i-- {
 			if req.Contents[i].Role == "user" {
-				return extractGeminiParts(req.Contents[i].Parts)
+				text := extractGeminiParts(req.Contents[i].Parts)
+				if text != "" {
+					return text
+				}
 			}
 		}
 		return extractGeminiParts(req.Contents[len(req.Contents)-1].Parts)
+
+	case *dto.OpenAIResponsesRequest:
+		if req == nil || len(req.Input) == 0 {
+			return ""
+		}
+		return extractResponsesInput(req.Input)
 
 	default:
 		// 尝试 JSON 序列化后提取
@@ -72,12 +97,15 @@ func ExtractPromptFromRequest(request interface{}) string {
 		}
 		if messages, ok := generic["messages"]; ok {
 			if msgArr, ok := messages.([]interface{}); ok && len(msgArr) > 0 {
-				// 从后往前找 user 消息
+				// 从后往前找有文本的 user 消息
 				for i := len(msgArr) - 1; i >= 0; i-- {
 					if msgMap, ok := msgArr[i].(map[string]interface{}); ok {
 						role, _ := msgMap["role"].(string)
-						if role == "user" || i == 0 {
-							return extractContentFromMap(msgMap)
+						if role == "user" {
+							text := extractContentFromMap(msgMap)
+							if text != "" {
+								return text
+							}
 						}
 					}
 				}
@@ -85,6 +113,12 @@ func ExtractPromptFromRequest(request interface{}) string {
 				if msgMap, ok := msgArr[len(msgArr)-1].(map[string]interface{}); ok {
 					return extractContentFromMap(msgMap)
 				}
+			}
+		}
+		// 也尝试 "input" 字段（OpenAI Responses 格式 fallback）
+		if input, ok := generic["input"]; ok {
+			if inputStr, ok := input.(string); ok {
+				return inputStr
 			}
 		}
 		return ""
@@ -116,6 +150,93 @@ func extractClaudeMessageContent(content any) string {
 	for _, b := range blocks {
 		if b.Type == "text" && b.Text != "" {
 			texts = append(texts, b.Text)
+		}
+	}
+	return strings.Join(texts, "\n")
+}
+
+// extractResponsesInput 从 OpenAI Responses 格式的 input 字段提取文本
+// input 可以是 string 或 messages 数组
+func extractResponsesInput(input json.RawMessage) string {
+	if len(input) == 0 {
+		return ""
+	}
+	// 尝试作为 string 解析
+	var s string
+	if err := json.Unmarshal(input, &s); err == nil {
+		return s
+	}
+	// 尝试作为 messages 数组解析
+	var messages []struct {
+		Role    string `json:"role"`
+		Content any    `json:"content"`
+	}
+	if err := json.Unmarshal(input, &messages); err == nil && len(messages) > 0 {
+		// 从后往前找 user 消息
+		for i := len(messages) - 1; i >= 0; i-- {
+			if messages[i].Role == "user" {
+				switch c := messages[i].Content.(type) {
+				case string:
+					if c != "" {
+						return c
+					}
+				case []interface{}:
+					for _, item := range c {
+						if m, ok := item.(map[string]interface{}); ok {
+							if t, ok := m["text"].(string); ok && t != "" {
+								return t
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return ""
+}
+
+// extractClaudeToolResultContent 从 Claude tool_result 类型的 content 块中提取内容
+func extractClaudeToolResultContent(content any) string {
+	if content == nil {
+		return ""
+	}
+	data, err := json.Marshal(content)
+	if err != nil {
+		return ""
+	}
+	var blocks []struct {
+		Type      string `json:"type"`
+		Content   any    `json:"content"`
+		ToolUseId string `json:"tool_use_id"`
+	}
+	if err := json.Unmarshal(data, &blocks); err != nil {
+		return ""
+	}
+	var texts []string
+	for _, b := range blocks {
+		if b.Type == "tool_result" && b.Content != nil {
+			switch c := b.Content.(type) {
+			case string:
+				if c != "" {
+					// 截取前 200 字符作为摘要
+					if len(c) > 200 {
+						c = c[:200] + "..."
+					}
+					texts = append(texts, c)
+				}
+			case []interface{}:
+				// tool_result 的 content 也可以是数组
+				for _, item := range c {
+					if m, ok := item.(map[string]interface{}); ok {
+						if t, ok := m["text"].(string); ok && t != "" {
+							if len(t) > 200 {
+								t = t[:200] + "..."
+							}
+							texts = append(texts, t)
+						}
+					}
+				}
+			}
 		}
 	}
 	return strings.Join(texts, "\n")
@@ -169,18 +290,15 @@ func AsyncAuditCheck(c *gin.Context, info *relaycommon.RelayInfo, request interf
 		return
 	}
 
-	// 提取 prompt
+	// 提取 prompt — 即使为空也记录审计日志（标记为提取失败）
 	prompt := ExtractPromptFromRequest(request)
-	if prompt == "" {
-		return
-	}
 
 	// 截取前 10000 字符，避免超大文本
 	if len(prompt) > 10000 {
 		prompt = prompt[:10000]
 	}
 
-	// 收集请求信息
+	// 收集请求信息（在主 goroutine 中完成，避免 gin.Context 并发问题）
 	group := info.UserGroup
 	if group == "" {
 		group = info.UsingGroup
@@ -206,9 +324,22 @@ func AsyncAuditCheck(c *gin.Context, info *relaycommon.RelayInfo, request interf
 	}
 
 	modelName := info.OriginModelName
+	isStream := info.IsStream
+	tokenId := info.TokenId
 
 	// 异步执行扫描和写入
 	gopool.Go(func() {
+		defer func() {
+			if r := recover(); r != nil {
+				common.SysError(fmt.Sprintf("审计日志写入 panic: %v", r))
+			}
+		}()
+
+		// 如果 prompt 为空，记录一条标记日志
+		if prompt == "" {
+			prompt = "[prompt_extraction_empty]"
+		}
+
 		// 规则匹配
 		scanResult := ScanPrompt(group, prompt)
 
@@ -218,12 +349,12 @@ func AsyncAuditCheck(c *gin.Context, info *relaycommon.RelayInfo, request interf
 			UserId:       userId,
 			Username:     username,
 			Group:        group,
-			TokenId:      info.TokenId,
+			TokenId:      tokenId,
 			TokenName:    tokenName,
 			ModelName:    modelName,
 			Prompt:       prompt,
 			Ip:           ip,
-			IsStream:     info.IsStream,
+			IsStream:     isStream,
 			RiskLevel:    scanResult.RiskLevel,
 			RiskCategory: scanResult.RiskCategory,
 			RiskTags:     scanResult.RiskTags,

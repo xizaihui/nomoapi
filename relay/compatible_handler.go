@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/QuantumNous/new-api/audit"
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/dto"
@@ -33,8 +32,7 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 		return types.NewErrorWithStatusCode(fmt.Errorf("invalid request type, expected dto.GeneralOpenAIRequest, got %T", info.Request), types.ErrorCodeInvalidRequest, http.StatusBadRequest, types.ErrOptionWithSkipRetry())
 	}
 
-	// 异步审计检查（不阻塞请求）
-	audit.AsyncAuditCheck(c, info, textReq)
+	// 注意: AsyncAuditCheck 已在 Relay() 入口统一调用，此处不再重复调用
 
 	request, err := common.DeepCopy(textReq)
 	if err != nil {
