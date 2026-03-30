@@ -38,8 +38,16 @@ func init() {
 				req.Header.Del("Accept-Encoding")
 			}
 		},
+		// Enable streaming: FlushInterval -1 means flush immediately
+		FlushInterval: -1,
 		ModifyResponse: func(resp *http.Response) error {
 			contentType := resp.Header.Get("Content-Type")
+
+			// Rewrite icon URLs in JSON API responses
+			// LibreChat returns iconURL as configured, but "http://new-api:3000/..."
+			// is Docker-internal and unreachable from browsers.
+			// We already fixed this in config to use "/logo.svg" which is relative.
+
 			if !strings.Contains(contentType, "text/html") {
 				return nil
 			}
@@ -75,9 +83,10 @@ func init() {
 			return nil
 		},
 		ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
+			common.SysError(fmt.Sprintf("LibreChat proxy error: %v (path: %s)", err, r.URL.Path))
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusBadGateway)
-			w.Write([]byte(`{"error":"Chat service unavailable"}`))
+			w.Write([]byte(`{"error":"Chat service temporarily unavailable. Please refresh the page."}`))
 		},
 	}
 }
@@ -144,8 +153,6 @@ func LibreChatAutoLogin(c *gin.Context) {
 
 	redirect := c.DefaultQuery("redirect", "/chat/c/new")
 
-	// The page sets localStorage.token (belt and suspenders) then redirects.
-	// LibreChat will use the refreshToken cookie to get a fresh JWT on /c/new load.
 	html := fmt.Sprintf(`<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
 body{margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:#0d0d0d;color:#a1a1a1;font-family:sans-serif}
@@ -178,5 +185,18 @@ func LibreChatProxy(c *gin.Context) {
 		return
 	}
 
+	// For SSE endpoints, ensure proper headers for streaming
+	if isSSEPath(path) {
+		c.Writer.Header().Set("X-Accel-Buffering", "no")
+		c.Writer.Header().Set("Cache-Control", "no-cache")
+	}
+
 	libreChatReverseProxy.ServeHTTP(c.Writer, c.Request)
+}
+
+// isSSEPath returns true for endpoints that use Server-Sent Events
+func isSSEPath(path string) bool {
+	return strings.HasPrefix(path, "api/ask/") ||
+		strings.HasPrefix(path, "api/edit/") ||
+		strings.HasPrefix(path, "api/agents/")
 }
