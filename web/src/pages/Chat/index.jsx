@@ -8,13 +8,16 @@ const ChatPage = () => {
   const [selectedToken, setSelectedToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [chatReady, setChatReady] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState('');
   const [error, setError] = useState('');
   const iframeRef = useRef(null);
+  const keySetRef = useRef(false);
 
-  // Fetch user's tokens
+  // Fetch tokens and auto-connect
   useEffect(() => {
-    const loadTokens = async () => {
+    const init = async () => {
       try {
+        // 1. Get user's tokens
         const response = await API.get('/api/token/?p=1&size=50');
         const { success, data } = response.data;
         if (!success) throw new Error('Failed to fetch tokens');
@@ -29,58 +32,65 @@ const ChatPage = () => {
         }
 
         setTokens(activeTokens);
+
+        // 2. Auto-select token
         const lastId = localStorage.getItem('chat_selected_token');
         const found = activeTokens.find((t) => String(t.id) === lastId);
-        setSelectedToken(found || activeTokens[0]);
+        const token = found || activeTokens[0];
+        setSelectedToken(token);
+
+        // 3. Get real key and set it in LibreChat
+        await setKeyForToken(token);
+
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
       }
     };
-    loadTokens();
+    init();
   }, []);
 
-  // Set API key in LibreChat when token is selected
-  const connectChat = useCallback(async (token) => {
-    if (!token) return;
-    setChatReady(false);
-    setError('');
-
+  const setKeyForToken = async (token) => {
     try {
-      // Get the real key
       const keyResp = await API.post(`/api/token/${token.id}/key`);
       const { success: keySuccess, data: keyData } = keyResp.data;
       if (!keySuccess || !keyData?.key) throw new Error('Failed to get token key');
 
       const fullKey = `sk-${keyData.key}`;
 
-      // Set key via bridge API
+      // Set key in LibreChat via bridge
       const authResp = await API.post('/api/librechat/auth', { token_key: fullKey });
       if (!authResp.data?.success) {
         throw new Error(authResp.data?.error || 'Chat auth failed');
       }
 
-      setChatReady(true);
       localStorage.setItem('chat_selected_token', String(token.id));
+      setChatReady(true);
+      // Use timestamp to force iframe reload on token switch
+      setIframeSrc(`/chat/?t=${Date.now()}`);
+      keySetRef.current = true;
     } catch (err) {
-      console.error('Chat connect error:', err);
+      console.error('Set key error:', err);
       setError(err.message || t('聊天服务连接失败'));
     }
-  }, [t]);
+  };
 
-  useEffect(() => {
-    if (selectedToken) {
-      connectChat(selectedToken);
-    }
-  }, [selectedToken, connectChat]);
+  const handleTokenChange = async (e) => {
+    const token = tokens.find((t) => t.id === parseInt(e.target.value));
+    if (!token) return;
+    setSelectedToken(token);
+    setChatReady(false);
+    setError('');
+    await setKeyForToken(token);
+  };
 
   if (isLoading) {
     return (
       <div className="flex h-[calc(100vh-64px)] items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <span className="text-sm text-muted-foreground">{t('加载中...')}</span>
+          <span className="text-sm text-muted-foreground">{t('正在初始化聊天...')}</span>
         </div>
       </div>
     );
@@ -103,16 +113,13 @@ const ChatPage = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-64px)]">
-      {/* Token selector bar */}
+      {/* Minimal token selector */}
       <div className="flex items-center gap-3 px-4 py-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shrink-0">
         <span className="text-xs text-muted-foreground whitespace-nowrap">{t('令牌')}:</span>
         <select
           className="h-8 rounded-md border border-input bg-background px-3 text-xs ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           value={selectedToken?.id || ''}
-          onChange={(e) => {
-            const token = tokens.find((t) => t.id === parseInt(e.target.value));
-            setSelectedToken(token);
-          }}
+          onChange={handleTokenChange}
         >
           {tokens.map((token) => (
             <option key={token.id} value={token.id}>
@@ -131,11 +138,12 @@ const ChatPage = () => {
         )}
       </div>
 
-      {/* Chat iframe — /chat/ auto-login endpoint handles JWT injection */}
-      {chatReady ? (
+      {/* Chat iframe */}
+      {chatReady && iframeSrc ? (
         <iframe
           ref={iframeRef}
-          src="/chat/"
+          key={iframeSrc}
+          src={iframeSrc}
           style={{ width: '100%', flex: 1, border: 'none' }}
           title="Chat"
           allow="camera;microphone;clipboard-write"

@@ -10,7 +10,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
@@ -18,14 +17,6 @@ import (
 )
 
 var libreChatReverseProxy *httputil.ReverseProxy
-
-// Cached LibreChat auth tokens (shared account)
-var (
-	lcAuthMu       sync.Mutex
-	lcToken        string
-	lcRefreshToken string
-	lcTokenExpiry  time.Time
-)
 
 func init() {
 	target, _ := url.Parse("http://librechat:3080")
@@ -43,7 +34,7 @@ func init() {
 			req.URL.Path = path
 
 			// Remove Accept-Encoding for HTML so we can modify it
-			if isHTMLRequest(path) {
+			if isHTMLPath(path) {
 				req.Header.Del("Accept-Encoding")
 			}
 		},
@@ -74,7 +65,6 @@ func init() {
 			resp.Body.Close()
 
 			bodyStr := string(body)
-			// Rewrite base href
 			bodyStr = strings.Replace(bodyStr, `<base href="/" />`, `<base href="/chat/" />`, 1)
 			bodyStr = strings.Replace(bodyStr, `<base href="/">`, `<base href="/chat/">`, 1)
 
@@ -92,7 +82,7 @@ func init() {
 	}
 }
 
-func isHTMLRequest(path string) bool {
+func isHTMLPath(path string) bool {
 	if path == "/" || path == "" {
 		return true
 	}
@@ -102,15 +92,8 @@ func isHTMLRequest(path string) bool {
 	return strings.HasSuffix(path, ".html")
 }
 
-// ensureLibreChatAuth gets or refreshes the cached LibreChat JWT
-func ensureLibreChatAuth() (string, string, error) {
-	lcAuthMu.Lock()
-	defer lcAuthMu.Unlock()
-
-	if lcToken != "" && time.Now().Before(lcTokenExpiry) {
-		return lcToken, lcRefreshToken, nil
-	}
-
+// freshLibreChatLogin does a fresh login to LibreChat and returns JWT + refreshToken
+func freshLibreChatLogin() (jwt string, refreshToken string, err error) {
 	body, _ := json.Marshal(map[string]string{
 		"email":    libreChatEmail,
 		"password": libreChatPassword,
@@ -119,7 +102,7 @@ func ensureLibreChatAuth() (string, string, error) {
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Post("http://librechat:3080/api/auth/login", "application/json", bytes.NewReader(body))
 	if err != nil {
-		return "", "", fmt.Errorf("login request failed: %w", err)
+		return "", "", fmt.Errorf("login failed: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -135,8 +118,6 @@ func ensureLibreChatAuth() (string, string, error) {
 		return "", "", err
 	}
 
-	// Extract refreshToken from Set-Cookie
-	refreshToken := ""
 	for _, cookie := range resp.Cookies() {
 		if cookie.Name == "refreshToken" {
 			refreshToken = cookie.Value
@@ -144,29 +125,27 @@ func ensureLibreChatAuth() (string, string, error) {
 		}
 	}
 
-	lcToken = loginResp.Token
-	lcRefreshToken = refreshToken
-	lcTokenExpiry = time.Now().Add(14 * time.Minute) // JWT typically 15min, refresh early
-
-	return lcToken, refreshToken, nil
+	return loginResp.Token, refreshToken, nil
 }
 
-// LibreChatAutoLogin serves a page that injects auth into localStorage then redirects
+// LibreChatAutoLogin serves a page that injects auth then redirects to the chat
 func LibreChatAutoLogin(c *gin.Context) {
-	token, refreshToken, err := ensureLibreChatAuth()
+	jwt, refreshToken, err := freshLibreChatLogin()
 	if err != nil {
 		common.SysError(fmt.Sprintf("LibreChat auto-login failed: %v", err))
-		c.HTML(http.StatusOK, "", nil)
-		c.Writer.WriteString(`<!DOCTYPE html><html><body><p>Chat service unavailable. <a href="/console">Go back</a></p></body></html>`)
+		c.Data(http.StatusOK, "text/html; charset=utf-8",
+			[]byte(`<!DOCTYPE html><html><body><p>Chat service unavailable. <a href="/console">Go back</a></p></body></html>`))
 		return
 	}
 
-	// Set the refreshToken cookie for /chat/ path
+	// Set refreshToken cookie for /chat/ path - this is what LibreChat uses for auth
 	c.SetCookie("refreshToken", refreshToken, 7*24*3600, "/chat/", "", false, true)
 	c.SetCookie("token_provider", "librechat", 7*24*3600, "/chat/", "", false, true)
 
-	// Serve a tiny HTML page that sets localStorage.token then redirects
 	redirect := c.DefaultQuery("redirect", "/chat/c/new")
+
+	// The page sets localStorage.token (belt and suspenders) then redirects.
+	// LibreChat will use the refreshToken cookie to get a fresh JWT on /c/new load.
 	html := fmt.Sprintf(`<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
 body{margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:#0d0d0d;color:#a1a1a1;font-family:sans-serif}
@@ -176,21 +155,28 @@ body{margin:0;display:flex;align-items:center;justify-content:center;height:100v
 </style></head><body>
 <div class="c"><div class="s"></div><div>Loading chat...</div></div>
 <script>
-try{localStorage.setItem('lastConversationSetup',JSON.stringify({presetOverride:null}));localStorage.setItem('token',JSON.stringify(%q))}catch(e){}
+try{localStorage.setItem('token',JSON.stringify(%q))}catch(e){}
 window.location.replace(%q);
-</script></body></html>`, token, redirect)
+</script></body></html>`, jwt, redirect)
 
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(html))
 }
 
-// LibreChatProxy reverse proxies all /chat/* requests
-// For the root /chat/ path, it serves an auto-login page that injects JWT
+// LibreChatProxy handles all /chat/* requests
 func LibreChatProxy(c *gin.Context) {
 	path := strings.TrimPrefix(c.Param("path"), "/")
-	// Root path or explicit auto-login → inject auth
+
+	// Root path → auto-login page
 	if path == "" || path == "auto-login" {
 		LibreChatAutoLogin(c)
 		return
 	}
+
+	// Login/register pages → redirect to auto-login (skip LibreChat's own login)
+	if path == "login" || path == "register" || strings.HasPrefix(path, "login/") {
+		c.Redirect(http.StatusFound, "/chat/")
+		return
+	}
+
 	libreChatReverseProxy.ServeHTTP(c.Writer, c.Request)
 }
