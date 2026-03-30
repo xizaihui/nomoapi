@@ -41,14 +41,22 @@ func init() {
 		// Enable streaming: FlushInterval -1 means flush immediately
 		FlushInterval: -1,
 		ModifyResponse: func(resp *http.Response) error {
+			reqPath := resp.Request.URL.Path
 			contentType := resp.Header.Get("Content-Type")
 
-			// Rewrite icon URLs in JSON API responses
-			// LibreChat returns iconURL as configured, but "http://new-api:3000/..."
-			// is Docker-internal and unreachable from browsers.
-			// We already fixed this in config to use "/logo.svg" which is relative.
+			// Prevent browser caching of API responses (avoids stale config/icons)
+			// LibreChat serves JSON as text/html, so check path instead of content-type
+			if strings.HasPrefix(reqPath, "/api/") {
+				resp.Header.Set("Cache-Control", "no-cache, no-store, must-revalidate")
+				resp.Header.Set("Pragma", "no-cache")
+			}
 
+			// Only modify actual HTML pages, not API responses
 			if !strings.Contains(contentType, "text/html") {
+				return nil
+			}
+			// Skip API paths (LibreChat returns text/html for JSON APIs)
+			if strings.HasPrefix(reqPath, "/api/") {
 				return nil
 			}
 
