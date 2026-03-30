@@ -268,6 +268,14 @@ func SetApiRouter(router *gin.Engine) {
 			tokenRoute.POST("/batch", controller.DeleteTokenBatch)
 		}
 
+		// LibreChat integration routes
+		libreChatRoute := apiRouter.Group("/librechat")
+		libreChatRoute.Use(middleware.UserAuth())
+		{
+			libreChatRoute.POST("/auth", controller.LibreChatAuth)
+			libreChatRoute.GET("/status", controller.LibreChatStatus)
+		}
+
 		usageRoute := apiRouter.Group("/usage")
 		usageRoute.Use(middleware.CORS(), middleware.CriticalRateLimit())
 		{

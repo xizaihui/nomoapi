@@ -9,6 +9,7 @@ import (
 
 	"github.com/QuantumNous/new-api/audit"
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/controller"
 	"github.com/QuantumNous/new-api/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,9 @@ func SetRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 	SetDashboardRouter(router)
 	SetRelayRouter(router)
 	SetVideoRouter(router)
+
+	// LibreChat reverse proxy (must be before NoRoute/static)
+	router.Any("/chat/*path", controller.LibreChatProxy)
 
 	// 审计模块路由（独立模块，不影响上游）
 	apiGroup := router.Group("/api")
