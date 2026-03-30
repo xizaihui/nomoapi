@@ -2,8 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { API } from '../../helpers/api';
 
-const CHAT_BASE = '/chat';
-
 const ChatPage = () => {
   const { t } = useTranslation();
   const [tokens, setTokens] = useState([]);
@@ -12,7 +10,6 @@ const ChatPage = () => {
   const [chatReady, setChatReady] = useState(false);
   const [error, setError] = useState('');
   const iframeRef = useRef(null);
-  const tokenSwitchRef = useRef(false);
 
   // Fetch user's tokens
   useEffect(() => {
@@ -44,7 +41,7 @@ const ChatPage = () => {
     loadTokens();
   }, []);
 
-  // Connect to LibreChat when token is selected
+  // Set API key in LibreChat when token is selected
   const connectChat = useCallback(async (token) => {
     if (!token) return;
     setChatReady(false);
@@ -58,7 +55,7 @@ const ChatPage = () => {
 
       const fullKey = `sk-${keyData.key}`;
 
-      // Auth with LibreChat via our bridge
+      // Set key via bridge API
       const authResp = await API.post('/api/librechat/auth', { token_key: fullKey });
       if (!authResp.data?.success) {
         throw new Error(authResp.data?.error || 'Chat auth failed');
@@ -132,21 +129,13 @@ const ChatPage = () => {
         {error && !chatReady && (
           <span className="text-xs text-destructive">{error}</span>
         )}
-        <a
-          href={`${window.location.protocol}//${window.location.hostname}:3080`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-auto text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          {t('新窗口打开')} ↗
-        </a>
       </div>
 
-      {/* Chat iframe - same origin via /chat/ reverse proxy */}
+      {/* Chat iframe — /chat/ auto-login endpoint handles JWT injection */}
       {chatReady ? (
         <iframe
           ref={iframeRef}
-          src={`${CHAT_BASE}/c/new`}
+          src="/chat/"
           style={{ width: '100%', flex: 1, border: 'none' }}
           title="Chat"
           allow="camera;microphone;clipboard-write"
