@@ -38,13 +38,24 @@ func formatRequest(requestBody io.Reader, requestHeader http.Header) (*AwsClaude
 	}
 	awsClaudeRequest.AnthropicVersion = "bedrock-2023-05-31"
 
-	// check header anthropic-beta
+	// check header anthropic-beta and filter unsupported flags for Bedrock
 	anthropicBetaValues := requestHeader.Get("anthropic-beta")
 	if len(anthropicBetaValues) > 0 {
 		var tempArray []string
 		tempArray = strings.Split(anthropicBetaValues, ",")
-		if len(tempArray) > 0 {
-			betaJson, err := json.Marshal(tempArray)
+		
+		// Filter out beta flags that Bedrock doesn't support
+		var supportedBetas []string
+		for _, beta := range tempArray {
+			beta = strings.TrimSpace(beta)
+			if isBedrockSupportedBeta(beta) {
+				supportedBetas = append(supportedBetas, beta)
+			}
+		}
+		
+		// Only set AnthropicBeta if there are supported flags
+		if len(supportedBetas) > 0 {
+			betaJson, err := json.Marshal(supportedBetas)
 			if err != nil {
 				return nil, err
 			}
@@ -142,4 +153,38 @@ func parseStopSequences(stop any) []string {
 		return sequences
 	}
 	return nil
+}
+
+// isBedrockSupportedBeta checks if a beta flag is supported by AWS Bedrock
+func isBedrockSupportedBeta(beta string) bool {
+	// Bedrock supports these beta features
+	supportedBetas := map[string]bool{
+		"computer-use-2025-01-24": true,
+		"max-tokens-3-5-sonnet-2022-07-15": true,
+		"messages-2023-12-15": true,
+		"tools-2024-04-04": true,
+		"tools-2024-05-16": true,
+	}
+	
+	// Bedrock does NOT support these (commonly sent by Claude Code/Desktop)
+	unsupportedBetas := map[string]bool{
+		"context-management": true,
+		"prompt-caching-scope": true,
+		"prompt-caching": true,
+		"extended-thinking": true,
+	}
+	
+	// If explicitly unsupported, reject
+	if unsupportedBetas[beta] {
+		return false
+	}
+	
+	// If explicitly supported, accept
+	if supportedBetas[beta] {
+		return true
+	}
+	
+	// For unknown flags, be conservative and reject
+	// (Bedrock is strict about beta flags)
+	return false
 }
