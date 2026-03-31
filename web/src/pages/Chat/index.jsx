@@ -24,7 +24,6 @@ const ChatPage = () => {
     checkService();
   }, [t]);
 
-  // Inject custom CSS to hide buttons after iframe loads
   useEffect(() => {
     if (status === 'ready' && iframeRef.current) {
       const iframe = iframeRef.current;
@@ -34,35 +33,27 @@ const ChatPage = () => {
           if (iframeDoc) {
             const style = iframeDoc.createElement('style');
             style.textContent = `
-              /* Hide fork/branch conversation button (next to model selector) */
-              button[aria-label*="fork" i],
-              button[aria-label*="branch" i],
-              button[data-testid*="fork"],
-              button[data-testid*="branch"],
-              [class*="fork" i] button,
-              [class*="branch" i] button {
+              /* Hide circle-plus button (添加多个对话) */
+              button svg.lucide-circle-plus,
+              button:has(svg.lucide-circle-plus) {
                 display: none !important;
               }
               
-              /* Hide temporary chat button (top right) */
-              button[aria-label*="temporary" i],
-              button[aria-label*="temp" i],
-              button[data-testid*="temporary"],
-              button[data-testid*="temp"],
-              [class*="temporary" i] button {
+              /* Hide temporary chat button (临时对话) */
+              button[aria-label="临时对话"],
+              button svg.lucide-message-circle-dashed,
+              button:has(svg.lucide-message-circle-dashed) {
                 display: none !important;
               }
             `;
             iframeDoc.head.appendChild(style);
           }
         } catch (e) {
-          // Cross-origin restriction, can't inject
           console.warn('Cannot inject CSS into iframe:', e);
         }
       };
 
       iframe.addEventListener('load', injectCSS);
-      // Try inject immediately if already loaded
       if (iframe.contentDocument?.readyState === 'complete') {
         injectCSS();
       }
