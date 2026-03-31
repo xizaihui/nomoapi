@@ -232,21 +232,8 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   }, [isAdmin(), isRoot(), t, isModuleVisible]);
 
   const chatMenuItems = useMemo(() => {
-    // Always show a single "聊天" item pointing to LibreChat
-    const items = [
-      {
-        text: t('聊天'),
-        itemKey: 'chat',
-        to: '/console/chat',
-      },
-    ];
-
-    const filteredItems = items.filter((item) => {
-      const configVisible = isModuleVisible('chat', item.itemKey);
-      return configVisible;
-    });
-
-    return filteredItems;
+    // Chat feature removed
+    return [];
   }, [t, isModuleVisible]);
 
   // 更新路由映射，添加聊天路由
