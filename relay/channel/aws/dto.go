@@ -10,6 +10,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/logger"
+	"github.com/QuantumNous/new-api/setting/operation_setting"
 )
 
 type AwsClaudeRequest struct {
@@ -50,6 +51,9 @@ func formatRequest(requestBody io.Reader, requestHeader http.Header) (*AwsClaude
 			beta = strings.TrimSpace(beta)
 			if isBedrockSupportedBeta(beta) {
 				supportedBetas = append(supportedBetas, beta)
+			} else {
+				// Log filtered flags for monitoring
+				logger.LogInfo(context.Background(), "Bedrock beta flag filtered: "+beta)
 			}
 		}
 		
@@ -157,34 +161,5 @@ func parseStopSequences(stop any) []string {
 
 // isBedrockSupportedBeta checks if a beta flag is supported by AWS Bedrock
 func isBedrockSupportedBeta(beta string) bool {
-	// Bedrock supports these beta features
-	supportedBetas := map[string]bool{
-		"computer-use-2025-01-24": true,
-		"max-tokens-3-5-sonnet-2022-07-15": true,
-		"messages-2023-12-15": true,
-		"tools-2024-04-04": true,
-		"tools-2024-05-16": true,
-	}
-	
-	// Bedrock does NOT support these (commonly sent by Claude Code/Desktop)
-	unsupportedBetas := map[string]bool{
-		"context-management": true,
-		"prompt-caching-scope": true,
-		"prompt-caching": true,
-		"extended-thinking": true,
-	}
-	
-	// If explicitly unsupported, reject
-	if unsupportedBetas[beta] {
-		return false
-	}
-	
-	// If explicitly supported, accept
-	if supportedBetas[beta] {
-		return true
-	}
-	
-	// For unknown flags, be conservative and reject
-	// (Bedrock is strict about beta flags)
-	return false
+	return operation_setting.IsBedrockSupportedBeta(beta)
 }

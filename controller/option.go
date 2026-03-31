@@ -296,12 +296,46 @@ func UpdateOption(c *gin.Context) {
 			})
 			return
 		}
+	case "BedrockBetaFlagsSupported":
+		// Validate supported flags format (newline-separated list)
+		// No special validation needed, just store as-is
+	case "BedrockBetaFlagsUnsupported":
+		// Validate unsupported flags format (newline-separated list)
+		// No special validation needed, just store as-is
 	}
 	err = model.UpdateOption(option.Key, option.Value.(string))
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
+	
+	// Special handling for Bedrock beta flags - update the setting cache
+	if option.Key == "BedrockBetaFlagsSupported" || option.Key == "BedrockBetaFlagsUnsupported" {
+		supportedStr := ""
+		unsupportedStr := ""
+		
+		if option.Key == "BedrockBetaFlagsSupported" {
+			supportedStr = option.Value.(string)
+			common.OptionMapRWMutex.RLock()
+			unsupportedStr = common.OptionMap["BedrockBetaFlagsUnsupported"]
+			common.OptionMapRWMutex.RUnlock()
+		} else {
+			unsupportedStr = option.Value.(string)
+			common.OptionMapRWMutex.RLock()
+			supportedStr = common.OptionMap["BedrockBetaFlagsSupported"]
+			common.OptionMapRWMutex.RUnlock()
+		}
+		
+		err = operation_setting.UpdateBedrockBetaFlagsSetting(supportedStr, unsupportedStr)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"success": false,
+				"message": "更新 Bedrock Beta Flags 设置失败: " + err.Error(),
+			})
+			return
+		}
+	}
+	
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "",

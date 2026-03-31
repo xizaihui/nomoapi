@@ -27,6 +27,7 @@ import SettingsLog from '../../pages/Setting/Operation/SettingsLog';
 import SettingsMonitoring from '../../pages/Setting/Operation/SettingsMonitoring';
 import SettingsCreditLimit from '../../pages/Setting/Operation/SettingsCreditLimit';
 import SettingsCheckin from '../../pages/Setting/Operation/SettingsCheckin';
+import SettingsBedrockBetaFlags from '../../pages/Setting/Operation/SettingsBedrockBetaFlags';
 import { API, showError, toBoolean } from '../../helpers';
 
 const OperationSetting = () => {
@@ -154,6 +155,10 @@ const OperationSetting = () => {
         <Card style={{ marginTop: '10px' }}>
           <SettingsCheckin options={inputs} refresh={onRefresh} />
         </Card>
+        {/* AWS Bedrock Beta Flags 配置 */}
+        <div style={{ marginTop: '10px' }}>
+          <SettingsBedrockBetaFlags />
+        </div>
       </Spin>
     </>
   );
