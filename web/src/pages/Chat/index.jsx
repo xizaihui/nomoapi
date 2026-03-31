@@ -3,13 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 const ChatPage = () => {
   const { t } = useTranslation();
-  const [status, setStatus] = useState('loading'); // loading | ready | error
+  const [status, setStatus] = useState('loading');
   const [error, setError] = useState('');
   const iframeRef = useRef(null);
 
   useEffect(() => {
-    // Just check if chat service is available, then load iframe
-    // The auto-login endpoint (/chat/) handles auth automatically
     const checkService = async () => {
       try {
         const resp = await fetch('/chat/api/config');
@@ -25,6 +23,53 @@ const ChatPage = () => {
     };
     checkService();
   }, [t]);
+
+  // Inject custom CSS to hide buttons after iframe loads
+  useEffect(() => {
+    if (status === 'ready' && iframeRef.current) {
+      const iframe = iframeRef.current;
+      const injectCSS = () => {
+        try {
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+          if (iframeDoc) {
+            const style = iframeDoc.createElement('style');
+            style.textContent = `
+              /* Hide fork/branch conversation button (next to model selector) */
+              button[aria-label*="fork" i],
+              button[aria-label*="branch" i],
+              button[data-testid*="fork"],
+              button[data-testid*="branch"],
+              [class*="fork" i] button,
+              [class*="branch" i] button {
+                display: none !important;
+              }
+              
+              /* Hide temporary chat button (top right) */
+              button[aria-label*="temporary" i],
+              button[aria-label*="temp" i],
+              button[data-testid*="temporary"],
+              button[data-testid*="temp"],
+              [class*="temporary" i] button {
+                display: none !important;
+              }
+            `;
+            iframeDoc.head.appendChild(style);
+          }
+        } catch (e) {
+          // Cross-origin restriction, can't inject
+          console.warn('Cannot inject CSS into iframe:', e);
+        }
+      };
+
+      iframe.addEventListener('load', injectCSS);
+      // Try inject immediately if already loaded
+      if (iframe.contentDocument?.readyState === 'complete') {
+        injectCSS();
+      }
+
+      return () => iframe.removeEventListener('load', injectCSS);
+    }
+  }, [status]);
 
   if (status === 'loading') {
     return (
@@ -62,7 +107,6 @@ const ChatPage = () => {
   );
 };
 
-// Fixed positioning: exactly below header, fill remaining space
 const containerStyle = {
   position: 'fixed',
   top: 64,
