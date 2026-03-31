@@ -706,3 +706,29 @@ ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
 | 开发 (154.40.40.48:3000) | ✅ 已部署 | `59a98cad` |
 | 测试 (154.36.173.198) | ⏳ 待部署 | |
 | 生产 (38.58.59.161) | ⏳ 待部署 | |
+
+---
+
+### 2026-03-31: AWS Bedrock Beta Flags 过滤 + LibreChat 移除
+
+#### AWS Bedrock Beta Flags 过滤 (commit: `9bae049f`)
+- **问题**: Claude Code/Desktop 发送 Bedrock 不支持的 beta flags 导致 400 错误
+  - `context-management`, `prompt-caching-scope`, `prompt-caching`, `extended-thinking`
+- **修复**: `relay/channel/aws/dto.go` 新增 `isBedrockSupportedBeta()` 白名单过滤
+- **支持的 flags**: `computer-use-2025-01-24`, `tools-2024-*`, `messages-2023-12-15`, `max-tokens-3-5-sonnet-2022-07-15`
+- **不支持的 flags**: 自动过滤，不发送给 Bedrock
+- 修复 Claude Code 使用 OpenToken + Bedrock 的兼容性问题
+
+#### LibreChat 集成移除 (commit: `894a48c9`)
+- 移除 `controller/librechat.go` + `controller/librechat_proxy.go`
+- 移除 `/chat/*` 路由和 `/api/librechat/*` API 端点
+- 移除前端 Chat 页面 (`web/src/pages/Chat/index.jsx`)
+- 清理侧栏聊天菜单项
+- 保留: Bedrock beta flags 过滤功能
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `894a48c9` |
+| 测试 (154.36.173.198) | ⏳ 待部署 | |
+| 生产 (38.58.59.161) | ⏳ 待部署 | |
