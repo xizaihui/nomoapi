@@ -66,8 +66,106 @@ func formatRequest(requestBody io.Reader, requestHeader http.Header) (*AwsClaude
 			awsClaudeRequest.AnthropicBeta = betaJson
 		}
 	}
+
+	// 清理请求体中 cache_control.scope 字段（Bedrock 不支持）
+	awsClaudeRequest.System = cleanCacheControlInSystem(awsClaudeRequest.System)
+	awsClaudeRequest.Messages = cleanCacheControlInMessages(awsClaudeRequest.Messages)
+
 	logger.LogJson(context.Background(), "json", awsClaudeRequest)
 	return &awsClaudeRequest, nil
+}
+
+// stripCacheControlScope 从 cache_control 对象中移除 Bedrock 不支持的 scope 字段
+func stripCacheControlScope(raw json.RawMessage) json.RawMessage {
+	if len(raw) == 0 {
+		return raw
+	}
+	var obj map[string]interface{}
+	if err := json.Unmarshal(raw, &obj); err != nil {
+		return raw
+	}
+	if _, has := obj["scope"]; has {
+		delete(obj, "scope")
+		if len(obj) == 0 {
+			return nil // cache_control 为空则移除
+		}
+		out, err := json.Marshal(obj)
+		if err != nil {
+			return raw
+		}
+		return out
+	}
+	return raw
+}
+
+// cleanCacheControlInSystem 清理 system 字段中的 cache_control.scope
+func cleanCacheControlInSystem(system any) any {
+	if system == nil {
+		return nil
+	}
+	// system 可能是 string 或 []interface{} (content blocks)
+	arr, ok := system.([]interface{})
+	if !ok {
+		return system
+	}
+	for i, item := range arr {
+		block, ok := item.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if cc, has := block["cache_control"]; has {
+			ccBytes, err := json.Marshal(cc)
+			if err != nil {
+				continue
+			}
+			cleaned := stripCacheControlScope(ccBytes)
+			if cleaned == nil {
+				delete(block, "cache_control")
+			} else {
+				var parsed interface{}
+				if err := json.Unmarshal(cleaned, &parsed); err == nil {
+					block["cache_control"] = parsed
+				}
+			}
+			arr[i] = block
+		}
+	}
+	return arr
+}
+
+// cleanCacheControlInMessages 清理 messages 中的 cache_control.scope
+func cleanCacheControlInMessages(messages []dto.ClaudeMessage) []dto.ClaudeMessage {
+	for i, msg := range messages {
+		// content 可能是 string 或 []interface{}
+		arr, ok := msg.Content.([]interface{})
+		if !ok {
+			continue
+		}
+		for j, item := range arr {
+			block, ok := item.(map[string]interface{})
+			if !ok {
+				continue
+			}
+			if cc, has := block["cache_control"]; has {
+				ccBytes, err := json.Marshal(cc)
+				if err != nil {
+					continue
+				}
+				cleaned := stripCacheControlScope(ccBytes)
+				if cleaned == nil {
+					delete(block, "cache_control")
+				} else {
+					var parsed interface{}
+					if err := json.Unmarshal(cleaned, &parsed); err == nil {
+						block["cache_control"] = parsed
+					}
+				}
+				arr[j] = block
+			}
+		}
+		messages[i].Content = arr
+	}
+	return messages
 }
 
 // NovaMessage Nova模型使用messages-v1格式
