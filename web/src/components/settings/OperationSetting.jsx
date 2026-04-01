@@ -28,6 +28,7 @@ import SettingsMonitoring from '../../pages/Setting/Operation/SettingsMonitoring
 import SettingsCreditLimit from '../../pages/Setting/Operation/SettingsCreditLimit';
 import SettingsCheckin from '../../pages/Setting/Operation/SettingsCheckin';
 import SettingsBedrockBetaFlags from '../../pages/Setting/Operation/SettingsBedrockBetaFlags';
+import SettingsDistillation from '../../pages/Setting/Operation/SettingsDistillation';
 import { API, showError, toBoolean } from '../../helpers';
 
 const OperationSetting = () => {
@@ -158,6 +159,10 @@ const OperationSetting = () => {
         {/* AWS Bedrock Beta Flags 配置 */}
         <div style={{ marginTop: '10px' }}>
           <SettingsBedrockBetaFlags />
+        </div>
+        {/* 蒸馏检测 */}
+        <div style={{ marginTop: '10px' }}>
+          <SettingsDistillation />
         </div>
       </Spin>
     </>

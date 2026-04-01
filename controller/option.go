@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/distillation"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/setting"
 	"github.com/QuantumNous/new-api/setting/console_setting"
@@ -298,10 +299,14 @@ func UpdateOption(c *gin.Context) {
 		}
 	case "BedrockBetaFlagsSupported":
 		// Validate supported flags format (newline-separated list)
-		// No special validation needed, just store as-is
 	case "BedrockBetaFlagsUnsupported":
 		// Validate unsupported flags format (newline-separated list)
-		// No special validation needed, just store as-is
+	case "DistillationDetectionEnabled",
+		"DistillationIntervalStdThreshold",
+		"DistillationMaxTokensWindow",
+		"DistillationIntervalsWindow",
+		"DistillationAlertThreshold":
+		// Distillation detection settings - no special validation
 	}
 	err = model.UpdateOption(option.Key, option.Value.(string))
 	if err != nil {
@@ -334,6 +339,11 @@ func UpdateOption(c *gin.Context) {
 			})
 			return
 		}
+	}
+	
+	// Distillation config update
+	if strings.HasPrefix(option.Key, "Distillation") {
+		distillation.InitConfig()
 	}
 	
 	c.JSON(http.StatusOK, gin.H{
