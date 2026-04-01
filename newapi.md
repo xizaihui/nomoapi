@@ -732,3 +732,50 @@ ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
 | 开发 (154.40.40.48:3000) | ✅ 已部署 | `894a48c9` |
 | 测试 (154.36.173.198) | ⏳ 待部署 | |
 | 生产 (38.58.59.161) | ⏳ 待部署 | |
+
+---
+
+### 2026-04-01: Bedrock Beta Flags 配置化 + 后台管理界面
+
+#### Bedrock Beta Flags 配置化 (commit: `63e88982`)
+- **功能**: 将硬编码的白名单/黑名单改为后台可配置
+- **后端**: `setting/operation_setting/bedrock_beta_flags_setting.go` — 配置管理 + 自动去重
+- **后端**: `controller/option.go` — 保存时更新内存缓存
+- **前端**: `web/src/pages/Setting/Operation/SettingsBedrockBetaFlags.jsx` — 配置界面
+- **位置**: 系统设置 → 运营设置 → 最底部
+- **特性**: 保存即生效、自动去重、# 注释支持、黑名单优先策略
+- **日志**: 被过滤的 flags 记录到系统日志
+
+#### 配置持久化修复 (commit: `e29c8fc0`)
+- **问题**: 保存成功但刷新页面显示旧值
+- **原因**: GetOptions 从 OptionMap 内存缓存读取，异步同步延迟
+- **修复**: 保存后保持前端状态，不重新加载
+
+#### 自动去重 (commit: `25841f9c`)
+- **功能**: 配置解析时自动去除重复的 beta flags
+- **实现**: parseFlags 使用 map 追踪已出现的 flag，保留首次出现顺序
+
+**当前白名单 (15个):**
+computer-use-2024-10-22, computer-use-2025-01-24, max-tokens-3-5-sonnet-2022-07-15,
+messages-2023-12-15, tools-2024-04-04, tools-2024-05-16,
+token-efficient-tools-2025-02-19, interleaved-thinking-2025-05-14,
+output-128k-2025-02-19, dev-full-thinking-2025-05-14, context-1m-2025-08-07,
+context-management-2025-06-27, effort-2025-11-24, tool-search-tool-2025-10-19,
+tool-examples-2025-10-29
+
+**当前黑名单 (21个):**
+context-management, prompt-caching-scope, prompt-caching, extended-thinking,
+prompt-caching-2024-07-31, message-batches-2024-09-24, pdfs-2024-09-25,
+token-counting-2024-11-01, files-api-2025-04-14, mcp-client-2025-04-04,
+mcp-client-2025-11-20, extended-cache-ttl-2025-04-11, code-execution-2025-05-22,
+model-context-window-exceeded-2025-08-26, skills-2025-10-02,
+structured-outputs-2025-11-13, fast-mode-2026-02-01,
+max-tokens-3-5-sonnet-2024-07-15, output-300k-2026-03-24,
+fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `25841f9c` |
+| 测试 (154.36.173.198) | ⏳ 部署中 | |
+| 生产 (38.58.59.161) | ✅ 已部署 | `63e88982` |
