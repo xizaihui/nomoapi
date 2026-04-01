@@ -293,6 +293,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* macOS 平台适配：Mac Retina 屏渲染偏大，整体缩放到 ~80% 对齐 Windows 视觉 */
+@supports (-webkit-appearance: none) {
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    html.platform-mac {
+      font-size: 12px;
+      zoom: 0.82;
+    }
+  }
+}
+
 /* 全局滚动条 - 细滚动条，背景透明 */
 * {
   scrollbar-width: thin;
