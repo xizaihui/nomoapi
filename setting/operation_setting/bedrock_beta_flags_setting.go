@@ -64,11 +64,13 @@ func parseFlags(input string) []string {
 		return []string{}
 	}
 	lines := strings.Split(input, "\n")
+	seen := make(map[string]bool)
 	var flags []string
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
-		if line != "" && !strings.HasPrefix(line, "#") {
+		if line != "" && !strings.HasPrefix(line, "#") && !seen[line] {
 			flags = append(flags, line)
+			seen[line] = true
 		}
 	}
 	return flags
