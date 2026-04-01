@@ -824,6 +824,17 @@ fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
 **部署状态:**
 | 环境 | 状态 | commit |
 |------|------|--------|
-| 开发 (154.40.40.48:3000) | ✅ 已部署 | `89a35a33` |
-| 测试 (154.36.173.198) | ⏳ 待部署 | |
-| 生产 (38.58.59.161) | ⏳ 待部署 | |
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `f6238912` |
+| 测试 (154.36.173.198) | ✅ 已部署 | `f6238912` |
+| 生产 (38.58.59.161) | ✅ 已部署 | `f6238912` |
+
+---
+
+### 2026-04-01: Bedrock cache_control.scope 清理 (commit: `f6238912`)
+
+- **问题**: Claude Code 发送 `cache_control: {type: "ephemeral", scope: "turn"}` 在请求体中，Bedrock 不支持 `scope` 字段导致 400 错误
+- **修复**: `relay/channel/aws/dto.go` — 在转发前遍历 system/messages 内容块，删除 `cache_control.scope`
+- **双重防护**:
+  - Header 层: 过滤不支持的 beta flags（白名单/黑名单）
+  - Body 层: 清理 `cache_control.scope` 字段
+- **函数**: `stripCacheControlScope()`, `cleanCacheControlInSystem()`, `cleanCacheControlInMessages()`
