@@ -777,5 +777,53 @@ fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
 | 环境 | 状态 | commit |
 |------|------|--------|
 | 开发 (154.40.40.48:3000) | ✅ 已部署 | `25841f9c` |
-| 测试 (154.36.173.198) | ⏳ 部署中 | |
+| 测试 (154.36.173.198) | ✅ 已部署 | `43179dea` |
 | 生产 (38.58.59.161) | ✅ 已部署 | `63e88982` |
+
+---
+
+### 2026-04-01: 蒸馏检测引擎 (commit: `89a35a33`)
+
+#### 功能概述
+检测并自动禁用疑似进行模型蒸馏的 API Key。仅保留两个高准确率（误杀率 < 1%）指标：
+1. **请求间隔标准差 < 阈值**：机器人均匀发送特征，正常人类不可能保持如此稳定的间隔
+2. **连续 N 次 max_tokens 完全一致**：模板化数据采集特征
+
+**触发逻辑：** 两个指标同时触发 → 计一次告警 → 累计 N 次 → 自动禁用该 Key
+
+#### 技术实现
+- **检测引擎**: `distillation/detector.go` — Redis 计数器 + 规则匹配
+- **API 接口**: `distillation/controller.go` — 配置/白名单/告警查询
+- **前端界面**: `web/src/pages/Setting/Operation/SettingsDistillation.jsx`
+- **Hook 点**: `controller/relay.go` Relay() 函数，异步 goroutine 不阻塞请求
+- **存储**: Redis（实时计数器，TTL 2h 自动过期）
+
+#### 配置项（后台 → 运营设置 → 蒸馏检测）
+| 配置 | 默认值 | 说明 |
+|------|--------|------|
+| 全局开关 | 关闭 | DistillationDetectionEnabled |
+| 间隔标准差阈值 | 500ms | DistillationIntervalStdThreshold |
+| max_tokens 检测窗口 | 100次 | DistillationMaxTokensWindow |
+| 间隔检测窗口 | 100次 | DistillationIntervalsWindow |
+| 自动禁用阈值 | 3次告警 | DistillationAlertThreshold |
+
+#### 安全特性
+- 异步检测，零请求延迟影响
+- 只禁用触发的 Key（Token.Status=2），不影响同用户其他 Key
+- 白名单机制：信任的 Token 跳过检测
+- 首次触发只标记，累计达阈值才禁用（防误杀）
+- 需要 Redis 支持
+
+#### API 路由
+- `GET /api/distillation/config` — 获取配置
+- `GET /api/distillation/whitelist` — 获取白名单
+- `POST /api/distillation/whitelist` — 添加白名单
+- `DELETE /api/distillation/whitelist/:id` — 移除白名单
+- `GET /api/distillation/alerts` — 获取当前告警
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `89a35a33` |
+| 测试 (154.36.173.198) | ⏳ 待部署 | |
+| 生产 (38.58.59.161) | ⏳ 待部署 | |
