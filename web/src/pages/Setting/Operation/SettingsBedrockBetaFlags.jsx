@@ -61,6 +61,7 @@ extended-thinking`;
 
       if (res1.data.success && res2.data.success) {
         showSuccess(t('保存成功'));
+        // Don't reload - keep current values
       } else {
         showError(res1.data.message || res2.data.message || t('保存失败'));
       }
