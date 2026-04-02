@@ -24,12 +24,14 @@ const SettingsDistillation = () => {
     try {
       const res = await API.get('/api/option/');
       const { success, data } = res.data;
-      if (success) {
-        setEnabled(data.DistillationDetectionEnabled === 'true');
-        if (data.DistillationIntervalStdThreshold) setIntervalStd(data.DistillationIntervalStdThreshold);
-        if (data.DistillationMaxTokensWindow) setMaxTokensWindow(data.DistillationMaxTokensWindow);
-        if (data.DistillationIntervalsWindow) setIntervalsWindow(data.DistillationIntervalsWindow);
-        if (data.DistillationAlertThreshold) setAlertThreshold(data.DistillationAlertThreshold);
+      if (success && Array.isArray(data)) {
+        const optMap = {};
+        data.forEach((item) => { optMap[item.key] = item.value; });
+        setEnabled(optMap.DistillationDetectionEnabled === 'true');
+        if (optMap.DistillationIntervalStdThreshold) setIntervalStd(optMap.DistillationIntervalStdThreshold);
+        if (optMap.DistillationMaxTokensWindow) setMaxTokensWindow(optMap.DistillationMaxTokensWindow);
+        if (optMap.DistillationIntervalsWindow) setIntervalsWindow(optMap.DistillationIntervalsWindow);
+        if (optMap.DistillationAlertThreshold) setAlertThreshold(optMap.DistillationAlertThreshold);
       }
     } catch (error) {
       // settings may not exist yet
