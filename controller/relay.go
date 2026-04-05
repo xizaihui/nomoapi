@@ -11,6 +11,7 @@ import (
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
+	"github.com/QuantumNous/new-api/distillation"
 	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/middleware"
@@ -125,6 +126,14 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 
 	// 异步审计检查（在渠道分发之前，不阻塞请求）
 	audit.AsyncAuditCheck(c, relayInfo, request)
+
+	// 蒸馏检测：记录请求指标
+	if openaiReq, ok := request.(*dto.GeneralOpenAIRequest); ok {
+		gopool.Go(func() {
+			distillation.RecordRequest(relayInfo.TokenId, openaiReq.GetMaxTokens())
+			distillation.CheckAndAlert(relayInfo.TokenId, relayInfo.TokenKey, relayInfo.UserId, "")
+		})
+	}
 
 	needSensitiveCheck := setting.ShouldCheckPromptSensitive()
 	needCountToken := constant.CountToken

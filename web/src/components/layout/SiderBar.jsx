@@ -55,6 +55,7 @@ const routerMap = {
   'audit-rules': '/console/audit-rules',
   'audit-retention': '/console/audit-retention',
   playground: '/console/playground',
+  chat: '/console/chat',
 };
 
 const SiderBar = ({ onNavigate = () => {} }) => {
@@ -231,22 +232,9 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   }, [isAdmin(), isRoot(), t, isModuleVisible]);
 
   const chatMenuItems = useMemo(() => {
-    const items = [
-      {
-        text: t('聊天'),
-        itemKey: 'chat',
-        items: chatItems,
-      },
-    ];
-
-    // 根据配置过滤项目
-    const filteredItems = items.filter((item) => {
-      const configVisible = isModuleVisible('chat', item.itemKey);
-      return configVisible;
-    });
-
-    return filteredItems;
-  }, [chatItems, t, isModuleVisible]);
+    // Chat feature removed
+    return [];
+  }, [t, isModuleVisible]);
 
   // 更新路由映射，添加聊天路由
   const updateRouterMapWithChats = (chats) => {

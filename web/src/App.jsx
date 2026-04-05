@@ -64,7 +64,6 @@ const Token = lazyRetry(() => import('./pages/Token'));
 const Redemption = lazyRetry(() => import('./pages/Redemption'));
 const TopUp = lazyRetry(() => import('./pages/TopUp'));
 const Log = lazyRetry(() => import('./pages/Log'));
-const Chat = lazyRetry(() => import('./pages/Chat'));
 const Chat2Link = lazyRetry(() => import('./pages/Chat2Link'));
 const Midjourney = lazyRetry(() => import('./pages/Midjourney'));
 const Pricing = lazyRetry(() => import('./pages/Pricing'));
@@ -411,14 +410,6 @@ function App() {
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
               <PrivacyPolicy />
-            </Suspense>
-          }
-        />
-        <Route
-          path='/console/chat/:id?'
-          element={
-            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
-              <Chat />
             </Suspense>
           }
         />

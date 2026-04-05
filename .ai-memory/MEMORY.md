@@ -68,6 +68,9 @@ docker compose up -d --force-recreate --no-deps new-api
 - ✅ Form.Upload 完整重写 (修复 Vertex AI 文件上传崩溃)
 - ✅ 安全部署脚本 (deploy.sh)
 - ✅ 视觉清晰度优化 (文字加深/字重分层/边框阴影/布局层次) — `20baf1bf`
+- ✅ Bedrock Beta Flags 配置化 (admin UI, DB-backed, 自动去重)
+- ✅ 蒸馏检测引擎 (Redis, 两指标, 自动禁用, 白名单) — `89a35a33`
+- ✅ Bedrock cache_control.scope 清理 (body 层过滤) — `f6238912`
 
 ### 待办方向
 - [ ] 移动端适配优化
@@ -92,6 +95,9 @@ docker compose up -d --force-recreate --no-deps new-api
 - **bun build**: 必须先 rm -rf dist node_modules/.vite，否则旧 CSS/JS 混入
 - **高饱和蓝色主题被否决**: 用户试过 #3b82f6 后不满意，退回钢蓝灰 — 不要再建议类似方案
 - **Docker 502**: 服务器重启后 docker-proxy 端口转发断裂，需 `systemctl restart docker`（不只是重启容器）
+- **API /api/option/ 返回数组**: `[{key, value}]` 格式，不是对象 — 前端读取时需先转 map
+- **Bedrock cache_control.scope**: 在请求体 body 中，不在 header — 过滤 header 的 beta flags 不够，需要遍历 body 删除
+- **macOS 缩放适配失败**: zoom: 0.82 效果不好，用户还原 — Mac/Windows 差异暂不强制适配
 
 ---
 

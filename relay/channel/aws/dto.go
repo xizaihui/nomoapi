@@ -10,6 +10,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/logger"
+	"github.com/QuantumNous/new-api/setting/operation_setting"
 )
 
 type AwsClaudeRequest struct {
@@ -38,21 +39,133 @@ func formatRequest(requestBody io.Reader, requestHeader http.Header) (*AwsClaude
 	}
 	awsClaudeRequest.AnthropicVersion = "bedrock-2023-05-31"
 
-	// check header anthropic-beta
+	// check header anthropic-beta and filter unsupported flags for Bedrock
 	anthropicBetaValues := requestHeader.Get("anthropic-beta")
 	if len(anthropicBetaValues) > 0 {
 		var tempArray []string
 		tempArray = strings.Split(anthropicBetaValues, ",")
-		if len(tempArray) > 0 {
-			betaJson, err := json.Marshal(tempArray)
+		
+		// Filter out beta flags that Bedrock doesn't support
+		var supportedBetas []string
+		for _, beta := range tempArray {
+			beta = strings.TrimSpace(beta)
+			if isBedrockSupportedBeta(beta) {
+				supportedBetas = append(supportedBetas, beta)
+			} else {
+				// Log filtered flags for monitoring
+				logger.LogInfo(context.Background(), "Bedrock beta flag filtered: "+beta)
+			}
+		}
+		
+		// Only set AnthropicBeta if there are supported flags
+		if len(supportedBetas) > 0 {
+			betaJson, err := json.Marshal(supportedBetas)
 			if err != nil {
 				return nil, err
 			}
 			awsClaudeRequest.AnthropicBeta = betaJson
 		}
 	}
+
+	// 清理请求体中 cache_control.scope 字段（Bedrock 不支持）
+	awsClaudeRequest.System = cleanCacheControlInSystem(awsClaudeRequest.System)
+	awsClaudeRequest.Messages = cleanCacheControlInMessages(awsClaudeRequest.Messages)
+
 	logger.LogJson(context.Background(), "json", awsClaudeRequest)
 	return &awsClaudeRequest, nil
+}
+
+// stripCacheControlScope 从 cache_control 对象中移除 Bedrock 不支持的 scope 字段
+func stripCacheControlScope(raw json.RawMessage) json.RawMessage {
+	if len(raw) == 0 {
+		return raw
+	}
+	var obj map[string]interface{}
+	if err := json.Unmarshal(raw, &obj); err != nil {
+		return raw
+	}
+	if _, has := obj["scope"]; has {
+		delete(obj, "scope")
+		if len(obj) == 0 {
+			return nil // cache_control 为空则移除
+		}
+		out, err := json.Marshal(obj)
+		if err != nil {
+			return raw
+		}
+		return out
+	}
+	return raw
+}
+
+// cleanCacheControlInSystem 清理 system 字段中的 cache_control.scope
+func cleanCacheControlInSystem(system any) any {
+	if system == nil {
+		return nil
+	}
+	// system 可能是 string 或 []interface{} (content blocks)
+	arr, ok := system.([]interface{})
+	if !ok {
+		return system
+	}
+	for i, item := range arr {
+		block, ok := item.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if cc, has := block["cache_control"]; has {
+			ccBytes, err := json.Marshal(cc)
+			if err != nil {
+				continue
+			}
+			cleaned := stripCacheControlScope(ccBytes)
+			if cleaned == nil {
+				delete(block, "cache_control")
+			} else {
+				var parsed interface{}
+				if err := json.Unmarshal(cleaned, &parsed); err == nil {
+					block["cache_control"] = parsed
+				}
+			}
+			arr[i] = block
+		}
+	}
+	return arr
+}
+
+// cleanCacheControlInMessages 清理 messages 中的 cache_control.scope
+func cleanCacheControlInMessages(messages []dto.ClaudeMessage) []dto.ClaudeMessage {
+	for i, msg := range messages {
+		// content 可能是 string 或 []interface{}
+		arr, ok := msg.Content.([]interface{})
+		if !ok {
+			continue
+		}
+		for j, item := range arr {
+			block, ok := item.(map[string]interface{})
+			if !ok {
+				continue
+			}
+			if cc, has := block["cache_control"]; has {
+				ccBytes, err := json.Marshal(cc)
+				if err != nil {
+					continue
+				}
+				cleaned := stripCacheControlScope(ccBytes)
+				if cleaned == nil {
+					delete(block, "cache_control")
+				} else {
+					var parsed interface{}
+					if err := json.Unmarshal(cleaned, &parsed); err == nil {
+						block["cache_control"] = parsed
+					}
+				}
+				arr[j] = block
+			}
+		}
+		messages[i].Content = arr
+	}
+	return messages
 }
 
 // NovaMessage Nova模型使用messages-v1格式
@@ -142,4 +255,9 @@ func parseStopSequences(stop any) []string {
 		return sequences
 	}
 	return nil
+}
+
+// isBedrockSupportedBeta checks if a beta flag is supported by AWS Bedrock
+func isBedrockSupportedBeta(beta string) bool {
+	return operation_setting.IsBedrockSupportedBeta(beta)
 }

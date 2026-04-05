@@ -481,3 +481,21 @@ func BatchDeleteTokens(ids []int, userId int) (int, error) {
 
 	return len(tokens), nil
 }
+
+// DisableTokenById 通过 ID 禁用 token（蒸馏检测用）
+func DisableTokenById(tokenId int) error {
+	token := Token{Id: tokenId}
+	err := DB.Model(&token).Where("id = ? AND status = ?", tokenId, common.TokenStatusEnabled).
+		Update("status", common.TokenStatusDisabled).Error
+	if err != nil {
+		return err
+	}
+	// 更新缓存
+	gopool.Go(func() {
+		var t Token
+		if e := DB.First(&t, tokenId).Error; e == nil {
+			_ = cacheSetToken(t)
+		}
+	})
+	return nil
+}

@@ -706,3 +706,135 @@ ec0677e4 → 1aa1ed3f → 0cadef18 → 2f54c85d → b340d6b5 → 3c8e9a1c
 | 开发 (154.40.40.48:3000) | ✅ 已部署 | `59a98cad` |
 | 测试 (154.36.173.198) | ⏳ 待部署 | |
 | 生产 (38.58.59.161) | ⏳ 待部署 | |
+
+---
+
+### 2026-03-31: AWS Bedrock Beta Flags 过滤 + LibreChat 移除
+
+#### AWS Bedrock Beta Flags 过滤 (commit: `9bae049f`)
+- **问题**: Claude Code/Desktop 发送 Bedrock 不支持的 beta flags 导致 400 错误
+  - `context-management`, `prompt-caching-scope`, `prompt-caching`, `extended-thinking`
+- **修复**: `relay/channel/aws/dto.go` 新增 `isBedrockSupportedBeta()` 白名单过滤
+- **支持的 flags**: `computer-use-2025-01-24`, `tools-2024-*`, `messages-2023-12-15`, `max-tokens-3-5-sonnet-2022-07-15`
+- **不支持的 flags**: 自动过滤，不发送给 Bedrock
+- 修复 Claude Code 使用 OpenToken + Bedrock 的兼容性问题
+
+#### LibreChat 集成移除 (commit: `894a48c9`)
+- 移除 `controller/librechat.go` + `controller/librechat_proxy.go`
+- 移除 `/chat/*` 路由和 `/api/librechat/*` API 端点
+- 移除前端 Chat 页面 (`web/src/pages/Chat/index.jsx`)
+- 清理侧栏聊天菜单项
+- 保留: Bedrock beta flags 过滤功能
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `894a48c9` |
+| 测试 (154.36.173.198) | ⏳ 待部署 | |
+| 生产 (38.58.59.161) | ⏳ 待部署 | |
+
+---
+
+### 2026-04-01: Bedrock Beta Flags 配置化 + 后台管理界面
+
+#### Bedrock Beta Flags 配置化 (commit: `63e88982`)
+- **功能**: 将硬编码的白名单/黑名单改为后台可配置
+- **后端**: `setting/operation_setting/bedrock_beta_flags_setting.go` — 配置管理 + 自动去重
+- **后端**: `controller/option.go` — 保存时更新内存缓存
+- **前端**: `web/src/pages/Setting/Operation/SettingsBedrockBetaFlags.jsx` — 配置界面
+- **位置**: 系统设置 → 运营设置 → 最底部
+- **特性**: 保存即生效、自动去重、# 注释支持、黑名单优先策略
+- **日志**: 被过滤的 flags 记录到系统日志
+
+#### 配置持久化修复 (commit: `e29c8fc0`)
+- **问题**: 保存成功但刷新页面显示旧值
+- **原因**: GetOptions 从 OptionMap 内存缓存读取，异步同步延迟
+- **修复**: 保存后保持前端状态，不重新加载
+
+#### 自动去重 (commit: `25841f9c`)
+- **功能**: 配置解析时自动去除重复的 beta flags
+- **实现**: parseFlags 使用 map 追踪已出现的 flag，保留首次出现顺序
+
+**当前白名单 (15个):**
+computer-use-2024-10-22, computer-use-2025-01-24, max-tokens-3-5-sonnet-2022-07-15,
+messages-2023-12-15, tools-2024-04-04, tools-2024-05-16,
+token-efficient-tools-2025-02-19, interleaved-thinking-2025-05-14,
+output-128k-2025-02-19, dev-full-thinking-2025-05-14, context-1m-2025-08-07,
+context-management-2025-06-27, effort-2025-11-24, tool-search-tool-2025-10-19,
+tool-examples-2025-10-29
+
+**当前黑名单 (21个):**
+context-management, prompt-caching-scope, prompt-caching, extended-thinking,
+prompt-caching-2024-07-31, message-batches-2024-09-24, pdfs-2024-09-25,
+token-counting-2024-11-01, files-api-2025-04-14, mcp-client-2025-04-04,
+mcp-client-2025-11-20, extended-cache-ttl-2025-04-11, code-execution-2025-05-22,
+model-context-window-exceeded-2025-08-26, skills-2025-10-02,
+structured-outputs-2025-11-13, fast-mode-2026-02-01,
+max-tokens-3-5-sonnet-2024-07-15, output-300k-2026-03-24,
+fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `25841f9c` |
+| 测试 (154.36.173.198) | ✅ 已部署 | `43179dea` |
+| 生产 (38.58.59.161) | ✅ 已部署 | `63e88982` |
+
+---
+
+### 2026-04-01: 蒸馏检测引擎 (commit: `89a35a33`)
+
+#### 功能概述
+检测并自动禁用疑似进行模型蒸馏的 API Key。仅保留两个高准确率（误杀率 < 1%）指标：
+1. **请求间隔标准差 < 阈值**：机器人均匀发送特征，正常人类不可能保持如此稳定的间隔
+2. **连续 N 次 max_tokens 完全一致**：模板化数据采集特征
+
+**触发逻辑：** 两个指标同时触发 → 计一次告警 → 累计 N 次 → 自动禁用该 Key
+
+#### 技术实现
+- **检测引擎**: `distillation/detector.go` — Redis 计数器 + 规则匹配
+- **API 接口**: `distillation/controller.go` — 配置/白名单/告警查询
+- **前端界面**: `web/src/pages/Setting/Operation/SettingsDistillation.jsx`
+- **Hook 点**: `controller/relay.go` Relay() 函数，异步 goroutine 不阻塞请求
+- **存储**: Redis（实时计数器，TTL 2h 自动过期）
+
+#### 配置项（后台 → 运营设置 → 蒸馏检测）
+| 配置 | 默认值 | 说明 |
+|------|--------|------|
+| 全局开关 | 关闭 | DistillationDetectionEnabled |
+| 间隔标准差阈值 | 500ms | DistillationIntervalStdThreshold |
+| max_tokens 检测窗口 | 100次 | DistillationMaxTokensWindow |
+| 间隔检测窗口 | 100次 | DistillationIntervalsWindow |
+| 自动禁用阈值 | 3次告警 | DistillationAlertThreshold |
+
+#### 安全特性
+- 异步检测，零请求延迟影响
+- 只禁用触发的 Key（Token.Status=2），不影响同用户其他 Key
+- 白名单机制：信任的 Token 跳过检测
+- 首次触发只标记，累计达阈值才禁用（防误杀）
+- 需要 Redis 支持
+
+#### API 路由
+- `GET /api/distillation/config` — 获取配置
+- `GET /api/distillation/whitelist` — 获取白名单
+- `POST /api/distillation/whitelist` — 添加白名单
+- `DELETE /api/distillation/whitelist/:id` — 移除白名单
+- `GET /api/distillation/alerts` — 获取当前告警
+
+**部署状态:**
+| 环境 | 状态 | commit |
+|------|------|--------|
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `f6238912` |
+| 测试 (154.36.173.198) | ✅ 已部署 | `f6238912` |
+| 生产 (38.58.59.161) | ✅ 已部署 | `f6238912` |
+
+---
+
+### 2026-04-01: Bedrock cache_control.scope 清理 (commit: `f6238912`)
+
+- **问题**: Claude Code 发送 `cache_control: {type: "ephemeral", scope: "turn"}` 在请求体中，Bedrock 不支持 `scope` 字段导致 400 错误
+- **修复**: `relay/channel/aws/dto.go` — 在转发前遍历 system/messages 内容块，删除 `cache_control.scope`
+- **双重防护**:
+  - Header 层: 过滤不支持的 beta flags（白名单/黑名单）
+  - Body 层: 清理 `cache_control.scope` 字段
+- **函数**: `stripCacheControlScope()`, `cleanCacheControlInSystem()`, `cleanCacheControlInMessages()`

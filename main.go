@@ -15,6 +15,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/controller"
+	"github.com/QuantumNous/new-api/distillation"
 	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/middleware"
@@ -314,6 +315,9 @@ func InitResources() error {
 	}
 	// 启动审计日志定时清理
 	audit.StartRetentionCleaner(model.DB)
+
+	// 初始化蒸馏检测配置
+	distillation.InitConfig()
 
 	// 启动系统监控
 	common.StartSystemMonitor()

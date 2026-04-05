@@ -27,61 +27,66 @@ import SettingsLog from '../../pages/Setting/Operation/SettingsLog';
 import SettingsMonitoring from '../../pages/Setting/Operation/SettingsMonitoring';
 import SettingsCreditLimit from '../../pages/Setting/Operation/SettingsCreditLimit';
 import SettingsCheckin from '../../pages/Setting/Operation/SettingsCheckin';
+import SettingsBedrockBetaFlags from '../../pages/Setting/Operation/SettingsBedrockBetaFlags';
+import SettingsDistillation from '../../pages/Setting/Operation/SettingsDistillation';
 import { API, showError, toBoolean } from '../../helpers';
 
+const OPERATION_DEFAULTS = {
+  /* 额度相关 */
+  QuotaForNewUser: 0,
+  PreConsumedQuota: 0,
+  QuotaForInviter: 0,
+  QuotaForInvitee: 0,
+  'quota_setting.enable_free_model_pre_consume': true,
+
+  /* 通用设置 */
+  TopUpLink: '',
+  'general_setting.docs_link': '',
+  QuotaPerUnit: 0,
+  USDExchangeRate: 0,
+  RetryTimes: 0,
+  'general_setting.quota_display_type': 'USD',
+  DisplayTokenStatEnabled: false,
+  DefaultCollapseSidebar: false,
+  DemoSiteEnabled: false,
+  SelfUseModeEnabled: false,
+
+  /* 顶栏模块管理 */
+  HeaderNavModules: '',
+
+  /* 左侧边栏模块管理（管理员） */
+  SidebarModulesAdmin: '',
+
+  /* 敏感词设置 */
+  CheckSensitiveEnabled: false,
+  CheckSensitiveOnPromptEnabled: false,
+  SensitiveWords: '',
+
+  /* 日志设置 */
+  LogConsumeEnabled: false,
+
+  /* 监控设置 */
+  ChannelDisableThreshold: 0,
+  QuotaRemindThreshold: 0,
+  AutomaticDisableChannelEnabled: false,
+  AutomaticEnableChannelEnabled: false,
+  AutomaticDisableKeywords: '',
+  AutomaticDisableStatusCodes: '401',
+  AutomaticRetryStatusCodes:
+    '100-199,300-399,401-407,409-499,500-503,505-523,525-599',
+  'monitor_setting.auto_test_channel_enabled': false,
+  'monitor_setting.auto_test_channel_minutes': 10,
+  /* 签到设置 */
+  'checkin_setting.enabled': false,
+  'checkin_setting.min_quota': 1000,
+  'checkin_setting.max_quota': 10000,
+
+  /* 令牌设置 */
+  'token_setting.max_user_tokens': 1000,
+};
+
 const OperationSetting = () => {
-  let [inputs, setInputs] = useState({
-    /* 额度相关 */
-    QuotaForNewUser: 0,
-    PreConsumedQuota: 0,
-    QuotaForInviter: 0,
-    QuotaForInvitee: 0,
-    'quota_setting.enable_free_model_pre_consume': true,
-
-    /* 通用设置 */
-    TopUpLink: '',
-    'general_setting.docs_link': '',
-    QuotaPerUnit: 0,
-    USDExchangeRate: 0,
-    RetryTimes: 0,
-    'general_setting.quota_display_type': 'USD',
-    DisplayTokenStatEnabled: false,
-    DefaultCollapseSidebar: false,
-    DemoSiteEnabled: false,
-    SelfUseModeEnabled: false,
-
-    /* 顶栏模块管理 */
-    HeaderNavModules: '',
-
-    /* 左侧边栏模块管理（管理员） */
-    SidebarModulesAdmin: '',
-
-    /* 敏感词设置 */
-    CheckSensitiveEnabled: false,
-    CheckSensitiveOnPromptEnabled: false,
-    SensitiveWords: '',
-
-    /* 日志设置 */
-    LogConsumeEnabled: false,
-
-    /* 监控设置 */
-    ChannelDisableThreshold: 0,
-    QuotaRemindThreshold: 0,
-    AutomaticDisableChannelEnabled: false,
-    AutomaticEnableChannelEnabled: false,
-    AutomaticDisableKeywords: '',
-    AutomaticDisableStatusCodes: '401',
-    AutomaticRetryStatusCodes:
-      '100-199,300-399,401-407,409-499,500-503,505-523,525-599',
-    'monitor_setting.auto_test_channel_enabled': false,
-    'monitor_setting.auto_test_channel_minutes': 10 /* 签到设置 */,
-    'checkin_setting.enabled': false,
-    'checkin_setting.min_quota': 1000,
-    'checkin_setting.max_quota': 10000,
-
-    /* 令牌设置 */
-    'token_setting.max_user_tokens': 1000,
-  });
+  let [inputs, setInputs] = useState({ ...OPERATION_DEFAULTS });
 
   let [loading, setLoading] = useState(false);
 
@@ -89,11 +94,11 @@ const OperationSetting = () => {
     const res = await API.get('/api/option/');
     const { success, message, data } = res.data;
     if (success) {
-      let newInputs = {};
+      let newInputs = { ...OPERATION_DEFAULTS };
       data.forEach((item) => {
-        if (typeof inputs[item.key] === 'boolean') {
+        if (typeof OPERATION_DEFAULTS[item.key] === 'boolean') {
           newInputs[item.key] = toBoolean(item.value);
-        } else {
+        } else if (item.key in OPERATION_DEFAULTS) {
           newInputs[item.key] = item.value;
         }
       });
@@ -154,6 +159,14 @@ const OperationSetting = () => {
         <Card style={{ marginTop: '10px' }}>
           <SettingsCheckin options={inputs} refresh={onRefresh} />
         </Card>
+        {/* AWS Bedrock Beta Flags 配置 */}
+        <div style={{ marginTop: '10px' }}>
+          <SettingsBedrockBetaFlags />
+        </div>
+        {/* 蒸馏检测 */}
+        <div style={{ marginTop: '10px' }}>
+          <SettingsDistillation />
+        </div>
       </Spin>
     </>
   );
