@@ -85,8 +85,8 @@ const PricingCardView = ({
   };
 
   const renderBillingTag = (record) => {
-    if (record.quota_type === 1) return <span className='text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground'>{t('按次计费')}</span>;
-    if (record.quota_type === 0) return <span className='text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground'>{t('按量计费')}</span>;
+    if (record.quota_type === 1) return <span className='text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-foreground/60'>{t('按次计费')}</span>;
+    if (record.quota_type === 0) return <span className='text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-foreground/60'>{t('按量计费')}</span>;
     return null;
   };
 
@@ -95,7 +95,7 @@ const PricingCardView = ({
     const tags = record.tags.split(',').filter(Boolean);
     if (tags.length === 0) return null;
     return tags.slice(0, 3).map((tg, idx) => (
-      <span key={idx} className='text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground'>{tg}</span>
+      <span key={idx} className='text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-foreground/60'>{tg}</span>
     ));
   };
 
@@ -153,7 +153,7 @@ const PricingCardView = ({
                       />
                     )}
                   </div>
-                  <div className='text-[11px] text-muted-foreground mt-0.5'>
+                  <div className='text-[11px] font-medium text-foreground/70 mt-0.5'>
                     {formatPriceInfo(priceData, t, siteDisplayType)}
                   </div>
                 </div>
@@ -161,7 +161,7 @@ const PricingCardView = ({
 
               {/* Description */}
               {model.description && (
-                <p className='text-xs text-muted-foreground/70 line-clamp-2 leading-relaxed mb-2'>
+                <p className='text-xs text-muted-foreground/80 line-clamp-2 leading-relaxed mb-2'>
                   {model.description}
                 </p>
               )}
@@ -176,7 +176,7 @@ const PricingCardView = ({
               {showRatio && (
                 <div className='mt-2 pt-2 border-t border-border/40'>
                   <div className='flex items-center gap-1 mb-1'>
-                    <span className='text-[10px] uppercase tracking-wider text-muted-foreground/60'>{t('倍率信息')}</span>
+                    <span className='text-[10px] uppercase tracking-wider text-muted-foreground/80 font-medium'>{t('倍率信息')}</span>
                     <Tooltip content={t('倍率是为了方便换算不同价格的模型')}>
                       <IconHelpCircle
                         className='text-muted-foreground/60 cursor-pointer'
@@ -185,7 +185,7 @@ const PricingCardView = ({
                       />
                     </Tooltip>
                   </div>
-                  <div className='flex gap-4 text-[11px] text-muted-foreground'>
+                  <div className='flex gap-4 text-[11px] font-medium text-foreground/60'>
                     <span>{t('模型')}: {model.quota_type === 0 ? model.model_ratio : '-'}</span>
                     <span>{t('补全')}: {model.quota_type === 0 ? parseFloat(model.completion_ratio.toFixed(3)) : '-'}</span>
                     <span>{t('分组')}: {priceData?.usedGroupRatio ?? '-'}</span>

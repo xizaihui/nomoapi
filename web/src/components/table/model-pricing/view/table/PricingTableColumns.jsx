@@ -196,7 +196,7 @@ export const getPricingTableColumns = ({
         <span>{t('倍率')}</span>
         <Tooltip content={t('倍率是为了方便换算不同价格的模型')}>
           <IconHelpCircle
-            className='text-foreground/80 cursor-pointer'
+            className='text-foreground/90 font-medium cursor-pointer'
             onClick={() => {
               setModalImageUrl('/ratio.png');
               setIsModalOpenurl(true);
@@ -212,14 +212,14 @@ export const getPricingTableColumns = ({
 
       return (
         <div className='space-y-1'>
-          <div className='text-foreground/80'>
+          <div className='text-foreground/90 font-medium'>
             {t('模型倍率')}：{record.quota_type === 0 ? text : t('无')}
           </div>
-          <div className='text-foreground/80'>
+          <div className='text-foreground/90 font-medium'>
             {t('补全倍率')}：
             {record.quota_type === 0 ? completionRatio : t('无')}
           </div>
-          <div className='text-foreground/80'>
+          <div className='text-foreground/90 font-medium'>
             {t('分组倍率')}：{priceData?.usedGroupRatio ?? '-'}
           </div>
         </div>
@@ -238,7 +238,7 @@ export const getPricingTableColumns = ({
       return (
         <div className='space-y-1'>
           {priceItems.map((item) => (
-            <div key={item.key} className='text-foreground/80'>
+            <div key={item.key} className='text-foreground/90 font-medium'>
               {item.label} {item.value}
               {item.suffix}
             </div>
