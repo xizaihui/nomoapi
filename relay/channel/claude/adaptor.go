@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/relay/channel"
@@ -42,7 +43,16 @@ func (a *Adaptor) Init(info *relaycommon.RelayInfo) {
 }
 
 func (a *Adaptor) GetRequestURL(info *relaycommon.RelayInfo) (string, error) {
-	requestURL := fmt.Sprintf("%s/v1/messages", info.ChannelBaseUrl)
+	// Determine if this request should use the ClewdR Code path (/code/v1/messages)
+	useCodePath := isClaudeCodeRequest(info)
+
+	var requestURL string
+	if useCodePath {
+		requestURL = fmt.Sprintf("%s/code/v1/messages", info.ChannelBaseUrl)
+	} else {
+		requestURL = fmt.Sprintf("%s/v1/messages", info.ChannelBaseUrl)
+	}
+
 	if !shouldAppendClaudeBetaQuery(info) {
 		return requestURL, nil
 	}
@@ -55,6 +65,21 @@ func (a *Adaptor) GetRequestURL(info *relaycommon.RelayInfo) (string, error) {
 	query.Set("beta", "true")
 	parsedURL.RawQuery = query.Encode()
 	return parsedURL.String(), nil
+}
+
+// isClaudeCodeRequest detects if the request should use ClewdR's /code/v1/messages path.
+// Detection: channel setting claude_code_mode=true, OR anthropic-beta header contains "oauth-2025".
+func isClaudeCodeRequest(info *relaycommon.RelayInfo) bool {
+	if info.ChannelOtherSettings.ClaudeCodeMode {
+		return true
+	}
+	// Auto-detect: Claude Code sends anthropic-beta containing "oauth-2025"
+	if beta, ok := info.RequestHeaders["Anthropic-Beta"]; ok {
+		if strings.Contains(beta, "oauth-2025") {
+			return true
+		}
+	}
+	return false
 }
 
 func shouldAppendClaudeBetaQuery(info *relaycommon.RelayInfo) bool {
