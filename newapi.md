@@ -838,3 +838,32 @@ fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
   - Header 层: 过滤不支持的 beta flags（白名单/黑名单）
   - Body 层: 清理 `cache_control.scope` 字段
 - **函数**: `stripCacheControlScope()`, `cleanCacheControlInSystem()`, `cleanCacheControlInMessages()`
+
+---
+
+### 2026-04-05: 监控设置保存修复 (commit: `2e508514`)
+
+- **问题**: 运营设置 → 监控设置的三个开关（定时测试所有通道、失败时自动禁用通道、成功时自动启用通道）勾选后保存报"你似乎并没有修改什么"，刷新后恢复未勾选
+- **根因**: Semi UI `<Form values={inputs}>` 受控模式导致循环更新 — Switch onChange 更新 state → re-render → Form 同步 values → 覆盖用户操作
+- **修复**: 重写 `SettingsMonitoring.jsx`，改用 `initValues` + `formApi.setValues()` / `formApi.getValues()` 模式，去掉所有 Switch 的 onChange
+- **同步修复**: `OperationSetting.jsx` 父组件提取 `OPERATION_DEFAULTS` 常量，`getOptions` 基于常量而非闭包 state
+- **教训**: Semi UI Form 的 `values` prop 是完全受控模式，不适合设置页面的"加载→编辑→提交"场景
+
+---
+
+### 2026-04-05: Claude Code 路由功能 (commit: `34cab999`, 来自 main)
+
+- **功能**: 自动识别 Claude Code 请求，路由到 ClewdR 的 `/code/v1/messages` 端点
+- **检测方式**: 渠道设置 `claude_code_mode=true` 或自动检测 `Anthropic-Beta` header 含 `oauth-2025`
+- **文件**: `relay/channel/claude/adaptor.go` — `isClaudeCodeRequest()`, `dto/channel_settings.go` — `ClaudeCodeMode` 字段
+
+---
+
+### 2026-04-07: Prompt Caching (CCR) 支持 (commit: `ff7022ce`)
+
+- **问题**: OpenAI → Claude 格式转换时 `cache_control` 字段被丢弃，导致客户端（CSR、Claude Code 等）发送的 prompt caching 标记无法透传到上游 Claude
+- **修复**:
+  - `dto/openai_request.go` — `ParseContent()` 解析 content 数组时提取 `cache_control` 字段，覆盖所有内容类型（text、image_url、input_audio、file、video_url）
+  - `relay/channel/claude/relay-claude.go` — `RequestOpenAI2ClaudeMessage()` 构造 `ClaudeMediaMessage` 时传递 `CacheControl`，包括 system 消息和 user/assistant 消息
+- **影响**: 启用后客户端发送 `cache_control: {"type": "ephemeral"}` 将正确透传，上游 Claude 可进行 prompt caching，显著降低重复内容的 token 消耗
+- **注意**: Claude 原生格式请求（非 OpenAI 格式）不受影响，本身就是直接透传
