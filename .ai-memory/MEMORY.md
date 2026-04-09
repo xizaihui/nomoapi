@@ -99,6 +99,49 @@ docker compose up -d --force-recreate --no-deps new-api
 - **API /api/option/ 返回数组**: `[{key, value}]` 格式，不是对象 — 前端读取时需先转 map
 - **Bedrock cache_control.scope**: 在请求体 body 中，不在 header — 过滤 header 的 beta flags 不够，需要遍历 body 删除
 - **macOS 缩放适配失败**: zoom: 0.82 效果不好，用户还原 — Mac/Windows 差异暂不强制适配
+- **Rust `regex` crate 不支持 look-ahead**: 用非贪婪匹配替代
+- **Rust `LazyLock` panic poisons**: 一个 LazyLock init panic 后所有后续 access 都 panic
+- **Rust 增量编译 ICE**: `cargo clean` 后重编可解决 `evaluate_obligation` 内部错误
+- **Release build OOM**: 7.8G 内存机器上 `cargo build --release` 可能被 SIGTERM，用 `CARGO_BUILD_JOBS=2` 限制并行度
+
+---
+
+## 🔧 ClewdR 项目
+
+### 快速恢复
+**一句话唤醒**: "继续 clewdr" 或 "看看 clewdr.md"
+**代码路径**: `/root/.openclaw/workspace/new-clewdr`
+**部署服务器**: 38.150.32.190 (`/opt/clewdr/clewdr`)
+**更新日志**: `/root/.openclaw/workspace/clewdr.md`
+
+### 当前版本状态 (2026-04-09)
+- 最新 commit: `a1c2806` on master
+- 已部署到 38.150.32.190，服务 active
+- 4 cookie valid，0 exhausted/invalid
+
+### 企业高并发改造完成
+- 目标: 300 个 Claude Max $200 账号，RPM 10k
+- 结论: 单套 clewdr 足够，不需要分布式
+- 配置化参数: rate limit/熔断/冻结全部可 toml 调整
+- Prometheus metrics 已埋点
+
+### 关键配置项 (clewdr.toml)
+```toml
+cookie_rate_limit_per_minute = 30   # Max 账号用 30, Free 用 10
+cookie_rate_window_secs = 60
+cookie_error_threshold = 8
+cookie_error_window_secs = 60
+cookie_freeze_base_secs = 60
+cookie_freeze_max_secs = 1800
+sanitize_xml_tool_calls = true      # XML 消毒器（默认开启）
+```
+
+### 三层 XML 防线（全部已部署）
+| 层 | 状态 |
+|---|---|
+| 入站历史清洗 | ✅ 每轮触发 |
+| 出站非流式 | ✅ tool_sim 升级 + fallback |
+| 出站流式 | ✅ 三种变体全覆盖 |
 
 ---
 
