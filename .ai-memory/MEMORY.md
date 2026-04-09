@@ -87,6 +87,7 @@ docker compose up -d --force-recreate --no-deps new-api
 4. 不需要重新读全部代码，newapi.md 已记录所有关键文件位置
 
 ### 踩过的坑（关键教训）
+- **XML tool_call 自回复毒害**：绝对不要在回复文本中输出字面量 XML tool_call 标签（包括 tool_name、parameters、function_calls、invoke），会导致 OpenClaw 解析失败 → 对话中断 → compaction 污染。已写入 AGENTS.md 禁止规则。
 - **Go embed**: 默认排除 `_` 和 `.` 开头文件，必须用 `all:` 前缀
 - **VChart**: canvas 渲染不认 CSS 变量，必须传实际颜色值
 - **FormField cloneElement**: 会给子组件注入 value prop，file input 会崩溃，用 `_noInject` 阻止
