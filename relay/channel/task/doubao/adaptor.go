@@ -160,6 +160,46 @@ func (a *TaskAdaptor) DoRequest(c *gin.Context, info *relaycommon.RelayInfo, req
 	return channel.DoTaskApiRequest(a, c, info, requestBody)
 }
 
+// EstimateBilling 根据请求是否包含参考视频动态调整计费倍率。
+// 后台按贵价(¥0.05/K token)配置，含视频参考时乘以 0.6 折扣(→ ¥0.03/K token)。
+// 注意：含图片或音频的请求不打折，只有含视频参考才打折。
+func (a *TaskAdaptor) EstimateBilling(c *gin.Context, info *relaycommon.RelayInfo) map[string]float64 {
+	req, err := relaycommon.GetTaskRequest(c)
+	if err != nil {
+		return nil
+	}
+	hasRefVideo := false
+	if req.Metadata != nil {
+		// 检查 metadata 中是否有视频相关字段
+		for _, key := range []string{"video_url", "reference_video", "video"} {
+			if _, ok := req.Metadata[key]; ok {
+				hasRefVideo = true
+				break
+			}
+		}
+		// 检查 metadata.content 数组中是否有 video 类型
+		if !hasRefVideo {
+			if contentArr, ok := req.Metadata["content"]; ok {
+				if items, ok := contentArr.([]interface{}); ok {
+					for _, item := range items {
+						if m, ok := item.(map[string]interface{}); ok {
+							if t, _ := m["type"].(string); t == "video" || t == "video_url" {
+								hasRefVideo = true
+								break
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if hasRefVideo {
+		common.SysLog(fmt.Sprintf("[doubao] reference video detected, applying 0.6x discount, model=%s", info.UpstreamModelName))
+		return map[string]float64{"ref_video": 0.6}
+	}
+	return nil
+}
+
 // DoResponse handles upstream response, returns taskID etc.
 func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (taskID string, taskData []byte, taskErr *dto.TaskError) {
 	responseBody, err := io.ReadAll(resp.Body)
