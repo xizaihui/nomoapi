@@ -194,11 +194,11 @@ func RelayTaskSubmit(c *gin.Context, info *relaycommon.RelayInfo) (*TaskSubmitRe
 	}
 
 	// 6. 将 OtherRatios 应用到基础额度
-	if !common.StringsContains(constant.TaskPricePatches, modelName) {
-		for _, ra := range info.PriceData.OtherRatios {
-			if ra != 1.0 {
-				info.PriceData.Quota = int(float64(info.PriceData.Quota) * ra)
-			}
+	//    注：按次计费模式（TaskPricePatches）也需要应用折扣，
+	//    TaskPricePatches 仅控制是否跳过任务完成后的 token 差额结算。
+	for _, ra := range info.PriceData.OtherRatios {
+		if ra != 1.0 {
+			info.PriceData.Quota = int(float64(info.PriceData.Quota) * ra)
 		}
 	}
 

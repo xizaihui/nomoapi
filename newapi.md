@@ -15,7 +15,7 @@
 - **GitHub**: `xizaihui/nomoapi` + `xizaihui/opentoken`
 - **上游**: `QuantumNous/new-api` (origin/main)
 - **同步指南**: `/opt/apps/newapis/UPSTREAM-SYNC.md`
-- **最新 tag**: `v0.4.5-opentoken`
+- **最新 tag**: `v1.6.0-Seedance动态计费`
 
 ---
 
@@ -867,3 +867,21 @@ fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
   - `relay/channel/claude/relay-claude.go` — `RequestOpenAI2ClaudeMessage()` 构造 `ClaudeMediaMessage` 时传递 `CacheControl`，包括 system 消息和 user/assistant 消息
 - **影响**: 启用后客户端发送 `cache_control: {"type": "ephemeral"}` 将正确透传，上游 Claude 可进行 prompt caching，显著降低重复内容的 token 消耗
 - **注意**: Claude 原生格式请求（非 OpenAI 格式）不受影响，本身就是直接透传
+
+---
+
+### 2026-04-12: Seedance 2.0 动态计费 — 视频参考折扣
+
+- **需求**: 豆包 Seedance 2.0 视频生成按场景差异计费：T2V ¥0.05/K token，I2V/V2V（含参考视频）¥0.03/K token
+- **方案**: 后台统一配高价（$7.142857/1M = ¥0.05/K），adaptor 检测视频参考后自动乘 0.6 折扣
+- **改动**:
+  1. `relay/channel/task/doubao/adaptor.go` — 新增 `EstimateBilling()` 方法：
+     - 检测 metadata 中 `video_url` / `reference_video` / `video` 字段，或 `content[]` 中 `type=video/video_url`
+     - 含参考视频 → 返回 `{"ref_video": 0.6}`（OtherRatios 乘法因子）
+     - 不含 → 返回 nil（原价）
+  2. `relay/relay_task.go` 第 6 步 — **修复 OtherRatios 在按次计费模式下不生效的 bug**：
+     - 原代码：`TaskPricePatches` 白名单同时跳过 OtherRatios 乘法（错误）
+     - 修复后：OtherRatios 始终应用，白名单仅控制任务完成后的 token 差额结算
+  3. `docker-compose.yml` — 新增 `TASK_PRICE_PATCH=T0101006` 环境变量（按次计费白名单）
+- **验证**: T2V 扣费 500 quota ($0.001) ✅，V2V 扣费 300 quota ($0.0006) ✅
+- **遗留**: 后台需配置 T0101006 模型价格 $7.142857/1M；渠道模型映射待配置
