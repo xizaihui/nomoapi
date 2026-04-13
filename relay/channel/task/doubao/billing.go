@@ -13,7 +13,8 @@ import (
 // 这些价格不放在 DB ModelPrice 里，因为 ModelPrice 会影响预扣额度。
 // 我们希望预扣保持最小（默认 $0.001），完成后按实际 token 数和此处的真实价格结算。
 var seedanceTokenPrice = map[string]float64{
-	"T0101006": 6.735, // doubao-seedance-2-0-260128: $6.735 / 1M tokens
+	"T0101006":                    6.735, // upstream model id
+	"doubao-seedance-2-0-260128":  6.735, // origin model name
 }
 
 // getActualModelPrice 获取模型的真实 token 单价。
