@@ -9,7 +9,7 @@
 ### 快速恢复
 **一句话唤醒**: "继续 OpenToken" 或 "看看 newapi.md"
 **项目状态文件**: `/opt/apps/newapis/newapi.md` ← **最完整的项目追踪文档，必读**
-**上次更新**: 2026-03-24，commit `20baf1bf`
+**上次更新**: 2026-04-13，commit `3144b42b`
 
 ### 项目概要
 - Go + React 全栈 Web 应用，API 管理平台
@@ -21,7 +21,7 @@
 ### 三环境
 | 环境 | 地址 | 部署方式 | 当前版本 |
 |------|------|----------|----------|
-| 开发 | 154.40.40.48:3000 | 本机 Docker | `20baf1bf` |
+| 开发 | 154.40.40.48:3000 | 本机 Docker | `3144b42b` |
 | 测试 | 154.36.173.198 (api.opentokens.net) | SSH deploy | `9c5e03fe` |
 | 生产 | 38.58.59.161 (api.opentoken.io) | SSH deploy | `9c5e03fe` |
 
@@ -71,6 +71,13 @@ docker compose up -d --force-recreate --no-deps new-api
 - ✅ Bedrock Beta Flags 配置化 (admin UI, DB-backed, 自动去重)
 - ✅ 蒸馏检测引擎 (Redis, 两指标, 自动禁用, 白名单) — `89a35a33`
 - ✅ Bedrock cache_control.scope 清理 (body 层过滤) — `f6238912`
+- ✅ Seedance T0101006 动态 token 计费 — `a19eee6e`
+  - billing.go: AdjustBillingOnComplete 按实际 tokens 结算 ($7.5/M tokens)
+  - 有参考视频 ×0.6 折扣，预扣保持 $0.001/$0.0006
+  - 删除 DB ModelPrice[T0101006]，注释 TASK_PRICE_PATCH
+- ✅ Seedance 计费日志增强 — `3144b42b`
+  - completion_tokens 写入日志表专用列，真实 modelPrice 回写 BillingContext
+  - RecalculateTaskQuota 支持 extraOther，billing log 含完整计费明细
 
 ### 待办方向
 - [ ] 移动端适配优化
