@@ -824,9 +824,9 @@ fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
 **部署状态:**
 | 环境 | 状态 | commit |
 |------|------|--------|
-| 开发 (154.40.40.48:3000) | ✅ 已部署 | `f6238912` |
-| 测试 (154.36.173.198) | ✅ 已部署 | `f6238912` |
-| 生产 (38.58.59.161) | ✅ 已部署 | `f6238912` |
+| 开发 (154.40.40.48:3000) | ✅ 已部署 | `3144b42b` |
+| 测试 (154.36.173.198) | ⚠️ 待更新 | `f6238912` |
+| 生产 (38.58.59.161) | ⚠️ 待更新 | `f6238912` |
 
 ---
 
@@ -872,16 +872,36 @@ fine-grained-tool-streaming-2025-05-14, context-management-2025-02-05
 
 ### 2026-04-12: Seedance 2.0 动态计费 — 视频参考折扣
 
-- **需求**: 豆包 Seedance 2.0 视频生成按场景差异计费：T2V ¥0.05/K token，I2V/V2V（含参考视频）¥0.03/K token
-- **方案**: 后台统一配高价（$7.142857/1M = ¥0.05/K），adaptor 检测视频参考后自动乘 0.6 折扣
+- **需求**: 豆包 Seedance 2.0 视频生成按场景差异计费：有参考视频 ×0.6 折扣
+- **方案（最终版 2026-04-13 确定）**:
+  - 后台**不配** ModelPrice[T0101006]（预扣走 fallback $0.001）
+  - `billing.go` 硬编码真实价格 $7.5/M tokens（`seedanceTokenPrice` map）
+  - 任务完成后 `AdjustBillingOnComplete` 按上游返回的 completion_tokens 实际结算
 - **改动**:
-  1. `relay/channel/task/doubao/adaptor.go` — 新增 `EstimateBilling()` 方法：
-     - 检测 metadata 中 `video_url` / `reference_video` / `video` 字段，或 `content[]` 中 `type=video/video_url`
-     - 含参考视频 → 返回 `{"ref_video": 0.6}`（OtherRatios 乘法因子）
-     - 不含 → 返回 nil（原价）
-  2. `relay/relay_task.go` 第 6 步 — **修复 OtherRatios 在按次计费模式下不生效的 bug**：
-     - 原代码：`TaskPricePatches` 白名单同时跳过 OtherRatios 乘法（错误）
-     - 修复后：OtherRatios 始终应用，白名单仅控制任务完成后的 token 差额结算
-  3. `docker-compose.yml` — 新增 `TASK_PRICE_PATCH=T0101006` 环境变量（按次计费白名单）
-- **验证**: T2V 扣费 500 quota ($0.001) ✅，V2V 扣费 300 quota ($0.0006) ✅
-- **遗留**: 后台需配置 T0101006 模型价格 $7.142857/1M；渠道模型映射待配置
+  1. `relay/channel/task/doubao/adaptor.go` — `EstimateBilling()` 检测视频参考
+     - 含参考视频 → 返回 `{"ref_video": 0.6}`
+  2. `relay/channel/task/doubao/billing.go` **（新增）** — `AdjustBillingOnComplete()`:
+     - `seedanceTokenPrice` 存储真实单价，`getActualModelPrice` 三层获取
+     - 公式: `price × (tokens/1M) × groupRatio × otherRatio × QuotaPerUnit`
+     - 回写真实 modelPrice 到 BillingContext（日志显示 7.5 而非 0.001）
+  3. `docker-compose.yml` — **注释** `TASK_PRICE_PATCH=T0101006`（不再按次固定计费）
+  4. DB — **删除** `ModelPrice[T0101006]`（避免大额预扣）
+- **计费结果**:
+  - 预扣: $0.001（无参考视频）/ $0.0006（有参考视频 ×0.6）
+  - 结算: `7.5 × (tokens/1M) × 0.6`（有参考视频） 或 `7.5 × (tokens/1M)`（无参考视频）
+  - 示例: 216900 tokens + ref_video → $0.976; 108900 tokens 无 ref → $0.817
+- **commits**: `a19eee6e`（核心计费）, `3144b42b`（日志增强）
+
+---
+
+### 2026-04-13: Seedance 计费日志增强 (commit: `3144b42b`)
+
+- **需求**: 用户查看日志时需要计费凭证（token 数、真实单价、折扣信息）
+- **改动**:
+  1. `model/log.go` — `RecordTaskBillingLogParams` 新增 `PromptTokens`/`CompletionTokens` 字段
+  2. `service/task_billing.go` — `RecalculateTaskQuota` 加 variadic `extraOther` 参数，从中提取 token 写入日志表专用列
+  3. `service/task_polling.go` — `settleTaskBillingOnComplete` adaptor 路径传入 token 信息
+- **效果**: 日志表 `completion_tokens` 列正确显示 216900，`other` JSON 包含完整计费明细:
+  ```json
+  {"completion_tokens":216900, "total_tokens":216900, "model_price":7.5, "ref_video":0.6, "actual_quota":488024, "pre_consumed_quota":300}
+  ```
