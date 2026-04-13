@@ -150,6 +150,12 @@ sanitize_xml_tool_calls = true      # XML 消毒器（默认开启）
 | 出站非流式 | ✅ tool_sim 升级 + fallback |
 | 出站流式 | ✅ 三种变体全覆盖 |
 
+### 第四层: Sentinel 出站过滤 (2026-04-13)
+- 问题: 上游 (OpenClaw) 的 sentinel 标记 (`⟦CDR_TOOL_BEGIN/END⟧`) 被 Claude 回复模仿输出，clewdr 不识别就透传到用户
+- 新增 `strip_sentinel_patterns()` 函数，按行过滤含 `CDR_TOOL_BEGIN/END` 的行
+- 覆盖 6 处文本出口: 非流式 remaining + 全文、Claude 流式 remaining + flush、OAI 流式 remaining + flush
+- Commits: `0115c27`, `77d87db` on `feat/tool-sim-hardening`
+
 ---
 
 ## 👤 用户信息
