@@ -81,6 +81,10 @@ func (a *TaskAdaptor) AdjustBillingOnComplete(task *model.Task, taskResult *rela
 	}
 	usd := modelPrice * float64(tokens) / 1_000_000.0
 	quota := int(usd * groupRatio * otherRatio * common.QuotaPerUnit)
+
+	// 将真实价格回写到 BillingContext，供日志 other 字段展示（覆盖 fallback 的 $0.001）
+	bc.ModelPrice = modelPrice
+
 	common.SysLog(fmt.Sprintf("[doubao] AdjustBillingOnComplete task=%s model=%s tokens=%d price=%.4f group=%.2f other=%.2f -> quota=%d",
 		task.TaskID, modelName, tokens, modelPrice, groupRatio, otherRatio, quota))
 	if quota <= 0 {

@@ -177,7 +177,7 @@ func RefundTaskQuota(ctx context.Context, task *model.Task, reason string) {
 // RecalculateTaskQuota 通用的异步差额结算。
 // actualQuota 是任务完成后的实际应扣额度，与预扣额度 (task.Quota) 做差额结算。
 // reason 用于日志记录（例如 "token重算" 或 "adaptor调整"）。
-func RecalculateTaskQuota(ctx context.Context, task *model.Task, actualQuota int, reason string) {
+func RecalculateTaskQuota(ctx context.Context, task *model.Task, actualQuota int, reason string, extraOther ...map[string]interface{}) {
 	if actualQuota <= 0 {
 		return
 	}
@@ -225,16 +225,36 @@ func RecalculateTaskQuota(ctx context.Context, task *model.Task, actualQuota int
 	//other["reason"] = reason
 	other["pre_consumed_quota"] = preConsumedQuota
 	other["actual_quota"] = actualQuota
+	// 合并调用方传入的额外字段（如 token 计数）
+	for _, extra := range extraOther {
+		for k, v := range extra {
+			other[k] = v
+		}
+	}
+	// 从 other 中提取 token 计数（如果有）写入日志表的专用列
+	var promptTokens, completionTokens int
+	if v, ok := other["completion_tokens"]; ok {
+		if n, ok := v.(int); ok {
+			completionTokens = n
+		}
+	}
+	if v, ok := other["prompt_tokens"]; ok {
+		if n, ok := v.(int); ok {
+			promptTokens = n
+		}
+	}
 	model.RecordTaskBillingLog(model.RecordTaskBillingLogParams{
-		UserId:    task.UserId,
-		LogType:   logType,
-		Content:   reason,
-		ChannelId: task.ChannelId,
-		ModelName: taskModelName(task),
-		Quota:     logQuota,
-		TokenId:   task.PrivateData.TokenId,
-		Group:     task.Group,
-		Other:     other,
+		UserId:           task.UserId,
+		LogType:          logType,
+		Content:          reason,
+		ChannelId:        task.ChannelId,
+		ModelName:        taskModelName(task),
+		Quota:            logQuota,
+		TokenId:          task.PrivateData.TokenId,
+		Group:            task.Group,
+		Other:            other,
+		PromptTokens:     promptTokens,
+		CompletionTokens: completionTokens,
 	})
 }
 

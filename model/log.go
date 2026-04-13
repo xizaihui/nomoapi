@@ -200,15 +200,17 @@ func RecordConsumeLog(c *gin.Context, userId int, params RecordConsumeLogParams)
 }
 
 type RecordTaskBillingLogParams struct {
-	UserId    int
-	LogType   int
-	Content   string
-	ChannelId int
-	ModelName string
-	Quota     int
-	TokenId   int
-	Group     string
-	Other     map[string]interface{}
+	UserId           int
+	LogType          int
+	Content          string
+	ChannelId        int
+	ModelName        string
+	Quota            int
+	TokenId          int
+	Group            string
+	Other            map[string]interface{}
+	PromptTokens     int
+	CompletionTokens int
 }
 
 func RecordTaskBillingLog(params RecordTaskBillingLogParams) {
@@ -235,6 +237,8 @@ func RecordTaskBillingLog(params RecordTaskBillingLogParams) {
 		TokenId:   params.TokenId,
 		Group:     params.Group,
 		Other:     common.MapToJsonStr(params.Other),
+		PromptTokens:     params.PromptTokens,
+		CompletionTokens: params.CompletionTokens,
 	}
 	err := LOG_DB.Create(log).Error
 	if err != nil {

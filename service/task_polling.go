@@ -548,7 +548,13 @@ func settleTaskBillingOnComplete(ctx context.Context, adaptor TaskPollingAdaptor
 	}
 	// 1. 优先让 adaptor 决定最终额度
 	if actualQuota := adaptor.AdjustBillingOnComplete(task, taskResult); actualQuota > 0 {
-		RecalculateTaskQuota(ctx, task, actualQuota, "adaptor计费调整")
+		reason := fmt.Sprintf("adaptor计费调整：completion_tokens=%d, total_tokens=%d",
+			taskResult.CompletionTokens, taskResult.TotalTokens)
+		tokenOther := map[string]interface{}{
+			"completion_tokens": taskResult.CompletionTokens,
+			"total_tokens":     taskResult.TotalTokens,
+		}
+		RecalculateTaskQuota(ctx, task, actualQuota, reason, tokenOther)
 		return
 	}
 	// 2. 回退到 token 重算
