@@ -194,8 +194,8 @@ func (a *TaskAdaptor) EstimateBilling(c *gin.Context, info *relaycommon.RelayInf
 		}
 	}
 	if hasRefVideo {
-		common.SysLog(fmt.Sprintf("[doubao] reference video detected, applying 0.6x discount, model=%s", info.UpstreamModelName))
-		return map[string]float64{"ref_video": 0.6}
+		common.SysLog(fmt.Sprintf("[doubao] reference video detected, applying 0.6087x discount, model=%s", info.UpstreamModelName))
+		return map[string]float64{"ref_video": 0.6087}
 	}
 	return nil
 }
