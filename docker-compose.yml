@@ -37,7 +37,7 @@ services:
       - SESSION_SECRET=opentoken_session_2026_xz527  # 固定会话密钥，容器重启不会失效
       - GLOBAL_WEB_RATE_LIMIT=500  # SPA单次加载需要很多chunk请求
       - GLOBAL_WEB_RATE_LIMIT_DURATION=60
-      - TASK_PRICE_PATCH=T0101006  # 按次计费白名单：Seedance 2.0 使用预扣价格作为最终价格，跳过token差额结算
+#      - TASK_PRICE_PATCH=T0101006  # 已注释：启用 doubao AdjustBillingOnComplete 动态计费
 #      - SYNC_FREQUENCY=60  # Uncomment if regular database syncing is needed
 #      - GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX  # Google Analytics 的测量 ID (Google Analytics Measurement ID)
 #      - UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Umami 网站 ID (Umami Website ID)
