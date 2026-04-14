@@ -167,6 +167,9 @@ export default function GeneralSettings(props) {
         <Form
           values={inputs}
           getFormApi={(formAPI) => (refForm.current = formAPI)}
+          onValueChange={(values) => {
+            setInputs((prev) => ({ ...prev, ...values }));
+          }}
           style={{ marginBottom: 15 }}
         >
           <Form.Section text={t('通用设置')}>

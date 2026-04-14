@@ -50,6 +50,7 @@ const OPERATION_DEFAULTS = {
   DefaultCollapseSidebar: false,
   DemoSiteEnabled: false,
   SelfUseModeEnabled: false,
+  PlaygroundEnabled: true,
 
   /* 顶栏模块管理 */
   HeaderNavModules: '',

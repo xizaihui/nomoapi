@@ -106,6 +106,17 @@
 
 ---
 
+### 2026-04-14 — 运营设置 Switch 保存失效修复
+
+#### Semi Form 受控模式 Switch 值不更新 ✅
+- **现象**: SettingsGeneral 页面的 5 个 Switch（PlaygroundEnabled/DemoSiteEnabled/SelfUseModeEnabled/DefaultCollapseSidebar/DisplayTokenStatEnabled）点击切换后保存无效，`inputs` state 值不变
+- **根因**: `<Form values={inputs}>` 受控模式下，每个字段单独的 `onChange={handleFieldChange(...)}` 与 Form 内部对 `values` prop 的同步存在竞争。Switch (`valueKey: 'checked'`) 受影响，Input (`valueKey: 'value'`) 侥幸正常
+- **修复**: 在 `<Form>` 上统一加 `onValueChange={(values) => setInputs((prev) => ({ ...prev, ...values }))}`，不再依赖字段级 onChange
+- **文件**: `web/src/pages/Setting/Operation/SettingsGeneral.jsx`
+- **部署**: 本机 + `api.ccmax.ai (154.44.9.169)`
+
+---
+
 ### 2026-03-21 — Typography 统一规范 + i18n 审计翻译 + 滚动条/固定列修复
 
 #### Typography & Visual Hierarchy ✅ (commit: `2ce578de`, 75 files)
