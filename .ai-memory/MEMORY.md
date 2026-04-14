@@ -9,7 +9,7 @@
 ### 快速恢复
 **一句话唤醒**: "继续 OpenToken" 或 "看看 newapi.md"
 **项目状态文件**: `/opt/apps/newapis/newapi.md` ← **最完整的项目追踪文档，必读**
-**上次更新**: 2026-04-13，commit `3144b42b`
+**上次更新**: 2026-04-14，Semi Form Switch 保存失效修复 (`onValueChange`)
 
 ### 项目概要
 - Go + React 全栈 Web 应用，API 管理平台
@@ -18,12 +18,25 @@
 - 品牌: OpenToken (原 Aurora → 原 New API)
 - Docker 镜像: `newapi-aurora:latest` (alpine, ~108MB)
 
-### 三环境
+### 环境列表
 | 环境 | 地址 | 部署方式 | 当前版本 |
 |------|------|----------|----------|
-| 开发 | 154.40.40.48:3000 | 本机 Docker | `3144b42b` |
+| 开发 | 154.40.40.48:3000 | 本机 Docker | `f01f468a` |
 | 测试 | 154.36.173.198 (api.opentokens.net) | SSH deploy | `9c5e03fe` |
 | 生产 | 38.58.59.161 (api.opentoken.io) | SSH deploy | `9c5e03fe` |
+| ccmax | 154.44.9.169 (api.ccmax.ai) | SSH + docker save/load | `f01f468a` |
+
+### SSH 凭据（所有远程统一）
+- 用户: `root`
+- 密码: `***REDACTED***`
+- 工具: `sshpass -p '***REDACTED***' ssh -o StrictHostKeyChecking=no root@<IP>`
+
+### ccmax 服务器专项说明（2026-04-14 新增）
+- 远程路径: `/opt/apps/opentoken`
+- 远程 git remote `origin` 为 `xizaihui/opentoken`，HEAD 可能落后本地
+- **远程没有 `web/dist/`**（Dockerfile `COPY . .` 直接嵌入），本地构建后必须 `docker save | ssh | docker load` 传镜像，不能远程 `docker build`
+- 本地修改: `docker-compose.yml` + `redis.conf` (stash/pop 保留环境配置)
+- 标准部署: 本机 build 成功 → `docker save newapi-aurora:latest | gzip | sshpass ssh ... 'gunzip | docker load'` → 远程 `docker compose up -d --force-recreate new-api`
 
 ### 关键路径
 - 项目: `/opt/apps/newapis` (本机), `/opt/apps/opentoken` (远程)
