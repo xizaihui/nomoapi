@@ -23,8 +23,9 @@
 |------|------|----------|----------|
 | 开发 | 154.40.40.48:3000 | 本机 Docker | `f01f468a` |
 | 测试 | 154.36.173.198 (api.opentokens.net) | SSH deploy | `9c5e03fe` |
-| 生产 | 38.58.59.161 (api.opentoken.io) | SSH deploy | `9c5e03fe` |
-| ccmax | 154.44.9.169 (api.ccmax.ai) | SSH + docker save/load | `f01f468a` |
+| 生产(旧) | 38.58.59.161 (api.opentoken.io) | SSH deploy | `9c5e03fe` | 待下线，DNS 切换后保留 24-48h |
+| 生产(新) | 154.36.173.70 (api.opentoken.io) | SSH deploy | 镜像自旧生产 | **2026-04-18 迁移完成，等 DNS 切换** |
+| ccmax | 154.44.9.169 (api.ccmax.ai) | SSH + docker save/load | `f01f468a` | |
 
 ### SSH 凭据（所有远程统一）
 - 用户: `root`
