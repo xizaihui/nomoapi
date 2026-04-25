@@ -172,6 +172,49 @@ sanitize_xml_tool_calls = true      # XML 消毒器（默认开启）
 
 ---
 
+## 💬 微信 AI Gateway
+
+### 快速恢复
+**一句话唤醒**: "继续微信bot" 或 "看看 wechat gateway"
+**代码路径**: `/opt/wechat-gateway/src-build` (远程 43.165.190.194)
+**部署服务器**: 43.165.190.194 (systemd: wechat-gateway)
+**日志**: `memory/2026-04-25.md`
+
+### 项目概要
+- Go 微信 iLink Bot 网关，HTTP long-poll 模式对接 ilinkai.weixin.qq.com
+- Redis Stream 消息队列 + SQLite 持久化（bots/users/chat_logs/security_events）
+- OpenAI 兼容 API 做 AI 回复（api.3mll.com），画图走 gemiai.top
+- 管理后台: Tailwind CSS 单页 Dashboard（嵌入 Go binary）
+- 8 个 bot 配置，20 worker 并发
+
+### 关键路径
+- 源码: `/opt/wechat-gateway/src-build`
+- 配置: `/opt/wechat-gateway/config.toml`
+- 数据: `/opt/wechat-gateway/data/gateway.db`
+- 二进制: `/opt/wechat-gateway/wechat-gateway`
+- Go: `/usr/local/go/bin/go` (需 export PATH)
+- 编译: `export PATH=/usr/local/go/bin:$PATH && cd /opt/wechat-gateway/src-build && go build -o /opt/wechat-gateway/wechat-gateway ./cmd/gateway/`
+- Admin token: `admin-secret-token`
+- 后台地址: `http://43.165.190.194:8080`
+
+### 已完成功能
+- ✅ iLink HTTP poll + 消息队列 + AI 回复 + 画图
+- ✅ SQLite 持久化（替代 bots.json + Redis 日志）
+- ✅ 连接健康监控 + 指数退避重连
+- ✅ 安全过滤器（API key/URL/prompt 探测拦截）
+- ✅ 扫码添加 bot（QR 流程）
+- ✅ Bot 真删除（tombstone 机制，重启不恢复）— 2026-04-25
+- ✅ 重复 Poller 去重（AddBot 幂等保护）
+- ✅ Dashboard: bot 管理/用户管理/对话日志/系统状态
+
+### 踩过的坑
+- 软删除无效: config.toml bot 每次重启被 main.go 直接加载，必须用 deleted tombstone 拦截
+- 重复 Poller: LoadPersistedBots + EnsureConfigBots 都调 AddBot，导致消息处理两遍
+- Go 编译: 服务器上 go 不在 PATH，需 `export PATH=/usr/local/go/bin:$PATH`
+- heredoc 转义: SSH 远程写 Go 代码用 heredoc 会搞坏单引号，用 python 脚本写更安全
+
+---
+
 ## 👤 用户信息
 
 - **称呼**: 抱抱熊
