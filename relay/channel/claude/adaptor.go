@@ -25,7 +25,36 @@ func (a *Adaptor) ConvertGeminiRequest(*gin.Context, *relaycommon.RelayInfo, *dt
 }
 
 func (a *Adaptor) ConvertClaudeRequest(c *gin.Context, info *relaycommon.RelayInfo, request *dto.ClaudeRequest) (any, error) {
+	stripThinkingBlocks(request)
 	return request, nil
+}
+
+// stripThinkingBlocks removes thinking content blocks from assistant messages
+// to prevent signature validation failures when proxying multi-turn requests.
+func stripThinkingBlocks(request *dto.ClaudeRequest) {
+	for i := range request.Messages {
+		msg := &request.Messages[i]
+		if msg.Role != "assistant" {
+			continue
+		}
+		if msg.IsStringContent() {
+			continue
+		}
+		parsed, err := msg.ParseContent()
+		if err != nil || len(parsed) == 0 {
+			continue
+		}
+		filtered := make([]dto.ClaudeMediaMessage, 0, len(parsed))
+		for _, block := range parsed {
+			if block.Type == "thinking" {
+				continue
+			}
+			filtered = append(filtered, block)
+		}
+		if len(filtered) < len(parsed) {
+			msg.SetContent(filtered)
+		}
+	}
 }
 
 func (a *Adaptor) ConvertAudioRequest(c *gin.Context, info *relaycommon.RelayInfo, request dto.AudioRequest) (io.Reader, error) {
