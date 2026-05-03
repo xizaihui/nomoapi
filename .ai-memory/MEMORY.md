@@ -127,6 +127,25 @@ docker compose up -d --force-recreate --no-deps new-api
 
 ---
 
+## 🔧 OpenAI-ClewdR 项目（独立 fork）
+
+### 快速恢复
+- 一句话唤醒: "继续 openai-clewdr 审计" 或 "看 AUDIT_v2"
+- 代码路径: /root/.openclaw/workspace/openai-clewdr
+- 审计报告: /root/.openclaw/workspace/openai-clewdr/AUDIT_v2.md
+- Git: git@github.com:xizaihui/openai-clewdr.git
+
+### 审计进度（2026-05-03）
+- HEAD = 1d619c2
+- 上线前 final review，已识别 BLOCKER-1 (system prompt 注入历史) + BLOCKER-2 (failover prev_* 污染) + 7 个 medium
+- v2 续审已完成 session_identity.rs，新增 SEC-NEW-1 (proxy 共享 token 跨用户碰撞) + SEC-NEW-2 (DefaultHasher 无 secret)
+- 待续审: cookie_actor.rs (883行，已审 0-250) → config.rs Display impl → response.rs stream callback → audit_log.rs → xml_stripper.rs
+
+### 与下方 ClewdR 区别
+这是 OpenAI 兼容 API 形态的 clewdr（独立 fork），不是 38.150.32.190 上的 ClewdR。两者代码不同步，分别看。
+
+---
+
 ## 🔧 ClewdR 项目
 
 ### 快速恢复
